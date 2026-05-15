@@ -76,3 +76,6 @@ backups/
 *.tmp
 tmp/
 temp/
+
+# Log files (بدون .gitkeep)
+logs/*.log.*

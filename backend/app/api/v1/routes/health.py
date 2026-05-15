@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from fastapi import APIRouter
 
 from app.core.config import settings
+from app.core.response import success_response
 
 router = APIRouter(tags=["Health"])
 
@@ -26,14 +27,12 @@ async def health_check() -> dict:
     خروجی: ساختار استاندارد پاسخ طبق سند ۶
         {success, message, data, errors}
     """
-    return {
-        "success": True,
-        "message": "API سالم است",
-        "data": {
+    return success_response(
+        message="API سالم است",
+        data={
             "status": "ok",
             "version": settings.APP_VERSION,
             "environment": settings.APP_ENV,
             "timestamp": datetime.now(timezone.utc).isoformat(),
         },
-        "errors": None,
-    }
+    )

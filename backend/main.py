@@ -2,7 +2,7 @@
 """
 نقطه ورود FastAPI — سامانه هوشمند ترید
 ================================================================
-این فایل فقط شامل: app instance + middleware + router include.
+این فایل فقط شامل: app instance + middleware + handlers + router include.
 
 قواعد قفل‌شده:
   - Business Logic در services/ — هرگز اینجا
@@ -23,6 +23,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.routes import health
 from app.core.config import settings
+from app.core.handlers import register_exception_handlers
+from app.core.logging import get_logger, setup_logging
+
+# تنظیم لاگ پیش از هر چیز
+setup_logging()
+logger = get_logger(__name__)
 
 
 # ============================================================
@@ -32,17 +38,17 @@ from app.core.config import settings
 async def lifespan(app: FastAPI):
     """مدیریت چرخه عمر اپلیکیشن"""
     # ===== Startup =====
-    print("=" * 60)
-    print(f"🚀 {settings.APP_NAME} v{settings.APP_VERSION}")
-    print(f"   Environment: {settings.APP_ENV}")
-    print(f"   API: http://{settings.API_HOST}:{settings.API_PORT}{settings.API_PREFIX}")
-    print(f"   Docs: http://{settings.API_HOST}:{settings.API_PORT}/docs")
-    print("=" * 60)
+    logger.info("=" * 60)
+    logger.info(f"🚀 {settings.APP_NAME} v{settings.APP_VERSION}")
+    logger.info(f"   Environment: {settings.APP_ENV}")
+    logger.info(f"   API: http://{settings.API_HOST}:{settings.API_PORT}{settings.API_PREFIX}")
+    logger.info(f"   Docs: http://{settings.API_HOST}:{settings.API_PORT}/docs")
+    logger.info("=" * 60)
 
     yield
 
     # ===== Shutdown =====
-    print(f"👋 {settings.APP_NAME} shutting down...")
+    logger.info(f"👋 {settings.APP_NAME} shutting down...")
 
 
 # ============================================================
@@ -59,7 +65,6 @@ app = FastAPI(
 # ============================================================
 # Middleware
 # ============================================================
-# CORS — اجازه دسترسی Frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
@@ -68,8 +73,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# نکته: سایر middleware ها (Rate Limit, Auth, RBAC, Input Sanitize,
-# Audit Log) طبق ترتیب سند ۶ در گام‌های بعد اضافه می‌شوند.
+
+# ============================================================
+# Exception Handlers
+# ============================================================
+register_exception_handlers(app)
 
 
 # ============================================================
@@ -81,17 +89,18 @@ app.include_router(health.router, prefix=settings.API_PREFIX)
 # ============================================================
 # Root Endpoint
 # ============================================================
+from app.core.response import success_response
+
+
 @app.get("/")
 async def root() -> dict:
     """صفحه ریشه — اطلاعات کلی"""
-    return {
-        "success": True,
-        "message": "سامانه هوشمند ترید فعال است",
-        "data": {
+    return success_response(
+        message="سامانه هوشمند ترید فعال است",
+        data={
             "name": settings.APP_NAME,
             "version": settings.APP_VERSION,
             "docs": "/docs",
             "health": f"{settings.API_PREFIX}/health",
         },
-        "errors": None,
-    }
+    )
