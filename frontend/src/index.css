@@ -1,0 +1,182 @@
+/* ============================================================
+   Reset + پایه — زیرگام ۸ (Theme Engine)
+   متغیرهای CSS توسط ThemeProvider روی :root تزریق می‌شوند.
+   ۲۷c — رنگ‌های fallback بایننس واقعی
+   ۲۷e — interactive states
+   ۲۸  — Toast animations
+   ۲۹  — Skeleton + Dialog
+   🆕 ۳۲ — html font-size scaling (Bug #47)
+   ============================================================ */
+
+:root {
+  --color-primary: #F0B90B;
+  --color-primary-hover: #FCD535;
+  --color-bg: #181A20;
+  --color-bg-elevated: #1E2329;
+  --color-card: #1E2329;
+  --color-card-hover: #2B2F36;
+  --color-border: #2B3139;
+  --color-border-strong: #474D57;
+  --color-text: #EAECEF;
+  --color-text-muted: #848E9C;
+  --color-text-inverse: #181A20;
+  --color-success: #0ECB81;
+  --color-success-bg: #0F2A1F;
+  --color-danger: #F6465D;
+  --color-danger-bg: #2A1517;
+  --color-info: #1890FF;
+  --color-warning: #F0B90B;
+  --color-link: #F0B90B;
+  --color-grid: #2B3139;
+  --shadow-card: 0 4px 12px rgba(0,0,0,0.5);
+
+  --font-size-base: 14px;
+  --font-family-ui: "Vazirmatn", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 🆕 ۳۲ — html font-size = baseline برای rem scaling سراسری.
+   ThemeProvider مقدار را با fontSize انتخابی کاربر به‌روز می‌کند.
+   همه inline styles از rem استفاده می‌کنند، پس همه‌جا scale می‌شود. */
+html {
+  font-size: var(--font-size-base);
+}
+
+html, body, #root {
+  min-height: 100vh;
+}
+
+body {
+  font-family: var(--font-family-ui);
+  font-size: 1rem;
+  line-height: 1.6;
+  background: var(--color-bg);
+  color: var(--color-text);
+  direction: rtl;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ============================================================
+   Interactive states (۲۷e)
+   ============================================================ */
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  transition: filter 0.15s ease, transform 0.05s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+button:hover:not(:disabled) { filter: brightness(1.12); }
+button:active:not(:disabled) { transform: translateY(1px); filter: brightness(0.95); }
+button:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+button:disabled { cursor: not-allowed; opacity: 0.5; filter: none; }
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+a:hover { text-decoration: underline; opacity: 0.85; }
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+select { cursor: pointer; }
+select:hover { border-color: var(--color-border-strong) !important; background: var(--color-card-hover) !important; }
+select:focus { border-color: var(--color-primary) !important; outline: none; }
+input:focus, textarea:focus { border-color: var(--color-primary) !important; outline: none; }
+
+[data-card-link="true"] {
+  display: block;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+[data-card-link="true"]:hover {
+  background: var(--color-card-hover) !important;
+  border-color: var(--color-border-strong) !important;
+  text-decoration: none !important;
+  opacity: 1;
+}
+
+/* ============================================================
+   Toast animations (۲۸)
+   ============================================================ */
+
+@keyframes toast-slide-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Skeleton + Dialog animations (۲۹)
+   ============================================================ */
+
+.skeleton-block {
+  display: block;
+  background: linear-gradient(
+    90deg,
+    var(--color-card-hover) 0%,
+    var(--color-border-strong) 50%,
+    var(--color-card-hover) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes dialog-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes dialog-slide-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-block {
+    animation: none;
+    background: var(--color-card-hover);
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   اسکرول‌بار سفارشی
+   ============================================================ */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 5px;
+  transition: background 0.15s ease;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }

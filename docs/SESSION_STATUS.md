@@ -1,56 +1,58 @@
-# وضعیت پروژه — 2026-05-15 (پایان چت ۳: تثبیت اسناد + v2.3)
+# وضعیت پروژه — 2026-05-16 (پایان چت ۳: زیرگام‌های ۵، ۷.۱، ۷.۲، ۷.۳ + ابزار پاک‌سازی)
 
 ## فاز جاری
 
-فاز ۰ — زیرساخت — حدود ۶۰٪ پیشرفت (۵ از ۸ زیرگام کامل)
+**فاز ۰ — زیرساخت — حدود ۹۵٪ پیشرفت** — فقط زیرگام ۸ (Theme Engine + UX پیشرفته) باقی است.
 
 ## نوع این چت
 
-**📋 چت اسناد** — هیچ کد جدیدی در این چت نوشته نشد. خروجی‌های اصلی:
-- تولید سند جامع v2.1.docx (نسخه Word)
-- تبدیل و گسترش به سند جامع v2.2.md (Markdown)
-- افزودن سند ۱۴ جدید: «پروتکل تعویض چت (Chat Handoff Protocol)»
-- افزودن قانون قفل‌شده #15
-- **🆕 v2.3** — افزودن بخش ۱۴.۴: پروتکل پایان طبیعی چت
-- تنظیم اسناد Session برای چت بعدی
+**🔧 چت اجرایی + اسناد + ابزار** — پیشرفت چشمگیر:
+- زیرگام ۵ (Auth + JWT) کامل
+- زیرگام ۷ کامل (۷.۱ + ۷.۲ + ۷.۳)
+- ۹ تصمیم جدید + ۲ Bug Fix
+- ۳ قانون رفتاری جدید (#17 توسعه‌یافته + #19 جدید + **#20 جدید**)
+- ابزار `00_cleanup_for_zip.py` برای پاک‌سازی خودکار پوشه
 
-## گام‌های انجام‌شده فاز ۰
+## گام‌های انجام‌شده در این چت
 
-- ✅ گام ۱: ساختار پوشه + Git + اسناد Session
-- ✅ گام ۱.۵: ثبت ۱۳ تصمیم معماری Session 2 در PROJECT_CONTEXT
-- ✅ گام ۲: Backend پایه (venv + requirements + main.py + .env + config + health)
-- ✅ گام ۳: Core Layer (Logger + ۱۳ Exception + Handlers + Response)
-- ✅ گام ۳.۵: Fix رنگ ANSI و emoji در Windows CMD (colorama)
-- ⏳ **گام ۴.۱ — گام بعدی** — Database + Models + Repositories
+- ✅ **Endpoint GET /ohlcv/{symbol_id}** — اولین endpoint کامل (`20_ohlcv_api.py`, `21_test_api.py`)
+- ✅ **زیرگام ۵ — Auth + JWT** (۱۴ فایل): `22_auth_jwt.py`, `22b_fix_env_app_version.py`, `22c_fix_bcrypt.py`, `23_test_auth.py`
+- ✅ **زیرگام ۷.۱ — Frontend scaffold**: Vite + React + Zustand + Router + axios + lightweight-charts (`24_frontend_scaffold.py`)
+- ✅ **زیرگام ۷.۲ — Login واقعی** (`25_login_page.py`)
+- ✅ **زیرگام ۷.۳ — نمودار کندل** با candlestick + volume (`26_chart_page.py`)
+- ✅ **🆕 ابزار `00_cleanup_for_zip.py`** — پاک‌سازی خودکار پوشه قبل از zip
 
-## گام‌های معلق
+## وضعیت تست‌شده
 
-- ⏳ گام ۴.۲: Alembic + اولین Migration + Seeding (admin + Binance)
-- ⏳ گام ۵: Auth + JWT + RBAC + Audit Log
-- ⏳ گام ۶: DataSource Abstraction + Excel Reader
-- ⏳ گام ۷: Frontend پایه (Vite + React + Router + Axios + authStore)
-- ⏳ گام ۸: کامپوننت‌های مشترک + Theme Engine + Login UI
+- ✅ `alembic current` → `08348dca2b9a (head)`
+- ✅ uvicorn روی `http://127.0.0.1:8000` با نسخه `v0.2.0`
+- ✅ Vite dev server روی `http://localhost:5173/`
+- ✅ تمام ۶ تست API + ۷ تست Auth در ترمینال
+- ✅ Frontend: login admin/1 → /home → /chart/1 → نمودار ۱۰۰۰ کندل BTC/USDT
+- ✅ Interaction نمودار: درگ، اسکرول zoom، crosshair با قیمت/حجم
 
-## وضعیت تست‌شده (بدون تغییر از پایان چت قبل)
+## تصمیمات گرفته‌شده در این چت (Session 5)
 
-- ✅ uvicorn روی http://127.0.0.1:8000 اجرا می‌شود
-- ✅ http://127.0.0.1:8000/ → JSON موفق با ساختار استاندارد
-- ✅ http://127.0.0.1:8000/api/v1/health → JSON موفق
-- ✅ http://127.0.0.1:8000/docs → Swagger UI
-- ✅ http://127.0.0.1:8000/api/v1/no-such-route → JSON خطای 404 فارسی استاندارد
-- ✅ فایل‌های log در backend/logs/ ساخته می‌شوند (app.log + error.log)
-- ✅ emoji و رنگ‌های پیام‌های خود سیستم در CMD درست نمایش داده می‌شوند
+40. **حذف passlib، استفاده مستقیم از bcrypt 4.1.3** — `passlib 1.7.4` در `detect_wrap_bug` یک رشته >۷۲ بایت می‌فرستد که bcrypt 4.x reject می‌کند.
+41. **bump نسخه v0.1.3 → v0.2.0** — Auth = MINOR feature طبق SemVer.
+42. **Frontend stack نهایی** — Vite 8.0.13 + React 18 + Zustand 4.5.2 + Router 6.23.1 + axios 1.7.2 + lightweight-charts 4.1.7
+43. **JWT در localStorage با Zustand persist** — فاز ۰ ساده‌تر، فاز ۵+ مهاجرت به HttpOnly Cookie.
+44. **OAuth2PasswordRequestForm + python-multipart** — استاندارد FastAPI با `application/x-www-form-urlencoded`.
+45. **JWT deterministic — پذیرفته‌شده** — افزودن `jti` به access هم در فاز ۵+ آینده‌نگرانه.
+46. **python-multipart==0.0.9** اضافه به requirements.
+47. **bcrypt==4.1.3** تثبیت در requirements (جایگزین passlib).
+48. **🆕 اسکریپت `00_cleanup_for_zip.py` + قانون #20** — پاک‌سازی خودکار پوشه. Claude در پایان هر چت دستور اجرای آن را می‌دهد.
 
-## تصمیمات گرفته‌شده در این چت
+## Bug Fixes این چت
 
-- ✅ **افزودن سند ۱۴ — پروتکل تعویض چت (Chat Handoff Protocol)** — تأییدشده
-- ✅ **افزودن قانون قفل‌شده #15** — اجرای اجباری پروتکل سند ۱۴ — تأییدشده
-- ✅ **انتقال سند ۱۴ قبلی (وضعیت اجرا) به سند ۱۵** — تأییدشده
-- ✅ **افزایش نسخه سند جامع از v2.1 به v2.2** — تأییدشده
-- ✅ **انتخاب Markdown به‌جای docx به‌عنوان فرمت پیش‌فرض سند جامع** — تأییدشده
-- ✅ **🆕 افزودن بخش ۱۴.۴ — پروتکل پایان طبیعی چت** — تأییدشده (v2.3)
-- ✅ **🆕 بازتعریف قانون #15** — حالا هم افت کیفیت و هم پایان طبیعی چت را پوشش می‌دهد — تأییدشده (v2.3)
-- ✅ **🆕 افزایش نسخه سند جامع از v2.2 به v2.3** — تأییدشده
+38. **APP_VERSION در .env بر default غلبه می‌کرد** → اصلاح با `22b_fix_env_app_version.py`
+39. **passlib + bcrypt 4.x → ValueError در login** → اصلاح با `22c_fix_bcrypt.py` (تصمیم #40)
+
+## قوانین رفتاری جدید Claude
+
+- **#17 (توسعه‌یافته):** نام tab با ایموجی رنگی متمایز — 🟦 backend / 🟩 scripts / 🟧 frontend
+- **#19 (جدید):** تست endpoint از ترمینال (httpx) — اولویت بر Swagger UI
+- **#20 (جدید):** تولید خودکار دستورات پاک‌سازی — Claude در هر پروتکل تعویض چت دستور `00_cleanup_for_zip.py` را می‌دهد
 
 ## تصمیمات معلق برای چت بعدی
 
@@ -62,42 +64,57 @@
 
 ## مسائل شناخته‌شده (Non-blocking)
 
-- پیام‌های اولیه uvicorn (قبل از startup hook) هنوز ANSI خام دارند چون colorama پس از آن‌ها اجرا می‌شود — موکول به بعد، کاربر را متوقف نمی‌کند
+- پیام‌های اولیه uvicorn هنوز ANSI خام دارند (قبل از colorama init)
+- لاگ‌های sqlalchemy.engine verbose هستند چون `echo=settings.IS_DEVELOPMENT`
+- JWT deterministic در همان ثانیه — قابل قبول
+- 4 high severity vulnerabilities در npm — همگی dev dependencies. در deploy رسیدگی می‌شود.
 
-## فایل‌های تولیدشده در این چت (در پنل سمت راست برای دانلود)
+## فایل‌های تولیدشده در این چت
 
-- `سند_جامع_v2.1.docx` (نسخه Word اولیه — اختیاری)
-- `سند_جامع_v2.2.md` (نسخه میانی Markdown — جایگزین شده)
-- `سند_جامع_v2.3.md` (**نسخه نهایی Markdown — این را استفاده کنید**)
-- `07_end_of_chat3_update_docs.py` (همین اسکریپت)
+### اسکریپت‌های Python (همه در `D:\Projects\trading-system\scripts\`):
+- `00_cleanup_for_zip.py` 🆕 — **ابزار پاک‌سازی خودکار پوشه قبل از zip**
+- `20_ohlcv_api.py` — اولین endpoint API
+- `21_test_api.py` — ۶ تست API از ترمینال
+- `22_auth_jwt.py` — Auth کامل (۱۴ فایل embedded)
+- `22b_fix_env_app_version.py` — رفع bug `APP_VERSION` در .env
+- `22c_fix_bcrypt.py` — حذف passlib، bcrypt مستقیم
+- `23_test_auth.py` — ۷ تست Auth
+- `24_frontend_scaffold.py` — ساختار اولیه Frontend (۱۰ فایل)
+- `25_login_page.py` — Login واقعی + HomePage
+- `26_chart_page.py` — نمودار کندل
+
+### اسناد:
+- `سند_جامع_v2.5.md` (نسخه lite — ~92KB، با حذف بخش‌های قدیمی/نظری)
+- `SESSION_STATUS.md` (همین فایل)
+- `PROJECT_CONTEXT.md`
 
 ## برای شروع چت جدید
 
 کاربر باید ۴ مورد را پیوست کند:
 
-1. `سند_جامع_v2.3.md` (از پنل سمت راست چت قبلی)
-2. `SESSION_STATUS.md` (همین فایل پس از آپدیت — از `docs/`)
-3. `PROJECT_CONTEXT.md` (از `docs/`)
-4. `trading-system.zip` (فایل فشرده کل پوشه پروژه بدون `venv` و `__pycache__`)
+1. `سند_جامع_v2.5.md`
+2. `SESSION_STATUS.md` (همین فایل)
+3. `PROJECT_CONTEXT.md`
+4. `trading-system.zip` (پاک‌شده با اسکریپت `00_cleanup_for_zip.py`)
 
-پیام شروع پیشنهادی در آخرین پاسخ Claude در چت قبلی آمده.
+🔒 Claude در شروع چت جدید طبق قانون #20 / سند ۱۴.۵ عمل می‌کند: اگر zip حاوی فایل‌های اضافی است، یادآوری اجرای `00_cleanup_for_zip.py` را می‌دهد.
 
-## گام بعدی — جزئیات زیرگام ۴.۱: Database + Models + Repositories
+## گام بعدی — انتخاب با کاربر
 
-این گام شامل کارهای زیر است:
-
-- اتصال async SQLAlchemy + aiosqlite در `backend/app/infrastructure/database/`
-- اعمال PRAGMA ها در connect event (foreign_keys + WAL + NORMAL + cache 64MB)
-- Base class با timestamps و soft delete mixin
-- ۱۴ مدل: `Users, Sessions, Exchanges, ExchangeAPIKeys, Symbols, Watchlist, OhlcvData, Strategies, Signals, Trades, Portfolio, Alerts, RiskSettings, AppSettings, AuditLog`
-- ایندکس‌های critical (مخصوصاً `idx_ohlcv_symbol_tf_ts`)
-- Repository Pattern (`BaseRepository` + نمونه‌های تخصصی)
-- Dependency Injection برای session
-
-سپس زیرگام ۴.۲: Alembic + Migration اولیه + Seeding (admin/1/1 + Binance row).
+دو گزینه پیش رو:
+- **الف)** زیرگام ۸ — Theme Engine + Toast + Skeleton + RTL کامل (تکمیل فاز ۰ به ۱۰۰٪)
+- **ب)** پرش به فاز ۱ — داده بازار (CCXT + WebSocket + ticks live + timeframes متعدد)
 
 ## نسخه پروژه
 
-- **کد:** v0.1.2 (بدون تغییر کد در این چت)
-- **اسناد:** v2.3 (سند جامع — نسخه نهایی این چت)
-- **آخرین commit:** پایان چت قبلی (گام ۳.۵)
+- **کد Backend:** v0.2.0 (Auth + bcrypt مستقیم)
+- **کد Frontend:** v0.0.0 (Vite scaffold)
+- **اسناد:** v2.5
+- **DB Migration head:** `08348dca2b9a` (add_row_index_to_ohlcv)
+- **OhlcvData:** 1714 رکورد (BTC/USDT روزانه)
+
+## پیشرفت کلی
+
+- فاز ۰: ~۹۵٪ (۱۲ از ۱۳ زیرگام کامل)
+- فاز ۱-۸: ۰٪ (شروع نشده)
+- **پیشرفت کلی پروژه: ~۱۱٪**

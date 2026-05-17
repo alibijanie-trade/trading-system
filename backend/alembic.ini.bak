@@ -1,0 +1,65 @@
+# ============================================================
+# Alembic Configuration — سامانه هوشمند ترید
+# ============================================================
+# نکته: sqlalchemy.url در env.py از settings.DATABASE_URL خوانده
+# می‌شود؛ مقدار اینجا فقط placeholder است.
+# ============================================================
+
+[alembic]
+# مسیر اسکریپت‌های migration (نه alembic/ پیش‌فرض)
+script_location = migrations
+
+# اضافه‌کردن مسیر backend/ به sys.path تا env.py بتواند `app` را import کند
+prepend_sys_path = .
+
+# جداکننده مسیر version paths
+version_path_separator = os
+
+# placeholder — env.py مقدار واقعی را از .env می‌گیرد
+sqlalchemy.url = sqlite+aiosqlite:///./trading.db
+
+# قالب نام فایل migration: <timestamp>_<slug>.py
+# مثال: 2026_05_16_0900-abc123_initial_schema.py
+file_template = %%(year)d_%%(month).2d_%%(day).2d_%%(hour).2d%%(minute).2d-%%(rev)s_%%(slug)s
+
+# ============================================================
+# Post-write hooks (خاموش)
+# ============================================================
+[post_write_hooks]
+
+# ============================================================
+# Logging
+# ============================================================
+[loggers]
+keys = root,sqlalchemy,alembic
+
+[handlers]
+keys = console
+
+[formatters]
+keys = generic
+
+[logger_root]
+level = WARNING
+handlers = console
+qualname =
+
+[logger_sqlalchemy]
+level = WARNING
+handlers =
+qualname = sqlalchemy.engine
+
+[logger_alembic]
+level = INFO
+handlers =
+qualname = alembic
+
+[handler_console]
+class = StreamHandler
+args = (sys.stderr,)
+level = NOTSET
+formatter = generic
+
+[formatter_generic]
+format = %(levelname)-5.5s [%(name)s] %(message)s
+datefmt = %H:%M:%S

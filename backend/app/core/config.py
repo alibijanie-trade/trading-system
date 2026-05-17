@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     # === Application ===
     APP_ENV: Literal["development", "production"] = "development"
     APP_NAME: str = "Trading System"
-    APP_VERSION: str = "0.1.1"
+    APP_VERSION: str = "0.2.0"
 
     # === API ===
     API_HOST: str = "127.0.0.1"
@@ -66,8 +66,16 @@ class Settings(BaseSettings):
 
     @property
     def DATABASE_URL(self) -> str:
-        """آدرس اتصال SQLAlchemy برای SQLite + aiosqlite"""
-        return f"sqlite+aiosqlite:///{self.DB_PATH}"
+        """آدرس اتصال SQLAlchemy برای SQLite + aiosqlite.
+
+        اگر DB_PATH مسیر relative باشد (مثل './trading.db')،
+        آن را نسبت به BACKEND_DIR resolve می‌کنیم تا مسیر DB
+        ثابت بماند حتی اگر اپ از پوشه دیگری اجرا شود.
+        """
+        db_path = Path(self.DB_PATH)
+        if not db_path.is_absolute():
+            db_path = BACKEND_DIR / self.DB_PATH
+        return f"sqlite+aiosqlite:///{db_path.as_posix()}"
 
     @property
     def IS_DEVELOPMENT(self) -> bool:

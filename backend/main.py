@@ -9,7 +9,7 @@
   - Query در repositories/ — هرگز اینجا
   - Validation در schemas/ — هرگز اینجا
 
-نحوه اجرا (در CMD 1):
+نحوه اجرا (در tab «1 backend»):
     cd backend
     venv\\Scripts\\activate
     uvicorn main:app --reload
@@ -21,7 +21,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.v1.routes import health
+from app.api.v1.routes import auth, health, ohlcv
 from app.core.config import settings
 from app.core.handlers import register_exception_handlers
 from app.core.logging import get_logger, setup_logging
@@ -84,6 +84,8 @@ register_exception_handlers(app)
 # Router Registration
 # ============================================================
 app.include_router(health.router, prefix=settings.API_PREFIX)
+app.include_router(auth.router, prefix=settings.API_PREFIX)
+app.include_router(ohlcv.router, prefix=settings.API_PREFIX)
 
 
 # ============================================================

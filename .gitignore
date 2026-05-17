@@ -79,3 +79,6 @@ temp/
 
 # Log files (بدون .gitkeep)
 logs/*.log.*
+# Backups دستی (پوشه .git zip شده)
+.git.zip
+*.git.zip
