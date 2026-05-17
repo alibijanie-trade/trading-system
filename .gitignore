@@ -82,3 +82,22 @@ logs/*.log.*
 # Backups دستی (پوشه .git zip شده)
 .git.zip
 *.git.zip
+# Backup files (ساخته‌شده توسط اسکریپت‌های قدیمی و IDE)
+*.bak
+*.bak.*
+*~
+
+# Log files (logs در runtime ساخته می‌شوند، هرگز commit نشوند)
+backend/logs/*.log
+backend/logs/*.log.*
+*.log
+!backend/logs/.gitkeep
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage outputs (frontend vitest + backend pytest-cov)
+coverage/
+htmlcov/
+.coverage
+*.lcov
