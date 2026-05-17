@@ -1,35 +1,317 @@
-# سامانه هوشمند ترید 🚀
+# 📊 سامانه هوشمند ترید
 
-سامانه جامع تحلیل و ترید در بازارهای کریپتو و فارکس.
+> سامانه‌ای حرفه‌ای و ماژولار برای تحلیل و معامله ارز دیجیتال — با تمرکز بر کیفیت کد، طراحی حرفه‌ای، و حافظه پروژه قابل ادامه.
 
-## Stack تکنولوژی
+---
 
-- **Backend:** FastAPI 0.111 + Python 3.11 + SQLAlchemy 2.0 (async) + SQLite
-- **Frontend:** React 18 + Vite + Zustand + lightweight-charts 4.1.7
-- **Database:** SQLite (با ایندکس‌های بهینه)
+## ✨ ویژگی‌های کلیدی
 
-## ساختار پروژه
+- 🎨 **۵ تم** قابل تنظیم با Variant Indicator Pattern (Binance accurate)
+- 📊 **نمودار شمعی** با lightweight-charts + تقویم شمسی/میلادی
+- 🔐 **Auth** کامل با JWT + bcrypt + OAuth2 password flow
+- 🌐 **API** RESTful با FastAPI + OpenAPI خودکار
+- 💾 **DataSource Abstraction** — Excel در فاز ۰، CCXT در فاز ۱
+- 🎯 **Theme Engine** سراسری + Settings Page با ۳ بخش
+- 📅 **تقویم شمسی** با `Intl` built-in (بدون کتابخانه خارجی)
+- 🔢 **جداکننده سه‌رقمی** + ۴ فرمت تاریخ میلادی
+- 📋 **Governance Infrastructure** — ۱۲ سند مرجع برای handoff حرفه‌ای
+
+---
+
+## 🚀 شروع سریع
+
+### پیش‌نیازها
+
+- **Python** 3.11 یا بالاتر
+- **Node.js** 22 LTS
+- **Git** (برای version control)
+
+### راه‌اندازی در ۳ دقیقه
+
+```cmd
+# 1. unzip یا clone پروژه
+cd trading-system
+
+# 2. اجرای اسکریپت magic — همه چیز را خودکار راه‌اندازی می‌کند
+python scripts/00b_post_unzip_setup.py
+
+# 3. فعال‌سازی venv (Windows)
+venv\Scripts\activate
+
+# 4. اجرای backend (tab «1»)
+cd backend
+uvicorn app.main:app --reload --port 8000
+
+# 5. اجرای frontend (tab «3»، در ترمینال جدید)
+cd frontend
+npm run dev
+
+# 6. مرورگر → http://localhost:5173
+# Login: admin / 1
+```
+
+---
+
+## 📁 ساختار پروژه
 
 ```
 trading-system/
-├── backend/          # Backend با FastAPI
-├── frontend/         # Frontend با React + Vite
-├── scripts/          # اسکریپت‌های کمکی
-├── docs/             # مستندات پروژه
-├── data/             # داده‌های ورودی (اکسل و ...)
-└── logs/             # لاگ‌های اجرا
+├── backend/              ← FastAPI server
+│   ├── app/
+│   │   ├── api/v1/routes/    ← endpoint files
+│   │   ├── auth/             ← JWT, bcrypt, dependencies
+│   │   ├── config/           ← settings.py
+│   │   ├── core/             ← logger, exceptions, response
+│   │   ├── database/         ← async SQLAlchemy
+│   │   ├── infrastructure/   ← DataSource pattern
+│   │   ├── models/           ← SQLAlchemy models
+│   │   ├── repositories/     ← DB query layer
+│   │   └── main.py
+│   ├── alembic/              ← migrations
+│   ├── .env                  ← config (در .gitignore)
+│   └── requirements.txt
+│
+├── frontend/             ← React + Vite app
+│   ├── src/
+│   │   ├── components/       ← UI components
+│   │   │   ├── common/       ← Toast, ConfirmDialog, ...
+│   │   │   └── settings/     ← ThemeCard, FontSizeControl, ...
+│   │   ├── pages/            ← Login, Home, Chart, Settings
+│   │   ├── stores/           ← Zustand state
+│   │   ├── services/         ← axios client
+│   │   ├── themes/           ← ۵ تم
+│   │   ├── utils/            ← formatNumber, formatDate
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   └── package.json
+│
+├── scripts/              ← Python automation
+│   ├── 00b_post_unzip_setup.py  ← راه‌اندازی خودکار
+│   ├── 01_*.py تا 32_*.py
+│   └── Nb_test_*.py            ← تست‌ها (قانون #۲۲)
+│
+└── docs/                 ← اسناد جامع (۱۲ سند)
+    ├── PROJECT_GOVERNANCE.md  ⭐
+    ├── CLAUDE_CHECKLIST.md    ⭐
+    ├── CHAT_LOG.md            ⭐
+    ├── TASK_BACKLOG.md        ⭐
+    ├── DECISIONS_LOG.md       ⭐
+    ├── REUSABLE_SKELETON.md   ⭐
+    ├── ONBOARDING_GUIDE.md    ⭐
+    ├── STYLE_GUIDE.md
+    ├── GLOSSARY.md
+    ├── TROUBLESHOOTING.md
+    ├── PROJECT_CONTEXT.md
+    └── SESSION_STATUS.md
 ```
 
-## CMDها
+---
 
-- **CMD 1:** Backend (uvicorn)
-- **CMD 2:** Frontend (npm run dev)
-- **CMD 3:** Scripts (اسکریپت‌های Python)
+## 📚 اسناد مرجع
 
-## مستندات
+### من برنامه‌نویس جدید هستم
+→ از **`docs/ONBOARDING_GUIDE.md`** شروع کنید (۴-۶ ساعت).
 
-اسناد کامل پروژه در پوشه `docs/` موجود است.
+### من می‌خواهم پروژه را با Claude ادامه دهم
+→ **`docs/PROJECT_GOVERNANCE.md`** + **`docs/CLAUDE_CHECKLIST.md`** را پیوست هر چت کنید.
 
-## وضعیت پروژه
+### می‌خواهم بدانم چه task هایی باقی‌مانده
+→ **`docs/TASK_BACKLOG.md`**.
 
-نسخه فعلی: **v0.1.0** (در حال توسعه — فاز ۰)
+### Bug پیدا کردم
+→ **`docs/TROUBLESHOOTING.md`** را اول جستجو کنید.
+
+### می‌خواهم پروژه جدیدی شروع کنم
+→ **`docs/REUSABLE_SKELETON.md`**.
+
+### اصطلاحی نا‌آشناست
+→ **`docs/GLOSSARY.md`**.
+
+---
+
+## 🎯 فاز فعلی
+
+**فاز ۰ — زیرساخت — ✅ ۱۰۰٪ تکمیل**
+
+| زیرگام | وضعیت |
+|---|---|
+| ۱ — Project Setup | ✅ |
+| ۲ — Backend Core | ✅ |
+| ۳ — Database + Models | ✅ |
+| ۴ — Auth + API | ✅ |
+| ۵ — Frontend Scaffold | ✅ |
+| ۶ — Login + Routing | ✅ |
+| ۷ — ChartPage | ✅ |
+| ۸.۱ — Theme Engine | ✅ |
+| ۸.۲ — Toast Notifications | ✅ |
+| ۸.۳ — Skeleton + ConfirmDialog | ✅ |
+| ۸.۴ — Settings Page | ✅ |
+| ۸.۵ — Numeric + Persian Calendar | ✅ |
+| Governance Infrastructure | ✅ |
+
+**فاز بعدی:** Tier 2 (Quality Hardening) یا فاز ۱ (CCXT + WebSocket).
+
+---
+
+## 🛠️ Stack
+
+### Backend
+- **FastAPI** 0.115+ — web framework
+- **SQLAlchemy** 2.0+ async — ORM
+- **Alembic** — migrations
+- **Pydantic** 2.x — validation
+- **Loguru** — logging
+- **bcrypt** + **python-jose** — auth
+- **SQLite** (فاز ۰) → **PostgreSQL** (فاز ۲+)
+
+### Frontend
+- **React** 18 + **Vite** 8
+- **react-router-dom** — routing
+- **zustand** — state management + persist
+- **axios** — HTTP client
+- **lightweight-charts** — charting
+- **Vazirmatn** font (CDN)
+
+### Tooling
+- **Python** scripts برای automation
+- **Node.js** برای runtime tests
+- **Git** برای version control
+
+---
+
+## 🏛️ معماری
+
+### Backend — Layered Architecture
+```
+HTTP Request
+    ↓
+routes/      ← endpoint definition، HTTP concerns
+    ↓
+services/    ← business logic (اگر پیچیده شد)
+    ↓
+repositories/ ← DB queries (هیچ‌جا غیر از اینجا)
+    ↓
+models/      ← SQLAlchemy schema
+```
+
+### Frontend — Component-based + Stores
+```
+pages/                  ← یک per route
+    ↓ استفاده از
+components/common/      ← Toast, ConfirmDialog, ...
+components/<feature>/   ← مخصوص feature
+    ↓ state از
+stores/                 ← zustand stores
+    ↓ API از
+services/api.js         ← axios + interceptors
+```
+
+### Theme System
+```
+themes/themes.js          ← تعریف ۵ تم
+    ↓
+themeStore (zustand)      ← تم فعال + fontSize
+    ↓
+ThemeProvider             ← تزریق CSS vars به :root
+    ↓
+:root { --color-...: ... } ← متغیرها در دسترس همه کامپوننت‌ها
+    ↓
+Components                ← style={{ color: "var(--color-primary)" }}
+```
+
+---
+
+## 📜 قوانین کلیدی
+
+این پروژه ۲۶ قانون قفل‌شده دارد (در سند جامع v2.7). مهم‌ترین‌ها:
+
+- **#۱:** هر فایل Python باید با `# -*- coding: utf-8 -*-` شروع شود
+- **#۲۱:** هر چیز قابل تست با کد، با کد تست شود (نه Swagger UI)
+- **#۲۲:** هر اسکریپت `{N}_*.py` باید `{N}b_test_*.py` همراه داشته باشد
+- **#۲۳:** هر چت، CHAT_LOG با بخش جدید آپدیت شود
+- **#۲۴:** سند جامع فقط افزوده/اصلاح می‌شود — **هرگز حذف نمی‌شود**
+- **#۲۵:** Claude در شروع چت چک‌لیست ۸ مرحله را انجام دهد
+- **#۲۶:** تغییرات اسناد به‌صورت اتمیک اعمال شوند
+
+برای لیست کامل: **سند جامع v2.7 بخش قوانین**.
+
+---
+
+## 🎨 طراحی
+
+پروژه از **Variant Indicator Pattern** (سند جامع ۸.۸.۱) پیروی می‌کند:
+
+- کانتینر همیشه از `var(--color-card)` + `var(--color-border)`
+- نوع (danger/warning/info) فقط با **accent باریک ۴px** + icon رنگی
+- **هرگز:** کادر کامل با رنگ نوع
+
+```jsx
+// ✅ صحیح
+<div style={{
+  background: "var(--color-card)",
+  borderInlineStart: "4px solid var(--color-warning)",
+}}>
+
+// ❌ ممنوع
+<div style={{ background: "var(--color-warning)" }}>
+```
+
+---
+
+## 🐛 اگر مشکلی پیش آمد
+
+1. **اول:** `docs/TROUBLESHOOTING.md` را جستجو کنید
+2. **دوم:** اسکریپت‌های `Nb_test_*.py` را اجرا کنید
+3. **سوم:** logs در `backend/logs/` را چک کنید
+4. **چهارم:** برای مشکلات محیطی (npm install، venv): `python scripts/00b_post_unzip_setup.py` را دوباره اجرا کنید
+
+---
+
+## 🤝 توسعه با Claude
+
+این پروژه با Claude AI به‌صورت تعاملی توسعه یافته. در هر چت جدید:
+
+1. zip پروژه را پیوست کنید
+2. سند جامع v2.X را پیوست کنید
+3. Claude خودکار:
+   - چک‌لیست شروع چت را اجرا می‌کند
+   - وضعیت فعلی را گزارش می‌دهد
+   - گزینه‌های گام بعدی را ارائه می‌دهد
+
+**جزئیات کامل:** `docs/PROJECT_GOVERNANCE.md` بخش ۴ و ۵.
+
+---
+
+## 📊 آمار پروژه
+
+| متریک | مقدار |
+|---|---|
+| چت‌های انجام‌شده | ۶ |
+| اسکریپت‌های idempotent | ~۳۲ |
+| اسکریپت‌های تست همراه | ~۲۰ |
+| Bug های رفع‌شده | ۴۹ |
+| تصمیمات معماری ثبت‌شده | ۵۴ |
+| قوانین قفل‌شده | ۲۶ |
+| تم‌های built-in | ۵ |
+| اسناد مرجع | ۱۲ |
+| Lines of code (frontend) | ~۲۵۰۰ |
+| Lines of code (backend) | ~۳۰۰۰ |
+| Bundle size (gzipped) | ~۱۴۴KB |
+
+---
+
+## 📝 License
+
+(در فاز فعلی تعیین نشده — پروژه شخصی)
+
+---
+
+## 🙏 سپاسگزاری
+
+این پروژه با همکاری انسان و Claude AI ساخته شده. هر اسکریپت، هر تصمیم، هر تم در نتیجه یک گفتگوی دقیق و حرفه‌ای شکل گرفته.
+
+---
+
+**نسخه فعلی:** v0.4.0  
+**فاز:** ۰ تکمیل شده  
+**به‌روز:** 2026-05-17
