@@ -18,15 +18,11 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-
 from app.core.exceptions import BusinessLogicError, ValidationError
 from app.core.logging import get_logger
 from app.infrastructure.data_sources.base import DataSource
-from app.infrastructure.data_sources.binance_mappings import (
-    get_symbol_info,
-    get_timeframe,
-)
-from app.schemas.ohlcv import OhlcvRowSchema, OhlcvImportResult
+from app.infrastructure.data_sources.binance_mappings import get_symbol_info, get_timeframe
+from app.schemas.ohlcv import OhlcvImportResult, OhlcvRowSchema
 
 logger = get_logger(__name__)
 
@@ -134,7 +130,9 @@ class ExcelDataSource(DataSource):
 
         logger.info(
             "نماد: %s | تایم‌فریم: %s | تعداد رکورد: %d",
-            symbol_info["symbol"], timeframe, len(df),
+            symbol_info["symbol"],
+            timeframe,
+            len(df),
         )
 
         # تبدیل ردیف‌ها به OhlcvRowSchema
@@ -145,15 +143,17 @@ class ExcelDataSource(DataSource):
                 int(record["OpenTime"]) / 1000,
                 tz=timezone.utc,
             )
-            rows.append(OhlcvRowSchema(
-                row_index=int(idx),  # از صفر — index pandas
-                timestamp=ts,
-                open=float(record["OpenPrice"]),
-                high=float(record["HighPrice"]),
-                low=float(record["LowPrice"]),
-                close=float(record["ClosePrice"]),
-                volume=float(record["Volume"]),
-            ))
+            rows.append(
+                OhlcvRowSchema(
+                    row_index=int(idx),  # از صفر — index pandas
+                    timestamp=ts,
+                    open=float(record["OpenPrice"]),
+                    high=float(record["HighPrice"]),
+                    low=float(record["LowPrice"]),
+                    close=float(record["ClosePrice"]),
+                    volume=float(record["Volume"]),
+                )
+            )
 
         return OhlcvImportResult(
             rows=rows,

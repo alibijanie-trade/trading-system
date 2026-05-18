@@ -18,10 +18,9 @@ sqlalchemy.orm.Session)
 
 from datetime import datetime, timezone
 
+from app.infrastructure.database import Base
 from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base
 
 
 def _utcnow() -> datetime:
@@ -39,11 +38,15 @@ class UserSession(Base):
         index=True,
     )
     token: Mapped[str] = mapped_column(
-        String, unique=True, nullable=False, index=True,
+        String,
+        unique=True,
+        nullable=False,
+        index=True,
     )
     ip_address: Mapped[str | None] = mapped_column(String, nullable=True)
     expires_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), nullable=False,
+        DateTime(timezone=True),
+        nullable=False,
     )
     is_revoked: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     created_at: Mapped[datetime] = mapped_column(

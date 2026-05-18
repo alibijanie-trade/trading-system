@@ -35,11 +35,17 @@ import sys
 from pathlib import Path
 
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN, RED, YELLOW, CYAN, BOLD, RESET = (
-        Fore.GREEN, Fore.RED, Fore.YELLOW, Fore.CYAN, Style.BRIGHT, Style.RESET_ALL,
+        Fore.GREEN,
+        Fore.RED,
+        Fore.YELLOW,
+        Fore.CYAN,
+        Style.BRIGHT,
+        Style.RESET_ALL,
     )
 except ImportError:
     GREEN = RED = YELLOW = CYAN = BOLD = RESET = ""
@@ -638,17 +644,22 @@ __all__ = [
 # توابع کمکی
 # ============================================================
 
+
 def info(msg: str) -> None:
     print(f"{CYAN}ℹ {msg}{RESET}")
+
 
 def success(msg: str) -> None:
     print(f"{GREEN}✅ {msg}{RESET}")
 
+
 def warn(msg: str) -> None:
     print(f"{YELLOW}⚠ {msg}{RESET}")
 
+
 def err(msg: str) -> None:
     print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg: str) -> None:
     line = "=" * 60
@@ -702,15 +713,15 @@ def main() -> int:
     info("شروع ساخت مدل‌ها...\n")
 
     files = [
-        ("user.py",             USER_PY),
-        ("user_session.py",     USER_SESSION_PY),
-        ("exchange.py",         EXCHANGE_PY),
+        ("user.py", USER_PY),
+        ("user_session.py", USER_SESSION_PY),
+        ("exchange.py", EXCHANGE_PY),
         ("exchange_api_key.py", EXCHANGE_API_KEY_PY),
-        ("symbol.py",           SYMBOL_PY),
-        ("watchlist.py",        WATCHLIST_PY),
-        ("risk_settings.py",    RISK_SETTINGS_PY),
-        ("app_settings.py",     APP_SETTINGS_PY),
-        ("__init__.py",         INIT_PY),
+        ("symbol.py", SYMBOL_PY),
+        ("watchlist.py", WATCHLIST_PY),
+        ("risk_settings.py", RISK_SETTINGS_PY),
+        ("app_settings.py", APP_SETTINGS_PY),
+        ("__init__.py", INIT_PY),
     ]
 
     results = {}
@@ -729,7 +740,9 @@ def main() -> int:
 
     info("گام بعدی — تست ایمپورت در CMD 1 (با venv فعال):")
     print()
-    print(f"  {BOLD}python -c \"from app.models import User, UserSession, Exchange, ExchangeAPIKey, Symbol, Watchlist, RiskSettings, AppSettings; print('OK - 8 models imported')\"{RESET}")
+    print(
+        f"  {BOLD}python -c \"from app.models import User, UserSession, Exchange, ExchangeAPIKey, Symbol, Watchlist, RiskSettings, AppSettings; print('OK - 8 models imported')\"{RESET}"
+    )
     print()
     info("اگر پیام «OK - 8 models imported» دیدید، گام بعدی (۷ مدل Part 2) آغاز می‌شود.")
     print()

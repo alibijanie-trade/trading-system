@@ -8,11 +8,17 @@ import sys
 from pathlib import Path
 
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN, RED, YELLOW, CYAN, BOLD, RESET = (
-        Fore.GREEN, Fore.RED, Fore.YELLOW, Fore.CYAN, Style.BRIGHT, Style.RESET_ALL,
+        Fore.GREEN,
+        Fore.RED,
+        Fore.YELLOW,
+        Fore.CYAN,
+        Style.BRIGHT,
+        Style.RESET_ALL,
     )
 except ImportError:
     GREEN = RED = YELLOW = CYAN = BOLD = RESET = ""
@@ -27,10 +33,21 @@ if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
 
 
-def info(msg): print(f"{CYAN}ℹ {msg}{RESET}")
-def success(msg): print(f"{GREEN}✅ {msg}{RESET}")
-def warn(msg): print(f"{YELLOW}⚠ {msg}{RESET}")
-def err(msg): print(f"{RED}❌ {msg}{RESET}")
+def info(msg):
+    print(f"{CYAN}ℹ {msg}{RESET}")
+
+
+def success(msg):
+    print(f"{GREEN}✅ {msg}{RESET}")
+
+
+def warn(msg):
+    print(f"{YELLOW}⚠ {msg}{RESET}")
+
+
+def err(msg):
+    print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg):
     line = "=" * 60
@@ -40,10 +57,10 @@ def header(msg):
 
 
 async def main_async(excel_file: Path) -> int:
-    from sqlalchemy import select, delete
-    from app.infrastructure.database import AsyncSessionLocal, engine
     from app.infrastructure.data_sources import ExcelDataSource
-    from app.models import Exchange, Symbol, OhlcvData
+    from app.infrastructure.database import AsyncSessionLocal, engine
+    from app.models import Exchange, OhlcvData, Symbol
+    from sqlalchemy import delete, select
 
     header(f"اسکریپت ۱۹ — Import فایل اکسل به DB")
     info(f"فایل: {excel_file}")
@@ -61,16 +78,22 @@ async def main_async(excel_file: Path) -> int:
     success(f"تعداد ردیف: {result.row_count}")
     info(f"نماد:        {result.symbol_info['symbol']}")
     info(f"تایم‌فریم:    {result.timeframe}")
-    info(f"بازه زمانی:  {result.source_metadata['first_timestamp']}  →  {result.source_metadata['last_timestamp']}")
+    info(
+        f"بازه زمانی:  {result.source_metadata['first_timestamp']}  →  {result.source_metadata['last_timestamp']}"
+    )
 
     # نمایش 3 ردیف اول و 3 ردیف آخر
     print()
     info("سه ردیف اول:")
     for r in result.rows[:3]:
-        print(f"  #{r.row_index:4d}  {r.timestamp.isoformat()}  O={r.open:>10.2f}  H={r.high:>10.2f}  L={r.low:>10.2f}  C={r.close:>10.2f}  V={r.volume:>12.4f}")
+        print(
+            f"  #{r.row_index:4d}  {r.timestamp.isoformat()}  O={r.open:>10.2f}  H={r.high:>10.2f}  L={r.low:>10.2f}  C={r.close:>10.2f}  V={r.volume:>12.4f}"
+        )
     info("سه ردیف آخر:")
     for r in result.rows[-3:]:
-        print(f"  #{r.row_index:4d}  {r.timestamp.isoformat()}  O={r.open:>10.2f}  H={r.high:>10.2f}  L={r.low:>10.2f}  C={r.close:>10.2f}  V={r.volume:>12.4f}")
+        print(
+            f"  #{r.row_index:4d}  {r.timestamp.isoformat()}  O={r.open:>10.2f}  H={r.high:>10.2f}  L={r.low:>10.2f}  C={r.close:>10.2f}  V={r.volume:>12.4f}"
+        )
     print()
 
     # ===== مرحله 2: پیدا کردن symbol_id =====
@@ -96,7 +119,9 @@ async def main_async(excel_file: Path) -> int:
         success(f"symbol_id = {symbol.id}")
 
         # ===== مرحله 3: پاک‌سازی داده‌های قبلی این نماد/تایم‌فریم =====
-        info(f"[3/4] پاک‌سازی داده‌های قبلی {result.symbol_info['symbol']}/{result.timeframe} (در صورت وجود)")
+        info(
+            f"[3/4] پاک‌سازی داده‌های قبلی {result.symbol_info['symbol']}/{result.timeframe} (در صورت وجود)"
+        )
         del_stmt = delete(OhlcvData).where(
             OhlcvData.symbol_id == symbol.id,
             OhlcvData.timeframe == result.timeframe,
@@ -134,9 +159,9 @@ async def main_async(excel_file: Path) -> int:
     print()
 
     # ===== تأیید نهایی =====
-    from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-    from sqlalchemy import func
     from app.core.config import settings
+    from sqlalchemy import func
+    from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
     eng = create_async_engine(settings.DATABASE_URL)
     async with AsyncSession(eng) as session:
@@ -163,7 +188,9 @@ async def main_async(excel_file: Path) -> int:
     if sample:
         info(f"نمونه ردیف row_index=0:")
         print(f"    id={sample.id}  ts={sample.timestamp.isoformat()}")
-        print(f"    O={sample.open}  H={sample.high}  L={sample.low}  C={sample.close}  V={sample.volume}")
+        print(
+            f"    O={sample.open}  H={sample.high}  L={sample.low}  C={sample.close}  V={sample.volume}"
+        )
 
     print()
     success("🎉 تست عملی Excel Reader موفق! زیرگام ۶ کامل شد.")
@@ -173,7 +200,9 @@ async def main_async(excel_file: Path) -> int:
 def main() -> int:
     if len(sys.argv) < 2:
         err("استفاده: python scripts\\19_test_excel_reader.py <مسیر-فایل-اکسل>")
-        err("مثال:  python scripts\\19_test_excel_reader.py D:\\path\\to\\btcusdt-daily-20220426.xlsx")
+        err(
+            "مثال:  python scripts\\19_test_excel_reader.py D:\\path\\to\\btcusdt-daily-20220426.xlsx"
+        )
         return 1
 
     excel_file = Path(sys.argv[1])

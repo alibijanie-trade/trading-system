@@ -32,7 +32,9 @@ def main() -> int:
         print("   🟦 tab «1 backend»")
         print("     cd backend")
         print("     venv\\Scripts\\activate")
-        print("     pip install pre-commit==3.7.1 black==24.4.2 isort==5.13.2 -i https://mirrors.aliyun.com/pypi/simple/")
+        print(
+            "     pip install pre-commit==3.7.1 black==24.4.2 isort==5.13.2 -i https://mirrors.aliyun.com/pypi/simple/"
+        )
         return 1
 
     # تأیید .pre-commit-config.yaml

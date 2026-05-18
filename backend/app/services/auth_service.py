@@ -15,8 +15,6 @@ AuthService — منطق کسب‌وکار احراز هویت
 
 from datetime import datetime, timezone
 
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.core.config import settings
 from app.core.exceptions import AuthenticationError
 from app.core.logging import get_logger
@@ -30,6 +28,7 @@ from app.models.user import User
 from app.repositories.user_repository import UserRepository
 from app.repositories.user_session_repository import UserSessionRepository
 from app.schemas.auth import TokenPair
+from sqlalchemy.ext.asyncio import AsyncSession
 
 logger = get_logger(__name__)
 

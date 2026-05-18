@@ -62,10 +62,10 @@ VITE_CONFIG = FRONTEND / "vite.config.js"
 SETUP_JS = SRC / "test" / "setup.js"
 
 TEST_NUMBER_FORMAT = SRC / "utils" / "numberFormat.test.js"
-TEST_DATE_FORMAT   = SRC / "utils" / "dateFormat.test.js"
+TEST_DATE_FORMAT = SRC / "utils" / "dateFormat.test.js"
 TEST_CONFIRM_STORE = SRC / "stores" / "confirmStore.test.js"
 TEST_ERROR_BOUNDARY = SRC / "components" / "common" / "ErrorBoundary.test.jsx"
-TEST_LOGIN_PAGE    = SRC / "pages" / "LoginPage.test.jsx"
+TEST_LOGIN_PAGE = SRC / "pages" / "LoginPage.test.jsx"
 
 
 # ────────────────────────────────────────────────────────────────
@@ -81,10 +81,10 @@ NEW_DEV_DEPS = {
 }
 
 NEW_SCRIPTS = {
-    "test":          "vitest run",
-    "test:watch":    "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ui":       "vitest --ui",
+    "test:ui": "vitest --ui",
 }
 
 
@@ -555,11 +555,11 @@ def main() -> int:
 
     # 4) فایل‌های تست
     test_files = [
-        (TEST_NUMBER_FORMAT,  NUMBER_FORMAT_TEST,  "utils/numberFormat.test.js"),
-        (TEST_DATE_FORMAT,    DATE_FORMAT_TEST,    "utils/dateFormat.test.js"),
-        (TEST_CONFIRM_STORE,  CONFIRM_STORE_TEST,  "stores/confirmStore.test.js"),
+        (TEST_NUMBER_FORMAT, NUMBER_FORMAT_TEST, "utils/numberFormat.test.js"),
+        (TEST_DATE_FORMAT, DATE_FORMAT_TEST, "utils/dateFormat.test.js"),
+        (TEST_CONFIRM_STORE, CONFIRM_STORE_TEST, "stores/confirmStore.test.js"),
         (TEST_ERROR_BOUNDARY, ERROR_BOUNDARY_TEST, "components/common/ErrorBoundary.test.jsx"),
-        (TEST_LOGIN_PAGE,     LOGIN_PAGE_TEST,     "pages/LoginPage.test.jsx"),
+        (TEST_LOGIN_PAGE, LOGIN_PAGE_TEST, "pages/LoginPage.test.jsx"),
     ]
     print("📝 فایل‌های تست (۵):")
     for path, content, label in test_files:

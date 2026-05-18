@@ -334,6 +334,10 @@ print()
 print("📌 پیام شروع پیشنهادی در آخرین پاسخ Claude در این چت آمده.")
 print()
 print("💡 پیشنهاد commit (در CMD 3):")
-print("   git add docs/SESSION_STATUS.md docs/PROJECT_CONTEXT.md scripts/07_end_of_chat3_update_docs.py")
-print('   git commit -m "docs(session): close chat 3 — finalize v2.3 (handoff + end-of-chat protocols)"')
+print(
+    "   git add docs/SESSION_STATUS.md docs/PROJECT_CONTEXT.md scripts/07_end_of_chat3_update_docs.py"
+)
+print(
+    '   git commit -m "docs(session): close chat 3 — finalize v2.3 (handoff + end-of-chat protocols)"'
+)
 print()

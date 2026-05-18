@@ -50,12 +50,12 @@
 ================================================================
 """
 
-from pathlib import Path
-import re
-import subprocess
-import shutil
 import os
+import re
+import shutil
+import subprocess
 import sys
+from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
@@ -72,7 +72,7 @@ CHART_JSX = SRC / "pages" / "ChartPage.jsx"
 
 # Regex برای تشخیص hex hardcoded در JSX (خارج از کامنت‌ها)
 # شامل #abc و #abcdef و #abcdef00 (با alpha)
-HEX_PATTERN = re.compile(r'#[0-9a-fA-F]{3,8}\b')
+HEX_PATTERN = re.compile(r"#[0-9a-fA-F]{3,8}\b")
 
 
 class Checks:
@@ -105,8 +105,8 @@ class Checks:
 def check_no_hex(src: str, exclude_patterns: list) -> tuple:
     """چک کن هیچ hex hardcoded در src نباشد (به‌جز exceptions)"""
     # حذف کامنت‌های /* */ و //
-    cleaned = re.sub(r'/\*.*?\*/', '', src, flags=re.DOTALL)
-    cleaned = re.sub(r'//.*$', '', cleaned, flags=re.MULTILINE)
+    cleaned = re.sub(r"/\*.*?\*/", "", src, flags=re.DOTALL)
+    cleaned = re.sub(r"//.*$", "", cleaned, flags=re.MULTILINE)
 
     matches = HEX_PATTERN.findall(cleaned)
     bad = []
@@ -134,17 +134,16 @@ def main() -> int:
     # ============================================================
     c.print_section("۱) وجود فایل‌ها")
     files = {
-        "SkeletonBlock.jsx":  SKELETON_JSX,
-        "confirmStore.js":    CONFIRM_STORE,
-        "ConfirmDialog.jsx":  CONFIRM_JSX,
-        "index.css":          INDEX_CSS,
-        "App.jsx":            APP_JSX,
-        "HomePage.jsx":       HOME_JSX,
-        "ChartPage.jsx":      CHART_JSX,
+        "SkeletonBlock.jsx": SKELETON_JSX,
+        "confirmStore.js": CONFIRM_STORE,
+        "ConfirmDialog.jsx": CONFIRM_JSX,
+        "index.css": INDEX_CSS,
+        "App.jsx": APP_JSX,
+        "HomePage.jsx": HOME_JSX,
+        "ChartPage.jsx": CHART_JSX,
     }
     for label, path in files.items():
-        c.add(f"موجود است: {label}", path.exists(),
-              f"مسیر: {path.relative_to(PROJECT_ROOT)}")
+        c.add(f"موجود است: {label}", path.exists(), f"مسیر: {path.relative_to(PROJECT_ROOT)}")
 
     # اگر فایل‌ها موجود نیستند، ادامه بی‌معناست
     if any(not p.exists() for p in files.values()):
@@ -162,24 +161,19 @@ def main() -> int:
     c.print_section("۲) SkeletonBlock.jsx")
     src = SKELETON_JSX.read_text(encoding="utf-8")
 
-    c.add('className="skeleton-block" موجود',
-          'className="skeleton-block"' in src)
-    c.add("variant rect تعریف شده",
-          "rect:" in src or '"rect"' in src)
-    c.add("variant text تعریف شده",
-          "text:" in src or '"text"' in src)
-    c.add("variant circle تعریف شده",
-          "circle:" in src or '"circle"' in src)
-    c.add("variant line تعریف شده",
-          "line:" in src or '"line"' in src)
-    c.add("prop count برای تکرار",
-          "count" in src and "Array.from" in src)
-    c.add('role="presentation" + aria-hidden',
-          'role="presentation"' in src and 'aria-hidden="true"' in src)
+    c.add('className="skeleton-block" موجود', 'className="skeleton-block"' in src)
+    c.add("variant rect تعریف شده", "rect:" in src or '"rect"' in src)
+    c.add("variant text تعریف شده", "text:" in src or '"text"' in src)
+    c.add("variant circle تعریف شده", "circle:" in src or '"circle"' in src)
+    c.add("variant line تعریف شده", "line:" in src or '"line"' in src)
+    c.add("prop count برای تکرار", "count" in src and "Array.from" in src)
+    c.add(
+        'role="presentation" + aria-hidden',
+        'role="presentation"' in src and 'aria-hidden="true"' in src,
+    )
 
     ok, bad = check_no_hex(src, [])
-    c.add("بدون hex hardcoded",
-          ok, f"hex های یافت‌شده: {bad}" if bad else "")
+    c.add("بدون hex hardcoded", ok, f"hex های یافت‌شده: {bad}" if bad else "")
 
     # ============================================================
     # ۳) confirmStore.js
@@ -187,25 +181,20 @@ def main() -> int:
     c.print_section("۳) confirmStore.js")
     src = CONFIRM_STORE.read_text(encoding="utf-8")
 
-    c.add("استفاده از Zustand: create",
-          'from "zustand"' in src and "create(" in src)
-    c.add("state: isOpen",         "isOpen" in src)
-    c.add("state: title",          "title" in src)
-    c.add("state: message",        "message" in src)
-    c.add("state: variant",        "variant" in src)
-    c.add("state: confirmText",    "confirmText" in src)
-    c.add("state: cancelText",     "cancelText" in src)
-    c.add("state: resolver",       "resolver" in src)
-    c.add("متد confirm با Promise",
-          "confirm:" in src and "new Promise" in src)
-    c.add("متد confirmAccept",     "confirmAccept" in src)
-    c.add("متد confirmReject",     "confirmReject" in src)
-    c.add("resolve(true) در accept",
-          "resolver(true)" in src or "resolve(true)" in src)
-    c.add("resolve(false) در reject",
-          "resolver(false)" in src or "resolve(false)" in src)
-    c.add("reject dialog قبلی هنگام confirm جدید",
-          "prev" in src and "prev(false)" in src)
+    c.add("استفاده از Zustand: create", 'from "zustand"' in src and "create(" in src)
+    c.add("state: isOpen", "isOpen" in src)
+    c.add("state: title", "title" in src)
+    c.add("state: message", "message" in src)
+    c.add("state: variant", "variant" in src)
+    c.add("state: confirmText", "confirmText" in src)
+    c.add("state: cancelText", "cancelText" in src)
+    c.add("state: resolver", "resolver" in src)
+    c.add("متد confirm با Promise", "confirm:" in src and "new Promise" in src)
+    c.add("متد confirmAccept", "confirmAccept" in src)
+    c.add("متد confirmReject", "confirmReject" in src)
+    c.add("resolve(true) در accept", "resolver(true)" in src or "resolve(true)" in src)
+    c.add("resolve(false) در reject", "resolver(false)" in src or "resolve(false)" in src)
+    c.add("reject dialog قبلی هنگام confirm جدید", "prev" in src and "prev(false)" in src)
 
     # ============================================================
     # ۴) ConfirmDialog.jsx — Variant Indicator Pattern
@@ -213,47 +202,40 @@ def main() -> int:
     c.print_section("۴) ConfirmDialog.jsx (سند ۸.۸.۱)")
     src = CONFIRM_JSX.read_text(encoding="utf-8")
 
-    c.add("background از تم: var(--color-card)",
-          'background: "var(--color-card)"' in src)
-    c.add("border از تم: var(--color-border)",
-          'border: "1px solid var(--color-border)"' in src)
-    c.add("borderInlineStart accent با cfg.color",
-          "borderInlineStart" in src and "${cfg.color}" in src)
-    c.add("ممنوع: border کامل با cfg.color",
-          "border: `1px solid ${cfg.color}`" not in src or
-          "borderInlineStart" in src)
-    c.add("icon رنگی با cfg.color",
-          "color: cfg.color" in src)
-    c.add("متن از تم: var(--color-text)",
-          'color: "var(--color-text)"' in src)
-    c.add("دکمه تأیید با cfg.color",
-          "background: cfg.color" in src)
-    c.add("دکمه انصراف از تم",
-          'color: "var(--color-text)"' in src and
-          'border: "1px solid var(--color-border-strong)"' in src)
+    c.add("background از تم: var(--color-card)", 'background: "var(--color-card)"' in src)
+    c.add("border از تم: var(--color-border)", 'border: "1px solid var(--color-border)"' in src)
+    c.add(
+        "borderInlineStart accent با cfg.color",
+        "borderInlineStart" in src and "${cfg.color}" in src,
+    )
+    c.add(
+        "ممنوع: border کامل با cfg.color",
+        "border: `1px solid ${cfg.color}`" not in src or "borderInlineStart" in src,
+    )
+    c.add("icon رنگی با cfg.color", "color: cfg.color" in src)
+    c.add("متن از تم: var(--color-text)", 'color: "var(--color-text)"' in src)
+    c.add("دکمه تأیید با cfg.color", "background: cfg.color" in src)
+    c.add(
+        "دکمه انصراف از تم",
+        'color: "var(--color-text)"' in src
+        and 'border: "1px solid var(--color-border-strong)"' in src,
+    )
     c.add('role="dialog"', 'role="dialog"' in src)
     c.add('aria-modal="true"', 'aria-modal="true"' in src)
-    c.add('aria-labelledby',  'aria-labelledby="confirm-dialog-title"' in src)
-    c.add('aria-describedby', 'aria-describedby="confirm-dialog-message"' in src)
+    c.add("aria-labelledby", 'aria-labelledby="confirm-dialog-title"' in src)
+    c.add("aria-describedby", 'aria-describedby="confirm-dialog-message"' in src)
     c.add("ref برای focus", "useRef" in src and "confirmBtnRef" in src)
     c.add("setTimeout focus", "setTimeout(" in src and ".focus()" in src)
-    c.add("Escape → confirmReject",
-          '"Escape"' in src and "confirmReject()" in src)
-    c.add("Tab cycling بین دو دکمه",
-          '"Tab"' in src and "shiftKey" in src)
-    c.add("backdrop click → reject",
-          "onClick={confirmReject}" in src)
-    c.add("stopPropagation روی dialog body",
-          "stopPropagation" in src)
-    c.add("animation: dialog-fade-in",
-          "dialog-fade-in" in src)
-    c.add("animation: dialog-slide-in",
-          "dialog-slide-in" in src)
+    c.add("Escape → confirmReject", '"Escape"' in src and "confirmReject()" in src)
+    c.add("Tab cycling بین دو دکمه", '"Tab"' in src and "shiftKey" in src)
+    c.add("backdrop click → reject", "onClick={confirmReject}" in src)
+    c.add("stopPropagation روی dialog body", "stopPropagation" in src)
+    c.add("animation: dialog-fade-in", "dialog-fade-in" in src)
+    c.add("animation: dialog-slide-in", "dialog-slide-in" in src)
 
     # hex فقط مجاز در backdrop rgba(0,0,0,0.5) — رنگ شفاف عمومی
     ok, bad = check_no_hex(src, [])
-    c.add("بدون hex hardcoded در JSX",
-          ok, f"hex های یافت‌شده: {bad}" if bad else "")
+    c.add("بدون hex hardcoded در JSX", ok, f"hex های یافت‌شده: {bad}" if bad else "")
 
     # ============================================================
     # ۵) index.css
@@ -261,26 +243,22 @@ def main() -> int:
     c.print_section("۵) index.css")
     src = INDEX_CSS.read_text(encoding="utf-8")
 
-    c.add("@keyframes skeleton-shimmer",
-          "@keyframes skeleton-shimmer" in src)
-    c.add("@keyframes dialog-fade-in",
-          "@keyframes dialog-fade-in" in src)
-    c.add("@keyframes dialog-slide-in",
-          "@keyframes dialog-slide-in" in src)
-    c.add(".skeleton-block class",
-          ".skeleton-block" in src)
-    c.add("linear-gradient با var(--color-card-hover)",
-          "linear-gradient" in src and "var(--color-card-hover)" in src)
-    c.add("linear-gradient با var(--color-border-strong)",
-          "var(--color-border-strong)" in src)
-    c.add("animation skeleton-shimmer روی .skeleton-block",
-          "animation: skeleton-shimmer" in src)
-    c.add("@media (prefers-reduced-motion: reduce)",
-          "prefers-reduced-motion" in src)
-    c.add("toast-slide-in حفظ شد (regression check)",
-          "@keyframes toast-slide-in" in src)
-    c.add("Interactive states حفظ شد (regression check)",
-          "button:focus-visible" in src and "button:disabled" in src)
+    c.add("@keyframes skeleton-shimmer", "@keyframes skeleton-shimmer" in src)
+    c.add("@keyframes dialog-fade-in", "@keyframes dialog-fade-in" in src)
+    c.add("@keyframes dialog-slide-in", "@keyframes dialog-slide-in" in src)
+    c.add(".skeleton-block class", ".skeleton-block" in src)
+    c.add(
+        "linear-gradient با var(--color-card-hover)",
+        "linear-gradient" in src and "var(--color-card-hover)" in src,
+    )
+    c.add("linear-gradient با var(--color-border-strong)", "var(--color-border-strong)" in src)
+    c.add("animation skeleton-shimmer روی .skeleton-block", "animation: skeleton-shimmer" in src)
+    c.add("@media (prefers-reduced-motion: reduce)", "prefers-reduced-motion" in src)
+    c.add("toast-slide-in حفظ شد (regression check)", "@keyframes toast-slide-in" in src)
+    c.add(
+        "Interactive states حفظ شد (regression check)",
+        "button:focus-visible" in src and "button:disabled" in src,
+    )
 
     # ============================================================
     # ۶) App.jsx
@@ -288,14 +266,13 @@ def main() -> int:
     c.print_section("۶) App.jsx")
     src = APP_JSX.read_text(encoding="utf-8")
 
-    c.add("import ConfirmDialog",
-          'import ConfirmDialog from "./components/common/ConfirmDialog.jsx"' in src)
-    c.add("mount <ConfirmDialog />",
-          "<ConfirmDialog />" in src)
-    c.add("ToastContainer حفظ شد (regression)",
-          "<ToastContainer />" in src)
-    c.add("ProtectedRoute حفظ شد (regression)",
-          "ProtectedRoute" in src)
+    c.add(
+        "import ConfirmDialog",
+        'import ConfirmDialog from "./components/common/ConfirmDialog.jsx"' in src,
+    )
+    c.add("mount <ConfirmDialog />", "<ConfirmDialog />" in src)
+    c.add("ToastContainer حفظ شد (regression)", "<ToastContainer />" in src)
+    c.add("ProtectedRoute حفظ شد (regression)", "ProtectedRoute" in src)
 
     # ============================================================
     # ۷) HomePage.jsx
@@ -303,21 +280,18 @@ def main() -> int:
     c.print_section("۷) HomePage.jsx")
     src = HOME_JSX.read_text(encoding="utf-8")
 
-    c.add("import useConfirmStore",
-          'import useConfirmStore from "../stores/confirmStore.js"' in src)
-    c.add("askConfirm از store گرفته شد",
-          "useConfirmStore((s) => s.confirm)" in src or
-          "askConfirm = useConfirmStore" in src)
-    c.add("handleLogout async است",
-          "const handleLogout = async" in src)
-    c.add("await askConfirm",
-          "await askConfirm" in src)
-    c.add('variant: "warning"',
-          '"warning"' in src)
-    c.add("if (!ok) return — انصراف",
-          "if (!ok) return" in src)
-    c.add("logout() بعد از تأیید حفظ شد",
-          "logout()" in src)
+    c.add(
+        "import useConfirmStore", 'import useConfirmStore from "../stores/confirmStore.js"' in src
+    )
+    c.add(
+        "askConfirm از store گرفته شد",
+        "useConfirmStore((s) => s.confirm)" in src or "askConfirm = useConfirmStore" in src,
+    )
+    c.add("handleLogout async است", "const handleLogout = async" in src)
+    c.add("await askConfirm", "await askConfirm" in src)
+    c.add('variant: "warning"', '"warning"' in src)
+    c.add("if (!ok) return — انصراف", "if (!ok) return" in src)
+    c.add("logout() بعد از تأیید حفظ شد", "logout()" in src)
 
     # ============================================================
     # ۸) ChartPage.jsx
@@ -325,16 +299,14 @@ def main() -> int:
     c.print_section("۸) ChartPage.jsx")
     src = CHART_JSX.read_text(encoding="utf-8")
 
-    c.add("import SkeletonBlock",
-          'import SkeletonBlock from "../components/common/SkeletonBlock.jsx"' in src)
-    c.add("استفاده از <SkeletonBlock",
-          "<SkeletonBlock" in src)
-    c.add('متن قدیمی "در حال بارگذاری نمودار..." حذف شد',
-          "در حال بارگذاری نمودار..." not in src)
-    c.add("شرط loading حفظ شد",
-          "loading" in src)
-    c.add("کلید themeId در deps حفظ شد (regression)",
-          "themeId]" in src)
+    c.add(
+        "import SkeletonBlock",
+        'import SkeletonBlock from "../components/common/SkeletonBlock.jsx"' in src,
+    )
+    c.add("استفاده از <SkeletonBlock", "<SkeletonBlock" in src)
+    c.add('متن قدیمی "در حال بارگذاری نمودار..." حذف شد', "در حال بارگذاری نمودار..." not in src)
+    c.add("شرط loading حفظ شد", "loading" in src)
+    c.add("کلید themeId در deps حفظ شد (regression)", "themeId]" in src)
 
     # ============================================================
     # چاپ نتایج تا اینجا

@@ -61,11 +61,11 @@ BINANCE_COLORS = {
 
 # رنگ‌های قدیمی TradingView — اگر هنوز باشند، خطا
 TRADINGVIEW_REMNANTS = {
-    "--color-link": "#2962ff",     # آبی به جای طلایی
-    "--color-bg": "#1e222d",       # خاکستری TradingView
-    "--color-text": "#d1d4dc",     # متن TradingView
+    "--color-link": "#2962ff",  # آبی به جای طلایی
+    "--color-bg": "#1e222d",  # خاکستری TradingView
+    "--color-text": "#d1d4dc",  # متن TradingView
     "--color-success": "#26a69a",  # فیروزه‌ای TradingView
-    "--color-danger": "#ef5350",   # نارنجی-قرمز TradingView
+    "--color-danger": "#ef5350",  # نارنجی-قرمز TradingView
 }
 
 

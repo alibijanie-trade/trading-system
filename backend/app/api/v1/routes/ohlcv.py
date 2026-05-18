@@ -12,9 +12,6 @@ Endpoint های OHLCV — سند ۶.۸
 
 from datetime import datetime
 
-from fastapi import APIRouter, Depends, Query
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.api.v1.dependencies import get_current_user
 from app.core.logging import get_logger
 from app.core.response import success_response
@@ -23,6 +20,8 @@ from app.models.user import User
 from app.repositories.ohlcv_repository import OhlcvRepository
 from app.repositories.symbol_repository import SymbolRepository
 from app.schemas.ohlcv import OhlcvCandleOut, OhlcvListData
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/ohlcv", tags=["OHLCV"])
 logger = get_logger(__name__)
@@ -87,7 +86,11 @@ async def get_ohlcv(
 
     logger.info(
         "GET /ohlcv/%s tf=%s user=%s --> %d/%d",
-        symbol_id, timeframe, current_user.username, len(candles), total,
+        symbol_id,
+        timeframe,
+        current_user.username,
+        len(candles),
+        total,
     )
 
     return success_response(

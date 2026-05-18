@@ -46,13 +46,13 @@ PROJECT_ROOT = SCRIPT_DIR.parent
 FRONTEND_SRC = PROJECT_ROOT / "frontend" / "src"
 
 ERROR_BOUNDARY_PATH = FRONTEND_SRC / "components" / "common" / "ErrorBoundary.jsx"
-APP_JSX_PATH        = FRONTEND_SRC / "App.jsx"
+APP_JSX_PATH = FRONTEND_SRC / "App.jsx"
 
 
 # ────────────────────────────────────────────────────────────────
 # محتوای ErrorBoundary.jsx
 # ────────────────────────────────────────────────────────────────
-ERROR_BOUNDARY_CONTENT = '''\
+ERROR_BOUNDARY_CONTENT = """\
 import { Component } from "react";
 
 /**
@@ -390,13 +390,13 @@ export default class ErrorBoundary extends Component {
     );
   }
 }
-'''
+"""
 
 
 # ────────────────────────────────────────────────────────────────
 # محتوای App.jsx (نسخه به‌روز)
 # ────────────────────────────────────────────────────────────────
-APP_JSX_CONTENT = '''\
+APP_JSX_CONTENT = """\
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
 import ToastContainer from "./components/common/ToastContainer.jsx";
@@ -460,7 +460,7 @@ export default function App() {
     </>
   );
 }
-'''
+"""
 
 
 # ────────────────────────────────────────────────────────────────

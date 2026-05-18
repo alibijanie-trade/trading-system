@@ -19,10 +19,9 @@
 ================================================================
 """
 
+from app.infrastructure.database import Base, TimestampMixin
 from sqlalchemy import Boolean, Float, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base, TimestampMixin
 
 
 class RiskSettings(Base, TimestampMixin):
@@ -36,19 +35,29 @@ class RiskSettings(Base, TimestampMixin):
         unique=True,  # یک‌به‌یک
     )
     max_risk_per_trade: Mapped[float] = mapped_column(
-        Float, default=0.02, nullable=False,
+        Float,
+        default=0.02,
+        nullable=False,
     )
     max_daily_drawdown: Mapped[float] = mapped_column(
-        Float, default=0.05, nullable=False,
+        Float,
+        default=0.05,
+        nullable=False,
     )
     max_open_trades: Mapped[int] = mapped_column(
-        Integer, default=5, nullable=False,
+        Integer,
+        default=5,
+        nullable=False,
     )
     default_rr_ratio: Mapped[float] = mapped_column(
-        Float, default=2.0, nullable=False,
+        Float,
+        default=2.0,
+        nullable=False,
     )
     auto_stop_on_loss: Mapped[bool] = mapped_column(
-        Boolean, default=True, nullable=False,
+        Boolean,
+        default=True,
+        nullable=False,
     )
 
     user: Mapped["User"] = relationship("User", back_populates="risk_settings")

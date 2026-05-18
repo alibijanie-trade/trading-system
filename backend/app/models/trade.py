@@ -25,10 +25,9 @@
 
 from datetime import datetime, timezone
 
+from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 
 
 def _utcnow() -> datetime:
@@ -67,9 +66,11 @@ class Trade(Base, TimestampMixin, SoftDeleteMixin):
     )
 
     order_type: Mapped[str] = mapped_column(String, nullable=False)  # market/limit/stop-limit
-    side: Mapped[str] = mapped_column(String, nullable=False)        # buy/sell
+    side: Mapped[str] = mapped_column(String, nullable=False)  # buy/sell
     status: Mapped[str] = mapped_column(
-        String, default="open", nullable=False,
+        String,
+        default="open",
+        nullable=False,
     )  # open/closed/cancelled
 
     entry_price: Mapped[float] = mapped_column(Float, nullable=False)
@@ -88,7 +89,8 @@ class Trade(Base, TimestampMixin, SoftDeleteMixin):
         nullable=False,
     )
     closed_at: Mapped[datetime | None] = mapped_column(
-        DateTime(timezone=True), nullable=True,
+        DateTime(timezone=True),
+        nullable=True,
     )
 
     # ===================================================
@@ -96,10 +98,12 @@ class Trade(Base, TimestampMixin, SoftDeleteMixin):
     # ===================================================
     user: Mapped["User"] = relationship("User", back_populates="trades")
     strategy: Mapped["Strategy | None"] = relationship(
-        "Strategy", back_populates="trades",
+        "Strategy",
+        back_populates="trades",
     )
     signal: Mapped["Signal | None"] = relationship(
-        "Signal", back_populates="trades",
+        "Signal",
+        back_populates="trades",
     )
     symbol: Mapped["Symbol"] = relationship("Symbol", back_populates="trades")
     exchange: Mapped["Exchange"] = relationship("Exchange", back_populates="trades")

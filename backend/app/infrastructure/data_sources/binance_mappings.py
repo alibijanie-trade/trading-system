@@ -12,7 +12,6 @@
 
 from typing import Final
 
-
 # stockID → (symbol, base_asset, quote_asset, market_type)
 STOCK_ID_TO_SYMBOL: Final[dict[int, dict[str, str]]] = {
     294: {

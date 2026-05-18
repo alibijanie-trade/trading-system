@@ -676,6 +676,7 @@ SECTION_15_UPDATE_HEADER = """## ۱۵.۱  وضعیت فعلی فاز ۰ (🆕 v2
 # توابع اجرا
 # ============================================================
 
+
 def find_section_position(content: str, pattern: str) -> int:
     """پیدا کردن موقعیت یک regex pattern در محتوا."""
     m = re.search(pattern, content)
@@ -685,27 +686,25 @@ def find_section_position(content: str, pattern: str) -> int:
 def upgrade_to_v27(content_v26: str) -> str:
     """ارتقای محتوا از v2.6 به v2.7."""
     content = content_v26
-    
+
     # تغییر ۱ — عنوان اصلی
     content = content.replace(
-        "# سامانه هوشمند ترید — سند جامع v2.6",
-        "# سامانه هوشمند ترید — سند جامع v2.7"
+        "# سامانه هوشمند ترید — سند جامع v2.6", "# سامانه هوشمند ترید — سند جامع v2.7"
     )
     content = content.replace(
-        "📅 نسخه ۲.۶ — اردیبهشت ۱۴۰۵ (May 2026)",
-        "📅 نسخه ۲.۷ — اردیبهشت ۱۴۰۵ (May 2026)"
+        "📅 نسخه ۲.۶ — اردیبهشت ۱۴۰۵ (May 2026)", "📅 نسخه ۲.۷ — اردیبهشت ۱۴۰۵ (May 2026)"
     )
-    
+
     # تغییر ۲ — اضافه کردن بخش "تغییرات v2.7" قبل از "تغییرات v2.5 → v2.6"
     marker = "# 📋 خلاصه تغییرات v2.5 → v2.6"
     if CHANGES_V27.strip()[:50] not in content:  # idempotency
         content = content.replace(marker, CHANGES_V27 + marker)
-    
+
     # تغییر ۳ — اضافه کردن سند ۱۶ و ۱۷ قبل از انتهای سند
     # موقعیت: بعد از آخرین "## ۱۵.۷  Workflow هر مکالمه جدید" تا انتها
     if "# سند ۱۶ — مدیریت دانش و حافظه پروژه" not in content:
         content = content + "\n\n---\n\n" + SECTION_16 + "\n\n---\n\n" + SECTION_17
-    
+
     # تغییر ۴ — اصلاحیه ۱۳.۶ (جایگزینی بخش)
     # پیدا کردن بخش فعلی ۱۳.۶ و جایگزینی
     pattern_13_6 = r"# سند ۱۳\.۶ جدید — قالب نام چت.*?(?=\n# سند \d+|\Z)"
@@ -714,8 +713,8 @@ def upgrade_to_v27(content_v26: str) -> str:
         # محتوای ۱۳.۶ را جایگزین می‌کنیم با نسخه جدید
         old_13_6 = re.search(pattern_13_6, content, re.DOTALL)
         if old_13_6:
-            content = content[:old_13_6.start()] + SECTION_13_6_FIX + content[old_13_6.end():]
-    
+            content = content[: old_13_6.start()] + SECTION_13_6_FIX + content[old_13_6.end() :]
+
     # تغییر ۵ — اضافه کردن بخش ۸.۸.۲ بعد از ۸.۸.۱
     if "## ۸.۸.۲" not in content:
         # پیدا کردن انتهای ۸.۸.۱
@@ -726,16 +725,16 @@ def upgrade_to_v27(content_v26: str) -> str:
             section_8_9_header = m.group(2)
             replacement = section_8_8_1 + SECTION_8_8_2 + section_8_9_header
             content = content.replace(m.group(0), replacement)
-    
+
     # تغییر ۶ — به‌روزرسانی فهرست مطالب (افزودن مراجع به ۱۶ و ۱۷)
     fehrest_marker = "- [سند ۱۵ — وضعیت اجرایی پروژه](#سند-۱۵--وضعیت-اجرایی-پروژه)"
     new_fehrest_items = """- [سند ۱۵ — وضعیت اجرایی پروژه](#سند-۱۵--وضعیت-اجرایی-پروژه)
 - [**سند ۱۶ — مدیریت دانش و حافظه پروژه** ⭐ 🆕 v2.7](#سند-۱۶--مدیریت-دانش-و-حافظه-پروژه)
 - [**سند ۱۷ — Templates پاسخ Claude** ⭐ 🆕 v2.7](#سند-۱۷--templates-پاسخ-claude-برای-موقعیتهای-رایج)"""
-    
+
     if "[سند ۱۶ — مدیریت دانش" not in content:
         content = content.replace(fehrest_marker, new_fehrest_items)
-    
+
     return content
 
 
@@ -744,20 +743,20 @@ def main() -> int:
     print("اسکریپت ۳۳ — ارتقای سند جامع v2.6 → v2.7")
     print("=" * 64)
     print()
-    
+
     if not SOURCE.exists():
         print(f"[ERROR] منبع یافت نشد: {SOURCE.relative_to(PROJECT_ROOT)}")
         print("        ابتدا سند v2.6 را در docs/ قرار دهید.")
         return 1
-    
+
     print(f"خواندن: {SOURCE.relative_to(PROJECT_ROOT)}")
     content_v26 = SOURCE.read_text(encoding="utf-8")
     print(f"  حجم: {len(content_v26):,} کاراکتر، {content_v26.count(chr(10))} خط")
-    
+
     print()
     print("اعمال تغییرات v2.7...")
     content_v27 = upgrade_to_v27(content_v26)
-    
+
     # چک تغییرات
     changes_applied = []
     if "v2.7" in content_v27:
@@ -772,13 +771,13 @@ def main() -> int:
         changes_applied.append("✓ سند ۱۶ — مدیریت دانش")
     if "# سند ۱۷ — Templates پاسخ Claude" in content_v27:
         changes_applied.append("✓ سند ۱۷ — Templates پاسخ")
-    
+
     for c in changes_applied:
         print(f"  {c}")
-    
+
     print()
     print(f"نوشتن: {TARGET.relative_to(PROJECT_ROOT)}")
-    
+
     # idempotency
     if TARGET.exists():
         existing = TARGET.read_text(encoding="utf-8")
@@ -789,11 +788,11 @@ def main() -> int:
             print("✅ سند v2.7 از قبل موجود و یکسان است.")
             print("=" * 64)
             return 0
-    
+
     TARGET.write_text(content_v27, encoding="utf-8", newline="\n")
     print(f"  حجم جدید: {len(content_v27):,} کاراکتر")
     print(f"  افزایش: +{len(content_v27) - len(content_v26):,} کاراکتر")
-    
+
     print()
     print("=" * 64)
     print("✅ سند جامع v2.7 ساخته شد.")

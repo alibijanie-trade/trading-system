@@ -16,8 +16,8 @@
 
 import os
 import sys
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 # ============================================================
 # تنظیمات اصلی
@@ -441,7 +441,9 @@ trading-system/
 - **Scripts:** `D:\\Projects\\trading-system\\scripts`
 - **Docs:** `D:\\Projects\\trading-system\\docs`
 """
-    if create_file_if_not_exists(PROJECT_ROOT / "docs" / "SESSION_STATUS.md", session_status_content):
+    if create_file_if_not_exists(
+        PROJECT_ROOT / "docs" / "SESSION_STATUS.md", session_status_content
+    ):
         print("   ✅ docs/SESSION_STATUS.md ساخته شد.")
     else:
         print("   ℹ️  docs/SESSION_STATUS.md از قبل وجود داشت.")
@@ -505,7 +507,9 @@ trading-system/
 - ⏳ گام ۷: Frontend پایه
 - ⏳ گام ۸: کامپوننت‌های مشترک
 """
-    if create_file_if_not_exists(PROJECT_ROOT / "docs" / "PROJECT_CONTEXT.md", project_context_content):
+    if create_file_if_not_exists(
+        PROJECT_ROOT / "docs" / "PROJECT_CONTEXT.md", project_context_content
+    ):
         print("   ✅ docs/PROJECT_CONTEXT.md ساخته شد.")
     else:
         print("   ℹ️  docs/PROJECT_CONTEXT.md از قبل وجود داشت.")

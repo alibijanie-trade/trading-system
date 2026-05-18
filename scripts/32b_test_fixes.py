@@ -23,11 +23,11 @@
 ================================================================
 """
 
-from pathlib import Path
 import re
-import subprocess
 import shutil
+import subprocess
 import sys
+from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
@@ -60,7 +60,7 @@ JSX_FILES = [
 # `fontSize: 13,` بد است
 # `fontSize: "0.93rem",` خوب است
 # `fontSize: `${value}px`,` خوب است
-BAD_FONT_SIZE = re.compile(r'fontSize:\s*\d+(?=\s*[,\}\)\s])')
+BAD_FONT_SIZE = re.compile(r"fontSize:\s*\d+(?=\s*[,\}\)\s])")
 
 
 class Checks:
@@ -137,7 +137,9 @@ def runtime_test(c):
         c("DEFAULT_GREGORIAN_FORMAT = us-short", DEFAULT_GREGORIAN_FORMAT, "us-short");
 
         console.log("RESULTS:" + JSON.stringify(results));
-    """ % { "df": DATE_FORMAT.as_uri() }
+    """ % {
+        "df": DATE_FORMAT.as_uri()
+    }
 
     tmp = PROJECT_ROOT / "_runtime_test_32.mjs"
     tmp.write_text(script, encoding="utf-8")
@@ -145,8 +147,11 @@ def runtime_test(c):
     try:
         result = subprocess.run(
             [node, str(tmp)],
-            capture_output=True, text=True,
-            encoding="utf-8", errors="replace", timeout=30,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=30,
         )
     except subprocess.TimeoutExpired:
         c.add("Runtime (Node.js)", False, "timeout")
@@ -162,10 +167,11 @@ def runtime_test(c):
         return
 
     import json
+
     line = None
     for ln in result.stdout.split("\n"):
         if ln.startswith("RESULTS:"):
-            line = ln[len("RESULTS:"):]
+            line = ln[len("RESULTS:") :]
             break
     if not line:
         c.add("Runtime (Node.js)", False, "RESULTS یافت نشد")
@@ -189,18 +195,15 @@ def main() -> int:
     # ============================================================
     c.print_section("۲) index.css — html font-size scaling")
     src = INDEX_CSS.read_text(encoding="utf-8")
-    c.add("html { font-size: var(--font-size-base) }",
-          "html {" in src and "font-size: var(--font-size-base)" in src)
-    c.add("body همچنان موجود",
-          "body {" in src)
-    c.add("regression: @keyframes toast-slide-in حفظ",
-          "@keyframes toast-slide-in" in src)
-    c.add("regression: @keyframes skeleton-shimmer حفظ",
-          "@keyframes skeleton-shimmer" in src)
-    c.add("regression: @keyframes dialog-fade-in حفظ",
-          "@keyframes dialog-fade-in" in src)
-    c.add("regression: button:focus-visible حفظ",
-          "button:focus-visible" in src)
+    c.add(
+        "html { font-size: var(--font-size-base) }",
+        "html {" in src and "font-size: var(--font-size-base)" in src,
+    )
+    c.add("body همچنان موجود", "body {" in src)
+    c.add("regression: @keyframes toast-slide-in حفظ", "@keyframes toast-slide-in" in src)
+    c.add("regression: @keyframes skeleton-shimmer حفظ", "@keyframes skeleton-shimmer" in src)
+    c.add("regression: @keyframes dialog-fade-in حفظ", "@keyframes dialog-fade-in" in src)
+    c.add("regression: button:focus-visible حفظ", "button:focus-visible" in src)
 
     # ============================================================
     # ۳) فایل‌های .jsx — بدون inline fontSize: <N>
@@ -221,135 +224,99 @@ def main() -> int:
     # ============================================================
     c.print_section("۴) dateFormat.js — فرمت‌های میلادی")
     s = DATE_FORMAT.read_text(encoding="utf-8")
-    c.add("export GREGORIAN_FORMATS",
-          "export const GREGORIAN_FORMATS" in s)
-    c.add("export GREGORIAN_FORMAT_LABELS",
-          "export const GREGORIAN_FORMAT_LABELS" in s)
-    c.add("export DEFAULT_GREGORIAN_FORMAT",
-          "export const DEFAULT_GREGORIAN_FORMAT" in s)
-    c.add("export isValidGregorianFormat",
-          "export function isValidGregorianFormat" in s)
-    c.add("پشتیبانی format='iso'",
-          '"iso"' in s)
-    c.add("پشتیبانی format='us-short'",
-          '"us-short"' in s)
-    c.add("پشتیبانی format='eu-short'",
-          '"eu-short"' in s)
-    c.add("پشتیبانی format='long'",
-          '"long"' in s and "dateStyle" in s)
-    c.add("ISO با dateStyle:long استفاده نمی‌کند (custom)",
-          "yyyy-${mm}" in s or "padStart(2" in s)
-    c.add("eu-short → en-GB",
-          '"en-GB"' in s)
+    c.add("export GREGORIAN_FORMATS", "export const GREGORIAN_FORMATS" in s)
+    c.add("export GREGORIAN_FORMAT_LABELS", "export const GREGORIAN_FORMAT_LABELS" in s)
+    c.add("export DEFAULT_GREGORIAN_FORMAT", "export const DEFAULT_GREGORIAN_FORMAT" in s)
+    c.add("export isValidGregorianFormat", "export function isValidGregorianFormat" in s)
+    c.add("پشتیبانی format='iso'", '"iso"' in s)
+    c.add("پشتیبانی format='us-short'", '"us-short"' in s)
+    c.add("پشتیبانی format='eu-short'", '"eu-short"' in s)
+    c.add("پشتیبانی format='long'", '"long"' in s and "dateStyle" in s)
+    c.add("ISO با dateStyle:long استفاده نمی‌کند (custom)", "yyyy-${mm}" in s or "padStart(2" in s)
+    c.add("eu-short → en-GB", '"en-GB"' in s)
 
     # ============================================================
     # ۵) preferencesStore.js
     # ============================================================
     c.print_section("۵) preferencesStore.js — gregorianFormat")
     s = PREFS_STORE.read_text(encoding="utf-8")
-    c.add("state: gregorianFormat",
-          "gregorianFormat:" in s)
-    c.add("setGregorianFormat",
-          "setGregorianFormat:" in s)
-    c.add("isValidGregorianFormat در setter",
-          "isValidGregorianFormat" in s)
-    c.add("reset شامل gregorianFormat",
-          "gregorianFormat: DEFAULT_GREGORIAN_FORMAT" in s)
-    c.add("version: 2 (bump به‌خاطر افزودن field)",
-          "version: 2" in s)
-    c.add("migrate function برای v1 → v2",
-          "migrate:" in s and "fromVersion" in s)
-    c.add("regression: calendar حفظ شد",
-          "calendar:" in s and "setCalendar:" in s)
+    c.add("state: gregorianFormat", "gregorianFormat:" in s)
+    c.add("setGregorianFormat", "setGregorianFormat:" in s)
+    c.add("isValidGregorianFormat در setter", "isValidGregorianFormat" in s)
+    c.add("reset شامل gregorianFormat", "gregorianFormat: DEFAULT_GREGORIAN_FORMAT" in s)
+    c.add("version: 2 (bump به‌خاطر افزودن field)", "version: 2" in s)
+    c.add("migrate function برای v1 → v2", "migrate:" in s and "fromVersion" in s)
+    c.add("regression: calendar حفظ شد", "calendar:" in s and "setCalendar:" in s)
 
     # ============================================================
     # ۶) CalendarToggle.jsx
     # ============================================================
     c.print_section("۶) CalendarToggle.jsx — select فرمت")
     s = CALENDAR_TOGGLE.read_text(encoding="utf-8")
-    c.add("props: format, onFormatChange",
-          "format" in s and "onFormatChange" in s)
-    c.add("import GREGORIAN_FORMATS",
-          "GREGORIAN_FORMATS" in s)
-    c.add("import GREGORIAN_FORMAT_LABELS",
-          "GREGORIAN_FORMAT_LABELS" in s)
-    c.add("شرط isGregorian برای نمایش select",
-          "isGregorian" in s and "&&" in s)
-    c.add("<select> برای فرمت",
-          "<select" in s and "onFormatChange" in s)
-    c.add("label فرمت تاریخ میلادی",
-          "فرمت تاریخ میلادی" in s)
-    c.add("preview با format passed",
-          "{ format }" in s or "{ format," in s)
+    c.add("props: format, onFormatChange", "format" in s and "onFormatChange" in s)
+    c.add("import GREGORIAN_FORMATS", "GREGORIAN_FORMATS" in s)
+    c.add("import GREGORIAN_FORMAT_LABELS", "GREGORIAN_FORMAT_LABELS" in s)
+    c.add("شرط isGregorian برای نمایش select", "isGregorian" in s and "&&" in s)
+    c.add("<select> برای فرمت", "<select" in s and "onFormatChange" in s)
+    c.add("label فرمت تاریخ میلادی", "فرمت تاریخ میلادی" in s)
+    c.add("preview با format passed", "{ format }" in s or "{ format," in s)
     # regression
-    c.add("regression: 2 دکمه radio (gregorian/jalali) حفظ",
-          'role="radio"' in s and "isActive" in s)
+    c.add(
+        "regression: 2 دکمه radio (gregorian/jalali) حفظ", 'role="radio"' in s and "isActive" in s
+    )
 
     # ============================================================
     # ۷) SettingsPage.jsx
     # ============================================================
     c.print_section("۷) SettingsPage.jsx")
     s = SETTINGS_PAGE.read_text(encoding="utf-8")
-    c.add("gregorianFormat از store",
-          "gregorianFormat" in s and "usePreferencesStore" in s)
-    c.add("setGregorianFormat از store",
-          "setGregorianFormat" in s)
-    c.add("passing format={gregorianFormat}",
-          "format={gregorianFormat}" in s)
-    c.add("passing onFormatChange={setGregorianFormat}",
-          "onFormatChange={setGregorianFormat}" in s)
+    c.add("gregorianFormat از store", "gregorianFormat" in s and "usePreferencesStore" in s)
+    c.add("setGregorianFormat از store", "setGregorianFormat" in s)
+    c.add("passing format={gregorianFormat}", "format={gregorianFormat}" in s)
+    c.add("passing onFormatChange={setGregorianFormat}", "onFormatChange={setGregorianFormat}" in s)
     # regression
-    c.add("regression: <CalendarToggle حفظ",
-          "<CalendarToggle" in s)
-    c.add("regression: <ThemeCard حفظ",
-          "<ThemeCard" in s)
-    c.add("regression: <FontSizeControl حفظ",
-          "<FontSizeControl" in s)
-    c.add("regression: handleReset → resetTheme + resetPreferences",
-          "resetTheme()" in s and "resetPreferences()" in s)
+    c.add("regression: <CalendarToggle حفظ", "<CalendarToggle" in s)
+    c.add("regression: <ThemeCard حفظ", "<ThemeCard" in s)
+    c.add("regression: <FontSizeControl حفظ", "<FontSizeControl" in s)
+    c.add(
+        "regression: handleReset → resetTheme + resetPreferences",
+        "resetTheme()" in s and "resetPreferences()" in s,
+    )
 
     # ============================================================
     # ۸) HomePage.jsx
     # ============================================================
     c.print_section("۸) HomePage.jsx — Bug #49 (formatNumber)")
     s = HOME_JSX.read_text(encoding="utf-8")
-    c.add("import formatNumber",
-          'from "../utils/numberFormat.js"' in s and "formatNumber" in s)
-    c.add("استفاده formatNumber(1714)",
-          "formatNumber(1714)" in s)
-    c.add("متن 1714 hardcoded حذف شد",
-          ">1714 کندل<" not in s and " 1714 کندل" not in s)
+    c.add("import formatNumber", 'from "../utils/numberFormat.js"' in s and "formatNumber" in s)
+    c.add("استفاده formatNumber(1714)", "formatNumber(1714)" in s)
+    c.add("متن 1714 hardcoded حذف شد", ">1714 کندل<" not in s and " 1714 کندل" not in s)
     # regression
-    c.add("regression: Link /settings حفظ",
-          'to="/settings"' in s)
-    c.add("regression: askConfirm حفظ",
-          "await askConfirm" in s)
+    c.add("regression: Link /settings حفظ", 'to="/settings"' in s)
+    c.add("regression: askConfirm حفظ", "await askConfirm" in s)
 
     # ============================================================
     # ۹) ChartPage.jsx — Bug #48 (timeFormatter)
     # ============================================================
     c.print_section("۹) ChartPage.jsx — Bug #48 (timeFormatter)")
     s = CHART_JSX.read_text(encoding="utf-8")
-    c.add("timeFormatter ست شده",
-          "timeFormatter:" in s)
-    c.add("dateFormat function حذف شد (به‌جای آن timeFormatter)",
-          "dateFormat:" not in s or "dateFormat: '" in s,
-          "هنوز localization.dateFormat (function) داریم")
-    c.add("priceFormatter حفظ",
-          "priceFormatter:" in s)
-    c.add("locale: 'en-US' در localization",
-          'locale: "en-US"' in s)
-    c.add("formatDate در timeFormatter",
-          "formatDate(d, calendar" in s)
-    c.add("استفاده gregorianFormat در formatDate",
-          "gregorianFormat" in s and "format: gregorianFormat" in s)
-    c.add("gregorianFormat در useEffect deps",
-          "gregorianFormat]" in s)
+    c.add("timeFormatter ست شده", "timeFormatter:" in s)
+    c.add(
+        "dateFormat function حذف شد (به‌جای آن timeFormatter)",
+        "dateFormat:" not in s or "dateFormat: '" in s,
+        "هنوز localization.dateFormat (function) داریم",
+    )
+    c.add("priceFormatter حفظ", "priceFormatter:" in s)
+    c.add("locale: 'en-US' در localization", 'locale: "en-US"' in s)
+    c.add("formatDate در timeFormatter", "formatDate(d, calendar" in s)
+    c.add(
+        "استفاده gregorianFormat در formatDate",
+        "gregorianFormat" in s and "format: gregorianFormat" in s,
+    )
+    c.add("gregorianFormat در useEffect deps", "gregorianFormat]" in s)
     # regression
-    c.add("regression: SkeletonBlock حفظ",
-          "<SkeletonBlock" in s)
-    c.add("regression: formatNumber در متادیتا حفظ",
-          "formatNumber(meta.count)" in s)
+    c.add("regression: SkeletonBlock حفظ", "<SkeletonBlock" in s)
+    c.add("regression: formatNumber در متادیتا حفظ", "formatNumber(meta.count)" in s)
 
     # ============================================================
     # نتایج استاتیک
@@ -403,8 +370,11 @@ def main() -> int:
         result = subprocess.run(
             [npm, "run", "build"],
             cwd=str(FRONTEND),
-            capture_output=True, text=True,
-            encoding="utf-8", errors="replace", timeout=180,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=180,
         )
     except subprocess.TimeoutExpired:
         print("❌ build timeout")

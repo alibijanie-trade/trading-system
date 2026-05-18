@@ -810,6 +810,7 @@ export default function ChartPage() {
 # تابع نوشتن idempotent
 # ============================================================
 
+
 def write_if_changed(path: Path, content: str, label: str) -> str:
     rel = path.relative_to(PROJECT_ROOT)
     if not path.exists():
@@ -831,6 +832,7 @@ def write_if_changed(path: Path, content: str, label: str) -> str:
 # ============================================================
 # اجرای اصلی
 # ============================================================
+
 
 def main() -> int:
     print("=" * 64)
@@ -856,15 +858,15 @@ def main() -> int:
         return 1
 
     print("--- فایل‌های جدید ---")
-    write_if_changed(NUMBER_FORMAT,    NUMBER_FORMAT_JS,    "formatNumber + parseFormattedNumber")
-    write_if_changed(DATE_FORMAT,      DATE_FORMAT_JS,      "formatDate + CALENDARS")
-    write_if_changed(PREFS_STORE,      PREFS_STORE_JS,      "preferencesStore (calendar)")
-    write_if_changed(CALENDAR_TOGGLE,  CALENDAR_TOGGLE_JSX, "CalendarToggle")
+    write_if_changed(NUMBER_FORMAT, NUMBER_FORMAT_JS, "formatNumber + parseFormattedNumber")
+    write_if_changed(DATE_FORMAT, DATE_FORMAT_JS, "formatDate + CALENDARS")
+    write_if_changed(PREFS_STORE, PREFS_STORE_JS, "preferencesStore (calendar)")
+    write_if_changed(CALENDAR_TOGGLE, CALENDAR_TOGGLE_JSX, "CalendarToggle")
 
     print()
     print("--- فایل‌های به‌روزرسانی ---")
     write_if_changed(SETTINGS_PAGE, SETTINGS_PAGE_JSX, "بخش زبان و تقویم + reset گسترش")
-    write_if_changed(CHART_PAGE,    CHART_PAGE_JSX,    "formatNumber + localization")
+    write_if_changed(CHART_PAGE, CHART_PAGE_JSX, "formatNumber + localization")
 
     print()
     print("=" * 64)

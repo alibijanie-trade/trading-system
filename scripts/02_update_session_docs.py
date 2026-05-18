@@ -20,8 +20,8 @@
 """
 
 import sys
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 # ============================================================
 # تنظیمات
@@ -382,8 +382,10 @@ def main() -> None:
     print(r"      D:\Projects\trading-system\CHANGELOG.md")
     print()
     print("   ۲. Commit کنید (در CMD 3):")
-    print(r'      cd /d D:\Projects\trading-system')
-    print(r'      git add docs/PROJECT_CONTEXT.md docs/SESSION_STATUS.md CHANGELOG.md scripts/02_update_session_docs.py')
+    print(r"      cd /d D:\Projects\trading-system")
+    print(
+        r"      git add docs/PROJECT_CONTEXT.md docs/SESSION_STATUS.md CHANGELOG.md scripts/02_update_session_docs.py"
+    )
     print(r'      git commit -m "docs(session): record 10 architecture decisions (v0.1.1)"')
     print()
     print("   ۳. سپس به Claude پیام دهید: «گام ۱.۵ انجام شد، گام ۲ را شروع کن»")

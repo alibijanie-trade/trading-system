@@ -34,8 +34,8 @@
 ================================================================
 """
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
@@ -1108,6 +1108,7 @@ export default function ChartPage() {
 # تابع نوشتن idempotent
 # ============================================================
 
+
 def write_if_changed(path: Path, content: str, label: str) -> str:
     """
     اگر محتوای فعلی با content یکسان است: skip
@@ -1135,6 +1136,7 @@ def write_if_changed(path: Path, content: str, label: str) -> str:
 # اجرای اصلی
 # ============================================================
 
+
 def main() -> int:
     print("=" * 64)
     print("اسکریپت ۲۹ — زیرگام ۸.۳: Skeleton + ConfirmDialog")
@@ -1157,15 +1159,15 @@ def main() -> int:
         return 1
 
     print("--- فایل‌های جدید ---")
-    write_if_changed(SKELETON_JSX,  SKELETON_BLOCK_JSX, "SkeletonBlock")
-    write_if_changed(CONFIRM_STORE, CONFIRM_STORE_JS,   "confirmStore")
-    write_if_changed(CONFIRM_JSX,   CONFIRM_DIALOG_JSX, "ConfirmDialog")
+    write_if_changed(SKELETON_JSX, SKELETON_BLOCK_JSX, "SkeletonBlock")
+    write_if_changed(CONFIRM_STORE, CONFIRM_STORE_JS, "confirmStore")
+    write_if_changed(CONFIRM_JSX, CONFIRM_DIALOG_JSX, "ConfirmDialog")
 
     print()
     print("--- فایل‌های به‌روزرسانی ---")
     write_if_changed(INDEX_CSS, INDEX_CSS_NEW, "shimmer + dialog keyframes")
-    write_if_changed(APP_JSX,   APP_JSX_NEW,   "mount ConfirmDialog")
-    write_if_changed(HOME_JSX,  HOME_JSX_NEW,  "askConfirm در logout")
+    write_if_changed(APP_JSX, APP_JSX_NEW, "mount ConfirmDialog")
+    write_if_changed(HOME_JSX, HOME_JSX_NEW, "askConfirm در logout")
     write_if_changed(CHART_JSX, CHART_JSX_NEW, "SkeletonBlock در loading")
 
     print()

@@ -13,10 +13,9 @@
 ================================================================
 """
 
+from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 from sqlalchemy import Boolean, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 
 
 class ExchangeAPIKey(Base, TimestampMixin, SoftDeleteMixin):

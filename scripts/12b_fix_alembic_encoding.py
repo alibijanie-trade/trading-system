@@ -28,11 +28,17 @@ import sys
 from pathlib import Path
 
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN, RED, YELLOW, CYAN, BOLD, RESET = (
-        Fore.GREEN, Fore.RED, Fore.YELLOW, Fore.CYAN, Style.BRIGHT, Style.RESET_ALL,
+        Fore.GREEN,
+        Fore.RED,
+        Fore.YELLOW,
+        Fore.CYAN,
+        Style.BRIGHT,
+        Style.RESET_ALL,
     )
 except ImportError:
     GREEN = RED = YELLOW = CYAN = BOLD = RESET = ""
@@ -127,17 +133,22 @@ datefmt = %H:%M:%S
 # توابع کمکی
 # ============================================================
 
+
 def info(msg: str) -> None:
     print(f"{CYAN}ℹ {msg}{RESET}")
+
 
 def success(msg: str) -> None:
     print(f"{GREEN}✅ {msg}{RESET}")
 
+
 def warn(msg: str) -> None:
     print(f"{YELLOW}⚠ {msg}{RESET}")
 
+
 def err(msg: str) -> None:
     print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg: str) -> None:
     line = "=" * 60
@@ -228,7 +239,7 @@ def main() -> int:
     print()
 
     print(f"{BOLD}{GREEN}# دستور ۲ — تولید Migration اولیه برای ۱۵ جدول:{RESET}")
-    print(f"  {BOLD}alembic revision --autogenerate -m \"initial_schema\"{RESET}")
+    print(f'  {BOLD}alembic revision --autogenerate -m "initial_schema"{RESET}')
     info("    این یک فایل جدید در backend/migrations/versions/ می‌سازد")
     print()
 

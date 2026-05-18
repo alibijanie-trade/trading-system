@@ -117,7 +117,9 @@ def main() -> int:
         print()
         print("    تغییرات:")
         print("      border:    `1px solid ${cfg.color}` → `1px solid var(--color-border)`")
-        print("      جدید:      borderInlineStart: `3px solid ${cfg.color}` (accent باریک در start)")
+        print(
+            "      جدید:      borderInlineStart: `3px solid ${cfg.color}` (accent باریک در start)"
+        )
 
     # ============================================================
     # تست خودکار سریع (در همین اسکریپت — efficient)

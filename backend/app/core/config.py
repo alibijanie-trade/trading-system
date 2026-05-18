@@ -16,7 +16,6 @@ from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
 # مسیر ریشه پوشه backend (که .env در آن قرار دارد)
 BACKEND_DIR = Path(__file__).resolve().parent.parent.parent
 

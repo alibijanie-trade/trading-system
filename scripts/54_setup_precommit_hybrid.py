@@ -744,6 +744,7 @@ jobs:
 # helpers
 # ============================================================
 
+
 def write_if_changed(path: Path, content: str) -> bool:
     if path.exists():
         if path.read_text(encoding="utf-8") == content:
@@ -792,7 +793,9 @@ def main() -> int:
     print("   🟦 tab «1 backend» — نصب deps")
     print("     cd backend")
     print("     venv\\Scripts\\activate")
-    print("     pip install pre-commit==3.7.1 black==24.4.2 isort==5.13.2 -i https://mirrors.aliyun.com/pypi/simple/")
+    print(
+        "     pip install pre-commit==3.7.1 black==24.4.2 isort==5.13.2 -i https://mirrors.aliyun.com/pypi/simple/"
+    )
     print()
     print("   🟩 tab «2 scripts» — نصب hooks")
     print("     python scripts\\install_git_hooks.py")

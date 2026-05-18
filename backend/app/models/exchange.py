@@ -11,10 +11,9 @@ ccxt_id برای پیوست با کتابخانه ccxt در فاز ۱.
 ================================================================
 """
 
+from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 from sqlalchemy import Boolean, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 
 
 class Exchange(Base, TimestampMixin, SoftDeleteMixin):
@@ -22,12 +21,17 @@ class Exchange(Base, TimestampMixin, SoftDeleteMixin):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(
-        String, unique=True, nullable=False, index=True,
+        String,
+        unique=True,
+        nullable=False,
+        index=True,
     )
     ccxt_id: Mapped[str] = mapped_column(String, nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     supports_futures: Mapped[bool] = mapped_column(
-        Boolean, default=False, nullable=False,
+        Boolean,
+        default=False,
+        nullable=False,
     )
 
     # ===================================================

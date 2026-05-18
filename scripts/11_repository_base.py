@@ -34,11 +34,17 @@ import sys
 from pathlib import Path
 
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN, RED, YELLOW, CYAN, BOLD, RESET = (
-        Fore.GREEN, Fore.RED, Fore.YELLOW, Fore.CYAN, Style.BRIGHT, Style.RESET_ALL,
+        Fore.GREEN,
+        Fore.RED,
+        Fore.YELLOW,
+        Fore.CYAN,
+        Style.BRIGHT,
+        Style.RESET_ALL,
     )
 except ImportError:
     GREEN = RED = YELLOW = CYAN = BOLD = RESET = ""
@@ -428,17 +434,22 @@ __all__ = ["BaseRepository"]
 # توابع کمکی
 # ============================================================
 
+
 def info(msg: str) -> None:
     print(f"{CYAN}ℹ {msg}{RESET}")
+
 
 def success(msg: str) -> None:
     print(f"{GREEN}✅ {msg}{RESET}")
 
+
 def warn(msg: str) -> None:
     print(f"{YELLOW}⚠ {msg}{RESET}")
 
+
 def err(msg: str) -> None:
     print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg: str) -> None:
     line = "=" * 60
@@ -493,7 +504,7 @@ def main() -> int:
     info("شروع ساخت Repository ...\n")
 
     files = [
-        ("base.py",     BASE_PY),
+        ("base.py", BASE_PY),
         ("__init__.py", INIT_PY),
     ]
 
@@ -514,13 +525,19 @@ def main() -> int:
     info("گام بعدی — سه تست در CMD 1 (با venv فعال):")
     print()
     print(f"  {BOLD}# تست ۱ — ایمپورت BaseRepository:{RESET}")
-    print(f"  {BOLD}python -c \"from app.repositories import BaseRepository; print('OK - BaseRepository imported')\"{RESET}")
+    print(
+        f"  {BOLD}python -c \"from app.repositories import BaseRepository; print('OK - BaseRepository imported')\"{RESET}"
+    )
     print()
     print(f"  {BOLD}# تست ۲ — Generic type-parameterization:{RESET}")
-    print(f"  {BOLD}python -c \"from app.repositories import BaseRepository; from app.models import User; t = BaseRepository[User]; print('OK - BaseRepository[User] generic type:', t)\"{RESET}")
+    print(
+        f"  {BOLD}python -c \"from app.repositories import BaseRepository; from app.models import User; t = BaseRepository[User]; print('OK - BaseRepository[User] generic type:', t)\"{RESET}"
+    )
     print()
     print(f"  {BOLD}# تست ۳ — اعتبارسنجی کامل (همه قطعات زیرگام ۴.۱):{RESET}")
-    print(f"  {BOLD}python -c \"from app.infrastructure.database import Base, engine, get_db; from app.models import User, OhlcvData, AuditLog; from app.repositories import BaseRepository; from sqlalchemy.orm import configure_mappers; configure_mappers(); print('OK - sub-step 4.1 complete')\"{RESET}")
+    print(
+        f"  {BOLD}python -c \"from app.infrastructure.database import Base, engine, get_db; from app.models import User, OhlcvData, AuditLog; from app.repositories import BaseRepository; from sqlalchemy.orm import configure_mappers; configure_mappers(); print('OK - sub-step 4.1 complete')\"{RESET}"
+    )
     print()
     success("اگر هر سه تست OK دادند → زیرگام ۴.۱ کاملاً انجام شده است! 🎉")
     print()

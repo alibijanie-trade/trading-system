@@ -35,11 +35,17 @@ import sys
 from pathlib import Path
 
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN, RED, YELLOW, CYAN, BOLD, RESET = (
-        Fore.GREEN, Fore.RED, Fore.YELLOW, Fore.CYAN, Style.BRIGHT, Style.RESET_ALL,
+        Fore.GREEN,
+        Fore.RED,
+        Fore.YELLOW,
+        Fore.CYAN,
+        Style.BRIGHT,
+        Style.RESET_ALL,
     )
 except ImportError:
     GREEN = RED = YELLOW = CYAN = BOLD = RESET = ""
@@ -62,14 +68,18 @@ if str(BACKEND_DIR) not in sys.path:
 def info(msg: str) -> None:
     print(f"{CYAN}ℹ {msg}{RESET}")
 
+
 def success(msg: str) -> None:
     print(f"{GREEN}✅ {msg}{RESET}")
+
 
 def warn(msg: str) -> None:
     print(f"{YELLOW}⚠ {msg}{RESET}")
 
+
 def err(msg: str) -> None:
     print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg: str) -> None:
     line = "=" * 60
@@ -84,6 +94,7 @@ def header(msg: str) -> None:
 def hash_password(password: str) -> str:
     """هش پسورد با bcrypt."""
     import bcrypt
+
     salt = bcrypt.gensalt(rounds=12)  # rounds=12 توصیه‌شده برای امنیت/سرعت
     hashed = bcrypt.hashpw(password.encode("utf-8"), salt)
     return hashed.decode("utf-8")
@@ -94,8 +105,8 @@ def hash_password(password: str) -> str:
 # ============================================================
 async def seed_exchange(session) -> int:
     """درج Exchange مجازی 'Excel'. خروجی: id رکورد (موجود یا تازه)."""
-    from sqlalchemy import select
     from app.models import Exchange
+    from sqlalchemy import select
 
     # چک کن از قبل وجود ندارد
     stmt = select(Exchange).where(Exchange.name == "Excel")
@@ -122,8 +133,8 @@ async def seed_exchange(session) -> int:
 
 async def seed_admin_user(session) -> int:
     """درج کاربر admin/1. خروجی: id کاربر."""
-    from sqlalchemy import select
     from app.models import User
+    from sqlalchemy import select
 
     # چک کن از قبل وجود ندارد
     stmt = select(User).where(User.username == "admin")
@@ -154,8 +165,8 @@ async def seed_admin_user(session) -> int:
 
 async def seed_risk_settings(session, user_id: int) -> None:
     """درج RiskSettings پیش‌فرض برای کاربر."""
-    from sqlalchemy import select
     from app.models import RiskSettings
+    from sqlalchemy import select
 
     # چک کن از قبل وجود ندارد (یک‌به‌یک با user)
     stmt = select(RiskSettings).where(RiskSettings.user_id == user_id)
@@ -177,8 +188,8 @@ async def seed_risk_settings(session, user_id: int) -> None:
 
 async def seed_app_settings(session, user_id: int) -> None:
     """درج AppSettings پیش‌فرض برای کاربر."""
-    from sqlalchemy import select
     from app.models import AppSettings
+    from sqlalchemy import select
 
     stmt = select(AppSettings).where(AppSettings.user_id == user_id)
     result = await session.execute(stmt)
@@ -262,6 +273,7 @@ async def main_async() -> int:
             await session.rollback()
             err(f"خطا در seed — rollback انجام شد: {e}")
             import traceback
+
             traceback.print_exc()
             return 1
 
@@ -272,10 +284,10 @@ async def main_async() -> int:
     header("خلاصه")
 
     # نمایش داده‌های درج‌شده
-    from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-    from sqlalchemy import select
     from app.core.config import settings
-    from app.models import Exchange, User, RiskSettings, AppSettings
+    from app.models import AppSettings, Exchange, RiskSettings, User
+    from sqlalchemy import select
+    from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
     eng = create_async_engine(settings.DATABASE_URL)
     async with AsyncSession(eng) as session:
@@ -284,28 +296,36 @@ async def main_async() -> int:
         exchanges = result.scalars().all()
         info(f"Exchanges در DB: {len(exchanges)}")
         for ex in exchanges:
-            print(f"    {GREEN}•{RESET} id={ex.id}  name={ex.name!r}  ccxt={ex.ccxt_id!r}  active={ex.is_active}")
+            print(
+                f"    {GREEN}•{RESET} id={ex.id}  name={ex.name!r}  ccxt={ex.ccxt_id!r}  active={ex.is_active}"
+            )
 
         # Users
         result = await session.execute(select(User))
         users = result.scalars().all()
         info(f"Users در DB: {len(users)}")
         for u in users:
-            print(f"    {GREEN}•{RESET} id={u.id}  username={u.username!r}  role={u.role!r}  active={u.is_active}")
+            print(
+                f"    {GREEN}•{RESET} id={u.id}  username={u.username!r}  role={u.role!r}  active={u.is_active}"
+            )
 
         # RiskSettings
         result = await session.execute(select(RiskSettings))
         rss = result.scalars().all()
         info(f"RiskSettings در DB: {len(rss)}")
         for rs in rss:
-            print(f"    {GREEN}•{RESET} user_id={rs.user_id}  max_risk={rs.max_risk_per_trade}  rr={rs.default_rr_ratio}")
+            print(
+                f"    {GREEN}•{RESET} user_id={rs.user_id}  max_risk={rs.max_risk_per_trade}  rr={rs.default_rr_ratio}"
+            )
 
         # AppSettings
         result = await session.execute(select(AppSettings))
         apss = result.scalars().all()
         info(f"AppSettings در DB: {len(apss)}")
         for aps in apss:
-            print(f"    {GREEN}•{RESET} user_id={aps.user_id}  theme={aps.theme!r}  tf={aps.default_timeframe!r}")
+            print(
+                f"    {GREEN}•{RESET} user_id={aps.user_id}  theme={aps.theme!r}  tf={aps.default_timeframe!r}"
+            )
 
     await eng.dispose()
 

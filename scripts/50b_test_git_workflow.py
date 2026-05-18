@@ -71,8 +71,16 @@ def main() -> int:
 
     # ---------- Scope ها ----------
     scopes = [
-        "backend", "frontend", "scripts", "docs", "governance",
-        "tier1", "tier2", "tier3", "deps", "migration",
+        "backend",
+        "frontend",
+        "scripts",
+        "docs",
+        "governance",
+        "tier1",
+        "tier2",
+        "tier3",
+        "deps",
+        "migration",
     ]
     missing_scopes = [s for s in scopes if f"`{s}`" not in text]
     if not missing_scopes:

@@ -79,18 +79,22 @@ SENSITIVE_PATTERNS = [
 # رنگ‌های ANSI (فقط در صورت پشتیبانی محیط)
 if _COLORS_ENABLED:
     COLORS = {
-        "DEBUG": "\033[36m",       # cyan
-        "INFO": "\033[32m",        # green
-        "WARNING": "\033[33m",     # yellow
-        "ERROR": "\033[31m",       # red
+        "DEBUG": "\033[36m",  # cyan
+        "INFO": "\033[32m",  # green
+        "WARNING": "\033[33m",  # yellow
+        "ERROR": "\033[31m",  # red
         "CRITICAL": "\033[1;31m",  # bold red
         "RESET": "\033[0m",
     }
 else:
     # رنگ‌های خالی — هیچ ANSI code خروجی داده نمی‌شود
     COLORS = {
-        "DEBUG": "", "INFO": "", "WARNING": "",
-        "ERROR": "", "CRITICAL": "", "RESET": "",
+        "DEBUG": "",
+        "INFO": "",
+        "WARNING": "",
+        "ERROR": "",
+        "CRITICAL": "",
+        "RESET": "",
     }
 
 
@@ -187,9 +191,7 @@ def setup_logging() -> None:
 
     # ============= هندلر کنسول =============
     console_handler = logging.StreamHandler(sys.stdout)
-    console_handler.setLevel(
-        logging.DEBUG if settings.IS_DEVELOPMENT else logging.INFO
-    )
+    console_handler.setLevel(logging.DEBUG if settings.IS_DEVELOPMENT else logging.INFO)
     console_handler.setFormatter(ColoredFormatter())
     console_handler.addFilter(SensitiveDataFilter())
     root_logger.addHandler(console_handler)

@@ -17,14 +17,13 @@ Exception Handlers — تبدیل خطاها به ساختار استاندار�
 ================================================================
 """
 
+from app.core.exceptions import AppException
+from app.core.logging import get_logger
+from app.core.response import error_response
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
-
-from app.core.exceptions import AppException
-from app.core.logging import get_logger
-from app.core.response import error_response
 
 logger = get_logger(__name__)
 
@@ -32,13 +31,13 @@ logger = get_logger(__name__)
 # ============================================================
 # Handler: AppException (و تمام زیرکلاس‌ها)
 # ============================================================
-async def app_exception_handler(
-    request: Request, exc: AppException
-) -> JSONResponse:
+async def app_exception_handler(request: Request, exc: AppException) -> JSONResponse:
     """رسیدگی به Exception های دامنه پروژه."""
     logger.warning(
         "AppException: %s — code=%s — path=%s",
-        exc.message, exc.code, request.url.path,
+        exc.message,
+        exc.code,
+        request.url.path,
         extra={"details": exc.details},
     )
 
@@ -62,16 +61,19 @@ async def validation_exception_handler(
     errors = []
     for err in exc.errors():
         field = ".".join(str(loc) for loc in err.get("loc", []))
-        errors.append({
-            "code": "VALIDATION_ERROR",
-            "field": field,
-            "message": err.get("msg", "مقدار نامعتبر"),
-            "type": err.get("type", "value_error"),
-        })
+        errors.append(
+            {
+                "code": "VALIDATION_ERROR",
+                "field": field,
+                "message": err.get("msg", "مقدار نامعتبر"),
+                "type": err.get("type", "value_error"),
+            }
+        )
 
     logger.info(
         "Validation error — path=%s — fields=%s",
-        request.url.path, [e["field"] for e in errors],
+        request.url.path,
+        [e["field"] for e in errors],
     )
 
     return JSONResponse(
@@ -87,9 +89,7 @@ async def validation_exception_handler(
 # ============================================================
 # Handler: HTTPException (خطاهای استاندارد HTTP از Starlette/FastAPI)
 # ============================================================
-async def http_exception_handler(
-    request: Request, exc: StarletteHTTPException
-) -> JSONResponse:
+async def http_exception_handler(request: Request, exc: StarletteHTTPException) -> JSONResponse:
     """رسیدگی به HTTPException های استاندارد."""
     # تبدیل پیام انگلیسی پیش‌فرض به فارسی برای کدهای متداول
     persian_messages = {
@@ -104,11 +104,11 @@ async def http_exception_handler(
     code = f"HTTP_{exc.status_code}"
 
     if exc.status_code >= 500:
-        logger.error("HTTPException %s — path=%s — %s",
-                     exc.status_code, request.url.path, exc.detail)
+        logger.error(
+            "HTTPException %s — path=%s — %s", exc.status_code, request.url.path, exc.detail
+        )
     else:
-        logger.info("HTTPException %s — path=%s",
-                    exc.status_code, request.url.path)
+        logger.info("HTTPException %s — path=%s", exc.status_code, request.url.path)
 
     return JSONResponse(
         status_code=exc.status_code,
@@ -119,16 +119,15 @@ async def http_exception_handler(
 # ============================================================
 # Handler: Exception ناشناخته (حالت آخر)
 # ============================================================
-async def unhandled_exception_handler(
-    request: Request, exc: Exception
-) -> JSONResponse:
+async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
     """رسیدگی به Exceptionهای پیش‌بینی‌نشده.
 
     این handler هرگز نباید جزئیات فنی را به کاربر نشان دهد.
     """
     logger.exception(
         "Unhandled exception — path=%s — type=%s",
-        request.url.path, type(exc).__name__,
+        request.url.path,
+        type(exc).__name__,
     )
 
     return JSONResponse(

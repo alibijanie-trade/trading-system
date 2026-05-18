@@ -35,7 +35,7 @@
     - us-short  (01/15/2024)
     - eu-short  (15/01/2024)
     - long      (January 15, 2024)
-  
+
   ذخیره در preferencesStore.gregorianFormat
   UI در CalendarToggle (یک select زیر دکمه‌های radio)
 
@@ -63,13 +63,13 @@ PROJECT_ROOT = SCRIPT_DIR.parent
 FRONTEND = PROJECT_ROOT / "frontend" / "src"
 
 # فایل‌های با محتوای کامل جدید
-INDEX_CSS         = FRONTEND / "index.css"
-DATE_FORMAT       = FRONTEND / "utils" / "dateFormat.js"
-PREFS_STORE       = FRONTEND / "stores" / "preferencesStore.js"
-CALENDAR_TOGGLE   = FRONTEND / "components" / "settings" / "CalendarToggle.jsx"
-SETTINGS_PAGE     = FRONTEND / "pages" / "SettingsPage.jsx"
-HOME_JSX          = FRONTEND / "pages" / "HomePage.jsx"
-CHART_JSX         = FRONTEND / "pages" / "ChartPage.jsx"
+INDEX_CSS = FRONTEND / "index.css"
+DATE_FORMAT = FRONTEND / "utils" / "dateFormat.js"
+PREFS_STORE = FRONTEND / "stores" / "preferencesStore.js"
+CALENDAR_TOGGLE = FRONTEND / "components" / "settings" / "CalendarToggle.jsx"
+SETTINGS_PAGE = FRONTEND / "pages" / "SettingsPage.jsx"
+HOME_JSX = FRONTEND / "pages" / "HomePage.jsx"
+CHART_JSX = FRONTEND / "pages" / "ChartPage.jsx"
 
 # فایل‌های با regex transform (font px → rem)
 REGEX_TARGETS = [
@@ -101,7 +101,7 @@ FONT_REM_MAP = {
 
 # Pattern: `fontSize:\s*N` که N بعدش یک علامت غیر-عددی/غیر-نقطه‌ای می‌آید
 # جلوگیری از match در: fontSize: 13.5 یا fontSize: 13px یا fontSize: 13rem
-FONT_PX_PATTERN = re.compile(r'(fontSize:\s*)(\d+)(?=\s*[,\}\)\s])')
+FONT_PX_PATTERN = re.compile(r"(fontSize:\s*)(\d+)(?=\s*[,\}\)\s])")
 
 
 def px_to_rem(n: int) -> str:
@@ -1207,6 +1207,7 @@ export default function ChartPage() {
 # تابع نوشتن idempotent
 # ============================================================
 
+
 def write_if_changed(path: Path, content: str, label: str) -> str:
     rel = path.relative_to(PROJECT_ROOT)
     if not path.exists():
@@ -1253,6 +1254,7 @@ def apply_font_rem_transform(path: Path) -> str:
 # اجرای اصلی
 # ============================================================
 
+
 def main() -> int:
     print("=" * 64)
     print("اسکریپت ۳۲ — رفع ۳ Bug + افزودن انتخاب فرمت میلادی")
@@ -1264,13 +1266,13 @@ def main() -> int:
         return 1
 
     print("--- فایل‌های با محتوای کامل جدید ---")
-    write_if_changed(INDEX_CSS,       INDEX_CSS_NEW,       "html font-size scaling")
-    write_if_changed(DATE_FORMAT,     DATE_FORMAT_NEW,     "افزودن GREGORIAN_FORMATS")
-    write_if_changed(PREFS_STORE,     PREFS_STORE_NEW,     "افزودن gregorianFormat (v2)")
+    write_if_changed(INDEX_CSS, INDEX_CSS_NEW, "html font-size scaling")
+    write_if_changed(DATE_FORMAT, DATE_FORMAT_NEW, "افزودن GREGORIAN_FORMATS")
+    write_if_changed(PREFS_STORE, PREFS_STORE_NEW, "افزودن gregorianFormat (v2)")
     write_if_changed(CALENDAR_TOGGLE, CALENDAR_TOGGLE_NEW, "select فرمت میلادی")
-    write_if_changed(SETTINGS_PAGE,   SETTINGS_PAGE_NEW,   "passing format به CalendarToggle")
-    write_if_changed(HOME_JSX,        HOME_JSX_NEW,        "formatNumber + rem")
-    write_if_changed(CHART_JSX,       CHART_JSX_NEW,       "timeFormatter + rem")
+    write_if_changed(SETTINGS_PAGE, SETTINGS_PAGE_NEW, "passing format به CalendarToggle")
+    write_if_changed(HOME_JSX, HOME_JSX_NEW, "formatNumber + rem")
+    write_if_changed(CHART_JSX, CHART_JSX_NEW, "timeFormatter + rem")
 
     print()
     print("--- فایل‌های با regex transform (px → rem) ---")

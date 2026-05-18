@@ -69,7 +69,16 @@ def main() -> int:
     cap = SCRIPTS / "check_anti_patterns.py"
     if cap.exists():
         text = cap.read_text(encoding="utf-8")
-        for key in ["CRITICAL", "MINOR", '"A1"', '"A4"', '"A8"', '"A10"', '"A6"', "get_staged_files"]:
+        for key in [
+            "CRITICAL",
+            "MINOR",
+            '"A1"',
+            '"A4"',
+            '"A8"',
+            '"A10"',
+            '"A6"',
+            "get_staged_files",
+        ]:
             if key in text:
                 passes.append(f"check_anti_patterns دارد: {key}")
             else:

@@ -8,11 +8,17 @@ import sys
 from pathlib import Path
 
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN, RED, YELLOW, CYAN, BOLD, RESET = (
-        Fore.GREEN, Fore.RED, Fore.YELLOW, Fore.CYAN, Style.BRIGHT, Style.RESET_ALL,
+        Fore.GREEN,
+        Fore.RED,
+        Fore.YELLOW,
+        Fore.CYAN,
+        Style.BRIGHT,
+        Style.RESET_ALL,
     )
 except ImportError:
     GREEN = RED = YELLOW = CYAN = BOLD = RESET = ""
@@ -318,10 +324,21 @@ __all__ = ["OhlcvRowSchema", "OhlcvImportResult"]
 # ============================================================
 # توابع کمکی
 # ============================================================
-def info(msg): print(f"{CYAN}ℹ {msg}{RESET}")
-def success(msg): print(f"{GREEN}✅ {msg}{RESET}")
-def warn(msg): print(f"{YELLOW}⚠ {msg}{RESET}")
-def err(msg): print(f"{RED}❌ {msg}{RESET}")
+def info(msg):
+    print(f"{CYAN}ℹ {msg}{RESET}")
+
+
+def success(msg):
+    print(f"{GREEN}✅ {msg}{RESET}")
+
+
+def warn(msg):
+    print(f"{YELLOW}⚠ {msg}{RESET}")
+
+
+def err(msg):
+    print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg):
     line = "=" * 60
@@ -362,7 +379,9 @@ def main() -> int:
     header("گام بعدی — تست ایمپورت")
 
     print(f"{BOLD}📍 Tab: 2 scripts{RESET}\n")
-    print(f"  {BOLD}python -c \"from app.schemas import OhlcvRowSchema, OhlcvImportResult; from app.infrastructure.data_sources import DataSource, ExcelDataSource; print('OK')\"{RESET}\n")
+    print(
+        f"  {BOLD}python -c \"from app.schemas import OhlcvRowSchema, OhlcvImportResult; from app.infrastructure.data_sources import DataSource, ExcelDataSource; print('OK')\"{RESET}\n"
+    )
     info("خروجی: 'OK'")
     print()
 

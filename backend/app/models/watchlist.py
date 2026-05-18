@@ -15,10 +15,9 @@
 
 from datetime import datetime, timezone
 
+from app.infrastructure.database import Base
 from sqlalchemy import DateTime, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base
 
 
 def _utcnow() -> datetime:

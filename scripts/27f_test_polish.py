@@ -56,8 +56,7 @@ print()
 # button states
 check(
     "button:hover با filter brightness",
-    re.search(r"button:hover:not\(:disabled\)\s*\{[^}]*filter:\s*brightness", css)
-    is not None,
+    re.search(r"button:hover:not\(:disabled\)\s*\{[^}]*filter:\s*brightness", css) is not None,
 )
 check(
     "button:active با translateY",
@@ -84,15 +83,13 @@ check(
 )
 check(
     "select:focus با border-color طلایی",
-    re.search(r"select:focus\s*\{[^}]*border-color:\s*var\(--color-primary\)", css)
-    is not None,
+    re.search(r"select:focus\s*\{[^}]*border-color:\s*var\(--color-primary\)", css) is not None,
 )
 
 # input focus
 check(
     "input:focus با border-color طلایی",
-    re.search(r"input:focus[^{]*\{[^}]*border-color:\s*var\(--color-primary\)", css)
-    is not None,
+    re.search(r"input:focus[^{]*\{[^}]*border-color:\s*var\(--color-primary\)", css) is not None,
 )
 
 # data-card-link
@@ -101,7 +98,7 @@ check(
     '[data-card-link="true"]' in css,
 )
 check(
-    '[data-card-link]:hover با background تغییر',
+    "[data-card-link]:hover با background تغییر",
     re.search(
         r'\[data-card-link="true"\]:hover\s*\{[^}]*background:\s*var\(--color-card-hover\)',
         css,
@@ -135,10 +132,7 @@ check(
 )
 check(
     "HomePage: کارت Link با border var",
-    re.search(
-        r'border:\s*"1px solid var\(--color-border\)"', home
-    )
-    is not None,
+    re.search(r'border:\s*"1px solid var\(--color-border\)"', home) is not None,
 )
 
 

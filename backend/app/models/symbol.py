@@ -16,10 +16,9 @@
 ================================================================
 """
 
+from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 from sqlalchemy import Boolean, ForeignKey, Index, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 
 
 class Symbol(Base, TimestampMixin, SoftDeleteMixin):
@@ -31,10 +30,10 @@ class Symbol(Base, TimestampMixin, SoftDeleteMixin):
         ForeignKey("Exchanges.id", ondelete="CASCADE"),
         nullable=False,
     )
-    symbol: Mapped[str] = mapped_column(String, nullable=False)        # BTC/USDT
-    base_asset: Mapped[str] = mapped_column(String, nullable=False)    # BTC
-    quote_asset: Mapped[str] = mapped_column(String, nullable=False)   # USDT
-    market_type: Mapped[str] = mapped_column(String, nullable=False)   # spot/futures
+    symbol: Mapped[str] = mapped_column(String, nullable=False)  # BTC/USDT
+    base_asset: Mapped[str] = mapped_column(String, nullable=False)  # BTC
+    quote_asset: Mapped[str] = mapped_column(String, nullable=False)  # USDT
+    market_type: Mapped[str] = mapped_column(String, nullable=False)  # spot/futures
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
     # ===================================================
@@ -66,9 +65,7 @@ class Symbol(Base, TimestampMixin, SoftDeleteMixin):
     # ===================================================
     # Indexes
     # ===================================================
-    __table_args__ = (
-        Index("idx_symbols_exchange_symbol", "exchange_id", "symbol"),
-    )
+    __table_args__ = (Index("idx_symbols_exchange_symbol", "exchange_id", "symbol"),)
 
     def __repr__(self) -> str:
         return (

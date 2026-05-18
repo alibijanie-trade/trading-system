@@ -7,11 +7,17 @@ import sys
 from pathlib import Path
 
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN, RED, YELLOW, CYAN, BOLD, RESET = (
-        Fore.GREEN, Fore.RED, Fore.YELLOW, Fore.CYAN, Style.BRIGHT, Style.RESET_ALL,
+        Fore.GREEN,
+        Fore.RED,
+        Fore.YELLOW,
+        Fore.CYAN,
+        Style.BRIGHT,
+        Style.RESET_ALL,
     )
 except ImportError:
     GREEN = RED = YELLOW = CYAN = BOLD = RESET = ""
@@ -64,10 +70,21 @@ openpyxl==3.1.2
 """
 
 
-def info(msg): print(f"{CYAN}ℹ {msg}{RESET}")
-def success(msg): print(f"{GREEN}✅ {msg}{RESET}")
-def warn(msg): print(f"{YELLOW}⚠ {msg}{RESET}")
-def err(msg): print(f"{RED}❌ {msg}{RESET}")
+def info(msg):
+    print(f"{CYAN}ℹ {msg}{RESET}")
+
+
+def success(msg):
+    print(f"{GREEN}✅ {msg}{RESET}")
+
+
+def warn(msg):
+    print(f"{YELLOW}⚠ {msg}{RESET}")
+
+
+def err(msg):
+    print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg):
     line = "=" * 60
@@ -103,7 +120,9 @@ def main() -> int:
     print()
 
     print(f"{BOLD}📍 Tab: 2 scripts{RESET} — تست ایمپورت\n")
-    print(f"  {BOLD}python -c \"import pandas; import openpyxl; print('OK', pandas.__version__, openpyxl.__version__)\"{RESET}\n")
+    print(
+        f"  {BOLD}python -c \"import pandas; import openpyxl; print('OK', pandas.__version__, openpyxl.__version__)\"{RESET}\n"
+    )
     info("خروجی: 'OK 2.2.2 3.1.2'")
     print()
 

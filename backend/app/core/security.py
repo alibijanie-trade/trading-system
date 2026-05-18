@@ -26,10 +26,9 @@ from typing import Any
 from uuid import uuid4
 
 import bcrypt
-from jose import JWTError, jwt
-
 from app.core.config import settings
 from app.core.exceptions import AuthenticationError
+from jose import JWTError, jwt
 
 # تعداد rounds پیش‌فرض bcrypt — توازن امنیت/سرعت
 BCRYPT_ROUNDS = 12
@@ -76,11 +75,13 @@ def _create_token(
     """ساخت JWT با iat + exp + type."""
     now = datetime.now(timezone.utc)
     data = payload.copy()
-    data.update({
-        "iat": now,
-        "exp": now + expires_delta,
-        "type": token_type,
-    })
+    data.update(
+        {
+            "iat": now,
+            "exp": now + expires_delta,
+            "type": token_type,
+        }
+    )
     return jwt.encode(
         data,
         settings.SECRET_KEY,

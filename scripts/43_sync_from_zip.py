@@ -207,10 +207,14 @@ def main():
             print("─" * 70)
             print(f"🛡️ فایل‌های محافظت‌شده ({len(protected_files)}):")
             print("─" * 70)
-            samples = sorted(set([
-                p.split("/")[0] + ("/" + p.split("/")[1] if "/" in p else "")
-                for p in protected_files
-            ]))[:15]
+            samples = sorted(
+                set(
+                    [
+                        p.split("/")[0] + ("/" + p.split("/")[1] if "/" in p else "")
+                        for p in protected_files
+                    ]
+                )
+            )[:15]
             for s in samples:
                 print(f"   🛡 {s}/...")
             print()

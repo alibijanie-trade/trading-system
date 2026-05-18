@@ -26,9 +26,9 @@
 ================================================================
 """
 
+import base64
 import os
 import sys
-import base64
 from pathlib import Path
 
 # ============================================================
@@ -483,9 +483,7 @@ def main() -> None:
     else:
         secret_key = generate_secret_key()
         fernet_key = generate_fernet_key()
-        env_content = ENV_CONTENT_TEMPLATE.format(
-            secret_key=secret_key, fernet_key=fernet_key
-        )
+        env_content = ENV_CONTENT_TEMPLATE.format(secret_key=secret_key, fernet_key=fernet_key)
         write_file_full(env_path, env_content)
         print(f"   🔑 backend/.env ساخته شد (با کلیدهای تصادفی)")
         print()

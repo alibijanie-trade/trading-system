@@ -16,10 +16,9 @@
 
 from datetime import datetime
 
+from app.infrastructure.database import Base, TimestampMixin
 from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base, TimestampMixin
 
 
 class Alert(Base, TimestampMixin):
@@ -37,11 +36,14 @@ class Alert(Base, TimestampMixin):
         ForeignKey("Symbols.id", ondelete="CASCADE"),
         nullable=False,
     )
-    alert_type: Mapped[str] = mapped_column(String, nullable=False)  # price_above, indicator_cross, ...
-    condition: Mapped[str] = mapped_column(Text, nullable=False)     # JSON
+    alert_type: Mapped[str] = mapped_column(
+        String, nullable=False
+    )  # price_above, indicator_cross, ...
+    condition: Mapped[str] = mapped_column(Text, nullable=False)  # JSON
     is_triggered: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     triggered_at: Mapped[datetime | None] = mapped_column(
-        DateTime(timezone=True), nullable=True,
+        DateTime(timezone=True),
+        nullable=True,
     )
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 

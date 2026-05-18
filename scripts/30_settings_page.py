@@ -648,6 +648,7 @@ export default function HomePage() {
 # تابع نوشتن idempotent
 # ============================================================
 
+
 def write_if_changed(path: Path, content: str, label: str) -> str:
     rel = path.relative_to(PROJECT_ROOT)
     if not path.exists():
@@ -669,6 +670,7 @@ def write_if_changed(path: Path, content: str, label: str) -> str:
 # ============================================================
 # اجرای اصلی
 # ============================================================
+
 
 def main() -> int:
     print("=" * 64)
@@ -706,13 +708,13 @@ def main() -> int:
         return 1
 
     print("--- فایل‌های جدید ---")
-    write_if_changed(THEME_CARD,     THEME_CARD_JSX,        "ThemeCard")
+    write_if_changed(THEME_CARD, THEME_CARD_JSX, "ThemeCard")
     write_if_changed(FONT_SIZE_CTRL, FONT_SIZE_CONTROL_JSX, "FontSizeControl")
-    write_if_changed(SETTINGS_PAGE,  SETTINGS_PAGE_JSX,     "SettingsPage")
+    write_if_changed(SETTINGS_PAGE, SETTINGS_PAGE_JSX, "SettingsPage")
 
     print()
     print("--- فایل‌های به‌روزرسانی ---")
-    write_if_changed(APP_JSX,  APP_JSX_NEW,  "route /settings")
+    write_if_changed(APP_JSX, APP_JSX_NEW, "route /settings")
     write_if_changed(HOME_JSX, HOME_JSX_NEW, "لینک ⚙️ به جای dropdown")
 
     print()

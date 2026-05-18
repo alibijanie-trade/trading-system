@@ -20,12 +20,12 @@
 ================================================================
 """
 
-import re
 import os
+import re
 import subprocess
 import sys
-import urllib.request
 import urllib.error
+import urllib.request
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -202,13 +202,11 @@ check(
 check("ChartPage: تابع readVar", "function readVar" in chart_src)
 check(
     "ChartPage: رنگ candle از readVar",
-    'readVar("--color-success"' in chart_src
-    and 'readVar("--color-danger"' in chart_src,
+    'readVar("--color-success"' in chart_src and 'readVar("--color-danger"' in chart_src,
 )
 check(
     "ChartPage: layout chart از readVar",
-    'readVar("--color-card"' in chart_src
-    and 'readVar("--color-text"' in chart_src,
+    'readVar("--color-card"' in chart_src and 'readVar("--color-text"' in chart_src,
 )
 
 
@@ -301,7 +299,10 @@ for desc, ok, detail in CHECKS:
     print(f"  {mark} {desc}{extra}")
 
 print()
-print("ℹ️  Vite dev server روی :5173:", "✅ بالاست" if dev_server_up else "⚠️ پاسخ نمی‌دهد (اشکالی نیست — اختیاری)")
+print(
+    "ℹ️  Vite dev server روی :5173:",
+    "✅ بالاست" if dev_server_up else "⚠️ پاسخ نمی‌دهد (اشکالی نیست — اختیاری)",
+)
 
 print()
 print("=" * 64)

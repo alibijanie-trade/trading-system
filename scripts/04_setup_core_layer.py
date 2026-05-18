@@ -856,14 +856,14 @@ def main() -> None:
     # ساخت/بازنویسی فایل‌ها
     # ============================================================
     files = [
-        ("backend/app/core/logging.py",            LOGGING_PY,     "📝"),
-        ("backend/app/core/exceptions.py",         EXCEPTIONS_PY,  "⚠️ "),
-        ("backend/app/core/response.py",           RESPONSE_PY,    "📦"),
-        ("backend/app/core/handlers.py",           HANDLERS_PY,    "🎯"),
-        ("backend/app/core/__init__.py",           CORE_INIT_PY,   "📂"),
-        ("backend/main.py",                        MAIN_PY,        "🐍"),
-        ("backend/app/api/v1/routes/health.py",    HEALTH_PY,      "🩺"),
-        ("backend/logs/.gitkeep",                  GITKEEP_CONTENT, "📁"),
+        ("backend/app/core/logging.py", LOGGING_PY, "📝"),
+        ("backend/app/core/exceptions.py", EXCEPTIONS_PY, "⚠️ "),
+        ("backend/app/core/response.py", RESPONSE_PY, "📦"),
+        ("backend/app/core/handlers.py", HANDLERS_PY, "🎯"),
+        ("backend/app/core/__init__.py", CORE_INIT_PY, "📂"),
+        ("backend/main.py", MAIN_PY, "🐍"),
+        ("backend/app/api/v1/routes/health.py", HEALTH_PY, "🩺"),
+        ("backend/logs/.gitkeep", GITKEEP_CONTENT, "📁"),
     ]
 
     print("📝 ساخت/بازنویسی فایل‌ها:")
@@ -923,8 +923,8 @@ def main() -> None:
     print()
     print("📌 پس از تست موفق، commit کنید (CMD 3):")
     print()
-    print(r'   cd /d D:\Projects\trading-system')
-    print(r'   git add backend/ scripts/04_setup_core_layer.py .gitignore')
+    print(r"   cd /d D:\Projects\trading-system")
+    print(r"   git add backend/ scripts/04_setup_core_layer.py .gitignore")
     print(r'   git commit -m "feat(core): add logger, exceptions, handlers, response wrapper"')
     print()
 

@@ -17,11 +17,10 @@ Async Engine برای SQLAlchemy + SQLite
 ================================================================
 """
 
-from sqlalchemy import event
-from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
-
 from app.core.config import settings
 from app.core.logging import get_logger
+from sqlalchemy import event
+from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 logger = get_logger(__name__)
 
@@ -55,9 +54,7 @@ def _set_sqlite_pragmas(dbapi_connection, connection_record) -> None:
         cursor.execute("PRAGMA journal_mode = WAL")
         cursor.execute("PRAGMA synchronous = NORMAL")
         cursor.execute("PRAGMA cache_size = -64000")
-        logger.debug(
-            "PRAGMA های SQLite اعمال شدند: FK=ON | WAL | NORMAL | cache=64MB"
-        )
+        logger.debug("PRAGMA های SQLite اعمال شدند: FK=ON | WAL | NORMAL | cache=64MB")
     finally:
         cursor.close()
 

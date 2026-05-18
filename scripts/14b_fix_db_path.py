@@ -31,11 +31,17 @@ import sys
 from pathlib import Path
 
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN, RED, YELLOW, CYAN, BOLD, RESET = (
-        Fore.GREEN, Fore.RED, Fore.YELLOW, Fore.CYAN, Style.BRIGHT, Style.RESET_ALL,
+        Fore.GREEN,
+        Fore.RED,
+        Fore.YELLOW,
+        Fore.CYAN,
+        Style.BRIGHT,
+        Style.RESET_ALL,
     )
 except ImportError:
     GREEN = RED = YELLOW = CYAN = BOLD = RESET = ""
@@ -57,10 +63,21 @@ CORRECT_DB = BACKEND_DIR / "trading.db"
 # ============================================================
 # توابع کمکی نمایش
 # ============================================================
-def info(msg: str) -> None: print(f"{CYAN}ℹ {msg}{RESET}")
-def success(msg: str) -> None: print(f"{GREEN}✅ {msg}{RESET}")
-def warn(msg: str) -> None: print(f"{YELLOW}⚠ {msg}{RESET}")
-def err(msg: str) -> None: print(f"{RED}❌ {msg}{RESET}")
+def info(msg: str) -> None:
+    print(f"{CYAN}ℹ {msg}{RESET}")
+
+
+def success(msg: str) -> None:
+    print(f"{GREEN}✅ {msg}{RESET}")
+
+
+def warn(msg: str) -> None:
+    print(f"{YELLOW}⚠ {msg}{RESET}")
+
+
+def err(msg: str) -> None:
+    print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg: str) -> None:
     line = "=" * 60
@@ -120,12 +137,12 @@ def check_db_is_empty_or_wrong(db_path: Path) -> tuple[bool, str]:
         return (False, f"خطا در خواندن DB: {e}")
 
     if not has_exchanges:
-        return (
-            True,
-            f"فاقد جدول Exchanges (تنها جدول‌های موجود: {all_tables})"
-        )
+        return (True, f"فاقد جدول Exchanges (تنها جدول‌های موجود: {all_tables})")
 
-    return (False, f"شامل جدول Exchanges + سایر جدول‌ها است ({len(all_tables)} جدول) - نباید پاک شود!")
+    return (
+        False,
+        f"شامل جدول Exchanges + سایر جدول‌ها است ({len(all_tables)} جدول) - نباید پاک شود!",
+    )
 
 
 # ============================================================
@@ -149,9 +166,7 @@ def main() -> int:
 
     try:
         conn = sqlite3.connect(str(CORRECT_DB))
-        cursor = conn.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
-        )
+        cursor = conn.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")
         tables = [r[0] for r in cursor.fetchall()]
         conn.close()
         success(f"فایل backend/trading.db سالم است — شامل {len(tables)} جدول:")
@@ -234,6 +249,7 @@ def main() -> int:
     # اما این اسکریپت اولین بار اجرا می‌شود پس cache مشکلی ندارد
     try:
         from app.core.config import settings
+
         url = settings.DATABASE_URL
         info(f"DATABASE_URL فعلی: {url}")
 

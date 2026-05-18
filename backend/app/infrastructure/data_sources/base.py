@@ -14,7 +14,7 @@ WebSocket، فایل CSV، ...) را پشت یک interface واحد قرار د�
 from abc import ABC, abstractmethod
 from typing import Any
 
-from app.schemas.ohlcv import OhlcvRowSchema, OhlcvImportResult
+from app.schemas.ohlcv import OhlcvImportResult, OhlcvRowSchema
 
 
 class DataSource(ABC):

@@ -16,10 +16,9 @@
 ================================================================
 """
 
+from app.infrastructure.database import Base, TimestampMixin
 from sqlalchemy import ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base, TimestampMixin
 
 
 class AppSettings(Base, TimestampMixin):
@@ -34,11 +33,15 @@ class AppSettings(Base, TimestampMixin):
     )
     theme: Mapped[str] = mapped_column(String, default="light", nullable=False)
     calendar_type: Mapped[str] = mapped_column(
-        String, default="gregorian", nullable=False,
+        String,
+        default="gregorian",
+        nullable=False,
     )
     font_size: Mapped[int] = mapped_column(Integer, default=14, nullable=False)
     default_timeframe: Mapped[str] = mapped_column(
-        String, default="1h", nullable=False,
+        String,
+        default="1h",
+        nullable=False,
     )
     active_exchanges: Mapped[str | None] = mapped_column(Text, nullable=True)  # JSON list
     telegram_chat_id: Mapped[str | None] = mapped_column(String, nullable=True)

@@ -23,11 +23,10 @@ OhlcvRepository — Query های اختصاصی OhlcvData
 
 from datetime import datetime
 
-from sqlalchemy import func, select
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.models.ohlcv_data import OhlcvData
 from app.repositories.base import BaseRepository
+from sqlalchemy import func, select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class OhlcvRepository(BaseRepository[OhlcvData]):

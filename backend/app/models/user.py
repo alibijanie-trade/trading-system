@@ -19,10 +19,9 @@ Watchlist، Strategy، Trade، و تنظیمات شخصی دارد.
 
 from datetime import datetime
 
+from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 from sqlalchemy import Boolean, DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 
 
 class User(Base, TimestampMixin, SoftDeleteMixin):
@@ -30,13 +29,17 @@ class User(Base, TimestampMixin, SoftDeleteMixin):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     username: Mapped[str] = mapped_column(
-        String, unique=True, nullable=False, index=True,
+        String,
+        unique=True,
+        nullable=False,
+        index=True,
     )
     password_hash: Mapped[str] = mapped_column(String, nullable=False)
     role: Mapped[str] = mapped_column(String, nullable=False)  # admin/trader/viewer
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     last_login: Mapped[datetime | None] = mapped_column(
-        DateTime(timezone=True), nullable=True,
+        DateTime(timezone=True),
+        nullable=True,
     )
 
     # ===================================================

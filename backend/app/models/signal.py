@@ -18,10 +18,9 @@
 
 from datetime import datetime, timezone
 
+from app.infrastructure.database import Base
 from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base
 
 
 def _utcnow() -> datetime:
@@ -44,12 +43,12 @@ class Signal(Base):
         nullable=False,
     )
     signal_type: Mapped[str] = mapped_column(String, nullable=False)  # buy/sell
-    strength: Mapped[str] = mapped_column(String, nullable=False)     # strong/medium/weak
+    strength: Mapped[str] = mapped_column(String, nullable=False)  # strong/medium/weak
     timeframe: Mapped[str] = mapped_column(String, nullable=False)
     price_at_signal: Mapped[float] = mapped_column(Float, nullable=False)
     suggested_entry: Mapped[float | None] = mapped_column(Float, nullable=True)
-    suggested_tp: Mapped[float | None] = mapped_column(Float, nullable=True)   # Take Profit
-    suggested_sl: Mapped[float | None] = mapped_column(Float, nullable=True)   # Stop Loss
+    suggested_tp: Mapped[float | None] = mapped_column(Float, nullable=True)  # Take Profit
+    suggested_sl: Mapped[float | None] = mapped_column(Float, nullable=True)  # Stop Loss
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     is_executed: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     created_at: Mapped[datetime] = mapped_column(

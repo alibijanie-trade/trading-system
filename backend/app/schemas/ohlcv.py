@@ -19,10 +19,10 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
-
 # ============================================================
 # Schema های DataSource Layer (فاز ۶)
 # ============================================================
+
 
 class OhlcvRowSchema(BaseModel):
     """یک ردیف داده OHLCV — مستقل از منبع."""
@@ -45,7 +45,8 @@ class OhlcvImportResult(BaseModel):
 
     rows: list[OhlcvRowSchema]
     symbol_info: dict[str, str] = Field(
-        ..., description="symbol, base_asset, quote_asset, market_type",
+        ...,
+        description="symbol, base_asset, quote_asset, market_type",
     )
     timeframe: str
     source_metadata: dict[str, Any] = Field(default_factory=dict)
@@ -58,6 +59,7 @@ class OhlcvImportResult(BaseModel):
 # ============================================================
 # Schema های API Response (فاز ۰ — endpoint GET /ohlcv)
 # ============================================================
+
 
 class OhlcvCandleOut(BaseModel):
     """

@@ -37,6 +37,7 @@ class Base(DeclarativeBase):
     قرارداد نامگذاری جدول‌ها (سند ۴.۵):
       هر مدل __tablename__ خود را به‌صراحت تعریف می‌کند (مثلاً "Users").
     """
+
     pass
 
 

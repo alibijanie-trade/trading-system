@@ -8,11 +8,17 @@ import sys
 from pathlib import Path
 
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN, RED, YELLOW, CYAN, BOLD, RESET = (
-        Fore.GREEN, Fore.RED, Fore.YELLOW, Fore.CYAN, Style.BRIGHT, Style.RESET_ALL,
+        Fore.GREEN,
+        Fore.RED,
+        Fore.YELLOW,
+        Fore.CYAN,
+        Style.BRIGHT,
+        Style.RESET_ALL,
     )
 except ImportError:
     GREEN = RED = YELLOW = CYAN = BOLD = RESET = ""
@@ -105,10 +111,21 @@ def get_timeframe(interval_id: int) -> str:
 # ============================================================
 # توابع کمکی نمایش
 # ============================================================
-def info(msg): print(f"{CYAN}ℹ {msg}{RESET}")
-def success(msg): print(f"{GREEN}✅ {msg}{RESET}")
-def warn(msg): print(f"{YELLOW}⚠ {msg}{RESET}")
-def err(msg): print(f"{RED}❌ {msg}{RESET}")
+def info(msg):
+    print(f"{CYAN}ℹ {msg}{RESET}")
+
+
+def success(msg):
+    print(f"{GREEN}✅ {msg}{RESET}")
+
+
+def warn(msg):
+    print(f"{YELLOW}⚠ {msg}{RESET}")
+
+
+def err(msg):
+    print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg):
     line = "=" * 60
@@ -133,9 +150,9 @@ def write_file(path: Path, content: str) -> str:
 
 async def seed_symbol() -> None:
     """درج نماد BTC/USDT روی Exchange 'Excel'."""
-    from sqlalchemy import select
     from app.infrastructure.database import AsyncSessionLocal, engine
     from app.models import Exchange, Symbol
+    from sqlalchemy import select
 
     async with AsyncSessionLocal() as session:
         # پیدا کردن Exchange Excel
@@ -193,16 +210,14 @@ async def main_async() -> int:
     print()
 
     # تأیید
-    from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-    from sqlalchemy import select
     from app.core.config import settings
-    from app.models import Symbol, Exchange
+    from app.models import Exchange, Symbol
+    from sqlalchemy import select
+    from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
     eng = create_async_engine(settings.DATABASE_URL)
     async with AsyncSession(eng) as session:
-        result = await session.execute(
-            select(Symbol, Exchange).join(Exchange)
-        )
+        result = await session.execute(select(Symbol, Exchange).join(Exchange))
         rows = result.all()
         info(f"Symbols در DB: {len(rows)}")
         for sym, ex in rows:

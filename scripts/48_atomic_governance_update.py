@@ -183,15 +183,11 @@ def update_governance(text: str) -> tuple[str, list[str]]:
 
     if "C16" not in text and "تأیید صریح قبل از فاز ۳ پایان چت" not in text:
         # افزودن C16-C20 بعد از C15
-        c15_anchor = (
-            "| C15 | تعهد به فاز ۰ → ۸ | ندیدن task ها به‌صورت ایزوله |"
-        )
+        c15_anchor = "| C15 | تعهد به فاز ۰ → ۸ | ندیدن task ها به‌صورت ایزوله |"
         if c15_anchor in text:
             text = text.replace(
                 c15_anchor,
-                c15_anchor
-                + "\n"
-                + GOVERNANCE_RESPONSIBILITIES_ADDITION.strip(),
+                c15_anchor + "\n" + GOVERNANCE_RESPONSIBILITIES_ADDITION.strip(),
                 1,
             )
             changes.append("افزودن C16-C20 (مسئولیت‌های جدید Claude)")
@@ -201,9 +197,7 @@ def update_governance(text: str) -> tuple[str, list[str]]:
     if "Audit مرتبط با قوانین #۲۷-#۳۲" not in text:
         # افزودن Audit بعد از "### Audit در پایان چت"
         # دقیق‌تر: بعد از خط «اگر هر سؤالی **NO** بود ...»
-        audit_anchor = (
-            "اگر هر سؤالی **NO** بود، Claude باید **توقف کند و اصلاح کند** قبل از تحویل."
-        )
+        audit_anchor = "اگر هر سؤالی **NO** بود، Claude باید **توقف کند و اصلاح کند** قبل از تحویل."
         if audit_anchor in text:
             text = text.replace(
                 audit_anchor,
@@ -292,12 +286,8 @@ def update_backlog(text: str) -> tuple[str, list[str]]:
         changes.append("به‌روزرسانی آمار کل: ۶۵→۶۶")
 
     # 4) Bump version Backlog
-    backlog_v_old = (
-        "**نسخه این Backlog:** v1.2 (2026-05-17 — پایان چت ۶)"
-    )
-    backlog_v_new = (
-        "**نسخه این Backlog:** v1.3 (2026-05-18 — در میانه چت ۷، مرحله A)"
-    )
+    backlog_v_old = "**نسخه این Backlog:** v1.2 (2026-05-17 — پایان چت ۶)"
+    backlog_v_new = "**نسخه این Backlog:** v1.3 (2026-05-18 — در میانه چت ۷، مرحله A)"
     if backlog_v_old in text:
         text = text.replace(backlog_v_old, backlog_v_new, 1)
         changes.append("ارتقای نسخه Backlog v1.2 → v1.3")

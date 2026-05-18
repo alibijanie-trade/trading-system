@@ -93,7 +93,9 @@ check(
 # ============================================================
 print()
 check("Toast: subscribe به toastStore", "useToastStore" in toast)
-check("Toast: ۴ نوع پیکربندی", all(f"{t}:" in toast for t in ["success", "error", "warning", "info"]))
+check(
+    "Toast: ۴ نوع پیکربندی", all(f"{t}:" in toast for t in ["success", "error", "warning", "info"])
+)
 check(
     "Toast: استفاده از CSS vars رنگ",
     "var(--color-success)" in toast and "var(--color-danger)" in toast,
@@ -146,7 +148,7 @@ check(
 )
 check(
     "LoginPage: حذف div خطا inline",
-    "color-danger-bg" not in login or "background: \"var(--color-danger-bg)\"" not in login,
+    "color-danger-bg" not in login or 'background: "var(--color-danger-bg)"' not in login,
 )
 
 

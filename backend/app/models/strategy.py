@@ -22,10 +22,9 @@
 ================================================================
 """
 
+from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 from sqlalchemy import Boolean, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base, SoftDeleteMixin, TimestampMixin
 
 
 class Strategy(Base, TimestampMixin, SoftDeleteMixin):
@@ -46,10 +45,10 @@ class Strategy(Base, TimestampMixin, SoftDeleteMixin):
         ForeignKey("Strategies.id", ondelete="SET NULL"),
         nullable=True,
     )
-    entry_conditions: Mapped[str] = mapped_column(Text, nullable=False)   # JSON
-    exit_conditions: Mapped[str] = mapped_column(Text, nullable=False)    # JSON
+    entry_conditions: Mapped[str] = mapped_column(Text, nullable=False)  # JSON
+    exit_conditions: Mapped[str] = mapped_column(Text, nullable=False)  # JSON
     risk_settings: Mapped[str | None] = mapped_column(Text, nullable=True)  # JSON
-    timeframes: Mapped[str] = mapped_column(Text, nullable=False)         # JSON list
+    timeframes: Mapped[str] = mapped_column(Text, nullable=False)  # JSON list
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
     # ===================================================
@@ -79,6 +78,5 @@ class Strategy(Base, TimestampMixin, SoftDeleteMixin):
 
     def __repr__(self) -> str:
         return (
-            f"<Strategy id={self.id} name={self.name!r} v{self.version} "
-            f"user_id={self.user_id}>"
+            f"<Strategy id={self.id} name={self.name!r} v{self.version} " f"user_id={self.user_id}>"
         )

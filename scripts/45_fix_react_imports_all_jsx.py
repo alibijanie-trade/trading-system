@@ -12,7 +12,7 @@ for jsx in SRC.rglob("*.jsx"):
     if "import React" in content.split("\\n")[0] or "import React" in content[:200]:
         skipped += 1
         continue
-    jsx.write_text("import React from \'react\';\\n" + content, encoding="utf-8")
+    jsx.write_text("import React from 'react';\\n" + content, encoding="utf-8")
     fixed += 1
     print(f"  + {jsx.relative_to(ROOT)}")
 

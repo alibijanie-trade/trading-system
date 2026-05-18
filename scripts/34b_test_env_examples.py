@@ -51,11 +51,11 @@ BACKEND = PROJECT_ROOT / "backend"
 FRONTEND = PROJECT_ROOT / "frontend"
 
 BACKEND_ENV_EXAMPLE = BACKEND / ".env.example"
-BACKEND_ENV         = BACKEND / ".env"
-BACKEND_CONFIG_PY   = BACKEND / "app" / "core" / "config.py"
+BACKEND_ENV = BACKEND / ".env"
+BACKEND_CONFIG_PY = BACKEND / "app" / "core" / "config.py"
 
 FRONTEND_ENV_EXAMPLE = FRONTEND / ".env.example"
-FRONTEND_SRC         = FRONTEND / "src"
+FRONTEND_SRC = FRONTEND / "src"
 
 CHANGELOG = PROJECT_ROOT / "CHANGELOG.md"
 GITIGNORE = PROJECT_ROOT / ".gitignore"
@@ -327,9 +327,8 @@ def section_b_frontend(c: Checks):
     )
 
     # 4) هشدار امنیتی Vite
-    has_security_warning = (
-        "VITE_" in content
-        and ("امنیت" in content or "security" in content.lower() or "حساس" in content)
+    has_security_warning = "VITE_" in content and (
+        "امنیت" in content or "security" in content.lower() or "حساس" in content
     )
     c.add(
         "هشدار امنیتی Vite (prefix VITE_) در کامنت ذکر شده",

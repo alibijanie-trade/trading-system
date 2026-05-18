@@ -29,8 +29,9 @@ from pathlib import Path
 # تلاش برای فعال‌سازی رنگ ANSI در Windows (colorama)
 # ------------------------------------------------------------
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN = Fore.GREEN
     RED = Fore.RED
@@ -46,7 +47,7 @@ except ImportError:
 # مسیرها
 # ============================================================
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = SCRIPT_DIR.parent           # D:\Projects\trading-system
+PROJECT_ROOT = SCRIPT_DIR.parent  # D:\Projects\trading-system
 BACKEND_DIR = PROJECT_ROOT / "backend"
 DB_DIR = BACKEND_DIR / "app" / "infrastructure" / "database"
 
@@ -329,17 +330,22 @@ __all__ = [
 # توابع کمکی نمایش
 # ============================================================
 
+
 def info(msg: str) -> None:
     print(f"{CYAN}ℹ {msg}{RESET}")
+
 
 def success(msg: str) -> None:
     print(f"{GREEN}✅ {msg}{RESET}")
 
+
 def warn(msg: str) -> None:
     print(f"{YELLOW}⚠ {msg}{RESET}")
 
+
 def err(msg: str) -> None:
     print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg: str) -> None:
     line = "=" * 60
@@ -402,9 +408,9 @@ def main() -> int:
 
     # ساخت فایل‌ها
     results = {
-        "base.py":     write_file(DB_DIR / "base.py", BASE_PY),
-        "engine.py":   write_file(DB_DIR / "engine.py", ENGINE_PY),
-        "session.py":  write_file(DB_DIR / "session.py", SESSION_PY),
+        "base.py": write_file(DB_DIR / "base.py", BASE_PY),
+        "engine.py": write_file(DB_DIR / "engine.py", ENGINE_PY),
+        "session.py": write_file(DB_DIR / "session.py", SESSION_PY),
         "__init__.py": write_file(DB_DIR / "__init__.py", INIT_PY),
     }
 
@@ -424,7 +430,9 @@ def main() -> int:
     print()
     print(f"  {BOLD}cd D:\\Projects\\trading-system\\backend{RESET}")
     print(f"  {BOLD}venv\\Scripts\\activate{RESET}")
-    print(f"  {BOLD}python -c \"from app.infrastructure.database import Base, engine, get_db, TimestampMixin, SoftDeleteMixin; print('OK - DB infrastructure imported')\"{RESET}")
+    print(
+        f"  {BOLD}python -c \"from app.infrastructure.database import Base, engine, get_db, TimestampMixin, SoftDeleteMixin; print('OK - DB infrastructure imported')\"{RESET}"
+    )
     print()
     info("اگر پیام «OK - DB infrastructure imported» دیدید، گام ۴.۱-۲ (مدل‌ها) شروع می‌شود.")
     print()

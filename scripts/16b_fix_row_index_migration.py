@@ -10,11 +10,17 @@ import sys
 from pathlib import Path
 
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN, RED, YELLOW, CYAN, BOLD, RESET = (
-        Fore.GREEN, Fore.RED, Fore.YELLOW, Fore.CYAN, Style.BRIGHT, Style.RESET_ALL,
+        Fore.GREEN,
+        Fore.RED,
+        Fore.YELLOW,
+        Fore.CYAN,
+        Style.BRIGHT,
+        Style.RESET_ALL,
     )
 except ImportError:
     GREEN = RED = YELLOW = CYAN = BOLD = RESET = ""
@@ -26,10 +32,21 @@ BACKEND_DIR = PROJECT_ROOT / "backend"
 VERSIONS_DIR = BACKEND_DIR / "migrations" / "versions"
 
 
-def info(msg): print(f"{CYAN}ℹ {msg}{RESET}")
-def success(msg): print(f"{GREEN}✅ {msg}{RESET}")
-def warn(msg): print(f"{YELLOW}⚠ {msg}{RESET}")
-def err(msg): print(f"{RED}❌ {msg}{RESET}")
+def info(msg):
+    print(f"{CYAN}ℹ {msg}{RESET}")
+
+
+def success(msg):
+    print(f"{GREEN}✅ {msg}{RESET}")
+
+
+def warn(msg):
+    print(f"{YELLOW}⚠ {msg}{RESET}")
+
+
+def err(msg):
+    print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg):
     line = "=" * 60
@@ -117,16 +134,22 @@ def downgrade() -> None:
 
     print(f"{BOLD}📍 Tab: 2 scripts{RESET}\n")
     print(f"  {BOLD}alembic upgrade head{RESET}\n")
-    info("خروجی: 'Running upgrade {} -> {}, add_row_index_to_ohlcv'".format(down_revision, revision))
+    info(
+        "خروجی: 'Running upgrade {} -> {}, add_row_index_to_ohlcv'".format(down_revision, revision)
+    )
     print()
 
     print(f"{BOLD}📍 Tab: 2 scripts{RESET} — تأیید ستون row_index\n")
-    print(f"  {BOLD}python -c \"import sqlite3; c=sqlite3.connect('trading.db'); [print(r) for r in c.execute('PRAGMA table_info(OhlcvData)')]\"{RESET}\n")
+    print(
+        f"  {BOLD}python -c \"import sqlite3; c=sqlite3.connect('trading.db'); [print(r) for r in c.execute('PRAGMA table_info(OhlcvData)')]\"{RESET}\n"
+    )
     info("باید یک ردیف row_index در خروجی دیده شود")
     print()
 
     print(f"{BOLD}📍 Tab: 2 scripts{RESET} — تأیید ایندکس‌های DESC سالم هستند\n")
-    print(f"  {BOLD}python -c \"import sqlite3; c=sqlite3.connect('trading.db'); [print(n,'->',s) for n,s in c.execute(\\\"SELECT name,sql FROM sqlite_master WHERE name LIKE 'idx_audit%'\\\")]\"{RESET}\n")
+    print(
+        f"  {BOLD}python -c \"import sqlite3; c=sqlite3.connect('trading.db'); [print(n,'->',s) for n,s in c.execute(\\\"SELECT name,sql FROM sqlite_master WHERE name LIKE 'idx_audit%'\\\")]\"{RESET}\n"
+    )
     info("باید هر دو ایندکس همچنان شامل 'created_at DESC' باشند")
     print()
 

@@ -51,7 +51,7 @@ FRONTEND = PROJECT_ROOT / "frontend"
 SRC = FRONTEND / "src"
 
 ERROR_BOUNDARY_PATH = SRC / "components" / "common" / "ErrorBoundary.jsx"
-APP_JSX_PATH        = SRC / "App.jsx"
+APP_JSX_PATH = SRC / "App.jsx"
 
 EXPECTED_ROUTE_LABELS = ["route:login", "route:home", "route:chart", "route:settings"]
 
@@ -109,7 +109,7 @@ def section_a_files(c):
 # الگوهای regex
 RX_HEX = re.compile(r"#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?\b")
 # fontSize: <عدد> بدون template literal — این چیزی است که نمی‌خواهیم
-RX_BAD_FONT_SIZE = re.compile(r'fontSize:\s*\d+(?=\s*[,\}\)\s])')
+RX_BAD_FONT_SIZE = re.compile(r"fontSize:\s*\d+(?=\s*[,\}\)\s])")
 
 
 def section_b_error_boundary(c):
@@ -174,8 +174,7 @@ def section_c_app_integration(c):
     )
     c.add(
         'outer ErrorBoundary label="root"',
-        '<ErrorBoundary label="root">' in content
-        or "<ErrorBoundary label='root'>" in content,
+        '<ErrorBoundary label="root">' in content or "<ErrorBoundary label='root'>" in content,
         "",
     )
 

@@ -33,11 +33,17 @@ import sys
 from pathlib import Path
 
 try:
-    from colorama import init as _colorama_init
     from colorama import Fore, Style
+    from colorama import init as _colorama_init
+
     _colorama_init(autoreset=True)
     GREEN, RED, YELLOW, CYAN, BOLD, RESET = (
-        Fore.GREEN, Fore.RED, Fore.YELLOW, Fore.CYAN, Style.BRIGHT, Style.RESET_ALL,
+        Fore.GREEN,
+        Fore.RED,
+        Fore.YELLOW,
+        Fore.CYAN,
+        Style.BRIGHT,
+        Style.RESET_ALL,
     )
 except ImportError:
     GREEN = RED = YELLOW = CYAN = BOLD = RESET = ""
@@ -671,17 +677,22 @@ __all__ = [
 # توابع کمکی
 # ============================================================
 
+
 def info(msg: str) -> None:
     print(f"{CYAN}ℹ {msg}{RESET}")
+
 
 def success(msg: str) -> None:
     print(f"{GREEN}✅ {msg}{RESET}")
 
+
 def warn(msg: str) -> None:
     print(f"{YELLOW}⚠ {msg}{RESET}")
 
+
 def err(msg: str) -> None:
     print(f"{RED}❌ {msg}{RESET}")
+
 
 def header(msg: str) -> None:
     line = "=" * 60
@@ -731,13 +742,13 @@ def main() -> int:
 
     files = [
         ("ohlcv_data.py", OHLCV_DATA_PY),
-        ("strategy.py",   STRATEGY_PY),
-        ("signal.py",     SIGNAL_PY),
-        ("trade.py",      TRADE_PY),
-        ("portfolio.py",  PORTFOLIO_PY),
-        ("alert.py",      ALERT_PY),
-        ("audit_log.py",  AUDIT_LOG_PY),
-        ("__init__.py",   INIT_PY),
+        ("strategy.py", STRATEGY_PY),
+        ("signal.py", SIGNAL_PY),
+        ("trade.py", TRADE_PY),
+        ("portfolio.py", PORTFOLIO_PY),
+        ("alert.py", ALERT_PY),
+        ("audit_log.py", AUDIT_LOG_PY),
+        ("__init__.py", INIT_PY),
     ]
 
     results = {}
@@ -757,10 +768,14 @@ def main() -> int:
     info("گام بعدی — دو تست در CMD 1 (با venv فعال):")
     print()
     print(f"  {BOLD}# تست ۱ — ایمپورت همه ۱۵ مدل:{RESET}")
-    print(f"  {BOLD}python -c \"from app.models import User, UserSession, Exchange, ExchangeAPIKey, Symbol, Watchlist, RiskSettings, AppSettings, OhlcvData, Strategy, Signal, Trade, Portfolio, Alert, AuditLog; print('OK - 15 models imported')\"{RESET}")
+    print(
+        f"  {BOLD}python -c \"from app.models import User, UserSession, Exchange, ExchangeAPIKey, Symbol, Watchlist, RiskSettings, AppSettings, OhlcvData, Strategy, Signal, Trade, Portfolio, Alert, AuditLog; print('OK - 15 models imported')\"{RESET}"
+    )
     print()
     print(f"  {BOLD}# تست ۲ — اعتبارسنجی relationship ها (configure_mappers):{RESET}")
-    print(f"  {BOLD}python -c \"from app.models import User; from sqlalchemy.orm import configure_mappers; configure_mappers(); print('OK - all relationships valid')\"{RESET}")
+    print(
+        f"  {BOLD}python -c \"from app.models import User; from sqlalchemy.orm import configure_mappers; configure_mappers(); print('OK - all relationships valid')\"{RESET}"
+    )
     print()
     info("اگر هر دو تست OK دادند، گام بعدی (اسکریپت ۱۱ - BaseRepository) آغاز می‌شود.")
     print()

@@ -48,11 +48,11 @@
 ================================================================
 """
 
-from pathlib import Path
 import re
-import subprocess
 import shutil
+import subprocess
 import sys
+from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
@@ -66,7 +66,7 @@ CALENDAR_TOGGLE = SRC / "components" / "settings" / "CalendarToggle.jsx"
 SETTINGS_PAGE = SRC / "pages" / "SettingsPage.jsx"
 CHART_PAGE = SRC / "pages" / "ChartPage.jsx"
 
-HEX_PATTERN = re.compile(r'#[0-9a-fA-F]{3,8}\b')
+HEX_PATTERN = re.compile(r"#[0-9a-fA-F]{3,8}\b")
 
 
 class Checks:
@@ -97,8 +97,8 @@ class Checks:
 
 
 def check_no_hex(src):
-    cleaned = re.sub(r'/\*.*?\*/', '', src, flags=re.DOTALL)
-    cleaned = re.sub(r'//.*$', '', cleaned, flags=re.MULTILINE)
+    cleaned = re.sub(r"/\*.*?\*/", "", src, flags=re.DOTALL)
+    cleaned = re.sub(r"//.*$", "", cleaned, flags=re.MULTILINE)
     matches = HEX_PATTERN.findall(cleaned)
     return (len(matches) == 0, ", ".join(sorted(set(matches))[:5]) if matches else "")
 
@@ -187,10 +187,11 @@ def runtime_test_node(c: Checks):
 
     # parse output
     import json
+
     line = None
     for ln in result.stdout.split("\n"):
         if ln.startswith("RESULTS:"):
-            line = ln[len("RESULTS:"):]
+            line = ln[len("RESULTS:") :]
             break
     if not line:
         c.add("Runtime test (Node.js)", False, "خروجی RESULTS یافت نشد")
@@ -221,12 +222,12 @@ def main() -> int:
     # ============================================================
     c.print_section("۱) وجود فایل‌ها")
     files = {
-        "numberFormat.js":       NUMBER_FORMAT,
-        "dateFormat.js":         DATE_FORMAT,
-        "preferencesStore.js":   PREFS_STORE,
-        "CalendarToggle.jsx":    CALENDAR_TOGGLE,
-        "SettingsPage.jsx":      SETTINGS_PAGE,
-        "ChartPage.jsx":         CHART_PAGE,
+        "numberFormat.js": NUMBER_FORMAT,
+        "dateFormat.js": DATE_FORMAT,
+        "preferencesStore.js": PREFS_STORE,
+        "CalendarToggle.jsx": CALENDAR_TOGGLE,
+        "SettingsPage.jsx": SETTINGS_PAGE,
+        "ChartPage.jsx": CHART_PAGE,
     }
     for label, path in files.items():
         c.add(f"موجود است: {label}", path.exists())
@@ -245,12 +246,12 @@ def main() -> int:
     c.print_section("۲) numberFormat.js")
     src = NUMBER_FORMAT.read_text(encoding="utf-8")
 
-    c.add("export formatNumber",        "export function formatNumber" in src)
+    c.add("export formatNumber", "export function formatNumber" in src)
     c.add("export parseFormattedNumber", "export function parseFormattedNumber" in src)
     c.add("استفاده از Intl.NumberFormat", "Intl.NumberFormat" in src)
-    c.add("پشتیبانی decimals option",    "decimals" in src)
-    c.add("handle null/undefined",       "null" in src and "undefined" in src)
-    c.add("Number.isFinite چک",          "Number.isFinite" in src)
+    c.add("پشتیبانی decimals option", "decimals" in src)
+    c.add("handle null/undefined", "null" in src and "undefined" in src)
+    c.add("Number.isFinite چک", "Number.isFinite" in src)
 
     # ============================================================
     # ۳) dateFormat.js
@@ -258,15 +259,15 @@ def main() -> int:
     c.print_section("۳) dateFormat.js")
     src = DATE_FORMAT.read_text(encoding="utf-8")
 
-    c.add("export formatDate",          "export function formatDate" in src)
-    c.add("export CALENDARS",           "export const CALENDARS" in src)
-    c.add("export CALENDAR_LABELS",     "export const CALENDAR_LABELS" in src)
-    c.add("CALENDARS.GREGORIAN",        "GREGORIAN:" in src)
-    c.add("CALENDARS.JALALI",           "JALALI:" in src)
+    c.add("export formatDate", "export function formatDate" in src)
+    c.add("export CALENDARS", "export const CALENDARS" in src)
+    c.add("export CALENDAR_LABELS", "export const CALENDAR_LABELS" in src)
+    c.add("CALENDARS.GREGORIAN", "GREGORIAN:" in src)
+    c.add("CALENDARS.JALALI", "JALALI:" in src)
     c.add('locale "fa-IR-u-ca-persian"', '"fa-IR-u-ca-persian"' in src)
-    c.add("Intl.DateTimeFormat",        "Intl.DateTimeFormat" in src)
-    c.add("try/catch fallback",         "try {" in src and "catch" in src)
-    c.add("پشتیبانی withTime option",   "withTime" in src)
+    c.add("Intl.DateTimeFormat", "Intl.DateTimeFormat" in src)
+    c.add("try/catch fallback", "try {" in src and "catch" in src)
+    c.add("پشتیبانی withTime option", "withTime" in src)
 
     # ============================================================
     # ۴) preferencesStore.js
@@ -274,14 +275,16 @@ def main() -> int:
     c.print_section("۴) preferencesStore.js")
     src = PREFS_STORE.read_text(encoding="utf-8")
 
-    c.add("Zustand: create",             'from "zustand"' in src and "create(" in src)
-    c.add("persist middleware",          "persist" in src and 'from "zustand/middleware"' in src)
-    c.add("import CALENDARS از dateFormat", 'from "../utils/dateFormat.js"' in src and "CALENDARS" in src)
-    c.add("state: calendar",             "calendar:" in src)
-    c.add("DEFAULT_CALENDAR = GREGORIAN",
-          "DEFAULT_CALENDAR" in src and "GREGORIAN" in src)
-    c.add("setCalendar",                 "setCalendar:" in src)
-    c.add("reset",                       "reset:" in src)
+    c.add("Zustand: create", 'from "zustand"' in src and "create(" in src)
+    c.add("persist middleware", "persist" in src and 'from "zustand/middleware"' in src)
+    c.add(
+        "import CALENDARS از dateFormat",
+        'from "../utils/dateFormat.js"' in src and "CALENDARS" in src,
+    )
+    c.add("state: calendar", "calendar:" in src)
+    c.add("DEFAULT_CALENDAR = GREGORIAN", "DEFAULT_CALENDAR" in src and "GREGORIAN" in src)
+    c.add("setCalendar", "setCalendar:" in src)
+    c.add("reset", "reset:" in src)
     c.add('name: "preferences-storage"', '"preferences-storage"' in src)
 
     # ============================================================
@@ -290,25 +293,19 @@ def main() -> int:
     c.print_section("۵) CalendarToggle.jsx")
     src = CALENDAR_TOGGLE.read_text(encoding="utf-8")
 
-    c.add("props: value, onChange",
-          "value" in src and "onChange" in src)
-    c.add("import formatDate + CALENDARS",
-          "formatDate" in src and "CALENDARS" in src and
-          'from "../../utils/dateFormat.js"' in src)
-    c.add("import CALENDAR_LABELS",
-          "CALENDAR_LABELS" in src)
-    c.add('role="radiogroup"',  'role="radiogroup"' in src)
-    c.add('role="radio"',       'role="radio"' in src)
-    c.add("aria-checked={isActive}",
-          "aria-checked={isActive}" in src)
-    c.add("aria-label فارسی",
-          'aria-label="نوع تقویم"' in src)
-    c.add("preview تاریخ امروز (بدون ساعت)",
-          "formatDate(new Date(), value)" in src)
-    c.add("preview همراه ساعت",
-          "withTime: true" in src)
-    c.add("بدنه preview: var(--color-bg-elevated)",
-          'background: "var(--color-bg-elevated)"' in src)
+    c.add("props: value, onChange", "value" in src and "onChange" in src)
+    c.add(
+        "import formatDate + CALENDARS",
+        "formatDate" in src and "CALENDARS" in src and 'from "../../utils/dateFormat.js"' in src,
+    )
+    c.add("import CALENDAR_LABELS", "CALENDAR_LABELS" in src)
+    c.add('role="radiogroup"', 'role="radiogroup"' in src)
+    c.add('role="radio"', 'role="radio"' in src)
+    c.add("aria-checked={isActive}", "aria-checked={isActive}" in src)
+    c.add("aria-label فارسی", 'aria-label="نوع تقویم"' in src)
+    c.add("preview تاریخ امروز (بدون ساعت)", "formatDate(new Date(), value)" in src)
+    c.add("preview همراه ساعت", "withTime: true" in src)
+    c.add("بدنه preview: var(--color-bg-elevated)", 'background: "var(--color-bg-elevated)"' in src)
 
     ok, bad = check_no_hex(src)
     c.add("بدون hex hardcoded", ok, f"hex: {bad}" if bad else "")
@@ -319,25 +316,21 @@ def main() -> int:
     c.print_section("۶) SettingsPage.jsx")
     src = SETTINGS_PAGE.read_text(encoding="utf-8")
 
-    c.add("import usePreferencesStore",
-          'from "../stores/preferencesStore.js"' in src)
-    c.add("import CalendarToggle",
-          'from "../components/settings/CalendarToggle.jsx"' in src)
-    c.add("calendar از store",          "s.calendar" in src)
-    c.add("setCalendar از store",       "s.setCalendar" in src)
-    c.add("resetPreferences از store",  "s.reset" in src or "resetPreferences" in src)
-    c.add("بخش 'زبان و تقویم'",
-          "زبان و تقویم" in src)
-    c.add("<CalendarToggle value={calendar}",
-          "<CalendarToggle" in src and "value={calendar}" in src)
-    c.add("handleReset: resetTheme()",  "resetTheme()" in src)
+    c.add("import usePreferencesStore", 'from "../stores/preferencesStore.js"' in src)
+    c.add("import CalendarToggle", 'from "../components/settings/CalendarToggle.jsx"' in src)
+    c.add("calendar از store", "s.calendar" in src)
+    c.add("setCalendar از store", "s.setCalendar" in src)
+    c.add("resetPreferences از store", "s.reset" in src or "resetPreferences" in src)
+    c.add("بخش 'زبان و تقویم'", "زبان و تقویم" in src)
+    c.add(
+        "<CalendarToggle value={calendar}", "<CalendarToggle" in src and "value={calendar}" in src
+    )
+    c.add("handleReset: resetTheme()", "resetTheme()" in src)
     c.add("handleReset: resetPreferences()", "resetPreferences()" in src)
-    c.add("variant: 'warning' حفظ شد",  '"warning"' in src)
+    c.add("variant: 'warning' حفظ شد", '"warning"' in src)
     # regression
-    c.add("ThemeCard حفظ شد (regression)",
-          "<ThemeCard" in src)
-    c.add("FontSizeControl حفظ شد (regression)",
-          "<FontSizeControl" in src)
+    c.add("ThemeCard حفظ شد (regression)", "<ThemeCard" in src)
+    c.add("FontSizeControl حفظ شد (regression)", "<FontSizeControl" in src)
 
     ok, bad = check_no_hex(src)
     c.add("بدون hex hardcoded", ok, f"hex: {bad}" if bad else "")
@@ -348,31 +341,26 @@ def main() -> int:
     c.print_section("۷) ChartPage.jsx")
     src = CHART_PAGE.read_text(encoding="utf-8")
 
-    c.add("import usePreferencesStore",
-          'from "../stores/preferencesStore.js"' in src)
-    c.add("import formatNumber",
-          'from "../utils/numberFormat.js"' in src)
-    c.add("import formatDate",
-          'from "../utils/dateFormat.js"' in src)
-    c.add("calendar = usePreferencesStore",
-          "s.calendar" in src)
-    c.add("calendar در useEffect deps",
-          "calendar]" in src)
-    c.add("localization.dateFormat",
-          "dateFormat:" in src and "formatDate(d, calendar)" in src)
-    c.add("localization.priceFormatter",
-          "priceFormatter:" in src and "formatNumber" in src)
-    c.add("استفاده از formatNumber در متادیتا",
-          "formatNumber(meta.count)" in src and "formatNumber(meta.total)" in src)
+    c.add("import usePreferencesStore", 'from "../stores/preferencesStore.js"' in src)
+    c.add("import formatNumber", 'from "../utils/numberFormat.js"' in src)
+    c.add("import formatDate", 'from "../utils/dateFormat.js"' in src)
+    c.add("calendar = usePreferencesStore", "s.calendar" in src)
+    c.add("calendar در useEffect deps", "calendar]" in src)
+    c.add("localization.dateFormat", "dateFormat:" in src and "formatDate(d, calendar)" in src)
+    c.add("localization.priceFormatter", "priceFormatter:" in src and "formatNumber" in src)
+    c.add(
+        "استفاده از formatNumber در متادیتا",
+        "formatNumber(meta.count)" in src and "formatNumber(meta.total)" in src,
+    )
     # regression از زیرگام ۸.۳
-    c.add("SkeletonBlock حفظ شد (regression ۸.۳)",
-          "import SkeletonBlock" in src and "<SkeletonBlock" in src)
-    c.add("themeId در deps حفظ شد",     "themeId" in src)
-    c.add("useThemeStore حفظ شد (regression)",
-          "useThemeStore" in src)
+    c.add(
+        "SkeletonBlock حفظ شد (regression ۸.۳)",
+        "import SkeletonBlock" in src and "<SkeletonBlock" in src,
+    )
+    c.add("themeId در deps حفظ شد", "themeId" in src)
+    c.add("useThemeStore حفظ شد (regression)", "useThemeStore" in src)
     # check that the 1714 hardcoded string is gone
-    c.add("متن 1714 hardcoded حذف شد",
-          "1714 کندل" not in src)
+    c.add("متن 1714 hardcoded حذف شد", "1714 کندل" not in src)
 
     # ============================================================
     # نتایج تست‌های استاتیک

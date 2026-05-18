@@ -36,7 +36,7 @@ INDEX_CSS = FRONTEND_SRC / "index.css"
 # ============================================================
 # بلوک جدید binance-dark — دقیقاً مطابق رنگ‌های رسمی بایننس
 # ============================================================
-NEW_BINANCE_BLOCK = '''  "binance-dark": {
+NEW_BINANCE_BLOCK = """  "binance-dark": {
     id: "binance-dark",
     name: "بایننس تاریک",
     isDark: true,
@@ -62,7 +62,7 @@ NEW_BINANCE_BLOCK = '''  "binance-dark": {
       "--color-grid": "#2B3139",
       "--shadow-card": "0 4px 12px rgba(0,0,0,0.5)",
     },
-  },'''
+  },"""
 
 
 # ============================================================
@@ -187,7 +187,7 @@ def replace_binance_block(themes_src: str) -> tuple[str, bool]:
         # قبلاً اصلاح شده — هیچ تغییری لازم نیست (idempotent)
         return themes_src, False
 
-    new_src = themes_src[: match.start()] + NEW_BINANCE_BLOCK + themes_src[match.end():]
+    new_src = themes_src[: match.start()] + NEW_BINANCE_BLOCK + themes_src[match.end() :]
     return new_src, True
 
 

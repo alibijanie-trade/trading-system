@@ -134,8 +134,7 @@ def upgrade_to_v28(src_text: str) -> str:
         raise RuntimeError("انکر فهرست مطالب (v2.5→v2.6) پیدا نشد!")
     toc_new = (
         "- [**خلاصه تغییرات v2.7 → v2.8 🆕**](#خلاصه-تغییرات-v27--v28)\n"
-        "- [خلاصه تغییرات v2.6 → v2.7](#خلاصه-تغییرات-v26--v27)\n"
-        + toc_anchor
+        "- [خلاصه تغییرات v2.6 → v2.7](#خلاصه-تغییرات-v26--v27)\n" + toc_anchor
     )
     text = text.replace(toc_anchor, toc_new, 1)
 

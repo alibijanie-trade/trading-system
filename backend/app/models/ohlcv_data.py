@@ -17,10 +17,9 @@
 
 from datetime import datetime, timezone
 
+from app.infrastructure.database import Base
 from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Index, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.infrastructure.database import Base
 
 
 def _utcnow() -> datetime:
@@ -38,7 +37,8 @@ class OhlcvData(Base):
     )
     timeframe: Mapped[str] = mapped_column(String, nullable=False)
     timestamp: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), nullable=False,
+        DateTime(timezone=True),
+        nullable=False,
     )
     open: Mapped[float] = mapped_column(Float, nullable=False)
     high: Mapped[float] = mapped_column(Float, nullable=False)
@@ -47,7 +47,9 @@ class OhlcvData(Base):
     volume: Mapped[float] = mapped_column(Float, nullable=False)
     is_closed: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     row_index: Mapped[int] = mapped_column(
-        Integer, nullable=False, default=0,
+        Integer,
+        nullable=False,
+        default=0,
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
@@ -57,9 +59,7 @@ class OhlcvData(Base):
 
     symbol: Mapped["Symbol"] = relationship("Symbol", back_populates="ohlcv_data")
 
-    __table_args__ = (
-        Index("idx_ohlcv_symbol_tf_ts", "symbol_id", "timeframe", "timestamp"),
-    )
+    __table_args__ = (Index("idx_ohlcv_symbol_tf_ts", "symbol_id", "timeframe", "timestamp"),)
 
     def __repr__(self) -> str:
         return (

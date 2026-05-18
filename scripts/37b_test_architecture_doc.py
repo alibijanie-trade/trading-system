@@ -153,17 +153,19 @@ def section_d_mermaid(c, content):
 
     # نوع‌های دیاگرام
     diagram_types = {
-        "flowchart": 3,        # 1 overview + 1 backend + 1 frontend
+        "flowchart": 3,  # 1 overview + 1 backend + 1 frontend
         "sequenceDiagram": 2,  # theme + auth
-        "classDiagram": 1,     # DataSource
+        "classDiagram": 1,  # DataSource
     }
     for dtype, expected_count in diagram_types.items():
         # شمارش با regex: داخل bloks mermaid، خط شروع‌شده با dtype
-        count = len(re.findall(
-            rf"```mermaid\s*\n\s*{dtype}\b",
-            content,
-            flags=re.MULTILINE,
-        ))
+        count = len(
+            re.findall(
+                rf"```mermaid\s*\n\s*{dtype}\b",
+                content,
+                flags=re.MULTILINE,
+            )
+        )
         c.add(
             f"نوع '{dtype}' = {expected_count}",
             count == expected_count,
@@ -175,7 +177,13 @@ def section_e_content(c, content):
     c.section("E) محتوای کلیدی")
 
     checks = [
-        ("ذکر ۵-لایه یا 5-لایه در backend", "۵-لایه" in content or "5-لایه" in content or "5 لایه" in content or "۵ لایه" in content),
+        (
+            "ذکر ۵-لایه یا 5-لایه در backend",
+            "۵-لایه" in content
+            or "5-لایه" in content
+            or "5 لایه" in content
+            or "۵ لایه" in content,
+        ),
         ("ذکر ErrorBoundary", "ErrorBoundary" in content),
         ("ذکر defense-in-depth", "defense-in-depth" in content),
         ("BaseDataSource", "BaseDataSource" in content),
@@ -187,7 +195,19 @@ def section_e_content(c, content):
         ("درخت فایل شامل backend/", "backend/" in content),
         ("درخت فایل شامل frontend/", "frontend/" in content),
         ("درخت فایل شامل docs/", "docs/" in content),
-        ("ذکر هر ۵ store در جدول", all(s in content for s in ["authStore", "themeStore", "preferencesStore", "toastStore", "confirmStore"])),
+        (
+            "ذکر هر ۵ store در جدول",
+            all(
+                s in content
+                for s in [
+                    "authStore",
+                    "themeStore",
+                    "preferencesStore",
+                    "toastStore",
+                    "confirmStore",
+                ]
+            ),
+        ),
     ]
     for name, ok in checks:
         c.add(name, ok, "")

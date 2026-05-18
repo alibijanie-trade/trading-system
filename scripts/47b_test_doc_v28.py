@@ -135,13 +135,9 @@ def main() -> int:
     # regex جامع: هر ردیف جدول که با شماره فارسی شروع شود و 🆕 داشته باشد
     new_rule_rows = re.findall(r"^\| \*\*[۰-۹]+ 🆕[^|]*\*\* \|", text, re.MULTILINE)
     if len(new_rule_rows) >= 19:
-        passes.append(
-            f"تعداد ردیف‌های 🆕 در جدول قوانین: {len(new_rule_rows)} ≥ ۱۹"
-        )
+        passes.append(f"تعداد ردیف‌های 🆕 در جدول قوانین: {len(new_rule_rows)} ≥ ۱۹")
     else:
-        failures.append(
-            f"تعداد ردیف‌های 🆕 ناکافی: {len(new_rule_rows)} < ۱۹"
-        )
+        failures.append(f"تعداد ردیف‌های 🆕 ناکافی: {len(new_rule_rows)} < ۱۹")
 
     # Test 14: حجم سند v2.8 > حجم سند v2.7
     if SRC.exists():
@@ -151,11 +147,7 @@ def main() -> int:
         if dst_lines > src_lines:
             passes.append(f"سند v2.8 طولانی‌تر: {dst_lines} > {src_lines} خط")
         else:
-            failures.append(
-                f"سند v2.8 کوتاه‌تر یا برابر: {dst_lines} vs {src_lines}"
-            )
-
-
+            failures.append(f"سند v2.8 کوتاه‌تر یا برابر: {dst_lines} vs {src_lines}")
 
     # Test 16: تعداد دفعات «v2.8» در سند (حداقل ~۱۰)
     v28_count = text.count("v2.8")

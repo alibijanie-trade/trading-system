@@ -58,8 +58,8 @@ FRONTEND = PROJECT_ROOT / "frontend"
 SRC = FRONTEND / "src"
 
 PACKAGE_JSON = FRONTEND / "package.json"
-VITE_CONFIG  = FRONTEND / "vite.config.js"
-SETUP_JS     = SRC / "test" / "setup.js"
+VITE_CONFIG = FRONTEND / "vite.config.js"
+SETUP_JS = SRC / "test" / "setup.js"
 
 TEST_FILES = [
     SRC / "utils" / "numberFormat.test.js",
@@ -211,7 +211,7 @@ def section_e_test_contents(c):
 
     cases = [
         (TEST_FILES[0], "numberFormat", "describe('formatNumber'"),
-        (TEST_FILES[1], "dateFormat",   "describe('formatDate"),
+        (TEST_FILES[1], "dateFormat", "describe('formatDate"),
         (TEST_FILES[2], "confirmStore", "beforeEach"),
         (TEST_FILES[2], "confirmStore — Promise behavior", ".resolves.toBe(true)"),
         (TEST_FILES[3], "ErrorBoundary — Bomb", "function Bomb"),

@@ -13,10 +13,9 @@ get_by_exchange_and_symbol).
 ================================================================
 """
 
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.models.symbol import Symbol
 from app.repositories.base import BaseRepository
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class SymbolRepository(BaseRepository[Symbol]):

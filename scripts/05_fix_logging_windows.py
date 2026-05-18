@@ -292,10 +292,7 @@ def add_colorama_to_requirements(requirements_path: Path) -> str:
             f"{COLORAMA_VERSION}    # Windows ANSI colors support\n"
         )
         # دقیقاً ۲ خط بعد از marker را عوض می‌کنیم
-        old_block = (
-            "# --- Environment ---\n"
-            "python-dotenv==1.0.1\n"
-        )
+        old_block = "# --- Environment ---\n" "python-dotenv==1.0.1\n"
         new_content = content.replace(old_block, new_block, 1)
         if new_content == content:
             # اگر pattern دقیق پیدا نشد، در انتها اضافه می‌کنیم
@@ -386,8 +383,10 @@ def main() -> None:
     print("🟢 CMD 3 (Scripts/Git):  پس از تست موفق، commit")
     print("─" * 60)
     print()
-    print(r'      cd /d D:\Projects\trading-system')
-    print(r'      git add backend/app/core/logging.py backend/requirements.txt scripts/05_fix_logging_windows.py')
+    print(r"      cd /d D:\Projects\trading-system")
+    print(
+        r"      git add backend/app/core/logging.py backend/requirements.txt scripts/05_fix_logging_windows.py"
+    )
     print(r'      git commit -m "fix(logging): add colorama and UTF-8 support for Windows CMD"')
     print()
 

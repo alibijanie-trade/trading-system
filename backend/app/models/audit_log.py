@@ -23,12 +23,9 @@
 
 from datetime import datetime, timezone
 
-from sqlalchemy import (
-    DateTime, ForeignKey, Index, Integer, String, Text, text,
-)
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-
 from app.infrastructure.database import Base
+from sqlalchemy import DateTime, ForeignKey, Index, Integer, String, Text, text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
 def _utcnow() -> datetime:

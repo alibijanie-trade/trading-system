@@ -16,16 +16,15 @@ Dependencies — توابع تزریق وابستگی FastAPI
 ================================================================
 """
 
-from fastapi import Depends
-from fastapi.security import OAuth2PasswordBearer
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.core.config import settings
 from app.core.exceptions import AuthenticationError
 from app.core.security import decode_token
 from app.infrastructure.database import get_db
 from app.models.user import User
 from app.repositories.user_repository import UserRepository
+from fastapi import Depends
+from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # OAuth2 password flow — Swagger UI خودش UI لاگین می‌سازد
 oauth2_scheme = OAuth2PasswordBearer(

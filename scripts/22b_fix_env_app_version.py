@@ -51,7 +51,7 @@ def main() -> None:
     match = pattern.search(content)
 
     if match:
-        current = match.group(2).strip().strip('"\'')
+        current = match.group(2).strip().strip("\"'")
         if current == TARGET_VERSION:
             print(f"  ✓ APP_VERSION از قبل = {TARGET_VERSION} است (بدون تغییر)")
         else:

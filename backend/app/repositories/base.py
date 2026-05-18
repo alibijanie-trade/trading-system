@@ -40,17 +40,12 @@ BaseRepository — کلاس پایه Generic برای همه Repository ها
 
 from typing import Any, Generic, TypeVar
 
+from app.core.exceptions import BusinessLogicError, ConflictError, NotFoundError
+from app.core.logging import get_logger
+from app.infrastructure.database import Base
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from app.core.exceptions import (
-    BusinessLogicError,
-    ConflictError,
-    NotFoundError,
-)
-from app.core.logging import get_logger
-from app.infrastructure.database import Base
 
 logger = get_logger(__name__)
 
@@ -213,12 +208,13 @@ class BaseRepository(Generic[ModelType]):
         obj = self.model(**kwargs)
         self.db.add(obj)
         try:
-            await self.db.flush()        # برای پر شدن id
-            await self.db.refresh(obj)   # برای خواندن default ها (created_at, ...)
+            await self.db.flush()  # برای پر شدن id
+            await self.db.refresh(obj)  # برای خواندن default ها (created_at, ...)
         except IntegrityError as e:
             logger.warning(
                 "IntegrityError هنگام create %s: %s",
-                self.model.__name__, getattr(e, "orig", e),
+                self.model.__name__,
+                getattr(e, "orig", e),
             )
             raise ConflictError(
                 message=f"تعارض دیتابیس در ایجاد {self.model.__name__}",
@@ -254,7 +250,9 @@ class BaseRepository(Generic[ModelType]):
         except IntegrityError as e:
             logger.warning(
                 "IntegrityError هنگام update %s id=%d: %s",
-                self.model.__name__, id, getattr(e, "orig", e),
+                self.model.__name__,
+                id,
+                getattr(e, "orig", e),
             )
             raise ConflictError(
                 message=f"تعارض دیتابیس در به‌روزرسانی {self.model.__name__}",
@@ -331,5 +329,6 @@ class BaseRepository(Generic[ModelType]):
         await self.db.flush()
         logger.info(
             "Hard delete %s id=%d انجام شد",
-            self.model.__name__, id,
+            self.model.__name__,
+            id,
         )

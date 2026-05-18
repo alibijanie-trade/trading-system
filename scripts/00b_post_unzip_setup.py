@@ -27,8 +27,8 @@
 import os
 import subprocess
 import sys
-import urllib.request
 import urllib.error
+import urllib.request
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -129,7 +129,7 @@ def setup_backend_venv() -> bool:
         step("1.3.bis", f"نصب از {PIP_MIRROR_IRAN}")
         if not run(
             f'"{VENV_PYTHON}" -m pip install -r "{REQUIREMENTS}" '
-            f'--index-url {PIP_MIRROR_IRAN} --timeout=60'
+            f"--index-url {PIP_MIRROR_IRAN} --timeout=60"
         ):
             print("  ❌ نصب pip حتی با mirror هم شکست خورد.")
             return False
