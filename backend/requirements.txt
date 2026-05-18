@@ -39,3 +39,13 @@ openpyxl==3.1.2
 # نکته: ccxt، websockets، python-telegram-bot
 # در فازهای آینده طبق نیاز اضافه خواهند شد.
 # ============================================================
+
+# --- Testing (T2.08 — چت ۷) ---
+pytest==8.2.2
+pytest-asyncio==0.23.7
+pytest-cov==5.0.0
+
+# --- Pre-commit Hooks (T2.06 — چت ۷) ---
+pre-commit==3.7.1
+black==24.4.2
+isort==5.13.2

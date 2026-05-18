@@ -1,0 +1,71 @@
+# Pre-commit configuration — Trading System (Hybrid mode)
+# T2.06 (چت ۷)
+#
+# نصب: pip install pre-commit && pre-commit install
+# اجرای دستی: pre-commit run --all-files
+# اضطرار: git commit --no-verify -m "[skip-hooks: REASON] ..."
+
+default_language_version:
+  python: python3.11
+
+repos:
+  # ========== Built-in hooks ==========
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^docs/.*\.md$  # markdown نیازمند trailing space برای line break
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+        exclude: ^frontend/package-lock\.json$
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+        exclude: '\.cmd$|\.bat$'
+
+  # ========== Python: black (اجباری) ==========
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+        language_version: python3
+        files: ^(backend/app/|backend/tests/|scripts/).*\.py$
+        args: ['--line-length=100']
+
+  # ========== Python: isort (اجباری) ==========
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        files: ^(backend/app/|backend/tests/|scripts/).*\.py$
+        args: ['--profile=black', '--line-length=100']
+
+  # ========== Local custom hooks (anti-patterns + tests) ==========
+  - repo: local
+    hooks:
+      # Hook 1 — Anti-Patterns A1-A10 (اجباری)
+      - id: check-anti-patterns
+        name: Anti-Patterns A1-A10 check
+        entry: python scripts/check_anti_patterns.py
+        language: system
+        types: [python]
+        pass_filenames: false
+
+      # Hook 2 — pytest unit only (اجباری، سریع)
+      - id: pytest-unit
+        name: Backend pytest unit tests
+        entry: scripts/run_pytest_unit.cmd
+        language: system
+        files: ^backend/(app|tests/unit)/.*\.py$
+        pass_filenames: false
+
+      # Hook 3 — vitest (اجباری، سریع)
+      - id: vitest
+        name: Frontend vitest
+        entry: scripts/run_vitest.cmd
+        language: system
+        files: ^frontend/src/.*\.(jsx?|tsx?)$
+        pass_filenames: false
