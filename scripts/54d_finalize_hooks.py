@@ -379,6 +379,7 @@ OLD_FILES_TO_REMOVE = [
 # Main
 # ============================================================
 
+
 def write_if_changed(path: Path, content: str) -> bool:
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists() and path.read_text(encoding="utf-8") == content:
@@ -436,7 +437,9 @@ def main() -> int:
     print()
     print("Next steps:")
     print("  1. git add -A")
-    print('  2. git commit --no-verify -m "fix(tier2): T2.06 hooks final -- ASCII + Python wrappers"')
+    print(
+        '  2. git commit --no-verify -m "fix(tier2): T2.06 hooks final -- ASCII + Python wrappers"'
+    )
     print("  3. Then re-run pre-commit:")
     print("     cd backend && venv\\\\Scripts\\\\activate && cd ..")
     print("     pre-commit run --all-files")

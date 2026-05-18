@@ -51,7 +51,7 @@ CRITICAL = {
     },
     "A4": {
         "name": "hardcoded secret/password/api_key/token",
-        "pattern": r'''(SECRET_KEY|PASSWORD|API_KEY|TOKEN)\s*=\s*["\'][^"\']{8,}["\']''',
+        "pattern": r"""(SECRET_KEY|PASSWORD|API_KEY|TOKEN)\s*=\s*["\'][^"\']{8,}["\']""",
         "files": [".py"],
         "exclude_paths": ["tests/", "scripts/"],
         "exclude_context": ["# noqa: secret-allowed", "settings.", "os.environ"],
@@ -93,7 +93,10 @@ def get_staged_files() -> list[Path]:
     try:
         result = subprocess.run(
             ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"],
-            capture_output=True, text=True, check=True, encoding="utf-8",
+            capture_output=True,
+            text=True,
+            check=True,
+            encoding="utf-8",
         )
         return [ROOT / f for f in result.stdout.splitlines() if f.strip()]
     except (subprocess.CalledProcessError, FileNotFoundError):
@@ -105,8 +108,11 @@ def get_all_project_files() -> list[Path]:
     files = []
     for pattern in ["backend/**/*.py", "scripts/**/*.py", "frontend/src/**/*.jsx"]:
         files.extend(ROOT.glob(pattern))
-    return [f for f in files if "venv" not in str(f) and "node_modules" not in str(f)
-            and "__pycache__" not in str(f)]
+    return [
+        f
+        for f in files
+        if "venv" not in str(f) and "node_modules" not in str(f) and "__pycache__" not in str(f)
+    ]
 
 
 def check_file(path: Path, rule_id: str, rule: dict) -> list[str]:
@@ -131,7 +137,7 @@ def check_file(path: Path, rule_id: str, rule: dict) -> list[str]:
 
     lines = text.splitlines()
     for m in pattern.finditer(text):
-        line_num = text[:m.start()].count("\n") + 1
+        line_num = text[: m.start()].count("\n") + 1
         line = lines[line_num - 1] if line_num <= len(lines) else ""
 
         # Skip if excluded context found
