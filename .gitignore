@@ -86,3 +86,6 @@ logs/*.log.*
 # Backend runtime logs (any subdir)
 backend/logs/*.log
 backend/logs/*.log.*
+
+# Backups (per rule #48)
+backups/
