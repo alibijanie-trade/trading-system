@@ -4,7 +4,7 @@
 
 > **محل قرارگیری:** `docs/CLAUDE_CHECKLIST.md`  
 > **مرجع بالاتر:** `PROJECT_GOVERNANCE.md` و سند جامع v2.8+  
-> **نسخه:** v1.1 (2026-05-18 — Atomic Update چت ۷)
+> **نسخه:** v1.2 (2026-05-18 — Atomic Update پایان چت ۷، +۱۵ قانون)
 
 ---
 
@@ -516,6 +516,21 @@ Claude: سلام! بریم سراغ Error Boundaries؟
 | #۳۰ | اصلاحات کوچک = اسکریپت Python idempotent | فاز ۲ — قبل از تولید اسکریپت |
 | #۳۱ | شماره + رنگ tab بالای هر کادر کد | فاز ۲ — قبل از تحویل |
 | #۳۲ | npm install در ایران: registry.npmmirror.com + flags | چک محیط (مرحله ۴ فاز ۱) |
+| #۳۳ | Backup فقط در پایان چت | پیش از commit -- نه نیاز |
+| #۳۴ | zip در root پروژه دانلود | کاربر زیپ ها را در root می‌گذارد |
+| #۳۵ | pip flags ≠ npm flags | فقط آن flag ها که برای ابزار مربوطه |
+| #۳۶ | verify signature قبل از تست | findstr پیش از نوشتن تست |
+| #۳۷ | read-back verify بعد از write | پس از تولید/تغییر فایل |
+| #۳۸ | `.py` -> scripts/، zip -> root | مسیر کپی صریح |
+| #۳۹ | multi-root zip -> `python -m zipfile -e` | به‌جای 43_sync_from_zip |
+| #۴۰ | verify argparse syntax | پیش از پیشنهاد command |
+| #۴۱ | `.get()` به‌جای `[]` در `or` | در assertion تست |
+| #۴۲ | `--no-verify` با `[skip-hooks: REASON]` | فقط در اضطرار |
+| #۴۳ | Hybrid hook mode | critical اجباری، minor warning |
+| #۴۴ | `.gitattributes` نه hook برای CRLF | line ending control |
+| #۴۵ | pre-commit entry: `python wrapper.py` | نه .cmd مستقیم |
+| #۴۶ | ASCII-only در print() اسکریپت Windows | + utf-8 reconfigure |
+| #۴۷ | تست hook قبل از deploy | روی کل codebase |
 
 ---
 
@@ -575,5 +590,5 @@ pytest
 
 ## 📌 پایان CLAUDE_CHECKLIST
 
-**نسخه:** v1.1 (2026-05-18 — Atomic Update چت ۷)  
+**نسخه:** v1.2 (2026-05-18 — Atomic Update پایان چت ۷، +۱۵ قانون)  
 **مرجع بالاتر:** PROJECT_GOVERNANCE.md + سند جامع v2.8+
