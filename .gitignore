@@ -79,3 +79,10 @@ temp/
 
 # Log files (بدون .gitkeep)
 logs/*.log.*
+
+# Sync backups (created by scripts/43_sync_from_zip.py --apply)
+.sync-backup/
+
+# Backend runtime logs (any subdir)
+backend/logs/*.log
+backend/logs/*.log.*

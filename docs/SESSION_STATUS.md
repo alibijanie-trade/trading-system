@@ -1,10 +1,10 @@
-# 📍 SESSION_STATUS — وضعیت پایان آخرین چت
+# 📍 SESSION_STATUS — وضعیت پایان چت ۶
 
-> **هدف یک‌خطی:** snapshot دقیق وضعیت پروژه در پایان آخرین چت — برای Claude بعدی که می‌خواهد ادامه دهد.
+> **هدف یک‌خطی:** snapshot دقیق وضعیت پروژه در پایان چت ۶ — برای Claude بعدی که ادامه می‌دهد.
 
 > **محل قرارگیری:** `docs/SESSION_STATUS.md`  
-> **به‌روز توسط:** Claude در پایان هر چت (CLAUDE_CHECKLIST فاز ۳ مرحله ۸)  
-> **آخرین به‌روزرسانی:** 2026-05-17 (پایان Session 7)
+> **به‌روز توسط:** Claude در پایان هر چت  
+> **آخرین به‌روزرسانی:** 2026-05-17 (پایان چت ۶)
 
 ---
 
@@ -12,25 +12,41 @@
 
 **نام چت:** `TRADING-phase0-part06-quality-hardening`  
 **تاریخ:** 2026-05-17  
-**مدت تقریبی:** یک نشست متوسط  
 **Claude version:** Claude Opus 4.7  
 **فاز شروع:** فاز ۰ — ۱۰۰٪ + Tier 2 (۰/۹)  
-**فاز پایان:** فاز ۰ — ۱۰۰٪ + Tier 2 — **۴/۹ (~۴۴٪)** ✅
+**فاز پایان:** فاز ۰ — ۱۰۰٪ + Tier 2 — **۴/۹ DONE + verified** ✅
 
 ---
 
 ## ✅ کارهای انجام‌شده در این چت
 
-طبق پیشنهاد کاربر («از گزینه‌ای که فکر می‌کنی درست‌تر و بهتره شروع کن»)، چهار task Tier 2 به ترتیب پیچیدگی صعودی انجام شدند:
+### بخش الف — Tier 2 (T2.01 تا T2.04)
 
-| Task | شرح | اسکریپت | تست‌های pass |
+| Task | شرح | اسکریپت | تست |
 |---|---|---|---|
-| **T2.03** | `.env.example` audit (backend + ساخت frontend) | `34_env_examples_audit.py` | ۲۰/۲۰ |
-| **T2.01** | Error Boundaries (defense-in-depth: ۱ root + ۴ per-route) | `35_error_boundaries.py` | ۳۱/۳۱ |
-| **T2.02** | vitest setup + ۵ smoke test | `36_vitest_setup.py` | ۴۵/۴۵ |
-| **T2.04** | ARCHITECTURE.md با ۶ دیاگرام Mermaid | `37_architecture_doc.py` | ۳۶/۳۶ |
+| T2.03 | `.env.example` audit | `34_env_examples_audit.py` | ۲۰/۲۰ static ✅ |
+| T2.01 | Error Boundaries (defense-in-depth: ۱ root + ۴ per-route) | `35_error_boundaries.py` | ۳۱/۳۱ static ✅ |
+| T2.02 | vitest setup + ۵ smoke test | `36_vitest_setup.py` | **۳۰/۳۰ runtime ✅** |
+| T2.04 | ARCHITECTURE.md با ۶ دیاگرام Mermaid | `37_architecture_doc.py` | ۳۶/۳۶ static ✅ |
 
-**جمع چک‌های استاتیک:** ۱۳۲/۱۳۲ ✅ — همه idempotent.
+### بخش ب — Git Infrastructure
+
+- بازیابی git history — چت‌های ۴-۶ به‌صورت retroactive commit شدند
+- پاکسازی فایل‌های `.bak` و `.log` از tracking
+- `.gitignore` تمیز و کامل شد
+- **۱۲ commit کل** در history (از ۷ commit در شروع چت)
+
+### بخش ج — Sync Infrastructure
+
+- اسکریپت `scripts/43_sync_from_zip.py` ساخته شد — workflow استاندارد برای sync کردن state چت Claude به پروژه local
+- روش dry-run + apply با backup خودکار
+
+### بخش د — Frontend Verification
+
+- `npm install` با flags بهینه‌شده ایران: `--save-dev --no-audit --no-fund --prefer-offline`
+- ۱۴۸ پکیج نصب شد (vitest + testing libraries + jsdom)
+- ۳۰ تست vitest همگی pass شدند
+- ۱۵ فایل `.jsx` با `import React` تکمیل شدند (Bug #50)
 
 ---
 
@@ -38,14 +54,12 @@
 
 | متریک | مقدار |
 |---|---|
-| اسکریپت‌های اصلی | ۴ (۳۴، ۳۵، ۳۶، ۳۷) |
-| اسکریپت‌های تست همراه | ۴ |
-| چک‌های استاتیک total | ۱۳۲ |
-| چک‌های runtime | ۰ (node_modules غایب در container — کاربر روی ماشین خود اجرا می‌کند) |
-| فایل‌های frontend جدید | ۸ (۱ component + ۵ تست + ۱ setup + ۱ env) |
-| Bug رفع‌شده | ۰ |
-| Decision ثبت‌شده | ۳ (#۵۵، #۵۶، #۵۷) |
-| قوانین جدید | ۰ |
+| Tasks تکمیل‌شده | ۴ از ۹ Tier 2 |
+| Tasks معلق | ۵ (T2.05-T2.09) |
+| Commits جدید | ۵ |
+| تست‌های frontend pass | **۳۰/۳۰ ✅** |
+| Bug کشف‌شده | ۲ (#۵۰ import React، #۵۱ python -c escape) |
+| قوانین جدید کشف‌شده | ۶ (#۲۷-#۳۲) |
 
 ---
 
@@ -58,195 +72,138 @@
 ```
 Tier 2 progress: ████████████░░░░░░░░░ ۴۴٪
 
-├─ T2.01 Error Boundaries        ✅
-├─ T2.02 Frontend tests (vitest) ✅
+├─ T2.01 Error Boundaries        ✅ verified (frontend npm test)
+├─ T2.02 Frontend tests (vitest) ✅ verified (30/30 pass)
 ├─ T2.03 .env.example audit      ✅
 ├─ T2.04 ARCHITECTURE.md         ✅
-├─ T2.05 Git workflow audit      📋
-├─ T2.06 Pre-commit hooks        📋
-├─ T2.07 Anti-pattern catalog    📋
-├─ T2.08 Backend test coverage   📋
-└─ T2.09 API_DOCS.md             📋
+├─ T2.05 Git workflow audit      📋 معلق چت ۷
+├─ T2.06 Pre-commit hooks        📋 معلق چت ۷
+├─ T2.07 Anti-pattern catalog    📋 معلق چت ۷
+├─ T2.08 Backend test coverage   📋 معلق چت ۷
+└─ T2.09 API_DOCS.md             📋 معلق چت ۷
 ```
 
 ---
 
-## 📁 فایل‌های ساخته‌شده/به‌روز در این چت
+## 📁 وضعیت Git در پایان چت ۶
 
-### Frontend جدید
-
-- `frontend/src/components/common/ErrorBoundary.jsx` ⭐
-- `frontend/src/components/common/ErrorBoundary.test.jsx`
-- `frontend/src/test/setup.js`
-- `frontend/src/utils/numberFormat.test.js`
-- `frontend/src/utils/dateFormat.test.js`
-- `frontend/src/stores/confirmStore.test.js`
-- `frontend/src/pages/LoginPage.test.jsx`
-- `frontend/.env.example`
-
-### Frontend به‌روز
-
-- `frontend/src/App.jsx` (defense-in-depth ErrorBoundary)
-- `frontend/package.json` (vitest + testing libraries + scripts test)
-- `frontend/vite.config.js` (بلوک test)
-
-### Backend به‌روز
-
-- `backend/.env.example` (APP_VERSION 0.1.1 → 0.4.0، افزودن API_PREFIX، دستورالعمل تولید کلیدها)
-
-### Scripts جدید
-
-- `scripts/34_env_examples_audit.py` + `34b_test_env_examples.py`
-- `scripts/35_error_boundaries.py` + `35b_test_error_boundaries.py`
-- `scripts/36_vitest_setup.py` + `36b_test_vitest_setup.py`
-- `scripts/37_architecture_doc.py` + `37b_test_architecture_doc.py`
-
-### Docs جدید
-
-- `docs/ARCHITECTURE.md` ⭐ (با ۶ دیاگرام Mermaid)
-
-### Docs به‌روز
-
-- `docs/TASK_BACKLOG.md` (T2.01-T2.04 → DONE، آمار)
-- `docs/CHAT_LOG.md` (افزودن چت ۷)
-- `docs/DECISIONS_LOG.md` (افزودن D#۵۵، D#۵۶، D#۵۷)
-- `docs/PROJECT_CONTEXT.md` (نسخه v0.5.0، لینک ARCHITECTURE.md)
-- `CHANGELOG.md` (v0.5.0)
-- `docs/SESSION_STATUS.md` (همین فایل)
-
----
-
-## 🚀 گام بعدی پیشنهادی
-
-### گزینه الف — ادامه Tier 2 (Quality Hardening)
-
-**نام چت پیشنهادی:** `TRADING-phase0-part07-quality-hardening-continued`
-
-Task های باقیمانده:
-- **T2.05** — Git workflow audit (آیا commit history واقعی هست؟) — S
-- **T2.06** — Pre-commit hooks (husky + lint-staged + ruff/eslint) — M
-- **T2.07** — Anti-pattern catalog (نمونه‌های concrete از A1-A10) — M
-- **T2.08** — Backend test coverage گزارش (pytest + coverage) — M
-- **T2.09** — API_DOCS.md (markdown alternative به Swagger) — M
-
-### گزینه ب — پرش به فاز ۱: CCXT + WebSocket
-
-**نام چت پیشنهادی:** `TRADING-phase1-part01-ccxt-websocket-setup`
-
-Task های فاز ۱:
-- نصب CCXT و config exchange
-- DataSource جدید: `CCXTDataSource` (طبق classDiagram در ARCHITECTURE.md)
-- WebSocket connection به Binance
-- ذخیره real-time در trading.db
-- نمایش live در نمودار
-
-### گزینه ج — تأیید چت ۷ توسط کاربر
-
-اگر کاربر هنوز کارهای این چت را روی ماشین خود تست نکرده (npm install + npm test)، گام بعد می‌تواند تأیید این کارها قبل از شروع کار جدید باشد.
-
----
-
-## ⚠️ مسائل شناخته‌شده (Non-blocking)
-
-### نیاز به npm install توسط کاربر
-
-اسکریپت ۳۶ فقط `package.json` را ویرایش کرد — نصب devDeps جدید باید توسط کاربر روی ماشین خود اجرا شود:
-
-```bash
-cd frontend
-npm install
+```
+1c66d39 (HEAD -> main) fix(jsx): add React imports + install vitest deps for T2.02 verification
+e79b947 feat(tier2): T2.01-T2.04 complete + Tier 2 governance docs
+65e90b6 chore: tighten .gitignore (bak/log/coverage/pytest-cache)
+f3034c0 chore: remove .bak/.log files and tighten .gitignore
+f787e97 feat: retrospective sync - chat 4-6 state (auth, frontend, theme, toast, ui-polish, governance)
+c59f200 docs(session): close chat 3 - finalize v2.3
+2d30c21 docs(session): close chat 3 - add Chat Handoff Protocol (v2.2)
+5e8d990 fix(logging): add colorama and UTF-8 support for Windows CMD
+ac0caaa feat(core): add logger, exceptions, handlers, response wrapper
+d2ade7b feat(backend): bootstrap FastAPI app with config, env, health endpoint
+11e44be docs(session): record 10 architecture decisions (v0.1.1)
+b8a02d0 feat: initial project structure (Phase 0 - Step 1)
 ```
 
-بعد از آن، تست‌ها قابل اجرا هستند:
-
-```bash
-npm test               # ۵ smoke test
-npm run test:coverage  # با گزارش پوشش (در coverage/index.html)
-```
-
-### محدودیت runtime check در chat 7
-
-به دلیل غیبت `node_modules` در container Claude، `npm test` runtime اجرا نشد. تست‌های static (~۱۳۲ چک) همگی pass شدند. در چت بعد، اگر کاربر تأیید کند `npm test` موفقیت‌آمیز بوده، می‌توان مطمئن بود تنظیمات vitest درست هستند.
+**۱۲ commit کل** — `working tree clean` ✅
 
 ---
 
-## 🔍 وضعیت تست‌شده
+## 🚀 گام بعدی پیشنهادی برای چت ۷
 
-**Backend (از چت ۶):**
-- ✅ `GET /health` پاسخ می‌دهد
-- ✅ `POST /auth/login` با admin/1 توکن می‌دهد
-- ✅ `GET /auth/me` با JWT اطلاعات کاربر را برمی‌گرداند
-- ✅ `GET /ohlcv/1?timeframe=1d` داده شمعی برمی‌گرداند
+### نام چت ۷ پیشنهادی
 
-**Frontend (از چت ۶ — هنوز در چت ۷ تأیید نشده):**
-- ✅ Login با admin/1 کار می‌کند
-- ✅ ChartPage با Skeleton + نمودار + tooltip
-- ✅ Settings Page با ۳ بخش
-- ✅ font scaling سراسری
-- ✅ تقویم شمسی و میلادی + ۴ فرمت
+`TRADING-phase0-part07-quality-hardening-continued`
 
-**جدید در چت ۷ (نیاز به تأیید کاربر):**
-- ⏳ ErrorBoundary در عمل (نیاز به trigger خطا برای validation)
-- ⏳ `npm test` با ۵ فایل تست
-- ⏳ رندر Mermaid در `docs/ARCHITECTURE.md` در GitHub/IDE
+### اولویت ۱ — ادغام قوانین جدید (atomic update)
+
+طبق قانون #۲۶ Atomic Updates، قوانین #۲۷-#۳۲ که در این چت کشف شدند، باید **اول** در این اسناد ادغام شوند:
+
+- `docs/سند_جامع_v2_7.md` — جدول قوانین قفل‌شده
+- `docs/CLAUDE_CHECKLIST.md` — پیش‌شرط بحرانی فاز ۳
+
+جزئیات این قوانین در `docs/CHAT6_FINALIZE.md` بخش ۲ موجود است.
+
+### اولویت ۲ — ادامه Tier 2 (T2.05-T2.09)
+
+- T2.05 — Git workflow audit + `docs/GIT_WORKFLOW.md`
+- T2.06 — Pre-commit hooks
+- T2.07 — Anti-pattern catalog مفصل
+- T2.08 — Backend pytest + coverage
+- T2.09 — API_DOCS.md
+
+جزئیات هر task در `docs/CHAT6_FINALIZE.md` بخش ۴ موجود است.
+
+### اولویت ۳ — رفع Bug #50 (ریشه‌ای)
+
+پیدا کردن علت ریشه‌ای اینکه چرا React 19 + Vite + plugin react در vitest نیاز به `import React` صریح دارد. احتمالاً مربوط به تنظیم `jsx: 'automatic'` در `vite.config.js` بخش `test`.
+
+---
+
+## ⚠️ مسائل شناخته‌شده
+
+### Bug #50 — import React اضافی در ۱۵ فایل .jsx
+
+به‌صورت موقت با اسکریپت `45_fix_react_imports_all_jsx.py` رفع شد. نیاز به علت‌یابی ریشه‌ای در چت ۷.
+
+### Bug #51 — Escape characters در python -c
+
+درس آموخته شد: برای ساخت/اصلاح فایل، از اسکریپت Python جداگانه استفاده شود — نه `python -c` با کد طولانی.
+
+---
+
+## 🔍 وضعیت تست‌شده در این چت
+
+**Frontend (تأیید عملی روی ماشین کاربر):**
+- ✅ `npm install` با registry mirror چینی + flags بهینه = ۱ دقیقه
+- ✅ `npm test` = **۳۰/۳۰ pass** (۵ فایل تست)
+
+**Backend (تأیید نشد در این چت):**
+- ⏳ `pytest` — معلق برای T2.08 در چت ۷
+
+**Git (تأیید عملی):**
+- ✅ `git log --oneline` نشان می‌دهد ۱۲ commit
+- ✅ `git status` = `nothing to commit, working tree clean`
 
 ---
 
 ## 📦 نسخه پروژه
 
-**نسخه فعلی:** `v0.5.0`  
-**نسخه سند جامع:** `v2.7` (بدون تغییر در چت ۷)  
-**نسخه CHAT_LOG:** `v1.1`  
-**نسخه TASK_BACKLOG:** `v1.1`  
-**نسخه DECISIONS_LOG:** `v1.1`
+**نسخه فعلی:** `v0.5.0` (T2.01-T2.04)  
+**نسخه سند جامع:** `v2.7` (بدون تغییر؛ قوانین #۲۷-#۳۲ منتظر ادغام در چت ۷)
 
 ---
 
-## 🎯 برای Claude بعدی
+## 🎯 برای Claude بعدی (چت ۷)
 
-اگر شما Claude هستید و این چت را شروع می‌کنید:
+اگر شما Claude هستید و چت ۷ را شروع می‌کنید:
 
 ### ۱) چک‌لیست شروع را اجرا کنید
 
-طبق `CLAUDE_CHECKLIST.md` فاز ۱، ۸ مرحله را انجام دهید.
+طبق `CLAUDE_CHECKLIST.md` فاز ۱.
 
 ### ۲) اسناد را به ترتیب بخوانید
 
 ```
-1. PROJECT_GOVERNANCE.md   ← راهبردی
-2. PROJECT_CONTEXT.md      ← به‌روز (v0.5.0)
+1. PROJECT_GOVERNANCE.md
+2. PROJECT_CONTEXT.md
 3. SESSION_STATUS.md       ← این سند
-4. CHAT_LOG.md             ← مهم — تاریخچه ۷ چت، به‌خصوص چت ۷
-5. TASK_BACKLOG.md         ← Tier 2 ۴/۹ — T2.05+ آماده
-6. ARCHITECTURE.md         ← جدید — برای فهم سریع معماری
-7. CLAUDE_CHECKLIST.md
-8. سند_جامع_v2_7.md
+4. CHAT6_FINALIZE.md       ← ⭐ مهمترین برای چت ۷
+5. CHAT_LOG.md
+6. TASK_BACKLOG.md
+7. ARCHITECTURE.md
+8. CLAUDE_CHECKLIST.md
+9. سند_جامع_v2_7.md
 ```
 
-### ۳) چک محیط
+### ۳) قبل از هر کار
 
-```cmd
-backend/venv/          → باید موجود باشد
-backend/trading.db     → باید موجود باشد (421KB)
-frontend/node_modules  → باید موجود باشد + شامل vitest!
-```
+- **اول** قوانین #۲۷-#۳۲ را از `CHAT6_FINALIZE.md` به سند جامع و CLAUDE_CHECKLIST ادغام کن
+- سپس بپرس کاربر می‌خواهد T2.05 شروع کنیم یا کار دیگری
 
-اگر `node_modules` غایب یا قدیمی است: `cd frontend && npm install`
+### ۴) قانون #۲۷ — تأیید صریح برای پایان چت
 
-### ۴) چک تست‌های جدید (در چت ۷ اضافه شد)
+- **هرگز** خودکار چت را نبند
+- منتظر تأیید صریح کاربر بمان
 
-```cmd
-cd frontend
-npm test
-```
-
-انتظار: ۵ فایل تست pass شود (numberFormat، dateFormat، confirmStore، ErrorBoundary، LoginPage).
-
-### ۵) گزارش آمادگی
-
-پیام اولیه شما باید Template ۱۷.۱ سند جامع v2.7 را پیروی کند.
-
-### ۶) صبر برای تأیید
+### ۵) صبر برای تأیید
 
 هیچ کاری قبل از تأیید کاربر شروع نشود.
 
@@ -254,5 +211,5 @@ npm test
 
 ## 📌 پایان SESSION_STATUS
 
-**نسخه:** v7 (Session 7)  
+**نسخه:** v6 (پایان چت ۶)  
 **به‌روز توسط:** Claude در پایان `TRADING-phase0-part06-quality-hardening`
