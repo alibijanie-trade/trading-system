@@ -4,7 +4,7 @@
 
 > **محل قرارگیری:** `docs/TASK_BACKLOG.md`  
 > **به‌روز توسط:** Claude در پایان هر چت (فاز ۳ مرحله ۳ چک‌لیست)  
-> **نسخه این Backlog:** v1.2 (2026-05-17 — پایان چت ۶)
+> **نسخه این Backlog:** v1.3 (2026-05-18 — آغاز چت ۷)
 
 ---
 
@@ -86,7 +86,9 @@
 | ID | Task | Status | شرح |
 |---|---|---|---|
 | T2.10 | رفع ریشه‌ای Bug #50 (import React) | 📋 TODO | علت‌یابی چرا React 19 + vitest نیاز به import React صریح دارد |
-| T2.11 | ادغام قوانین #۲۷-#۳۲ در سند جامع | 📋 TODO | atomic update لازم در ابتدای چت ۷ |
+| T2.11 | ادغام قوانین #۲۷-#۳۲ در سند جامع | 🚧 IN-PROGRESS | atomic update در آغاز چت ۷ (سند v2.7→v2.8 + CLAUDE_CHECKLIST + PROJECT_GOVERNANCE + CHAT_LOG) |
+| T2.12 | ارزیابی و مهاجرت به Claude Code / GitHub MCP workflow | 📋 TODO | بحث آینده (شاید چت ۱۰+ یا فاز ۱) — جایگزینی روش zip + claude.ai با دسترسی مستقیم به git/disk. بررسی: (الف) Claude Code CLI، (ب) GitHub MCP connector — هر دو کاهنده overhead sync دستی. Tier 3، 🟢 LOW، XL. |
+| T2.13 | علت‌یابی ریشه‌ای Bug #50 (import React اضافی) | 📋 TODO | موقت در چت ۶ با اسکریپت ۴۵ رفع شد. علت احتمالی: `jsx: 'automatic'` در `vite.config.js` بلوک `test`. Tier 2، 🟡 MEDIUM، S. |
 
 ---
 
@@ -195,10 +197,10 @@
 | سطح | تعداد Tasks | DONE | باقیمانده |
 |---|---|---|---|
 | Tier 1 | 16 | 16 | 0 |
-| Tier 2 | 11 | 4 | 7 (T2.05-T2.09 + T2.10 + T2.11) |
-| Tier 3 | 20 | 0 | 20 |
+| Tier 2 | 13 | 4 | 9 (T2.05-T2.09 + T2.10 + T2.11 + T2.13) |
+| Tier 3 | 21 | 0 | 21 (شامل T2.12 — مهاجرت Claude Code) |
 | Tier 4 | 18 | 0 | 18 |
-| **مجموع** | **65** | **20** | **45** |
+| **مجموع** | **68** | **20** | **48** |
 
 > 💡 این آمار **حدوداً** است و در طول پروژه تغییر می‌کند.
 
@@ -206,6 +208,6 @@
 
 ## 📌 پایان TASK_BACKLOG
 
-**نسخه:** v1.2 (2026-05-17 — پایان چت ۶)  
-**به‌روز شده در:** پایان چت `TRADING-phase0-part06-quality-hardening`  
+**نسخه:** v1.3 (2026-05-18 — آغاز چت ۷، Atomic Update T2.11)  
+**به‌روز شده در:** آغاز چت `TRADING-phase0-part07-quality-hardening-continued`  
 **به‌روز توسط:** Claude (طبق قانون #۲۳ و CLAUDE_CHECKLIST فاز ۳ مرحله ۳)

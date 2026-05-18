@@ -4,7 +4,7 @@
 
 > **محل قرارگیری:** `docs/CHAT_LOG.md`  
 > **به‌روز توسط:** Claude در پایان هر چت (CLAUDE_CHECKLIST فاز ۳ مرحله ۲ — قانون #۲۳)  
-> **نسخه این Log:** v1.0 (2026-05-17)
+> **نسخه این Log:** v1.2 (2026-05-18 — یکپارچه‌سازی شمارش چت‌ها)
 
 ---
 
@@ -17,9 +17,25 @@
 - [چت ۲ — phase0-part02-backend-core](#چت-۲--phase0-part02-backend-core)
 - [چت ۳ — phase0-part03-db-and-data](#چت-۳--phase0-part03-db-and-data)
 - [چت ۴ — phase0-part04-auth-and-frontend](#چت-۴--phase0-part04-auth-and-frontend)
-- [چت ۵ — phase0-part04-theme-engine](#چت-۵--phase0-part04-theme-engine) 
-- [چت ۶ — phase0-part05-ui-polish-and-governance](#چت-۶--phase0-part05-ui-polish-and-governance)
-- [چت ۷ — phase0-part06-quality-hardening](#چت-۷--phase0-part06-quality-hardening) ← این چت
+- [چت ۵.الف — phase0-part04-theme-engine](#چت-۵الف--phase0-part04-theme-engine)
+- [چت ۵.ب — phase0-part05-ui-polish-and-governance](#چت-۵ب--phase0-part05-ui-polish-and-governance)
+- [چت ۶ — phase0-part06-quality-hardening](#چت-۶--phase0-part06-quality-hardening)
+- [چت ۷ — phase0-part07-quality-hardening-continued](#چت-۷--phase0-part07-quality-hardening-continued) ← این چت
+
+---
+
+## ⚠️ یادداشت یکپارچه‌سازی شمارش (v1.1 — چت ۷)
+
+در چت ۷ (`phase0-part07-quality-hardening-continued`)، شمارش چت‌ها یکپارچه شد:
+
+| شمارش قدیمی | شمارش جدید | علت تغییر |
+|---|---|---|
+| چت ۵ | **چت ۵.الف** | chat اصلی Session 5 (theme-engine، part04) |
+| چت ۶ | **چت ۵.ب** | ادامه Session 5 (ui-polish-and-governance، part05) |
+| چت ۷ | **چت ۶** | Session 6 مستقل (quality-hardening، part06) — منطبق با CHAT6_FINALIZE.md |
+| (این چت) | **چت ۷** | Session 7 (quality-hardening-continued، part07) |
+
+این یکپارچه‌سازی باعث می‌شود «چت N» در CHAT_LOG با Session N در سایر اسناد (CHAT6_FINALIZE، SESSION_STATUS) همراستا شود.
 
 ---
 
@@ -134,12 +150,14 @@ TRADING-phase{N}-part{NN}-{topic-slug}
    │
 چت ۴ ─ 2026-05-16 ─ Auth + Frontend ─ [JWT + Login + ChartPage]
    │
-چت ۵ ─ 2026-05-17 ─ Theme Engine ─ [۵ تم + Toast + 00b]
+چت ۵.الف ─ 2026-05-17 ─ Theme Engine ─ [۵ تم + Toast + 00b]
    │
-چت ۶ ─ 2026-05-17 ─ UI Polish + Governance ─ [۸.۳/۸.۴/۸.۵ + اسناد] ← این چت
+چت ۵.ب ─ 2026-05-17 ─ UI Polish + Governance ─ [۸.۳/۸.۴/۸.۵ + اسناد]
+   │
+چت ۶ ─ 2026-05-17 ─ Quality Hardening ─ [Tier 2 — ۴/۹: ErrorBoundary + vitest + ARCHITECTURE + git]
    │
    ▼
-چت ۷ ─ 2026-??-?? ─ Quality Hardening ─ [Tier 2 — Error Boundaries + Tests + ...]
+چت ۷ ─ 2026-05-18 ─ Quality Hardening Continued ─ [Tier 2 — Atomic Update قوانین + ۵/۹ بقیه] ← این چت
 ```
 
 ---
@@ -344,7 +362,7 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 
 ---
 
-## چت ۵ — phase0-part04-theme-engine
+## چت ۵.الف — phase0-part04-theme-engine
 
 > ⚠️ **توجه:** نام چت ۴ و ۵ هر دو `part04` بودند به دلیل اصلاحیه نام چت در سند v2.7. در v2.7+ نام صحیح این چت `part05` خواهد بود — ولی در زمان شروعش `part04` نوشته شد.
 
@@ -409,7 +427,7 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 
 ---
 
-## چت ۶ — phase0-part05-ui-polish-and-governance
+## چت ۵.ب — phase0-part05-ui-polish-and-governance
 
 **نام چت (در زمان شروع):** `TRADING-phase0-part05-skeleton-confirm`  
 **نام نهایی (بر اساس موضوعات):** `TRADING-phase0-part05-ui-polish-and-governance`  
@@ -598,7 +616,7 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 
 ---
 
-## چت ۷ — phase0-part06-quality-hardening
+## چت ۶ — phase0-part06-quality-hardening
 
 **نام چت (در زمان شروع):** `TRADING-phase0-part06-quality-hardening`  
 **نام نهایی:** `TRADING-phase0-part06-quality-hardening` (بدون تغییر)  
@@ -793,14 +811,35 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 
 ---
 
+
+## چت ۷ — phase0-part07-quality-hardening-continued
+
+> 🚧 **در حال انجام — این چت.** جزئیات کامل در پایان چت طبق CLAUDE_CHECKLIST فاز ۳ مرحله ۲ ثبت می‌شود.
+
+**نام چت:** `TRADING-phase0-part07-quality-hardening-continued`  
+**تاریخ:** 2026-05-18  
+**Claude version:** Claude Opus 4.7  
+**فاز شروع:** فاز ۰ — ۱۰۰٪ + Tier 2 — ۴/۹  
+**فاز پایان (پیش‌بینی):** Tier 2 — تا ۹/۹ (T2.05-T2.09) + atomic update قوانین #۲۷-۳۲ + T2.12 ثبت‌شده
+
+### 📌 موضوع کلی
+
+ادامه Tier 2 (Quality Hardening). دو هدف:
+1. **مرحله A:** Atomic Update قوانین #۲۷-۳۲ در همه اسناد + یکپارچه‌سازی شمارش چت‌ها
+2. **مرحله B:** ادامه T2.05 تا T2.09
+
+_بقیه جزئیات در پایان چت تکمیل می‌شود._
+
+---
+
 ## آمار کلی پروژه
 
 | دسته | تعداد |
 |---|---|
 | چت‌های انجام‌شده | ۷ |
-| اسکریپت‌های تولید‌شده | ~۴۰ (۸ تای جدید در چت ۷) |
+| اسکریپت‌های تولید‌شده | ~۴۲ (۸ تای جدید در چت ۶ + ۲ atomic update در چت ۷) |
 | Bug های ثبت‌شده | ۴۹ |
-| Decisions ثبت‌شده | ~۵۷ (۳ تای جدید در چت ۷) |
+| Decisions ثبت‌شده | ~۵۷ (۳ تای جدید در چت ۶) |
 | قوانین قفل‌شده | ۲۶ |
 | فاز پایان‌یافته | فاز ۰ (۱۰۰٪) + Tier 2 (~۴۴٪) |
 | فاز در حال شروع | ادامه Tier 2 یا فاز ۱ |
@@ -809,6 +848,6 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v1.1 (2026-05-17 — پایان چت ۷)  
-**به‌روز شده در:** پایان چت ۷  
-**به‌روز توسط:** Claude طبق قانون #۲۳ و CLAUDE_CHECKLIST فاز ۳ مرحله ۲
+**نسخه:** v1.2 (2026-05-18 — آغاز چت ۷، یکپارچه‌سازی شمارش چت‌ها + stub چت ۷)  
+**به‌روز شده در:** آغاز چت ۷ (Atomic Update T2.11)  
+**به‌روز توسط:** Claude طبق قانون #۲۳ و #۲۶ (Atomic Updates) — CLAUDE_CHECKLIST فاز ۳ مرحله ۲
