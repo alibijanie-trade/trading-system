@@ -1,3 +1,4 @@
+import React from 'react';
 import useToastStore from "../../stores/toastStore.js";
 
 const TYPE_CONFIG = {

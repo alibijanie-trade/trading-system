@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { createChart, CrosshairMode } from "lightweight-charts";

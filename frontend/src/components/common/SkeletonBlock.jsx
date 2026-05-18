@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * SkeletonBlock — placeholder متحرک برای حالات بارگذاری
  * طبق سند ۸.۳ (Skeleton Screen برای loading states)

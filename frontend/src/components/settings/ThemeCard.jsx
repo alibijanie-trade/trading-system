@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * ThemeCard — کارت انتخاب تم با پیش‌نمایش رنگ‌ها
  *

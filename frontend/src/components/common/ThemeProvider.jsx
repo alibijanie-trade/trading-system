@@ -1,3 +1,4 @@
+import React from 'react';
 /* ============================================================
    ThemeProvider — متغیرهای CSS تم فعلی را روی :root اعمال می‌کند.
    هر بار themeId/fontSize/customColors تغییر کند، اعمال مجدد می‌شود.
