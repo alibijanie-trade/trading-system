@@ -47,7 +47,11 @@ CRITICAL = {
         "pattern": r"#[0-9a-fA-F]{3,6}\b",
         "files": [".jsx"],
         "exclude_paths": ["frontend/src/themes/", "frontend/src/index.css"],
-        "exclude_context": ["// theme-tokens-allowed"],
+        "exclude_context": [
+            "// theme-tokens-allowed",
+            "readVar(",  # fallback default in readVar(varName, "#default")
+            "theme-fallback",  # // theme-fallback comment marker
+        ],
     },
     "A4": {
         "name": "hardcoded secret/password/api_key/token",
