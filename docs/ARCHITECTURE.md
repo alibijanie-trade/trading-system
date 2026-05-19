@@ -4,8 +4,8 @@
 
 > **محل قرارگیری:** `docs/ARCHITECTURE.md`  
 > **نسخه پروژه در زمان نگارش:** v0.4.0  
-> **آخرین به‌روزرسانی:** 2026-05-17  
-> **منبع رسمی:** این فایل تصویر معماری را خلاصه می‌کند؛ برای جزئیات کامل (API specs، DB schemas، business rules) به «سند جامع v2.7» مراجعه کنید.
+> **آخرین به‌روزرسانی:** 2026-05-19 (چت ۸ — T2.10: Repository Layer + CCXT expansion)  
+> **منبع رسمی:** این فایل تصویر معماری را خلاصه می‌کند؛ برای جزئیات کامل (API specs، DB schemas، business rules) به «سند جامع v2.10» مراجعه کنید.
 
 ---
 
@@ -88,6 +88,81 @@ flowchart TB
 - `app/core/` (پایه‌ای): `config.py`, `security.py`, `exceptions.py`, `handlers.py`, `logging.py`, `response.py` — توسط همه‌ی لایه‌ها قابل استفاده.
 - `app/api/v1/dependencies.py` — DI factory functions (`get_db`, `get_current_user`) که توسط FastAPI تزریق می‌شوند.
 - `app/schemas/` — Pydantic DTOs برای request/response (نه entity).
+- **Repository Layer** از `BaseRepository[T]` generic ارث می‌برد — جزئیات در بخش ۵.۵ پایین.
+
+---
+
+## ۲.۵. جزئیات Repository Layer 🆕 v2.10
+
+Repository Layer abstraction بین Service و Database است — hide کردن SQLAlchemy details از service code (سند ۵.۳ و قانون #۳۵).
+
+```mermaid
+classDiagram
+  class BaseRepository~T~ {
+    <<generic>>
+    -session: AsyncSession
+    -model: Type[T]
+    +get_by_id(id) Optional[T]
+    +get_all(skip, limit) List[T]
+    +create(**kwargs) T
+    +update(id, **kwargs) Optional[T]
+    +delete(id) bool
+    +count(**filters) int
+    +exists(**filters) bool
+  }
+
+  class UserRepository {
+    +get_by_username(username) Optional[User]
+    +get_by_email(email) Optional[User]
+    +get_active_users() List[User]
+  }
+
+  class OHLCVRepository {
+    +get_by_symbol_interval(symbol_id, interval, since, until) List[OHLCVData]
+    +get_latest(symbol_id, interval) Optional[OHLCVData]
+    +bulk_insert(records) int
+  }
+
+  class SymbolRepository {
+    +get_by_ticker(ticker) Optional[Symbol]
+    +get_active() List[Symbol]
+    +get_by_exchange(exchange_id) List[Symbol]
+  }
+
+  class UserSessionRepository {
+    +get_by_refresh_token(token) Optional[UserSession]
+    +revoke(session_id) bool
+    +cleanup_expired() int
+  }
+
+  BaseRepository <|-- UserRepository
+  BaseRepository <|-- OHLCVRepository
+  BaseRepository <|-- SymbolRepository
+  BaseRepository <|-- UserSessionRepository
+```
+
+**اصول در Repository:**
+- هر repository پارامتر اول constructor `session: AsyncSession` دارد.
+- متدهای Generic (`get_by_id`, `create`, ...) از `BaseRepository` به ارث می‌رسند.
+- متدهای خاص entity (مثل `get_by_username`) در subclass تعریف می‌شوند.
+- repository **هیچ‌وقت** business logic ندارد — فقط CRUD + queries.
+- Service Layer برای multi-entity transactions از چند repository استفاده می‌کند.
+
+**مثال جریان در service:**
+```python
+# app/services/auth_service.py
+class AuthService:
+    def __init__(self, session: AsyncSession):
+        self.user_repo = UserRepository(session)
+        self.session_repo = UserSessionRepository(session)
+
+    async def login(self, username, password):
+        user = await self.user_repo.get_by_username(username)
+        if not user or not verify_password(password, user.password_hash):
+            raise AuthenticationError()
+        session = await self.session_repo.create(user_id=user.id, ...)
+        return generate_tokens(user, session)
+```
 
 ---
 
@@ -194,6 +269,48 @@ classDiagram
 
 **فایده:** برای تست/development می‌توان از Excel استفاده کرد؛ در production به Binance switch می‌شود — بدون تغییر در service layer. هیچ کد بالاتری (Service یا API) نام کلاس concrete را نمی‌داند؛ فقط `BaseDataSource` را می‌بیند.
 
+### ۵.۱. بسط CCXTDataSource — آماده‌سازی فاز ۱ 🆕 v2.10
+
+CCXT کتابخانه unified برای اتصال به ده‌ها صرافی رمزارز است (Binance، Coinbase، Kraken، ...). در فاز ۱، فقط Binance پشتیبانی می‌شود.
+
+```mermaid
+sequenceDiagram
+  actor U as Service Layer
+  participant CCXT as CCXTDataSource
+  participant CCXTLib as ccxt library
+  participant WS as Binance WebSocket
+  participant DB as OHLCVRepository
+
+  Note over U,DB: سناریو ۱: دریافت داده تاریخی
+  U->>CCXT: fetch_ohlcv('BTC/USDT', '1h', since, limit=1000)
+  CCXT->>CCXTLib: exchange.fetch_ohlcv(...)
+  CCXTLib->>CCXTLib: HTTP GET binance.com/api/v3/klines
+  CCXTLib-->>CCXT: List[[timestamp, O, H, L, C, V]]
+  CCXT->>CCXT: validate + convert to dict
+  CCXT-->>U: AsyncGenerator yields records
+  U->>DB: bulk_insert(records)
+
+  Note over U,WS: سناریو ۲: real-time WebSocket subscribe
+  U->>CCXT: subscribe_ws('BTC/USDT', '1m')
+  CCXT->>WS: ws://stream.binance.com:9443/ws/btcusdt@kline_1m
+  WS-->>CCXT: kline event (every 1s update)
+  CCXT->>CCXT: filter only 'closed' candles
+  CCXT-->>U: yield closed candle
+  U->>DB: bulk_insert([record])
+```
+
+**نکات مهم برای فاز ۱:**
+- **API key:** در `ExchangeApiKey` model encrypted ذخیره می‌شود (سند بخش ۶.۳). رمزگشایی فقط در `CCXTDataSource.__init__` در RAM.
+- **Rate limiting:** ccxt داخلی rate limit دارد (`exchange.enableRateLimit = True`).
+- **Error handling:** `ccxt.NetworkError`, `ccxt.ExchangeError`, `ccxt.RateLimitExceeded` — در service layer catch می‌شوند.
+- **WebSocket reconnect:** در صورت disconnect، استراتژی exponential backoff (max 30s).
+- **Idempotency:** `OHLCVRepository.bulk_insert` از `INSERT OR REPLACE` (سند ۵.۴.۳) — چکرخ بدون تکرار.
+
+**تست strategy برای CCXTDataSource:**
+- Unit tests: mock `ccxt.Exchange` با `unittest.mock.AsyncMock`.
+- Integration tests: ccxt sandbox/testnet (`exchange.set_sandbox_mode(True)`).
+- E2E tests: فقط در staging با read-only API key.
+
 ---
 
 ## ۶. جریان Authentication
@@ -290,8 +407,9 @@ trading-system/
 │   ├── package.json
 │   └── vite.config.js
 │
-├── docs/                       # ۱۲+ سند governance
-│   ├── سند_جامع_v2_7.md       # قانون اساسی پروژه
+├── docs/                       # ۱۵+ سند governance (v2.10)
+│   ├── سند_جامع_v2_10.md      # قانون اساسی پروژه (200KB — جدید)
+│   ├── PENDING_FOR_NEXT_VERSION.md # 🆕 v2.10 — جمع‌آوری PENDING-EOC
 │   ├── PROJECT_CONTEXT.md     # context سریع برای Claude
 │   ├── ARCHITECTURE.md        # این فایل
 │   ├── TASK_BACKLOG.md
@@ -304,7 +422,12 @@ trading-system/
 │   ├── ONBOARDING_GUIDE.md
 │   ├── REUSABLE_SKELETON.md
 │   ├── PROJECT_GOVERNANCE.md
-│   └── CLAUDE_CHECKLIST.md
+│   ├── CLAUDE_CHECKLIST.md
+│   ├── GIT_WORKFLOW.md        # 🆕 چت ۷
+│   ├── ANTI_PATTERNS.md       # 🆕 چت ۷
+│   ├── BACKEND_TESTING.md     # 🆕 چت ۷
+│   ├── API_DOCS.md            # 🆕 چت ۷
+│   └── PRECOMMIT.md           # 🆕 چت ۷
 │
 ├── scripts/                    # ۳۷+ Python script (idempotent + paired test)
 ├── CHANGELOG.md
@@ -317,7 +440,8 @@ trading-system/
 
 | مرجع | کاربرد |
 |---|---|
-| **سند جامع v2.7** (`docs/سند_جامع_v2_7.md`) | منبع اصلی — همه‌ی API specs، DB schemas، قوانین قفل‌شده، business rules |
+| **سند جامع v2.10** (`docs/سند_جامع_v2_10.md`) | منبع اصلی — همه‌ی API specs، DB schemas، قوانین قفل‌شده، business rules |
+| **PENDING_FOR_NEXT_VERSION.md** 🆕 v2.10 | مخزن لحظه‌ای PENDING-EOC — قانون #۶۰ |
 | **PROJECT_CONTEXT.md** | context سریع برای شروع چت‌های جدید Claude |
 | **TASK_BACKLOG.md** | کارهای آینده گروه‌بندی شده per phase + tier |
 | **DECISIONS_LOG.md** | توجیه فنی تصمیمات معماری (۵۴+ تصمیم) |
@@ -331,6 +455,7 @@ trading-system/
 ## 🔄 تاریخچه
 
 - **2026-05-17** — نسخه اولیه (T2.04). ۶ دیاگرام Mermaid + جدول stores + درخت فایل‌ها.
+- **2026-05-19** 🆕 — چت ۸ (T2.10): بخش ۲.۵ (جزئیات Repository Layer با classDiagram) + بخش ۵.۱ (بسط CCXTDataSource با sequenceDiagram برای فاز ۱). ارجاعات v2.7 → v2.10.
 
 ---
 

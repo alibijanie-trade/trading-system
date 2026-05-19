@@ -85,10 +85,10 @@
 
 | ID | Task | Status | شرح |
 |---|---|---|---|
-| T2.10 | توسعه ARCHITECTURE.md (بخش‌های فاز ۱) | 📋 TODO | minimal expansion — افزودن Repository Layer + CCXT connector sections. در چت ۸ بلوک ۳. Tier 2، 🟡 MEDIUM، S. |
+| T2.10 | توسعه ARCHITECTURE.md (بخش‌های فاز ۱) | ✅ DONE | چت ۸ بلوک ۳ — بخش ۲.۵ Repository Layer + بخش ۵.۱ CCXTDataSource + اصلاح ارجاعات v2.10 |
 | T2.11 | ادغام قوانین #۲۷-#۳۲ در سند جامع | ✅ DONE | atomic update در آغاز چت ۷ (سند v2.7→v2.8 + CLAUDE_CHECKLIST + PROJECT_GOVERNANCE + CHAT_LOG) |
 | T2.12 | ارزیابی و مهاجرت به Claude Code / GitHub MCP workflow | 📋 TODO | Tier 3، 🟢 LOW، XL — بررسی در چت ۸ بلوک ۳ (ارزیابی دو connector برای فاز ۱+). |
-| T2.13 | علت‌یابی ریشه‌ای Bug #50 (import React اضافی) | 📋 TODO | timebox 30min در چت ۸ بلوک ۳. اگر در زمان رفع نشد، open issue باقی. Tier 2، 🟡 MEDIUM، S. |
+| T2.13 | علت‌یابی ریشه‌ای Bug #50 (import React اضافی) | ✅ DONE (analysis) | چت ۸ بلوک ۳ — تحلیل کامل ثبت شد در PENDING (E2.1). Cleanup به چت ۹ موکول می‌شود (نیاز به تست). |
 | T2.14 🆕 | Filesystem MCP integration + permissions | ✅ DONE | چت ۷ — نصب + configure. در v2.10 سند ۲۲ مستند شد. |
 | T2.15 🆕 | Claude Desktop: Memory + Project Knowledge + Custom Instructions | ✅ DONE | چت ۷ — Memory toggles ON. در v2.10 سند ۲۳ مستند شد. |
 | T2.16 🆕 | `claude_workspace/` structure (۵ subfolder + gitignore) | ✅ DONE | چت ۷. در v2.10 سند ۲۴ مستند شد. |
@@ -238,10 +238,10 @@
 | سطح | تعداد Tasks | DONE | باقیمانده |
 |---|---|---|---|
 | Tier 1 | 16 | 16 | 0 |
-| Tier 2 | 21 | 14 | 7 (T2.10، T2.12، T2.13، T2.18، T2.19، T2.20، T2.21) |
+| Tier 2 | 21 | **16** | 5 (T2.12، T2.18، T2.19 ✅، T2.20 ✅، T2.21) |
 | Tier 3 | 21 | 0 | 21 |
 | Tier 4 | 18 | 0 | 18 |
-| **مجموع** | **76** | **30** | **46** |
+| **مجموع** | **76** | **32** | **44** |
 
 > 💡 این آمار **حدوداً** است و در طول پروژه تغییر می‌کند.
 

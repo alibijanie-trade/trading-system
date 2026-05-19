@@ -358,8 +358,110 @@ git commit -m "..."
 
 ---
 
+### آیتم E2.1 — Bug #50 root cause + راه‌حل cleanup (T2.13 تحلیل)
+
+**کشف:** چت ۸، بلوک ۳ (E2 — T2.13 root cause analysis) — 2026-05-19  
+**سطح:** 🟡 medium / cleanup task (غیر-urgent — همه تست‌ها pass هستند با workaround)
+
+**وضعیت فعلی:**
+- ۱۵ فایل `.jsx` دارای خط `import React from 'react';` هستند (از چت ۶ script 45)
+- `vite.config.js`: `plugins: [react()]` در top-level
+- همه ۳۰ تست vitest ✅ pass
+- Bug وضعیت پایدار دارد
+
+**تحلیل علت ریشه‌ای:**
+
+Stack: React 19.2.6 + @vitejs/plugin-react 6.0.1 + Vite 8.0.12 + Vitest 3.2.4
+
+از React 17+، plugin-react به‌صورت پیش‌فرض باید از **automatic JSX runtime** استفاده کند (که نیاز به `import React` ندارد). اما در ترکیب vitest 3.2 + vite 8 + plugin-react 6:
+
+1. plugin-react v6 تنظیم صریح `jsxRuntime: 'automatic'` ندارد
+2. در محیط jsdom + vitest، بدون صریح‌سازی، classic runtime فعال می‌شود
+3. در classic runtime، JSX به `React.createElement(...)` ترجمه می‌شود → نیاز به `import React`
+
+**راه‌حل پیشنهادی (برای چت ۹):**
+
+```javascript
+// frontend/vite.config.js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react({
+    jsxRuntime: 'automatic',  // ⬅️ صریح‌سازی
+  })],
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test/setup.js'],
+    css: false,
+    coverage: { /* ... */ },
+  },
+})
+```
+
+پس از تغییر:
+1. `npm test` — بررسی کن تست‌ها هنوز pass هستند با تغییر تنها
+2. از ۱۵ فایل `.jsx`، خط `import React from 'react';` حذف شود — در صورتی که React فقط برای JSX استفاده شده باشد (نه برای `React.useEffect`، `React.memo`، `React.forwardRef`، ...)
+3. `npm test` دوباره — همه تست‌ها باید پاس بمانند
+
+**فایل‌های تحت تأثیر (کشف‌شده در چت ۶ script 45):**
+- `App.jsx` ، `main.jsx`
+- همه `pages/*.jsx` (LoginPage ، HomePage ، ChartPage ، SettingsPage ، ...)
+- همه `components/common/*.jsx` (Toast ، ConfirmDialog ، ErrorBoundary ، ProtectedRoute ، ThemeProvider ، SkeletonBlock)
+- تعداد دقیق: ۱۵ فایل
+
+**توجه مهم:**
+- این به‌عنوان cleanup است، نه fix
+- Bug Bug نیست — همه تست‌ها pass هستند
+- فقط حذف کد تکراری + ترازی‌سازی با best practice React 19 است
+
+**ادغام در:** v2.11 یا فاز ۱ (low-medium priority — تلفیق با اولین تغییر frontend)  
+**ثبت‌شده توسط:** قانون #۶۰
+
+---
+
+### آیتم D2.1+D3.1 — Claude Code + GitHub MCP ارزیابی (T2.12)
+
+**کشف:** چت ۸، بلوک ۳ (D2 + D3) — 2026-05-19  
+**سطح:** 🟢 low / ارزیابی برای آینده (غیر-urgent)
+
+**Claude Code (D2):**
+- اجازه می‌دهد Claude مستقیم در terminal کار کند بدون paste چت
+- مزیت: بدون workflow zip، git aware native، MCP integration بهتر
+- عیب: کاربر دانش CLI لازم دارد — برای پروژه فعلی که کاربر غیربرنامه‌نویس است مناسب نیست
+- **پیشنهاد:** در فاز ۴+ (بک‌تست engine) وقتی پروژه پیچیده‌تر می‌شود، دوباره ارزیابی شود
+
+**GitHub MCP Connector (D3):**
+- دسترسی Claude به GitHub APIs (read repo، open PR، manage issues)
+- مزیت: بازیابی commit history بدون local، ساخت PR در فاز ۱+
+- عیب: تداخل با Filesystem MCP (overlapping)، ریسک امنیتی اگر PAT scope باز باشد
+- **پیشنهاد:** در فاز ۵+ (security hardening) یا وقتی تیم بزرگ شد. در فاز ۰+۱ با Filesystem MCP کافی است.
+
+**تصمیم:** T2.12 باقی می‌ماند در Tier 3 (low priority، XL). در فاز ۴+ دوباره بررسی شود.
+
+**ادغام در:** تصمیم فاز ۴+ (فعلاً document در PENDING می‌ماند)  
+**ثبت‌شده توسط:** قانون #۶۰
+
+---
+
 ## 📌 پایان فایل
 
 **نسخه:** v0.1 (2026-05-19 — تولد در چت ۸، اولین فایل از این نوع)  
 **ساخته توسط:** Claude در چت ۸ (`TRADING-phase0-part08-pre-phase1-setup`)  
-**به‌روز توسط:** Claude در هر چت که PENDING کشف کند (قانون #۶۰)
+**به‌روز توسط:** Claude در هر چت که PENDING کشف کند (قانون #۶۰)  
+**ادغام بعدی:** سند جامع v2.11 (در چت ۹ یا بعد)
+
+## 📊 خلاصه آیتم های PENDING برای v2.11
+
+| آیتم | سطح | توضیح |
+|---|---|---|
+| **B5.1** | 💡 minor | فرمت `.gitignore` برای `claude_workspace/` (پیشنهاد سند ۲۴.۳ vs فعلی) |
+| **B2.1** | 🎯 important | اصلاح مسیر Memory toggles در سند ۲۳.۱ (Capabilities نه Profile) |
+| **C1.1** | 📊 medium | نتایج Settings audit — افزودن به سند ۲۳.۴ |
+| **D1.1** | 🔴 important | Bug pre-commit `end-of-file-fixer` با فایل فارسی Windows |
+| **E2.1** | 🟡 medium | Bug #50 cleanup — `jsxRuntime: 'automatic'` + حذف `import React` |
+| **D2.1+D3.1** | 🟢 low | ارزیابی Claude Code + GitHub MCP (موکول به فاز ۴+) |
+
+**تعداد:** ۶ آیتم  
+**اولویت ادغام:** D1.1 و B2.1 در v2.11 اول → بقیه به ترتیب
