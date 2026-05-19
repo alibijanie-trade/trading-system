@@ -89,3 +89,7 @@ backend/logs/*.log.*
 
 # Backups (per rule #48)
 backups/
+
+# Claude workspace (per rules 56-59)
+claude_workspace/zip_temp/
+claude_workspace/screenshots/
