@@ -4,7 +4,7 @@
 
 > **محل قرارگیری:** `docs/CHAT_LOG.md`  
 > **به‌روز توسط:** Claude در پایان هر چت (CLAUDE_CHECKLIST فاز ۳ مرحله ۲ — قانون #۲۳)  
-> **نسخه این Log:** v1.2 (2026-05-18 — یکپارچه‌سازی شمارش چت‌ها)
+> **نسخه این Log:** v1.3 (2026-05-19 — چت ۸ T2.19: تکمیل چت ۷ stub + افزودن چت ۸ + اصلاح آمار)
 
 ---
 
@@ -20,7 +20,8 @@
 - [چت ۵.الف — phase0-part04-theme-engine](#چت-۵الف--phase0-part04-theme-engine)
 - [چت ۵.ب — phase0-part05-ui-polish-and-governance](#چت-۵ب--phase0-part05-ui-polish-and-governance)
 - [چت ۶ — phase0-part06-quality-hardening](#چت-۶--phase0-part06-quality-hardening)
-- [چت ۷ — phase0-part07-quality-hardening-continued](#چت-۷--phase0-part07-quality-hardening-continued) ← این چت
+- [چت ۷ — phase0-part07-quality-hardening-continued](#چت-۷--phase0-part07-quality-hardening-continued)
+- [چت ۸ — phase0-part08-pre-phase1-setup](#چت-۸--phase0-part08-pre-phase1-setup) ← این چت
 
 ---
 
@@ -157,7 +158,10 @@ TRADING-phase{N}-part{NN}-{topic-slug}
 چت ۶ ─ 2026-05-17 ─ Quality Hardening ─ [Tier 2 — ۴/۹: ErrorBoundary + vitest + ARCHITECTURE + git]
    │
    ▼
-چت ۷ ─ 2026-05-18 ─ Quality Hardening Continued ─ [Tier 2 — Atomic Update قوانین + ۵/۹ بقیه] ← این چت
+چت ۷ ─ 2026-05-18 ─ Quality Hardening Continued ─ [Tier 2 — ۹/۹ ✅ + قوانین #۳۳-۴۷ + MCP setup]
+   │
+   ▼
+چت ۸ ─ 2026-05-19 ─ Pre-Phase 1 Setup ─ [v2.10 + PENDING + #۴۸-۶۱ + Settings audit] ← این چت
 ```
 
 ---
@@ -814,19 +818,220 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 
 ## چت ۷ — phase0-part07-quality-hardening-continued
 
-> 🚧 **در حال انجام — این چت.** جزئیات کامل در پایان چت طبق CLAUDE_CHECKLIST فاز ۳ مرحله ۲ ثبت می‌شود.
-
 **نام چت:** `TRADING-phase0-part07-quality-hardening-continued`  
 **تاریخ:** 2026-05-18  
 **Claude version:** Claude Opus 4.7  
 **فاز شروع:** فاز ۰ — ۱۰۰٪ + Tier 2 — ۴/۹  
-**فاز پایان (پیش‌بینی):** Tier 2 — تا ۹/۹ (T2.05-T2.09) + atomic update قوانین #۲۷-۳۲ + T2.12 ثبت‌شده
+**فاز پایان:** Tier 2 — **۹/۹ DONE** ✅ + قوانین #۳۳-۴۷ + درس‌نامه M1-M21 + زیرساخت Claude Desktop
+
+> ⚠️ **یادداشت بحرانی از چت ۸:** این بخش در چت ۸ (Atomic Update T2.19) **بازنویسی شد** چون در پایان چت ۷ به‌صورت stub باقی ماند. این **مهم‌ترین درس کل پروژه (M23)** است: «اعتماد به حافظه فعال در پایان چت، نه چک‌لیست فعال سند ۱۷.۵». راه‌حل ریشه‌ای: **قانون #۶۰** + `PENDING_FOR_NEXT_VERSION.md` که در چت ۸ معرفی شد.
 
 ### 📌 موضوع کلی
 
-ادامه Tier 2 (Quality Hardening). دو هدف:
-1. **مرحله A:** Atomic Update قوانین #۲۷-۳۲ در همه اسناد + یکپارچه‌سازی شمارش چت‌ها
-2. **مرحله B:** ادامه T2.05 تا T2.09
+ادامه Tier 2 (Quality Hardening). سه فاز اصلی:
+
+1. **مرحله A:** Atomic Update قوانین #۲۷-۳۲ (T2.11) — v2.7 → v2.8
+2. **مرحله B:** اتمام T2.05 تا T2.09 (Git + Pre-commit + Anti-Patterns + pytest + API_DOCS) + سند v2.8 → v2.9
+3. **مرحله C:** نصب Filesystem MCP + Claude Desktop config + claude_workspace structure (Tier 2 افزوده‌شده)
+
+### 🎯 گام‌های انجام‌شده
+
+#### مرحله A — Atomic Update قوانین #۲۷-۳۲ (T2.11)
+
+- سند جامع: v2.7 → v2.8 با ۶ قانون جدید
+- CLAUDE_CHECKLIST: v1.1 → v1.2
+- PROJECT_GOVERNANCE: v1.1 → v1.2 (C21-C25)
+- CHAT_LOG: یکپارچه‌سازی شمارش چت‌ها (چت ۵→۵.الف، ۶→۵.ب، ۷→۶)
+
+#### مرحله B — Tier 2 Quality Hardening (T2.05-T2.09)
+
+- **T2.05 — Git workflow + GIT_WORKFLOW.md:** سند جدید + اصلاح .gitignore + retroactive commits
+- **T2.06 — Pre-commit hooks (Hybrid mode):** critical اجباری + minor warning + black/isort/ruff + custom hooks A1/A4/A8/A10
+- **T2.07 — Anti-pattern catalog:** ANTI_PATTERNS.md با ۱۰ نمونه concrete A1-A10
+- **T2.08 — Backend pytest + coverage:** pyproject.toml + conftest + ۲۵ test → **۲۵/۲۵ pass**
+- **T2.09 — API_DOCS.md:** markdown alternative به Swagger با OpenAPI examples
+
+در پایان مرحله B، سند جامع به v2.9 ارتقا یافت (+۱۵ قانون #۳۳-۴۷ + درس‌نامه M1-M21).
+
+#### مرحله C — Infrastructure زیرساخت Claude Desktop
+
+- **T2.14 — Filesystem MCP integration:** نصب + configure (read-only Always Allow، write Needs Approval)
+- **T2.15 — Memory + Project Knowledge + Custom Instructions:** Memory toggles ON، PROJECT_KNOWLEDGE.md ساخت
+- **T2.16 — `claude_workspace/` structure:** ۵ subfolder با gitignore policy
+
+### 🛠️ اسکریپت‌های تولیدشده
+
+| # | نام | شرح |
+|---|---|---|
+| 38 | `38_atomic_update_v2_8.py` | Atomic Update قوانین #۲۷-۳۲ |
+| 39 | `39_git_workflow.py` | GIT_WORKFLOW.md + .gitignore audit |
+| 40 | `40_pre_commit_hooks.py` | Pre-commit Hybrid mode |
+| 41 | `41_anti_patterns.py` | ANTI_PATTERNS.md |
+| 42 | `42_pytest_setup.py` | pyproject.toml + conftest + ۲۵ test |
+| 43 | `43_sync_from_zip.py` | sync helper (single-root) |
+| 44 | `44_api_docs.py` | API_DOCS.md |
+| 45 | `45_fix_react_imports.py` | Bug #50 موقت (15 .jsx) |
+| 46-54 | `46_*` تا `54_*` | فایل‌های auxiliary + fix scripts + atomic update v2.9 |
+
+> توجه: قوانین #۳۳-۴۷ + درس‌نامه M1-M21 از تجربه این چت استخراج شدند (همگی در سند v2.9 ثبت).
+
+### 📁 فایل‌های جدید
+
+- `docs/GIT_WORKFLOW.md` + `ANTI_PATTERNS.md` + `BACKEND_TESTING.md` + `API_DOCS.md` + `PRECOMMIT.md`
+- `backend/pyproject.toml` + `backend/tests/conftest.py` + ۲۵ test file
+- `.pre-commit-config.yaml` + custom hook scripts
+- `PROJECT_KNOWLEDGE.md` (برای Project Knowledge آپلود)
+- `claude_workspace/` با ۵ subfolder + `.gitkeep` ها
+
+### 🐛 Bug ها رفع‌شده
+
+- (هیچ Bug جدید بحرانی — فقط fix scripts مربوط به pre-commit + tests)
+
+### 🏛️ تصمیمات معماری
+
+- **Hybrid Pre-commit Mode:** critical اجباری + minor warning (سند ۲۰)
+- **`.gitattributes` به‌جای hook برای CRLF:** اجتناب از cp1252 crash
+- **pre-commit entry: `python wrapper.py`:** cross-platform
+
+### 📜 قوانین جدید
+
+**#۳۳-۴۷ (۱۵ قانون):** Backup، zip placement، pip vs npm flags، read-back verify، .py vs zip routing، multi-root zip، argparse verify، .get() در or، --no-verify، Hybrid mode، .gitattributes، wrapper.py، ASCII-only، test hook قبل از deploy
+
+### 📜 درس‌نامه‌های جدید
+
+**M1-M21 (۲۱ درس):** درس‌نامه اشتباهات از تجربه این چت (در سند v2.9 بخش ۱۸ ثبت)
+
+### ⚠️ نکات بحرانی برای آینده — یادداشت چت ۸
+
+این بخش در چت ۸ اضافه شد:
+
+1. **M23 (مهم‌ترین درس کل پروژه):** Claude در پایان چت ۷ پیام handoff تولید **نکرد** با وجود ثبت قانون در همان چت. علت: اعتماد به حافظه فعال نه چک‌لیست فعال. راه‌حل ریشه‌ای: قانون #۶۰ (PENDING-EOC در لحظه ثبت).
+2. **اعداد تناقض‌دار در پایان چت ۷:** کاربر گفت +۲۷ قانون (#۳۳-۵۹) و M1-M52، ولی واقعیت سند v2.9: فقط #۳۳-۴۷ و M1-M21. این تناقض در چت ۸ کشف و حل شد (سیاست conservative numbering).
+3. **CHAT_LOG چت ۷ stub باقی ماند** — همین بخش که در چت ۸ بازنویسی شد (تست عملی M23).
+
+### 📊 آمار این چت
+
+| متریک | مقدار |
+|---|---|
+| اسکریپت‌های اصلی | ~۱۷ (`38_` تا `54_`) |
+| pytest tests | ۲۵/۲۵ pass |
+| vitest tests | ۳۰/۳۰ pass (carry forward از چت ۶) |
+| اسناد جدید | ۵ (GIT_WORKFLOW + ANTI_PATTERNS + BACKEND_TESTING + API_DOCS + PRECOMMIT) |
+| قوانین جدید | ۱۵ (#۳۳-۴۷) |
+| درس‌نامه جدید | ۲۱ (M1-M21) |
+| Git commits | `91704ca` → `d6bc75c` |
+
+### 🔗 ارتباطات
+
+- ادامه چت قبل: `TRADING-phase0-part06-quality-hardening`
+- **نام چت بعد:** `TRADING-phase0-part08-pre-phase1-setup` (چت ۸)
+- **پیام handoff:** فراموش شد (درس M23 — در چت ۸ بازسازی شد)
+
+### TASK های DONE شده در این چت
+
+- T2.05 — Git Workflow + GIT_WORKFLOW.md
+- T2.06 — Pre-commit hooks Hybrid mode
+- T2.07 — Anti-pattern catalog
+- T2.08 — Backend pytest (۲۵/۲۵)
+- T2.09 — API_DOCS.md
+- T2.11 — Atomic Update قوانین #۲۷-۳۲
+- T2.14 — Filesystem MCP integration
+- T2.15 — Claude Desktop Memory + Project Knowledge
+- T2.16 — claude_workspace structure
+
+### TASK های جدید کشف‌شده
+
+- T2.17 تا T2.21 (در چت ۸ ثبت و برنامه‌ریزی شدند)
+
+---
+
+## چت ۸ — phase0-part08-pre-phase1-setup
+
+> 🚧 **در حال انجام — این چت.** ۴ بلوک کاری قبل از فاز ۱.
+
+**نام چت:** `TRADING-phase0-part08-pre-phase1-setup`  
+**تاریخ:** 2026-05-19  
+**Claude version:** Claude Opus 4.7 + Adaptive Thinking + Filesystem MCP + Project Knowledge + Memory  
+**فاز شروع:** فاز ۰ — ۱۰۰٪ + Tier 2 — ۹/۹ + قوانین #۳۳-۴۷  
+**فاز پایان (در حال):** آماده فاز ۱ + قوانین #۴۸-۶۱ + سند v2.10 + درس‌نامه M22-M62
+
+### 📌 موضوع کلی
+
+اولین چت با **Filesystem MCP + Project Knowledge + Memory + قانون #۶۰**. ۴ بلوک کاری:
+
+1. **بلوک A — Documentation Backlog:** ادغام PENDING → v2.10 + Atomic Updates Governance + تکمیل CHAT_LOG چت ۷ + Infrastructure audit (A1-A7 + B1-B5)
+2. **بلوک B — تعاملی:** GitHub setup + Settings audit (۸ tab) — نیاز به screenshot
+3. **بلوک C — Tier 2 پایانی + Phase 1 readiness:** T2.10 ARCHITECTURE.md + T2.13 Bug #50 + Model Selection Guide
+4. **بلوک D — پایان چت:** ادغام نهایی PENDING + CHAT8_FINALIZE + handoff + commit + push
+
+### 📦 ورودی‌های چت
+
+- سند جامع v2.9 (پیوست)
+- Project Knowledge فعال با PROJECT_KNOWLEDGE.md
+- Memory toggles ON (Search past chats + Generate memory)
+- Filesystem MCP با permissions تنظیم‌شده
+
+### 🎯 گام‌های انجام‌شده (تا این لحظه)
+
+#### بلوک A — Documentation Backlog
+
+- **A1 ✅:** ادغام PENDING → سند جامع v2.10 (171KB → 200.8KB، +۱۴ قانون + ۲۱ ردیف درس‌نامه + ۴ بخش جدید)
+- **A2 ✅:** Atomic Update CLAUDE_CHECKLIST v1.2 → v1.3
+- **A3 ✅:** Atomic Update PROJECT_GOVERNANCE v1.2 → v1.3 (C26-C30 + A11 + G8)
+- **A4 ✅:** Atomic Update TASK_BACKLOG v1.4 → v1.5 (+۸ task زیرساخت Claude Desktop)
+- **A5 ✅ (همین لحظه):** تکمیل CHAT_LOG چت ۷ (T2.19 — تست عملی M23) + افزودن بخش چت ۸ + اصلاح آمار
+- **A6 ✅:** اصلاح آمار کلی CHAT_LOG (۲۶ → ۶۱ قانون)
+- **A7 ⏳:** SESSION_STATUS برای پایان چت ۸ (در پایان چت)
+- **B1-B5 ⏳:** Infrastructure audit
+
+#### بلوک B — تعاملی (پس از بلوک A)
+
+- **D1 ⏳:** GitHub setup
+- **C1-C8 ⏳:** Settings audit (نیاز به ۸ screenshot)
+
+### 🆕 فایل‌های جدید در این چت
+
+- `docs/PENDING_FOR_NEXT_VERSION.md` ⭐⭐⭐ (بنیادی — قانون #۶۰)
+- `docs/سند_جامع_v2_10.md` (جایگزین v2.9 — No-Deletion)
+
+### 🆙 فایل‌های به‌روز (Atomic Update)
+
+- `docs/CLAUDE_CHECKLIST.md` v1.2 → v1.3
+- `docs/PROJECT_GOVERNANCE.md` v1.2 → v1.3
+- `docs/TASK_BACKLOG.md` v1.4 → v1.5
+- `docs/CHAT_LOG.md` v1.2 → v1.3 (همین فایل!)
+
+### 🎓 درس‌های جدید کشف‌شده (M22-M62)
+
+**کشف‌شده (۱۵ درس):**
+- **M23** ⭐⭐⭐ (از چت ۷ بازیافت): عدم تولید handoff در پایان چت ۷
+- **M25-M28، M30، M31، M44:** درس‌های چت ۷ که در Memory پیدا شد
+- **M56-M62:** درس‌های جدید چت ۸ (Memory ≠ ثبت دقیق، self-binding، preview قبل از write، read-back verify، پیشنهاد گزینه مطلوب، ...)
+
+**Reserved (۲۵ درس):**
+- M22، M24، M29، M32-M43، M45-M55 — سیاست conservative numbering
+
+### 📜 قوانین جدید (#۴۸-۶۱)
+
+- **#۴۸:** پروتکل اجباری شروع چت — بخش ۱۸ + PENDING
+- **#۴۹-۵۱:** Filesystem MCP permissions و workflow
+- **#۵۲-۵۳:** Reserved
+- **#۵۴-۵۸:** sandbox، Project Knowledge، screenshots، snapshots، تحویل فایل
+- **#۵۹** ⭐: بلااستثنا اعلام مسیر دانلود
+- **#۶۰** ⭐⭐⭐: PENDING-EOC در لحظه با MCP
+- **#۶۱** ⭐: پیشنهاد گزینه مطلوب در چندگزینه‌ای
+
+### 🆕 بخش‌های جدید سند جامع v2.10
+
+- سند ۲۲: Filesystem MCP Integration
+- سند ۲۳: Claude Desktop Configuration
+- سند ۲۴: claude_workspace Structure
+- سند ۲۵: Skills اختصاصی پروژه (placeholder)
+
+### 🔗 ارتباطات (تا این لحظه)
+
+- ادامه چت قبل: `TRADING-phase0-part07-quality-hardening-continued`
+- **نام چت بعد پیشنهادی:** `TRADING-phase1-part01-ccxt-websocket-setup` (شروع فاز ۱)
 
 _بقیه جزئیات در پایان چت تکمیل می‌شود._
 
@@ -836,18 +1041,20 @@ _بقیه جزئیات در پایان چت تکمیل می‌شود._
 
 | دسته | تعداد |
 |---|---|
-| چت‌های انجام‌شده | ۷ |
-| اسکریپت‌های تولید‌شده | ~۴۲ (۸ تای جدید در چت ۶ + ۲ atomic update در چت ۷) |
-| Bug های ثبت‌شده | ۴۹ |
-| Decisions ثبت‌شده | ~۵۷ (۳ تای جدید در چت ۶) |
-| قوانین قفل‌شده | ۲۶ |
-| فاز پایان‌یافته | فاز ۰ (۱۰۰٪) + Tier 2 (~۴۴٪) |
-| فاز در حال شروع | ادامه Tier 2 یا فاز ۱ |
+| چت‌های انجام‌شده | ۸ |
+| اسکریپت‌های تولید‌شده | ~۶۰ (~۱۷ در چت ۷ + ادغام‌های MCP در چت ۸) |
+| Bug های ثبت‌شده | ۵۱ |
+| Decisions ثبت‌شده | ~۵۷ |
+| قوانین قفل‌شده | **۶۱** (با ۲ Reserved) |
+| درس‌نامه ثبت‌شده | **۶۲ ردیف** (۳۷ کشف‌شده + ۲۵ Reserved) |
+| فاز پایان‌یافته | فاز ۰ (۱۰۰٪) + Tier 2 (۱۴/۲۱ ✅) |
+| فاز در حال شروع | فاز ۱ (در چت ۹ پس از پایان چت ۸) |
+| نسخه سند جامع | v2.10 |
 
 ---
 
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v1.2 (2026-05-18 — آغاز چت ۷، یکپارچه‌سازی شمارش چت‌ها + stub چت ۷)  
-**به‌روز شده در:** آغاز چت ۷ (Atomic Update T2.11)  
-**به‌روز توسط:** Claude طبق قانون #۲۳ و #۲۶ (Atomic Updates) — CLAUDE_CHECKLIST فاز ۳ مرحله ۲
+**نسخه:** v1.3 (2026-05-19 — چت ۸ T2.19: تکمیل چت ۷ stub + افزودن چت ۸ + اصلاح آمار)  
+**به‌روز شده در:** چت `TRADING-phase0-part08-pre-phase1-setup`  
+**به‌روز توسط:** Claude طبق قانون #۲۳ + #۲۶ + #۶۰ — CLAUDE_CHECKLIST v1.3 فاز ۳

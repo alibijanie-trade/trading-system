@@ -80,6 +80,7 @@ Claude در هر چت جدید **خاطره‌ای از چت‌های قبلی �
      ├─→ PROJECT_GOVERNANCE.md ⭐  (این سند — فرایند)
      ├─→ PROJECT_CONTEXT.md         (خلاصه سراسری برای Claude)
      ├─→ CLAUDE_CHECKLIST.md ⭐    (چک‌لیست explicit)
+     ├─→ PENDING_FOR_NEXT_VERSION.md ⭐⭐⭐ 🆕 v2.10 (مخزن لحظه‌ای PENDING-EOC — قانون #۶۰)
      │
      ├─→ CHAT_LOG.md ⭐            (تاریخچه هر چت)
      ├─→ SESSION_STATUS.md         (وضعیت آخرین چت)
@@ -106,6 +107,7 @@ Claude در هر چت جدید **خاطره‌ای از چت‌های قبلی �
 | **PROJECT_GOVERNANCE** | Reference راهبردی | Claude در پایان چت | ابتدای هر چت (کامل) |
 | PROJECT_CONTEXT | Reference سراسری | Claude در پایان چت | ابتدای هر چت |
 | **CLAUDE_CHECKLIST** | Operational | Claude + کاربر | ابتدا و انتهای هر چت |
+| **PENDING_FOR_NEXT_VERSION** 🆕 v2.10 | Operational/Buffer | Claude در طول چت (قانون #۶۰) | ابتدای هر چت (قانون #۴۸) + در طول چت برای ثبت لحظه‌ای |
 | **CHAT_LOG** | History | Claude در پایان هر چت | ابتدای هر چت |
 | SESSION_STATUS | State | Claude در پایان هر چت | ابتدای هر چت |
 | **TASK_BACKLOG** | Tracking | Claude در پایان هر چت | ابتدای هر چت |
@@ -175,6 +177,20 @@ Claude در هر چت جدید **خاطره‌ای از چت‌های قبلی �
 ---
 
 
+### قانون G8 — یادآور قوانین #۴۸-۶۱ (افزوده در v2.10) 🆕
+
+از سند جامع v2.10 به بعد، ۱۴ قانون رفتاری جدید (#۴۸-۶۱) به جدول ۱.۹ قوانین قفل‌شده اضافه شدند. این قوانین در چت ۷ و ۸ کشف و در `docs/PENDING_FOR_NEXT_VERSION.md` ابتدا ثبت سپس در v2.10 رسمی شدند:
+
+- **#۴۸:** پروتکل اجباری شروع چت — خواندن بخش ۱۸ + PENDING_FOR_NEXT_VERSION.md
+- **#۴۹-#۵۱:** Filesystem MCP permissions و workflow
+- **#۵۲-#۵۳:** Reserved (conservative numbering)
+- **#۵۴-#۵۸:** sandbox، Project Knowledge، screenshots، snapshots
+- **#۵۹** ⭐: بلااستثنا اعلام مسیر دانلود/قرارگیری
+- **#۶۰** ⭐⭐⭐: PENDING-EOC در لحظه ثبت — حل ریشه‌ای M23
+- **#۶۱** ⭐: پیشنهاد گزینه مطلوب در چندگزینه‌ای
+
+این قوانین در `سند_جامع_v2_10.md` بخش ۱.۹ مستند هستند.
+
 ### قانون G7 — یادآور قوانین #۲۷-۳۲ (افزوده در v2.8)
 
 از سند جامع v2.8 به بعد، ۶ قانون رفتاری جدید (#۲۷-۳۲) به جدول ۱.۹ قوانین قفل‌شده اضافه شدند. این قوانین در `docs/CHAT6_FINALIZE.md` بخش ۲ کشف و در v2.8 رسمی شدند:
@@ -211,7 +227,8 @@ Claude چک می‌کند:
 4. `docs/CHAT_LOG.md` ← تاریخچه کامل
 5. `docs/TASK_BACKLOG.md` ← چه باید کرد
 6. `docs/CLAUDE_CHECKLIST.md` ← یادآوری چک‌لیست
-7. سند جامع کامل (با توقف روی هر ⭐)
+7. **`docs/PENDING_FOR_NEXT_VERSION.md`** 🆕 v2.10 ← PENDING-EOC از چت قبل (قانون #۴۸+#۶۰)
+8. سند جامع کامل (با توقف روی هر ⭐ و **بخش ۱۸ درس‌نامه**)
 
 > **اگر هر یک از این فایل‌ها غایب باشد، Claude پیش از ادامه به کاربر گزارش می‌دهد.**
 
@@ -286,7 +303,8 @@ Claude لیست می‌کند:
 ۷. SESSION_STATUS.md   — وضعیت پایان چت
 ۸. PROJECT_CONTEXT.md  — به‌روز با مراجع جدید
 ۹. CHANGELOG.md        — اگر version bump
-۱۰. سند جامع         — اصلی‌ترین — با تغییرات این چت
+۱۰. سند جامع         — اصلی‌ترین — با ادغام PENDING_FOR_NEXT_VERSION.md
+۱۰.۵. PENDING_FOR_NEXT_VERSION.md 🆕 v2.10 — پاک‌سازی بخش‌های ۱-۶ (پروتکل ۷.۳ خود فایل)
 ۱۱. README.md          — اگر تغییر بنیادی
 ۱۲. zip نهایی         — همه فایل‌ها
 ```
@@ -352,6 +370,11 @@ Claude:
 | C23 | **read-back verify بعد از write** (قانون #۳۷) | همه اسکریپت‌های تولید فایل |
 | C24 | **verify signature/argparse قبل از پیشنهاد** (قوانین #۳۶، #۴۰) | پیشنهاد command/test |
 | C25 | **ASCII-only در print() Windows** (قانون #۴۶) | اسکریپت‌های Python ویندوز |
+| C26 | **خواندن PENDING_FOR_NEXT_VERSION.md در شروع چت** (قانون #۴۸) | شروع چت جدید |
+| C27 | **MCP permissions: read-only Always Allow، write Needs Approval** (قانون #۴۹+#۵۱) | همه عملیات MCP |
+| C28 | **اعلام مسیر دانلود/قرارگیری هر فایل** (قانون #۵۹) | همه فایل‌های تولیدی |
+| C29 | **ثبت لحظه‌ای PENDING-EOC با MCP** (قانون #۶۰) | هنگام کشف PENDING |
+| C30 | **پیشنهاد گزینه مطلوب در سؤالات چندگزینه‌ای** (قانون #۶۱) | همه سؤالات چندگزینه‌ای |
 
 ---
 
@@ -542,6 +565,23 @@ function oldComponent() { ... }
 
 اگر یک قانون جدید اضافه شد ولی فقط در سند جامع آمد و در CHAT_LOG/PROJECT_GOVERNANCE نیامد → **فاجعه آینده**.
 
+### Anti-Pattern A11 — نادیده گرفتن PENDING-EOC (🆕 v2.10) ⭐⭐⭐
+
+اگر در چت یک [PENDING-EOC] کشف شد ولی **همان لحظه** در `docs/PENDING_FOR_NEXT_VERSION.md` ثبت نشد → در پایان چت گم می‌شود (تجربه چت ۷ → M23).
+
+```
+# ❌ ممنوع
+"این مورد را در پایان چت اضافه می‌کنم..."  → فراموش می‌شود
+
+# ✅ صحیح (قانون #۶۰)
+"📝 [PENDING-EOC کشف شد] — اکنون با MCP در PENDING_FOR_NEXT_VERSION.md ثبت می‌کنم"
+[edit_file فوری]
+[read-back verify]
+"✅ ثبت شد. ادامه..."
+```
+
+این **مهم‌ترین** Anti-Pattern چت‌های پایان‌فاز است.
+
 ---
 
 ## بخش ۱۲ — Self-Audit Claude
@@ -617,13 +657,14 @@ function oldComponent() { ... }
 
 ## 📌 پایان سند PROJECT_GOVERNANCE
 
-**نسخه:** v1.2 (2026-05-18 — افزودن C21-C25 + پایان چت ۷)  
+**نسخه:** v1.3 (2026-05-19 — چت ۸: +۱ سند PENDING + ۵ مسئولیت C26-C30 + Anti-Pattern A11 + قانون G8 برای #۴۸-۶۱)  
 **نسخه پروژه در زمان ایجاد:** v0.4.0  
-**نویسنده:** Claude در چت `TRADING-phase0-part05-...`  
+**نویسنده:** Claude در چت `TRADING-phase0-part05-...` + به‌روز توسط `TRADING-phase0-part08-pre-phase1-setup`  
 **تأیید کاربر:** ✅
 
 > این سند زنده است. هر تغییر باید مستند شود.
 
-**تغییرات آینده:**
-- v1.1: ...
-- v1.2: ...
+**تغییرات نسخه‌ها:**
+- v1.1: bootstrap اولیه (چت ۵.ب)
+- v1.2: افزودن C21-C25 + پایان چت ۷
+- v1.3: 🆕 چت ۸ — +PENDING_FOR_NEXT_VERSION + C26-C30 + A11 + G8 (#۴۸-۶۱)

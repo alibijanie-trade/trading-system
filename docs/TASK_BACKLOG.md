@@ -4,7 +4,7 @@
 
 > **محل قرارگیری:** `docs/TASK_BACKLOG.md`  
 > **به‌روز توسط:** Claude در پایان هر چت (فاز ۳ مرحله ۳ چک‌لیست)  
-> **نسخه این Backlog:** v1.4 (2026-05-18 — آغاز چت ۷)
+> **نسخه این Backlog:** v1.5 (2026-05-19 — چت ۸: ادغام Tier 2 + ۸ task جدید زیرساخت Claude Desktop)
 
 ---
 
@@ -12,7 +12,7 @@
 
 - [راهنمای استفاده](#راهنمای-استفاده)
 - [Tier 1 — DONE (در چت ۵)](#tier-1)
-- [Tier 2 — Quality Hardening (در حال انجام — ۴/۹)](#tier-2--quality-hardening)
+- [Tier 2 — Quality Hardening + Infrastructure (۱۴/۲۱ ✅)](#tier-2--quality-hardening)
 - [Tier 3 — موازی با فاز ۱+](#tier-3)
 - [Tier 4 — آینده دور](#tier-4)
 - [DONE History](#done-history)
@@ -75,20 +75,28 @@
 | T2.02 | Frontend tests (vitest setup + smoke tests) | ✅ DONE | 🟠 | L | چت ۶ — **۳۰/۳۰ pass** ✅ |
 | T2.03 | بررسی `.env.example` و تکمیل اگر ناقص | ✅ DONE | 🟠 | XS | چت ۶ |
 | T2.04 | ARCHITECTURE.md ساخت (با دیاگرام layered) | ✅ DONE | 🟠 | M | چت ۶ |
-| T2.05 | Git workflow audit + GIT_WORKFLOW.md | 📋 TODO | 🟠 | S | چت ۷ |
-| T2.06 | Pre-commit hooks (pre-commit framework + ruff + eslint) | 📋 TODO | 🟡 | M | چت ۷ |
-| T2.07 | Anti-pattern catalog (نمونه concrete از A1-A10) | 📋 TODO | 🟡 | M | چت ۷ |
-| T2.08 | Backend pytest + coverage + pyproject.toml | 📋 TODO | 🟡 | M | چت ۷ |
-| T2.09 | API_DOCS.md (markdown alternative به Swagger) | 📋 TODO | 🟡 | M | چت ۷ |
+| T2.05 | Git workflow audit + GIT_WORKFLOW.md | ✅ DONE | 🟠 | S | چت ۷ |
+| T2.06 | Pre-commit hooks (Hybrid mode: critical اجباری + minor warning) | ✅ DONE | 🟡 | M | چت ۷ |
+| T2.07 | Anti-pattern catalog (A1-A10) | ✅ DONE | 🟡 | M | چت ۷ |
+| T2.08 | Backend pytest + coverage + pyproject.toml (**۲۵/۲۵ pass**) | ✅ DONE | 🟡 | M | چت ۷ |
+| T2.09 | API_DOCS.md (markdown alternative به Swagger) | ✅ DONE | 🟡 | M | چت ۷ |
 
 ### Tasks اضافی کشف‌شده در چت ۶
 
 | ID | Task | Status | شرح |
 |---|---|---|---|
-| T2.10 | رفع ریشه‌ای Bug #50 (import React) | 📋 TODO | علت‌یابی چرا React 19 + vitest نیاز به import React صریح دارد |
-| T2.11 | ادغام قوانین #۲۷-#۳۲ در سند جامع | 🚧 IN-PROGRESS | atomic update در آغاز چت ۷ (سند v2.7→v2.8 + CLAUDE_CHECKLIST + PROJECT_GOVERNANCE + CHAT_LOG) |
-| T2.12 | ارزیابی و مهاجرت به Claude Code / GitHub MCP workflow | 📋 TODO | بحث آینده (شاید چت ۱۰+ یا فاز ۱) — جایگزینی روش zip + claude.ai با دسترسی مستقیم به git/disk. بررسی: (الف) Claude Code CLI، (ب) GitHub MCP connector — هر دو کاهنده overhead sync دستی. Tier 3، 🟢 LOW، XL. |
-| T2.13 | علت‌یابی ریشه‌ای Bug #50 (import React اضافی) | 📋 TODO | موقت در چت ۶ با اسکریپت ۴۵ رفع شد. علت احتمالی: `jsx: 'automatic'` در `vite.config.js` بلوک `test`. Tier 2، 🟡 MEDIUM، S. |
+| T2.10 | توسعه ARCHITECTURE.md (بخش‌های فاز ۱) | 📋 TODO | minimal expansion — افزودن Repository Layer + CCXT connector sections. در چت ۸ بلوک ۳. Tier 2، 🟡 MEDIUM، S. |
+| T2.11 | ادغام قوانین #۲۷-#۳۲ در سند جامع | ✅ DONE | atomic update در آغاز چت ۷ (سند v2.7→v2.8 + CLAUDE_CHECKLIST + PROJECT_GOVERNANCE + CHAT_LOG) |
+| T2.12 | ارزیابی و مهاجرت به Claude Code / GitHub MCP workflow | 📋 TODO | Tier 3، 🟢 LOW، XL — بررسی در چت ۸ بلوک ۳ (ارزیابی دو connector برای فاز ۱+). |
+| T2.13 | علت‌یابی ریشه‌ای Bug #50 (import React اضافی) | 📋 TODO | timebox 30min در چت ۸ بلوک ۳. اگر در زمان رفع نشد، open issue باقی. Tier 2، 🟡 MEDIUM، S. |
+| T2.14 🆕 | Filesystem MCP integration + permissions | ✅ DONE | چت ۷ — نصب + configure. در v2.10 سند ۲۲ مستند شد. |
+| T2.15 🆕 | Claude Desktop: Memory + Project Knowledge + Custom Instructions | ✅ DONE | چت ۷ — Memory toggles ON. در v2.10 سند ۲۳ مستند شد. |
+| T2.16 🆕 | `claude_workspace/` structure (۵ subfolder + gitignore) | ✅ DONE | چت ۷. در v2.10 سند ۲۴ مستند شد. |
+| T2.17 🆕 | PENDING_FOR_NEXT_VERSION.md system (قانون #۶۰) | ✅ DONE | چت ۸ — فایل ساخت + پروتکل. **حل ریشه‌ای M23**. |
+| T2.18 🆕 | ادغام PENDING → سند جامع v2.10 + Atomic Updates Governance | 🚧 IN-PROGRESS | چت ۸ بلوک ۱ — A1-A7. |
+| T2.19 🆕 | تکمیل CHAT_LOG.md چت ۷ (stub بود — نتیجه M23) | 🚧 IN-PROGRESS | چت ۸ بلوک ۱ — A5. |
+| T2.20 🆕 | GitHub setup طبق سند ۲۱ | 📋 TODO | چت ۸ بلوک ۲ (تعاملی، نیاز به کاربر). |
+| T2.21 🆕 | Audit Settings Claude Desktop (سند ۲۳) | 📋 TODO | چت ۸ بلوک ۲ — نیاز به ۸ screenshot از کاربر. |
 
 ---
 
@@ -190,6 +198,39 @@
 | Bug #51 درس آموخته (python -c escape) | ✅ DONE |
 | قوانین #۲۷-#۳۲ کشف شد | ✅ DONE — ⏳ ادغام در چت ۷ |
 
+### چت ۷ (Session 7 - part07) — 2026-05-18 (quality-hardening-continued)
+
+| Task | Status |
+|---|---|
+| T2.05 — Git workflow audit + GIT_WORKFLOW.md | ✅ DONE |
+| T2.06 — Pre-commit hooks (Hybrid mode) | ✅ DONE |
+| T2.07 — Anti-pattern catalog (A1-A10) | ✅ DONE |
+| T2.08 — Backend pytest + coverage + pyproject.toml | ✅ DONE — ۲۵/۲۵ pass |
+| T2.09 — API_DOCS.md | ✅ DONE |
+| T2.11 — ادغام قوانین #۲۷-۳۲ (Atomic Update v2.7→v2.8→v2.9) | ✅ DONE |
+| T2.14 — Filesystem MCP integration | ✅ DONE |
+| T2.15 — Claude Desktop: Memory + Project Knowledge + Custom Instructions | ✅ DONE |
+| T2.16 — `claude_workspace/` structure | ✅ DONE |
+| قوانین #۳۳-۴۷ + درس‌نامه M1-M21 ثبت | ✅ DONE — در سند v2.9 |
+| ۵ سند جانبی جدید (GIT_WORKFLOW + API_DOCS + ANTI_PATTERNS + BACKEND_TESTING + PRECOMMIT) | ✅ DONE |
+| Git: تکمیل تاریخچه چت ۷ (91704ca → d6bc75c) | ✅ DONE |
+
+> ⚠️ **نکته از چت ۸:** CHAT_LOG.md چت ۷ در پایان آن چت stub باقی ماند (درس M23 — مهم‌ترین درس پروژه). در چت ۸ تکمیل خواهد شد (T2.19).
+
+### چت ۸ (Session 8 - part08) — 2026-05-19 (pre-phase1-setup) — 🚧 IN-PROGRESS
+
+| Task | Status |
+|---|---|
+| T2.17 — PENDING_FOR_NEXT_VERSION.md system (قانون #۶۰) | ✅ DONE |
+| T2.18 — Atomic Update Governance docs (A1-A7) | 🚧 IN-PROGRESS |
+| قوانین جدید #۴۸-۶۱ + درس‌های M22-M62 | ✅ DONE — در v2.10 |
+| ۴ بخش جدید سند جامع (۲۲-۲۵) | ✅ DONE |
+| Atomic Update CLAUDE_CHECKLIST v1.2→v1.3 | ✅ DONE |
+| Atomic Update PROJECT_GOVERNANCE v1.2→v1.3 | ✅ DONE |
+| Atomic Update TASK_BACKLOG v1.4→v1.5 | 🚧 IN-PROGRESS (همین لحظه!) |
+
+> این بخش در پایان چت ۸ تکمیل می‌شود.
+
 ---
 
 ## آمار
@@ -197,10 +238,10 @@
 | سطح | تعداد Tasks | DONE | باقیمانده |
 |---|---|---|---|
 | Tier 1 | 16 | 16 | 0 |
-| Tier 2 | 13 | 4 | 9 (T2.05-T2.09 + T2.10 + T2.11 + T2.13) |
-| Tier 3 | 21 | 0 | 21 (شامل T2.12 — مهاجرت Claude Code) |
+| Tier 2 | 21 | 14 | 7 (T2.10، T2.12، T2.13، T2.18، T2.19، T2.20، T2.21) |
+| Tier 3 | 21 | 0 | 21 |
 | Tier 4 | 18 | 0 | 18 |
-| **مجموع** | **68** | **20** | **48** |
+| **مجموع** | **76** | **30** | **46** |
 
 > 💡 این آمار **حدوداً** است و در طول پروژه تغییر می‌کند.
 
@@ -208,6 +249,6 @@
 
 ## 📌 پایان TASK_BACKLOG
 
-**نسخه:** v1.4 (2026-05-18 — آغاز چت ۷، Atomic Update T2.11)  
-**به‌روز شده در:** آغاز چت `TRADING-phase0-part07-quality-hardening-continued`  
-**به‌روز توسط:** Claude (طبق قانون #۲۳ و CLAUDE_CHECKLIST فاز ۳ مرحله ۳)
+**نسخه:** v1.5 (2026-05-19 — چت ۸: ادغام Tier 2 + ۸ task جدید زیرساخت Claude Desktop)  
+**به‌روز شده در:** چت `TRADING-phase0-part08-pre-phase1-setup`  
+**به‌روز توسط:** Claude (طبق قانون #۲۳ و CLAUDE_CHECKLIST v1.3 فاز ۳)
