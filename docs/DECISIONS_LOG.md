@@ -582,11 +582,218 @@ T2.04 نیاز به سند معماری دارد. پوشه `docs/architecture/` 
 
 ---
 
+### Decision #58 — Pre-commit Hybrid Mode (critical اجباری + minor warning)
+
+**ثبت‌شده در:** چت ۷ (Atomic Update v2.9) — backfilled در چت ۱۰  
+**Status:** ✅ Accepted
+
+#### Context
+T2.06 نیاز به pre-commit hook دارد. دو گزینه: strict (همه چیز اجباری) vs lenient (فقط warning).
+
+#### Decision
+✅ **Hybrid Mode** — critical hooks (black, isort, ruff, trailing-whitespace) اجباری؛ minor (line length warnings) فقط warning.
+
+#### Rationale
+- strict باعث friction در commit های سریع می‌شود
+- lenient کیفیت را تضمین نمی‌کند
+- Hybrid: ضروریات اجباری، توصیه‌ها optional
+
+---
+
+### Decision #59 — `.gitattributes` به‌جای hook برای CRLF normalization
+
+**ثبت‌شده در:** چت ۷ — backfilled در چت ۱۰  
+**Status:** ✅ Accepted
+
+#### Context
+Windows-Linux interop باعث CRLF/LF conflicts می‌شود. Bug #51 cp1252 crash از همین مسیر آمد.
+
+#### Decision
+✅ استفاده از `.gitattributes` با `* text=auto eol=lf` به‌جای pre-commit hook.
+
+#### Rationale
+- .gitattributes در همه ابزارها (VS Code, git CLI, GitHub) اعمال می‌شود
+- hook فقط در زمان commit عمل می‌کند
+- جلوگیری از cp1252 fallback روی Windows
+
+---
+
+### Decision #60 — Pre-commit entry: `python wrapper.py` (cross-platform)
+
+**ثبت‌شده در:** چت ۷ — backfilled در چت ۱۰  
+**Status:** ✅ Accepted
+
+#### Context
+pre-commit hook ها روی Windows با shell scripts کار نمی‌کنند.
+
+#### Decision
+✅ هر custom hook با `python wrapper.py` (نه bash) فراخوانی شود.
+
+#### Rationale
+- cross-platform (Windows/Linux/macOS)
+- venv activation در Python سازگارتر
+- error handling consistent
+
+---
+
+### Decision #61 — Gradient Interface برای DataSource async extension
+
+**ثبت‌شده در:** چت ۱۰ (G2 — Architecture Q&A)  
+**Status:** ✅ Accepted
+
+#### Context
+DataSource(ABC) فعلی sync است. CCXTDataSource نیاز به async دارد. چطور بدون breaking change اضافه کنیم؟
+
+#### گزینه‌ها
+- **A** — تغییر `read_ohlcv` به async (breaking ExcelDataSource)
+- **B** — کلاس جدید `AsyncDataSource` جدا (duplication)
+- **C** — `read_ohlcv_async` اضافی با default impl `asyncio.to_thread(self.read_ohlcv, ...)` (gradient interface)
+
+#### Decision
+✅ **C — Gradient interface**
+
+#### Rationale
+- backwards compat کامل با ExcelDataSource (هیچ تغییری در sync code نیاز نیست)
+- async-first در FastAPI handlers
+- swap بین Excel و CCXT بدون درد در فاز ۵+ (تأیید در Decision #65)
+
+#### پیامد
+- `read_ohlcv` (sync) باقی می‌ماند برای backwards compat
+- `read_ohlcv_async` با default `asyncio.to_thread(self.read_ohlcv, ...)`
+- ExcelDataSource بدون تغییر کار می‌کند
+- CCXTDataSource `read_ohlcv_async` را override می‌کند و `read_ohlcv` (sync wrapper) از `asyncio.run` استفاده می‌کند (با warning M69 درباره FastAPI handler)
+
+---
+
+### Decision #62 — Mock Strategy: AsyncMock در pytest fixtures
+
+**ثبت‌شده در:** چت ۱۰ (G2)  
+**Status:** ✅ Accepted
+
+#### Context
+تست CCXTDataSource بدون اتصال به Binance واقعی.
+
+#### گزینه‌ها
+- **A** — VCR.py (record/replay HTTP)
+- **B** — Live testnet Binance
+- **C** — AsyncMock در fixtures
+
+#### Decision
+✅ **C — AsyncMock**
+
+#### Rationale
+- سریع، deterministic، بدون شبکه
+- کنترل کامل روی scenarios (BadSymbol، rate limit، …)
+- exception signatures و schema fields در اولین تلاش match می‌شوند (تجربه چت ۱۰: ۵/۵ test pass)
+
+---
+
+### Decision #63 — WebSocket → Repository: asyncio.Queue واسطه
+
+**ثبت‌شده در:** چت ۱۰ (G2)  
+**Status:** ✅ Accepted (پیاده‌سازی موکول به فاز ۵+)
+
+#### Context
+وقتی WebSocket subscriber در فاز ۵ ساخته شود، چطور به DB write کند؟
+
+#### گزینه‌ها
+- **A** — Direct DB write از WS handler
+- **B** — asyncio.Queue واسطه + consumer worker
+
+#### Decision
+✅ **B — asyncio.Queue**
+
+#### Rationale
+- decoupling از DB latency
+- batch write برای performance
+- multi-consumer در آینده (DB + Cache + WebSocket broadcast)
+
+---
+
+### Decision #64 — Rate Limiting: ccxt built-in `enableRateLimit=True`
+
+**ثبت‌شده در:** چت ۱۰ (G2)  
+**Status:** ✅ Accepted
+
+#### Context
+Binance API rate limits دارد. آیا custom token bucket بسازیم؟
+
+#### Decision
+✅ **ccxt built-in `enableRateLimit=True`**
+
+#### Rationale
+- ساده، کار می‌کند، YAGNI برای custom
+- اگر در فاز ۵+ نیاز به throttling پیشرفته‌تر شد، می‌توان جایگزین کرد
+
+---
+
+### Decision #65 — موکول‌کردن اتصال زنده Binance/Telegram به فاز ۵+
+
+**ثبت‌شده در:** چت ۱۰ (پایان چت — تصمیم استراتژیک)  
+**Status:** ✅ Accepted
+
+#### Context
+در چت ۱۰، CCXTDataSource skeleton ساخته شد. آیا فاز ۲ روی اتصال زنده تمرکز کند یا روی اندیکاتورها؟
+
+#### گزینه‌ها
+- **A** — فاز ۲ = binance_client + binance_ws (ادامه اتصال زنده)
+- **B** — فاز ۲ = اندیکاتورها با ExcelDataSource (اتصال زنده موکول به فاز ۵+)
+
+#### Decision
+✅ **B — موکول‌کردن اتصال زنده تا فاز ۵+**
+
+#### Rationale
+- gradient interface (Decision #61) swap را بدون درد می‌کند
+- ExcelDataSource دارای ۱۷۱۴ کندل BTC/USDT 1d است — کافی برای backtest
+- backtest با Excel data static reproducibility بالاتری دارد (بدون look-ahead bias)
+- value-delivery سریع‌تر: اندیکاتورها روی نمودار قابل-نمایش بدون نیاز به live
+- CCXTDataSource skeleton روی Shelf می‌ماند برای فاز ۵+
+
+#### پیامد
+- فاز ۲ (اندیکاتورها)، ۳ (استراتژی)، ۴ (بک‌تست) با ExcelDataSource
+- فاز ۵+ شروع: binance_client.py، binance_ws.py، integration test واقعی
+- در چت ۱۱ scope به Discovery / Master Architecture تغییر یافت
+
+---
+
+### Decision #66 — Push اجباری در پایان هر چت (GitHub-only backup)
+
+**ثبت‌شده در:** چت ۱۰ (پایان چت — پس از بحث با کاربر)  
+**Status:** ✅ Accepted
+
+#### Context
+نیاز به استراتژی backup در پایان هر چت.
+
+#### گزینه‌ها
+- **A** — local zip + GitHub (دو لایه)
+- **B** — فقط GitHub (یک لایه، استاندارد صنعتی)
+
+#### Decision
+✅ **B — GitHub-only با اسکریپت optional برای کاربرانی که DB/.env هم می‌خواهند**
+
+#### Rationale
+- سادگی workflow بهتر از لایه‌بندی پیچیده
+- GitHub خودش backup primary است — کاربر می‌تواند با git clone backup داشته باشد
+- .env هرگز در git نباشد (امنیتی) — فقط .env.example
+- DB در .gitignore می‌ماند (*.db)
+- Recovery time در disaster: ~۴۵-۶۰ دقیقه (ماشین آماده) — قابل قبول
+- اسکریپت scripts/63_backup_project.py optional برای کاربری که می‌خواهد backup شامل DB+.env داشته باشد
+
+#### قانون مرتبط
+قانون #۶۶ (پیشنهادی — برای ادغام در v2.12): در پایان هر چت، Claude باید مطمئن شود همه تغییرات commit و push شده‌اند.
+
+#### پیامد
+- پروتکل پایان چت: git add . → git commit → git push origin main
+- پس از هر commit بزرگ، یک HEAD backfill commit جداگانه (به‌خاطر M71 self-reference paradox)
+- در PENDING Z2.9 ثبت شد برای ادغام در v2.12
+
+---
+
 ## آمار
 
 | Status | تعداد |
 |---|---|
-| ✅ Accepted | ۵۷ |
+| ✅ Accepted | ۶۶ |
 | ⚠️ Superseded | ۰ |
 | ❌ Rejected | ۰ |
 | ⏳ Pending | ۰ |
@@ -595,6 +802,6 @@ T2.04 نیاز به سند معماری دارد. پوشه `docs/architecture/` 
 
 ## 📌 پایان DECISIONS_LOG
 
-**نسخه:** v1.1 (2026-05-17 — پایان چت ۷)  
-**تصمیمات ثبت‌شده:** ۵۷  
+**نسخه:** v1.2 (2026-05-20 — پایان چت ۱۰: backfill Decisions #58-66 + cleanup Documentation Drift M71)  
+**تصمیمات ثبت‌شده:** ۶۶  
 **Status کلی:** همه Accepted

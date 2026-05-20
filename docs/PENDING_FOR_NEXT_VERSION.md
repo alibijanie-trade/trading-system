@@ -259,6 +259,83 @@ RuntimeError: asyncio.run() cannot be called from a running event loop
 
 ---
 
+---
+
+## 🆕 آیتم‌های کشف‌شده در پایان چت ۱۰ (Cleanup Round)
+
+### Z2.10: M71 — Documentation Drift Self-Reference Paradox ⚠️
+
+**کشف‌شده در:** چت ۱۱ (توسط Claude در audit) — پیگیری در پایان چت ۱۰
+
+**درس (M71):**
+وقتی فایلی شامل reference به خودش است (مثل "Git HEAD پایان چت" در فایلی که خودش commit می‌شود)، آن reference همیشه یک commit عقب می‌ماند — chicken-and-egg paradox.
+
+**تجربه چت ۱۰:** در هر ۴ commit، HANDOFF و SESSION_STATUS HEAD reference قبلی را نگه داشتند تا Claude در چت ۱۱ متوجه شد.
+
+**راه‌حل پیشنهادی برای v2.12:**
+1. فایل جدا `docs/HEADS.md` برای HEAD پایان هر چت
+2. رویکرد فعلی: دو commit (محتوا + HEAD backfill جداگانه)
+3. placeholder `<TBD>` تا چت بعد
+
+**ادغام در:** v2.12 — **نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.11: M72 — End-of-Chat Verification Checklist غایب ⚠️
+
+**کشف‌شده در:** چت ۱۰ (audit پایان)  
+**وضعیت:** برای افزودن به CLAUDE_CHECKLIST فاز ۳ در v2.12
+
+**درس (M72):**
+قانون #۴۸ فقط پروتکل **شروع** چت را پوشش می‌دهد. پروتکل **پایان** چت فاقد checklist verification است:
+- چت ۹ Decisions #۵۸-۶۰ را در DECISIONS_LOG ثبت نکرد
+- چت ۱۰ Decisions #۶۱-۶۶ را ثبت نکرد
+- هرگز cross-check بین اسناد انجام نشد
+
+**چک‌لیست پیشنهادی برای افزودن به CLAUDE_CHECKLIST فاز ۳:**
+```
+□ ۱. همه Decisions جدید در DECISIONS_LOG ثبت شدند؟ (sequential، بدون gap)
+□ ۲. همه Bug های جدید در TROUBLESHOOTING ثبت شدند؟
+□ ۳. همه درس‌های جدید (M*) در PENDING یا سند جامع ثبت شدند؟
+□ ۴. همه قوانین جدید (#*) ثبت شدند؟
+□ ۵. HEAD references در SESSION_STATUS و CHAT_LOG به‌روز هستند؟
+□ ۶. آمار در SESSION_STATUS + CHAT_LOG + DECISIONS_LOG سازگارند؟
+□ ۷. Git push موفق و HEAD نهایی ثبت شد؟
+```
+
+**ادغام در:** v2.12 — **نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.12: M73 — Cross-Document Consistency Audit ⚠️
+
+**درس (M73):**
+اسناد متعدد (CHAT_LOG, SESSION_STATUS, HANDOFF, DECISIONS_LOG, PENDING, TROUBLESHOOTING) باید با هم سازگار باشند.
+
+**مثال از چت ۱۰:**
+- HANDOFF: HEAD = `a29586e` ❌
+- SESSION_STATUS: HEAD = `5cfc7e0` ❌
+- DECISIONS_LOG: تعداد = ۵۷ ❌
+- واقعی: HEAD = `f42d54f`، Decisions = ۶۶ ✅
+
+**راه‌حل:** `scripts/audit_docs_consistency.py` که HEAD و آمار را cross-check کند.
+
+**ادغام در:** v2.12 — **نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.13: Bug #54 — Decisions Numbering Gap ✅ حل‌شده
+
+**وضعیت:** ✅ حل در پایان چت ۱۰ (DECISIONS_LOG v1.1 → v1.2 با backfill #۵۸-۶۶)
+
+**علائم:** DECISIONS_LOG.md در #۵۷ متوقف بود، ولی در حقیقت #۵۸-#۶۶ در چت های ۸-۱۰ گرفته شده بودند.
+
+**علت ریشه‌ای:** M72
+
+**پیشگیری:** M72 باید اجباری شود تا تکرار نشود.
+
+---
+
 ## 📜 آیتم‌های ادغام‌شده در v2.11 (تاریخچه — حذف شد)
 
 تمام آیتم‌های زیر در پایان چت ۹ (فاز A) با ساخت سند جامع v2.11 ادغام شدند و طبق پروتکل ۷.۳ از این فایل پاک شدند:
@@ -291,7 +368,7 @@ RuntimeError: asyncio.run() cannot be called from a running event loop
 
 ## 📌 پایان فایل
 
-**نسخه:** v0.4 (2026-05-20 — پایان چت ۱۰: افزودن Z2.3-Z2.7 برای ادغام در v2.12)  
+**نسخه:** v0.5 (2026-05-20 — پایان چت ۱۰ cleanup: افزودن Z2.10-Z2.13 — M71/M72/M73 + Bug #54)  
 **ساخته توسط:** Claude در چت ۸ (`TRADING-phase0-part08-pre-phase1-setup`)  
 **به‌روز توسط:** Claude در پایان چت ۱۰ طبق پروتکل ۷.۳  
 **ادغام بعدی:** سند جامع v2.12 (در چت ۱۱ یا چت ۱۲)
@@ -308,9 +385,13 @@ RuntimeError: asyncio.run() cannot be called from a running event loop
 | **Z2.6** 🆕 | 🟡 medium | M69 — `asyncio.run()` در FastAPI handler crash می‌کند |
 | **Z2.7** 🆕 | 💡 minor | اصلاحیه سند جامع v2.11 بخش ۲.۲ (ccxt 4.3.0 → 4.3.98) |
 | **Z2.8** 🆕 | 💡 minor (cosmetic) | خط cosmetic در CHAT_LOG (bytes خراب) |
-| **Z2.9** 🆕 | 🔴 **important** | قانون #۶۶ — Backup اجباری در پایان هر چت (ساخته در چت ۱۰) |
+| **Z2.9** 🆕 | 🔴 **important** | قانون #۶۶ — Push اجباری در پایان هر چت (ساخته در چت ۱۰) |
+| **Z2.10** 🆕⚠️ | 🔴 **important** | M71 — Documentation Drift Self-Reference Paradox |
+| **Z2.11** 🆕⚠️ | 🔴 **important** | M72 — End-of-Chat Verification Checklist غایب در قانون #۴۸ |
+| **Z2.12** 🆕⚠️ | 🔴 **important** | M73 — Cross-Document Consistency Audit اجباری در پایان چت |
+| **Z2.13** ✅ | 🟡 medium | Bug #54 — Decisions منقطع (#57→#65) — حل شد در پایان چت ۱۰ |
 
-**تعداد:** ۹ آیتم  
+**تعداد:** ۱۳ آیتم  
 **اولویت ادغام:** Z2.4 (critical bug)، Z2.1 (already-fixed lesson)، بقیه
 
 ---

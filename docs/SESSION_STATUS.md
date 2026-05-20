@@ -12,13 +12,14 @@
 - **Tier جاری:** Tier 2 + Infrastructure — **۱۶/۲۱ DONE (76%)**
 - **سند جامع:** **v2.11** (152,438 chars؛ نیاز به اصلاح بخش ۲.۲ در v2.12)
 - **Git HEAD شروع چت ۱۰:** `88debb7`
-- **Git HEAD پایان چت ۱۰:** `5cfc7e0`
+- **Git HEAD پایان چت ۱۰:** `f42d54f` (پس از cleanup round و بک‌فیل Decisions #۵۸-۶۶)
 - **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH via port 443) ✅
 - **چت بعدی پیشنهادی:** `TRADING-phase1to2-transition-discovery` 🎯 (Discovery Chat — درخواست کاربر پایان چت ۱۰)
 - **تصمیمات استراتژیک چت ۱۰:**
   - Decision #65: اتصال زنده Binance/Telegram به فاز ۵+ موکول — فاز ۲-۴ با ExcelDataSource
-  - Decision #66: قانون جدید #۶۶ — Backup اجباری در پایان هر چت (پیاده‌سازی: scripts/63_*)
+  - Decision #66 + قانون جدید #۶۶: Push اجباری در پایان هر چت (GitHub-only backup)
   - Discovery Chat قبل از فاز ۲: جمع‌بندی فنی فازهای ۲-۸ با PHASE2_PLUS_ROADMAP.md
+  - **Cleanup Round پایانی:** Decisions #۵۸-۶۶ در DECISIONS_LOG backfill شدند + M71/M72/M73 ثبت
 
 ---
 
@@ -74,8 +75,8 @@
 - **Tests:** 25/25 pytest + 30/30 vitest + ۲۵ تست script چت ۱۰ = **۸۰ pass**
 - **چت‌های کامل:** **۱۰** (آخرین: همین چت)
 - **Backlog Total:** **۳۴/۸۲ DONE** (T3.01 + T3.02 اضافه شدند)
-- **PENDING برای v2.12:** **۷ آیتم** (Z2.1-Z2.7)
-- **Git commits:** پایان چت ۱۰ — `5cfc7e0` (از `88debb7` — 18 فایل تغییر، +2154/-129 خط)
+- **PENDING برای v2.12:** **۱۳ آیتم** (Z2.1-Z2.13 — شامل M71/M72/M73 و Bug #54 حل‌شده در cleanup round)
+- **Git commits:** پایان چت ۱۰ — `5cfc7e0` → `a7dccca` → `a29586e` → `f42d54f` → `<جدید cleanup>` (از `88debb7`)
 
 ---
 
