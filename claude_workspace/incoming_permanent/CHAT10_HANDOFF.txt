@@ -2,8 +2,8 @@
 
 ساخته‌شده توسط: Claude در پایان چت ۹ (طبق قانون #۶۲)
 تاریخ: 2026-05-20
-چت قبلی: چت ۹ — TRADING-phase1-part01-ccxt-websocket-setup (فاز A کامل شد)
-چت بعدی پیشنهادی: TRADING-phase1-part01b-ccxt-skeleton (فاز B خالص)
+چت قبلی: چت ۹ — TRADING-phase0-part09-v2_11-atomic-update-and-bug50-cleanup (فاز A کامل شد)
+چت بعدی پیشنهادی: TRADING-phase1-part01-ccxt-websocket-setup (شروع رسمی فاز ۱)
 Git HEAD پایان چت ۹: (پس از commit نهایی — نگاه به git log)
 
 ═══════════════════════════════════════════════════════════
@@ -124,7 +124,7 @@ Git HEAD پایان چت ۹: (پس از commit نهایی — نگاه به git 
    💡 Auth: JWT + bcrypt
    💡 محیط: Windows + venv + PowerShell
 
-💡 NOTE — اگر در ابتدای چت ۱۰ نام آن `TRADING-phase1-part01b-ccxt-skeleton` نباشد، نگران نباش — هر نامی که با `TRADING-phase1-` شروع شود قابل قبول است.
+💡 NOTE — اگر در ابتدای چت ۱۰ نام آن `TRADING-phase1-part01-ccxt-websocket-setup` نباشد، نگران نباش — هر نامی که با `TRADING-phase1-` شروع شود قابل قبول است.
 
 💡 NOTE — نام فعلی این فایل: `claude_workspace/incoming_permanent/CHAT10_HANDOFF.txt` (طبق قانون #۶۲).
 

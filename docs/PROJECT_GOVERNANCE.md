@@ -659,7 +659,7 @@ function oldComponent() { ... }
 
 **نسخه:** v1.4 (2026-05-20 — چت ۹: Atomic Update v2.10→v2.11 + ادغام ۱۰ آیتم PENDING + Bug #50 cleanup + M63-M64)  
 **نسخه پروژه در زمان ایجاد:** v0.4.0  
-**نویسنده:** Claude در چت `TRADING-phase0-part05-...` + به‌روز توسط `TRADING-phase0-part08-pre-phase1-setup` + `TRADING-phase1-part01-ccxt-websocket-setup`  
+**نویسنده:** Claude در چت `TRADING-phase0-part05-...` + به‌روز توسط `TRADING-phase0-part08-pre-phase1-setup` + `TRADING-phase0-part09-v2_11-atomic-update-and-bug50-cleanup`  
 **تأیید کاربر:** ✅
 
 > این سند زنده است. هر تغییر باید مستند شود.

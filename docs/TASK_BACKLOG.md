@@ -229,7 +229,7 @@
 | Atomic Update PROJECT_GOVERNANCE v1.2→v1.3 | ✅ DONE |
 | Atomic Update TASK_BACKLOG v1.4→v1.5 | ✅ DONE |
 
-### چت ۹ (Session 9 - phase1-part01) — 2026-05-20 (ccxt-websocket-setup) — ✅ DONE (فاز A فقط)
+### چت ۹ (Session 9 - phase0-part09) — 2026-05-20 (v2_11-atomic-update-and-bug50-cleanup) — ✅ DONE
 
 | Task | Status |
 |---|---|
@@ -263,6 +263,6 @@
 
 ## 📌 پایان TASK_BACKLOG
 
-**نسخه:** v1.6 (2026-05-20 — چت ۹: تکمیل چت ۸ + افزودن چت ۹ فاز A + tasks T2.22-T2.29)  
-**به‌روز شده در:** چت `TRADING-phase1-part01-ccxt-websocket-setup`  
+**نسخه:** v1.6 (2026-05-20 — چت ۹: تکمیل چت ۸ + افزودن چت ۹ + tasks T2.22-T2.29)  
+**به‌روز شده در:** چت `TRADING-phase0-part09-v2_11-atomic-update-and-bug50-cleanup`  
 **به‌روز توسط:** Claude (طبق قانون #۲۳ و CLAUDE_CHECKLIST v1.4 فاز ۳)

@@ -1031,11 +1031,11 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 ### 🔗 ارتباطات (چت ۸)
 
 - ادامه چت قبل: `TRADING-phase0-part07-quality-hardening-continued`
-- **چت بعد:** چت ۹ — `TRADING-phase1-part01-ccxt-websocket-setup` (فاز A: ادغام + Bug #50 cleanup)
+- **چت بعد:** چت ۹ — `TRADING-phase0-part09-v2_11-atomic-update-and-bug50-cleanup` (فاز A: ادغام + Bug #50 cleanup)
 
 ---
 
-## چت ۹ (Session 9) — `TRADING-phase1-part01-ccxt-websocket-setup` (فاز A)
+## چت ۹ (Session 9) — `TRADING-phase0-part09-v2_11-atomic-update-and-bug50-cleanup`
 
 **تاریخ:** 2026-05-20  
 **مدت:** ~۵ ساعت  
@@ -1091,7 +1091,7 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 ### 🔗 ارتباطات
 
 - ادامه چت قبل: `TRADING-phase0-part08-pre-phase1-setup`
-- **چت بعد پیشنهادی:** `TRADING-phase1-part01b-ccxt-skeleton` (فاز B خالص — CCXTDataSource skeleton + WebSocket subscriber)
+- **چت بعد پیشنهادی:** `TRADING-phase1-part01-ccxt-websocket-setup` (شروع رسمی فاز ۱ — CCXTDataSource skeleton + WebSocket subscriber)
 - **handoff فایل:** `claude_workspace/incoming_permanent/CHAT10_HANDOFF.txt`
 
 ---
@@ -1115,5 +1115,5 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 ## 📌 پایان CHAT_LOG
 
 **نسخه:** v1.4 (2026-05-20 — چت ۹: تکمیل چت ۸ stub + افزودن بخش چت ۹ فاز A + تصحیح آمار)  
-**به‌روز شده در:** چت `TRADING-phase1-part01-ccxt-websocket-setup`  
+**به‌روز شده در:** چت `TRADING-phase0-part09-v2_11-atomic-update-and-bug50-cleanup`  
 **به‌روز توسط:** Claude طبق قانون #۲۳ + #۲۶ + #۶۰ — CLAUDE_CHECKLIST v1.4 فاز ۳
