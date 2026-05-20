@@ -198,6 +198,67 @@ RuntimeError: asyncio.run() cannot be called from a running event loop
 
 ---
 
+### Z2.8: خط cosmetic در CHAT_LOG (bytes خراب)
+
+**کشف‌شده در:** چت ۱۰ (پایان)  
+**وضعیت:** 🟡 cosmetic only — اطلاعات نادرست (~۶۴ به‌جای ~۷۴)  
+**رفع:** با اسکریپت Python (read_bytes/write_bytes) در v2.12
+
+---
+
+### Z2.9: قانون #۶۶ — Backup اجباری در پایان هر چت 🆕
+
+**درخواست کاربر در:** پایان چت ۱۰ (2026-05-20)  
+**وضعیت:** 🟢 پیاده‌سازی اولیه در چت ۱۰ (اسکریپت `63_backup_project.py`)
+
+**🆕 متن نهایی قانون #۶۶ (تصمیم پایان چت ۱۰):**
+
+> **قانون #۶۶ — Push اجباری در پایان هر چت:**
+>
+> در پایان هر چت، Claude باید مطمئن شود همه تغییرات commit و به GitHub push شده‌اند. **GitHub خودش backup primary است** — کاربر می‌تواند با `git clone` در هر ماشینی یک نسخه backup داشته باشد.
+>
+> **پروتکل پایان چت:**
+> ۱. wrap-up اسناد (PENDING، CHAT_LOG، SESSION_STATUS، CHAT[N+1]_HANDOFF)
+> ۲. ساخت اسکریپت backup در ابتدای چت (طبق قانون #۶۲)
+> ۳. تحویل دستور `git add . && git commit -m "..." && git push origin main` با Convention 🟢 ▶️ EXECUTE
+> ۴. تأیید HEAD جدید پس از کاربر
+>
+> **نکات امنیتی:**
+> - `.env` هرگز در git نباشد — فقط `.env.example` (با dummy values)
+> - DB در `.gitignore` می‌ماند (`*.db`) — کاربر مسئول backup شخصی DB است
+> - secrets هرگز در commit messages یا code نباشد
+>
+> **Recovery از GitHub در صورت disaster:**
+> - ماشین آماده (Python+Node+Git نصب): **~۴۵-۶۰ دقیقه**
+> - ماشین خالی: **~۱.۵-۲ ساعت**
+> - کیفیت: ۱۰۰٪ یکسان تا آخرین commit پوش شده
+>
+> **اسکریپت `scripts/63_backup_project.py` (optional):** برای کاربری که می‌خواهد backup شامل DB و .env (که در git نیستند) داشته باشد. در شرایط عادی نیازی نیست — GitHub کافی است.
+
+**اقدامات لازم در v2.12:**
+
+1. افزودن قانون #۶۶ به جدول ۱.۹ سند جامع (با اصلاحیه زیر)
+2. افزودن backup step به CLAUDE_CHECKLIST فاز ۳ (پایان چت)
+3. افزودن بخش جدید به سند جامع: «بخش ۲۶ — Backup Strategy»
+4. بررسی rotation policy (نگه‌داری N بک‌آپ آخر)
+
+**🔄 تحول مدل backup در طول چت ۱۰ (تاریخچه):**
+
+- **v1 (اولیه):** Backup zip local + GitHub (دو لایه) — اسکریپت 63 ساخته شد
+- **سؤال کاربر:** «بک‌آپ جدید را در گیتهاب گرفتی؟» — ابهام درباره اجرای خودکار vs دستی
+- **پیشنهاد کاربر:** «همه چیز در GitHub، خودم clone می‌کنم» — ساده‌تر و استانداردتر
+- **تصمیم نهایی:** نسخه بالا (Push اجباری در پایان هر چت)
+- **سرنوشت اسکریپت 63:** optional — برای کاربری که می‌خواهد backup شامل DB و .env (که در git نیستند) داشته باشد
+
+**درس نهایی (M70 — برای ادغام در v2.12):**
+
+سادگی workflow > لایه‌بندی پیچیده. **یک source of truth (GitHub)** بهتر از دو منبع (GitHub + local zip) است در ۸۰٪ موارد. لایه دوم فقط برای محتوای حساس (DB با state، .env) ارزش دارد و اختیاری است.
+
+**ثبت‌شده توسط:** قانون #۶۰ + قانون #۶۵  
+**نشان داده شده به کاربر:** ✅
+
+---
+
 ## 📜 آیتم‌های ادغام‌شده در v2.11 (تاریخچه — حذف شد)
 
 تمام آیتم‌های زیر در پایان چت ۹ (فاز A) با ساخت سند جامع v2.11 ادغام شدند و طبق پروتکل ۷.۳ از این فایل پاک شدند:
@@ -246,9 +307,10 @@ RuntimeError: asyncio.run() cannot be called from a running event loop
 | **Z2.5** 🆕 | 🎯 important | M68 — نسخه‌های pinned باید با PyPI verify شوند |
 | **Z2.6** 🆕 | 🟡 medium | M69 — `asyncio.run()` در FastAPI handler crash می‌کند |
 | **Z2.7** 🆕 | 💡 minor | اصلاحیه سند جامع v2.11 بخش ۲.۲ (ccxt 4.3.0 → 4.3.98) |
-| **Z2.8** 🆕 | 💡 minor (cosmetic) | خط `| اس‫‬ریپت‌های تولید‌شده |` در CHAT_LOG bytes خراب دارد — رفع با اسکریپت Python (read_bytes/write_bytes) |
+| **Z2.8** 🆕 | 💡 minor (cosmetic) | خط cosmetic در CHAT_LOG (bytes خراب) |
+| **Z2.9** 🆕 | 🔴 **important** | قانون #۶۶ — Backup اجباری در پایان هر چت (ساخته در چت ۱۰) |
 
-**تعداد:** ۸ آیتم  
+**تعداد:** ۹ آیتم  
 **اولویت ادغام:** Z2.4 (critical bug)، Z2.1 (already-fixed lesson)، بقیه
 
 ---

@@ -14,8 +14,11 @@
 - **Git HEAD شروع چت ۱۰:** `88debb7`
 - **Git HEAD پایان چت ۱۰:** `5cfc7e0`
 - **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH via port 443) ✅
-- **چت بعدی پیشنهادی:** `TRADING-phase2-part01-indicators-base` 🚀
-- **تصمیم استراتژیک چت ۱۰:** Decision #65 (پیشنهادی) — اتصال زنده Binance/Telegram به فاز ۵+ موکول — فاز ۲ (اندیکاتورها) با ExcelDataSource
+- **چت بعدی پیشنهادی:** `TRADING-phase1to2-transition-discovery` 🎯 (Discovery Chat — درخواست کاربر پایان چت ۱۰)
+- **تصمیمات استراتژیک چت ۱۰:**
+  - Decision #65: اتصال زنده Binance/Telegram به فاز ۵+ موکول — فاز ۲-۴ با ExcelDataSource
+  - Decision #66: قانون جدید #۶۶ — Backup اجباری در پایان هر چت (پیاده‌سازی: scripts/63_*)
+  - Discovery Chat قبل از فاز ۲: جمع‌بندی فنی فازهای ۲-۸ با PHASE2_PLUS_ROADMAP.md
 
 ---
 

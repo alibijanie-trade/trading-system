@@ -1,208 +1,226 @@
-# CHAT11_HANDOFF — پایان چت ۱۰ → شروع چت ۱۱
+# CHAT11_HANDOFF — پایان چت ۱۰ → شروع چت ۱۱ (Discovery Chat)
 
 ساخته‌شده توسط: Claude در پایان چت ۱۰ (طبق قانون #۶۲)
 تاریخ: 2026-05-20
-چت قبلی: چت ۱۰ — TRADING-phase1-part01-ccxt-websocket-setup (G1+G2+G3 کامل شد)
-چت بعدی پیشنهادی: TRADING-phase2-part01-indicators-base
-Git HEAD پایان چت ۱۰: 5cfc7e0 (commit دوم HEAD backfill در پایان wrap-up)
+چت قبلی: چت ۱۰ — TRADING-phase1-part01-ccxt-websocket-setup
+چت بعدی پیشنهادی: TRADING-phase1to2-transition-discovery
+Git HEAD پایان چت ۱۰: a7dccca (پس از commit نهایی wrap-up)
 
 ═══════════════════════════════════════════════════════════
-بخش ۰: تصمیم استراتژیک پایان چت ۱۰ ⭐ مهم
+بخش ۰: تصمیم‌های استراتژیک پایان چت ۱۰ ⭐ مهم
 ═══════════════════════════════════════════════════════════
 
-🎯 Decision #65 (پیشنهادی — در ابتدای چت ۱۱ رسماً به DECISIONS_LOG اضافه شود):
+🎯 Decision #65 (پیشنهادی — در ابتدای چت ۱۱ به DECISIONS_LOG اضافه شود):
 
-   ★ اتصال زنده به Binance API و Telegram bot به فاز ۵+ موکول می‌شود.
-   ★ فاز ۲ (اندیکاتورها)، فاز ۳ (استراتژی)، فاز ۴ (بک‌تست) با ExcelDataSource انجام می‌شوند.
+   ★ اتصال زنده Binance API و Telegram bot به فاز ۵+ موکول می‌شود.
+   ★ فاز ۲ (اندیکاتورها)، ۳ (استراتژی)، ۴ (بک‌تست) با ExcelDataSource انجام می‌شوند.
    ★ CCXTDataSource skeleton (چت ۱۰) به‌عنوان "آماده روی Shelf" نگه داشته می‌شود.
-   ★ این تصمیم به‌خاطر معماری gradient interface (Decision #61) ریسک پایینی دارد:
-      وقتی نیاز شد، فقط یک خط در dependency injection عوض می‌شود.
+   ★ دلیل: gradient interface (Decision #61) swap بدون درد را ممکن می‌کند.
 
-این تصمیم در پایان چت ۱۰ توسط کاربر تأیید شد. در ابتدای چت ۱۱،
-Claude باید Decision #65 را در docs/DECISIONS_LOG.md ثبت کند.
+🎯 Decision #66 (پیشنهادی — در ابتدای چت ۱۱ ثبت):
+
+   ★ قانون #۶۶ — Push اجباری در پایان هر چت (نسخه نهایی پس از بحث چت ۱۰)
+   ★ در پایان هر چت: git add . && git commit -m "..." && git push origin main
+   ★ GitHub خودش backup primary است — کاربر می‌تواند با git clone backup داشته باشد
+   ★ .env هرگز در git نیست (فقط .env.example) — استاندارد امنیتی
+   ★ DB در .gitignore می‌ماند (*.db) — کاربر مسئول backup شخصی DB
+   ★ Recovery time در disaster: ~۴۵-۶۰ دقیقه (ماشین آماده)، ۱.۵-۲ ساعت (خالی)
+   ★ اسکریپت scripts/63_backup_project.py optional باقی می‌ماند برای کاربری
+      که می‌خواهد backup شامل DB و .env داشته باشد (در شرایط عادی نیاز نیست)
+
+🎯 درخواست کاربر پایان چت ۱۰ ⭐⭐⭐:
+
+   ★ چت ۱۱ یک "Discovery / Planning Chat" باشد — نه شروع TODO اندیکاتورها
+   ★ هدف: جمع‌بندی فنی جامع از فازهای ۲-۸ قبل از کدنویسی
+   ★ بحث بین کاربر و Claude:
+      - انتظارات کاربر از هر فاز
+      - تصمیم‌های معماری بزرگ‌تر (مدل اندیکاتورها، استراتژی، بک‌تست، …)
+      - scope definition هر فاز
+      - شناسایی ریسک‌ها و dependencies
+      - تعیین roadmap و milestones
+   ★ خروجی: سند جدید docs/PHASE2_PLUS_ROADMAP.md
 
 ═══════════════════════════════════════════════════════════
 بخش ۱: وضعیت پروژه در شروع چت ۱۱
 ═══════════════════════════════════════════════════════════
 
-✅ DONE — G1 (Dependencies): ccxt 4.3.98 + websockets 12.0 + ۱۲ dep جانبی نصب
-✅ DONE — G2 (Architecture): ۴ تصمیم معماری ثبت (Decisions #۶۱-۶۴)
+✅ DONE — G1 (Dependencies): ccxt 4.3.98 + websockets 12.0 نصب
+✅ DONE — G2 (Architecture): Decisions #۶۱-۶۴ ثبت
 ✅ DONE — G3 (CCXTDataSource skeleton): base.py + ccxt_source.py + ۵ test mock pass
 ✅ DONE — Bug #53 cleanup (BOM در requirements.txt)
-✅ DONE — Documentation update: PENDING (v0.4)، CHAT_LOG (v1.5)، TROUBLESHOOTING (v1.2)، SESSION_STATUS
-✅ DONE — Git commit `5cfc7e0` + push موفق
-🆕 NEW — Decision #65 پیشنهادی: موکول‌کردن اتصال زنده تا فاز ۵+
+✅ DONE — Documentation update: PENDING (v0.4 — ۹ آیتم)، CHAT_LOG (v1.5)، TROUBLESHOOTING (v1.2)، SESSION_STATUS
+✅ DONE — Git commits ۲ تا (`5cfc7e0`، `a7dccca`)
+✅ DONE — قانون #۶۶ + اسکریپت backup ساخته شد (در چت ۱۰)
 
-⚠️ CHECK — قبل از شروع کار در چت ۱۱، این موارد را بررسی کن:
-   ⚠️ CHECK ۱: venv فعال است؟ ← cd backend; .\venv\Scripts\Activate.ps1
-   ⚠️ CHECK ۲: backend اجرا می‌شود؟ ← uvicorn app.main:app --reload
-   ⚠️ CHECK ۳: frontend اجرا می‌شود؟ ← cd frontend; npm run dev
-   ⚠️ CHECK ۴: login admin/1 کار می‌کند؟ نمودار BTC/USDT را می‌بینید؟
-   ⚠️ CHECK ۵: pip list | findstr "ccxt pandas numpy" → هر سه باید موجود باشند
-   ⚠️ CHECK ۶: python scripts/61b_test_async_base.py و scripts/62b_test_ccxt_source.py — هر دو pass؟
-   ⚠️ CHECK ۷: کندل‌های BTC/USDT 1d در DB (~1714 کندل) موجود هستند؟
-      ← `cd backend && python -c "import asyncio; from app.repositories.ohlcv_repository import OhlcvRepository; from app.infrastructure.database.session import get_session_factory; async def f(): sf=get_session_factory(); async with sf() as s: r=OhlcvRepository(s); print(await r.count(symbol_id=1, timeframe_id=12)); asyncio.run(f())"`
-      یا ساده‌تر: backend GET /api/v1/ohlcv?symbol_id=1&timeframe_id=12&limit=5
+⚠️ CHECK — قبل از شروع چت ۱۱:
+   ⚠️ CHECK ۱: venv فعال است؟
+   ⚠️ CHECK ۲: backend اجرا می‌شود؟ (uvicorn)
+   ⚠️ CHECK ۳: frontend اجرا می‌شود؟ (npm run dev)
+   ⚠️ CHECK ۴: login admin/1 + نمودار BTC/USDT کار می‌کند؟
+   ⚠️ CHECK ۵: backup ساخته شد؟ ← `ls claude_workspace/backups/` باید `trading-system-chat10-2026-05-20.zip` ببینید
+   ⚠️ CHECK ۶: کندل‌های BTC/USDT 1d در DB (~1714) موجود هستند؟
 
-💡 NOTE — ۸ آیتم در PENDING_FOR_NEXT_VERSION.md باقی است (v0.4):
-   💡 Z2.1 — M64 (JSX runtime در plugin-react vs esbuild)
-   💡 Z2.2 — M65 (تشخیص shell از prompt)
+💡 NOTE — ۹ آیتم در PENDING_FOR_NEXT_VERSION.md (برای ادغام در v2.12):
+   💡 Z2.1 — M64 (JSX runtime)
+   💡 Z2.2 — M65 (تشخیص shell)
    💡 Z2.3 — M66 (Filesystem MCP و فایل‌های >200KB)
-   💡 Z2.4 — M67 (BOM لازم برای pip روی Windows) ⭐ critical
+   💡 Z2.4 — M67 (BOM لازم برای pip) ⭐ critical
    💡 Z2.5 — M68 (نسخه‌های pinned با PyPI verify)
-   💡 Z2.6 — M69 (asyncio.run() در FastAPI handler crash)
-   💡 Z2.7 — اصلاحیه سند جامع v2.11 بخش ۲.۲ (ccxt 4.3.0 → 4.3.98)
-   💡 Z2.8 — bytes خراب در یک خط CHAT_LOG (cosmetic)
+   💡 Z2.6 — M69 (asyncio.run() در FastAPI handler)
+   💡 Z2.7 — اصلاحیه سند جامع v2.11 بخش ۲.۲
+   💡 Z2.8 — bytes خراب در CHAT_LOG (cosmetic)
+   💡 Z2.9 — قانون #۶۶ Backup اجباری ⭐ important
 
 ═══════════════════════════════════════════════════════════
-بخش ۲: هدف چت ۱۱ — فاز ۲ شروع (اندیکاتورها)
+بخش ۲: هدف چت ۱۱ — Discovery / Planning
 ═══════════════════════════════════════════════════════════
 
-📋 TODO ۰: ثبت Decision #65 در docs/DECISIONS_LOG.md
-   - متن دقیق از بخش ۰ این فایل کپی شود
-   - تاریخ: 2026-05-20 (پایان چت ۱۰، تأیید کاربر)
-   - دلایل: gradient interface از Decision #61، اولویت value-delivery، reproducibility بک‌تست
+📋 TODO ۰: ثبت رسمی Decisions در DECISIONS_LOG
+   - Decision #65 (موکول‌کردن اتصال زنده)
+   - Decision #66 (Backup در پایان هر چت)
 
-📋 TODO ۱: بحث ۴ سؤال معماری (G2 چت ۱۱)
-   ⚠️ سؤال ۱: مکان اندیکاتورها در کجا؟
-      الف) `backend/app/domain/indicators/` — pure logic، بدون نیاز DB
-      ب) `backend/app/services/indicators/` — همراه service layer
-      پیشنهاد Claude: الف — اندیکاتورها pure functions روی OHLCV هستند، domain logic
+📋 TODO ۱: مرور کامل با کاربر — انتظارات از فازهای ۲-۸
 
-   ⚠️ سؤال ۲: الگوی طراحی: کلاس یا تابع؟
-      الف) Strategy pattern — هر اندیکاتور یک کلاس با interface
-      ب) Function-based — هر اندیکاتور یک تابع
-      پیشنهاد Claude: الف — قابل توسعه با پارامتر (period, source)، state-friendly
+   فاز ۲ — اندیکاتورها:
+   - کدام اندیکاتورها مهم‌تر هستند؟ MA/EMA/RSI/MACD/Bollinger/Volume Profile/Stochastic/ATR/...
+   - باید روی نمودار رندر شوند یا فقط backend signals؟
+   - تنظیمات per-user (period دلخواه) یا global presets؟
+   - cache برای performance؟
 
-   ⚠️ سؤال ۳: محاسبه با چه ابزار؟
-      الف) pandas + numpy — سرعت، ساده‌گویی، already در deps
-      ب) pure Python loops — کنترل دقیق، بدون dep جدید
-      ج) TA-Lib — استاندارد صنعتی، ولی نیاز نصب C library
-      پیشنهاد Claude: الف — pandas/numpy موجود، speed، تست‌پذیر
+   فاز ۳ — استراتژی (Signal Generation):
+   - منطق چه شکلی است؟ Rules-based (if RSI<30 then buy)؟ یا ترکیب چند indicator؟
+   - چند استراتژی همزمان فعال باشد؟
+   - تعریف ورودی/خروجی استراتژی چیست؟
+   - مدل صف سیگنال‌ها (priority، confidence score)؟
 
-   ⚠️ سؤال ۴: محاسبه در backend یا frontend?
-      الف) Backend — single source of truth، یک کد، cacheable
-      ب) Frontend — کاهش بار backend، real-time client-side
-      پیشنهاد Claude: الف — backend (consistency)؛ در فاز ۵+ live، یک optimization می‌توان روی frontend هم اضافه کرد
+   فاز ۴ — Backtest:
+   - دوره backtest چقدر؟ (1 ساله؟ 5 ساله؟)
+   - متریک‌های ارزیابی چه باشند؟ (Sharpe، MaxDrawdown، Win Rate، …)
+   - یک یا چند نماد همزمان؟
+   - گزارش backtest چه شکلی؟ (تصویری روی نمودار؟ PDF؟ Excel?)
 
-📋 TODO ۲: ساخت Interface — `backend/app/domain/indicators/base.py`
-   - `class Indicator(ABC)` با:
-     - `@abstractmethod calculate(ohlcv: list[OhlcvRowSchema]) -> list[float]`
-     - `@property abstractmethod name -> str`
-     - `__init__(self, **params)` برای تنظیمات (period, source, ...)
-   - تشابه با DataSource pattern (الگوی موفق فاز ۱)
+   فاز ۵ — Live/Paper Trading:
+   - اول paper یا مستقیماً live؟ (پیشنهاد: paper)
+   - Position sizing strategy؟ (fixed amount، % portfolio، Kelly criterion، …)
+   - Stop loss / Take profit مدیریت چطور؟
+   - چطور با outage های Binance رفتار کنیم؟
 
-📋 TODO ۳: پیاده‌سازی اولین ۳ اندیکاتور
-   - `simple_moving_average.py` (SMA) — ساده‌ترین، baseline test
-   - `exponential_moving_average.py` (EMA) — برای MACD لازم است
-   - `relative_strength_index.py` (RSI) — popular indicator، خوب برای signal
+   فاز ۶ — Telegram Alerts:
+   - چه نوع notification؟ (هر signal؟ خلاصه روزانه؟ هشدارهای بحرانی؟)
+   - چند کاربر همزمان؟ (شخصی یا multi-user؟)
+   - فرمت پیام (متن ساده، dashboard inline، graph image؟)
 
-📋 TODO ۴: تست‌های unit
-   - برای هر اندیکاتور، known input/output با مقایسه عدد دقیق
-   - مرجع: TradingView یا TA-Lib یا hand-calculated
-   - ۵-۱۰ تست per اندیکاتور
+   فاز ۷ — Multi-user / RBAC:
+   - چند کاربر همزمان؟ (single-user always، multi-user with auth، یا public SaaS؟)
+   - role types? (admin، trader، viewer)
 
-📋 TODO ۵ (اختیاری اگر زمان رسید): Endpoint API
-   - POST `/api/v1/indicators/calculate` با body `{symbol_id, timeframe_id, indicator: "SMA", params: {period: 20}}`
-   - Service layer که داده را از Repository می‌خواند، اندیکاتور را اعمال می‌کند
-   - return list[{timestamp, value}]
+   فاز ۸ — Production / Deployment:
+   - کجا host شود؟ (VPS شخصی، Vercel، AWS، …)
+   - SSL، domain، monitoring، backup چطور؟
+   - CI/CD pipeline؟
 
-📋 TODO ۶ (موکول به چت ۱۲): Integration با LightweightCharts
-   - LineSeries در نمودار همراه candlestick
-   - نمایش SMA + EMA + RSI (RSI در نمودار جداگانه)
-   - Settings panel برای تنظیم period
+📋 TODO ۲: بحث تصمیم‌های معماری کلان
+   - پایگاه داده: SQLite تا فاز چندم کافی است؟ کی به Postgres مهاجرت کنیم؟
+   - Cache layer: نیاز به Redis داریم؟ از کجا؟
+   - Background jobs: APScheduler ساده، Celery، یا asyncio task ها؟
+   - testing strategy: pytest برای backend، vitest برای frontend، E2E با Playwright؟
+   - Logging و observability: log files، Sentry، Prometheus + Grafana؟
 
-⚠️ CHECK — برآورد scope چت ۱۱:
-   ⚠️ TODO ۰ + ۱ + ۲ + ۳: حداقل scope (~2-3 ساعت)
-   ⚠️ TODO ۴: همان جلسه قابل انجام (~۱ ساعت اضافه)
-   ⚠️ TODO ۵: اختیاری — اگر context رسید (~۱-۲ ساعت اضافه)
-   ⚠️ TODO ۶: قطعاً به چت ۱۲ موکول می‌شود (frontend changes جداگانه)
+📋 TODO ۳: تعیین Milestones و Timeline
+   - چند چت برای هر فاز برآورد می‌شود؟
+   - تجربه چت ۱۰: یک "subgoal بزرگ" تقریباً ۱ چت می‌گیرد
+   - فاز ۲: احتمالاً ۳-۵ چت (base + 3-5 اندیکاتور + endpoint + frontend integration + tests)
+   - …
 
-💡 NOTE — درس از چت‌های ۹ و ۱۰: scope بزرگ همه را نمی‌گنجاند.
-   اولویت چت ۱۱: TODO ۰-۴ (skeleton + ۳ indicator + test). TODO ۵-۶ اگر آمد، حسن نیت.
+📋 TODO ۴: ساخت سند خروجی docs/PHASE2_PLUS_ROADMAP.md
+   - خلاصه همه تصمیمات این چت
+   - جدول فازها با scope، dependencies، estimate
+   - architectural decisions جدید (اگر در این چت گرفته شد)
+   - این سند در ابتدای هر چت فاز ۲+ خوانده می‌شود
+
+📋 TODO ۵ (اختیاری): به‌روزرسانی سند جامع → v2.12 (Atomic Update)
+   - ادغام ۹ آیتم PENDING (Z2.1-Z2.9)
+   - افزودن Decisions #65، #66
+   - افزودن قانون #۶۶
+   - افزودن بخش ۲۶ — Backup Strategy
+   - افزودن بخش جدید برای Roadmap (یا ارجاع به PHASE2_PLUS_ROADMAP.md)
+
+⚠️ CHECK — این چت بحث-محور است نه code-محور
+   ⚠️ بیشتر زمان: سؤال و پاسخ، جمع‌آوری انتظارات کاربر
+   ⚠️ Claude نقش: مشاور فنی، نه coder
+   ⚠️ خروجی فیزیکی: PHASE2_PLUS_ROADMAP.md (1 سند جدید) + احتمالاً Atomic Update v2.12
+
+💡 NOTE — اگر چت ۱۱ روی Discovery تمرکز کند، شروع کدنویسی فاز ۲ به چت ۱۲ موکول می‌شود.
+   نام چت ۱۲ پیشنهادی: TRADING-phase2-part01-indicators-base
 
 ═══════════════════════════════════════════════════════════
 بخش ۳: قوانین مهم برای چت ۱۱
 ═══════════════════════════════════════════════════════════
 
-📋 TODO — رعایت قوانین UX v2.11:
-   📋 قانون #۶۲: این فایل CHAT11_HANDOFF.txt را در شروع چت ۱۱ بخوان
-   📋 قانون #۶۳: هر گام اجرایی با `## 🟢 ▶️ EXECUTE — اقدام لازم` + نام و رنگ tab
-   📋 قانون #۶۴: عدم نمایش جزئیات تصحیح خطای کد
-   📋 قانون #۶۵: ثبت درس از اشتباهات با نمایش به کاربر
-   📋 قانون #۶۱: در سؤالات چندگزینه‌ای، پیشنهاد مطلوب با ⭐
+📋 قوانین UX v2.11:
+   - #۶۲ (handoff دائمی) — این فایل را در شروع چت ۱۱ خواند
+   - #۶۳ (🟢 ▶️ EXECUTE) — برای گام‌های اجرایی (در discovery کم خواهد بود)
+   - #۶۴ (عدم نمایش جزئیات تصحیح)
+   - #۶۵ (نمایش درس از اشتباهات)
+   - #۶۱ (پیشنهاد گزینه مطلوب با ⭐)
+   - **#۶۶ (پیشنهادی)** — Push اجباری در پایان چت ۱۱:
+       `git add . && git commit -m "..." && git push origin main`
+       (اسکریپت scripts/63_backup_project.py optional است — معمولاً نیاز نیست)
 
-⚠️ CHECK — protocol شروع چت طبق قانون #۴۸:
-   ⚠️ خواندن `docs/سند_جامع_v2_11.md` بخش ۱ (قوانین) و ۱۸ (درس‌نامه)
-      ← اگر MCP روی فایل بزرگ hang کرد (درس M66)، از CHAT_LOG و این HANDOFF کفایت کن
-   ⚠️ خواندن `docs/PENDING_FOR_NEXT_VERSION.md` (۸ آیتم Z2.1-Z2.8)
-   ⚠️ خواندن این فایل (CHAT11_HANDOFF.txt) — کامل
-   ⚠️ خواندن `docs/CHAT_LOG.md` بخش چت ۱۰ (Decisions #۶۱-۶۴ و M66-M69)
-   ⚠️ خواندن `docs/SESSION_STATUS.md` (snapshot پایان چت ۱۰)
-   ⚠️ مرور کوتاه `backend/app/repositories/ohlcv_repository.py` و
-       `backend/app/schemas/ohlcv.py` (لازم برای اندیکاتورها)
+📋 پروتکل شروع چت طبق قانون #۴۸:
+   1. خواندن این فایل (CHAT11_HANDOFF.txt) کامل
+   2. خواندن docs/PENDING_FOR_NEXT_VERSION.md (۹ آیتم)
+   3. خواندن docs/CHAT_LOG.md بخش چت ۱۰
+   4. خواندن docs/SESSION_STATUS.md
+   5. اگر MCP روی سند جامع hang کرد (M66)، از CHAT_LOG و این HANDOFF کفایت کن
 
 ═══════════════════════════════════════════════════════════
-بخش ۴: نقاط بحرانی و درس‌های آموخته در چت ۱۰
+بخش ۴: درس‌های آموخته در چت ۱۰ (یادآوری)
 ═══════════════════════════════════════════════════════════
 
-💡 NOTE — درس M66: سند جامع v2.11 (216KB) باعث hang کل Filesystem MCP session شد.
-   راه‌حل: ری‌استارت Claude Desktop. در چت ۱۱، برای خواندن سند جامع از view_range روی محدوده کوچک استفاده کن.
+💡 M66 — Filesystem MCP و فایل‌های >200KB hang می‌کند. ری‌استارت Claude Desktop. در چت ۱۱، برای خواندن سند جامع از view_range استفاده کن.
 
-💡 NOTE — درس M67: pip روی Windows + فایل UTF-8 بدون BOM + متن فارسی → crash.
-   در چت ۱۱ اگر فایلی شامل متن غیر-ASCII را با Filesystem MCP بازنویسی کردی،
-   حتماً سپس BOM-fix اجرا شود (یا از همان ابتدا با utf-8-sig).
-   ⭐ ترجیح در آینده (Policy A در Z2.4): فایل‌های dependency فقط ASCII.
+💡 M67 — pip روی Windows + UTF-8 بدون BOM + متن غیر-ASCII → crash. در چت ۱۱ Policy A (ASCII-only برای فایل‌های dependency) ترجیحی است.
 
-💡 NOTE — درس M68: نسخه‌های pinned باید با PyPI verify شوند.
-   در چت ۱۱، اگر اندیکاتور لازم به dep جدید داشت (مثل TA-Lib)، اول
-   `pip index versions <pkg>` در venv فعال اجرا شود.
+💡 M68 — نسخه‌های pinned باید با PyPI verify شوند. در چت ۱۱ اگر dep جدید لازم شد، `pip index versions <pkg>` در venv فعال اول.
 
-💡 NOTE — درس M69: asyncio.run() در FastAPI handler crash می‌کند.
-   در API endpoint برای اندیکاتورها (TODO ۵)، همیشه `await` در handler.
-
-⚠️ CHECK — وضعیت Tab های توصیه‌شده در چت ۱۱:
-   ⚠️ 🟦 Tab 1 (backend): `(venv) PS D:\Projects\trading-system\backend>` ← uvicorn run
-   ⚠️ 🟧 Tab 2 (frontend): `D:\Projects\trading-system\frontend>` ← npm run dev (برای دیدن نمودار)
-   ⚠️ 🟩 Tab 3 (scripts): `(venv) PS D:\Projects\trading-system>` ← اسکریپت‌های جدید
-   ⚠️ Tab 4 (Git): `D:\Projects\trading-system>` ← git status/commit/push
+💡 M69 — asyncio.run() در FastAPI handler crash می‌کند. در API endpoints همیشه `await`.
 
 ═══════════════════════════════════════════════════════════
 بخش ۵: ارتباطات و metadata
 ═══════════════════════════════════════════════════════════
 
-💡 NOTE — Stack فعلی (تأییدشده پایان چت ۱۰):
-   💡 Frontend: React 19 + Vite 8 + Vitest 3 + Tailwind v4 + lightweight-charts
-   💡 Backend: FastAPI + SQLAlchemy + Alembic + SQLite
-   💡 Phase 1 deps: ccxt 4.3.98 + websockets 12.0 (روی Shelf برای فاز ۵+)
-   💡 Phase 2 deps: pandas 2.2.2 + numpy (already موجود — استفاده در فاز ۲)
-   💡 Auth: JWT + bcrypt
-   💡 محیط: Windows + venv + PowerShell (با ExecutionPolicy=RemoteSigned)
+💡 Stack فعلی (پایان چت ۱۰):
+   - Frontend: React 19 + Vite 8 + Tailwind v4 + lightweight-charts
+   - Backend: FastAPI + SQLAlchemy + Alembic + SQLite
+   - Phase 1 deps (روی Shelf): ccxt 4.3.98 + websockets 12.0
+   - Phase 2 deps (آماده): pandas 2.2.2 + numpy
+   - Auth: JWT + bcrypt
+   - محیط: Windows + venv + PowerShell (ExecutionPolicy=RemoteSigned)
 
-💡 NOTE — نام چت ۱۱ پیشنهادی: TRADING-phase2-part01-indicators-base
-   اگر نام دیگری استفاده شد، باید با TRADING-phase2- شروع شود.
+💡 نام چت ۱۱ پیشنهادی: TRADING-phase1to2-transition-discovery
+   اگر نام دیگری استفاده شد، باید شامل کلمات "discovery" یا "planning" یا "transition" باشد.
 
-💡 NOTE — نام فعلی این فایل: claude_workspace/incoming_permanent/CHAT11_HANDOFF.txt (طبق قانون #۶۲).
+💡 نام چت ۱۲ پیشنهادی (بعد از Discovery): TRADING-phase2-part01-indicators-base
 
-💡 NOTE — فایل‌های الگو از چت ۱۰ که در چت ۱۱ مفید خواهند بود:
-   💡 backend/app/infrastructure/data_sources/base.py — pattern برای indicators/base.py (ABC)
-   💡 backend/app/infrastructure/data_sources/ccxt_source.py — pattern برای پیاده‌سازی Indicator concrete
-   💡 scripts/62_create_ccxt_source.py — pattern برای ساخت فایل جدید via Python script
-   💡 scripts/62b_test_ccxt_source.py — pattern برای تست (Mock یا direct)
+💡 الگوهای مفید چت ۱۰ برای استفاده در چت‌های بعدی:
+   - backend/app/infrastructure/data_sources/base.py → الگو برای Indicator(ABC)
+   - backend/app/infrastructure/data_sources/ccxt_source.py → الگو برای concrete classes
+   - scripts/62_create_ccxt_source.py → الگو برای ساخت فایل جدید via script
+   - scripts/63_backup_project.py → الگو برای backup در پایان هر چت
 
-💡 NOTE — CCXTDataSource skeleton وضعیت "Shelf":
-   💡 کد در backend/app/infrastructure/data_sources/ccxt_source.py سالم است
-   💡 ۵ test mock همگی pass — backwards compat ExcelDataSource سالم
-   💡 در فاز ۵+ شروع: ساخت binance_client.py و binance_ws.py + integration test واقعی
-   💡 تا آن زمان: pip list نشان می‌دهد ccxt 4.3.98 نصب است، ولی استفاده نمی‌شود
+💡 CCXTDataSource وضعیت "Shelf":
+   - کد سالم در backend/app/infrastructure/data_sources/ccxt_source.py
+   - ۵ test mock pass، backwards compat تأیید
+   - استفاده در فاز ۵+ شروع می‌شود
 
 ═══════════════════════════════════════════════════════════
 پایان CHAT11_HANDOFF
 ═══════════════════════════════════════════════════════════
 
-🎯 موفقیت چت ۱۰: G1+G2+G3 ۱۰۰٪ کامل + Decision #65 موکول‌کردن اتصال زنده
-🎯 هدف چت ۱۱: شروع فاز ۲ — اندیکاتورها (base ABC + SMA + EMA + RSI + تست)
-🎯 موکول به چت ۱۲: API endpoint اندیکاتورها + integration با LightweightCharts
-🎯 موکول به فاز ۵+: binance_client.py، binance_ws.py، integration test واقعی
+🎯 موفقیت چت ۱۰: G1+G2+G3 ۱۰۰٪ + Decision #65 + Decision #66 + ساخت backup tool
+🎯 هدف چت ۱۱: Discovery — جمع‌بندی فنی فازهای ۲-۸ + ساخت PHASE2_PLUS_ROADMAP.md
+🎯 موکول به چت ۱۲: شروع کدنویسی فاز ۲ (اندیکاتورها) با base ABC + SMA + EMA + RSI
+🎯 موکول به فاز ۵+: binance_client، binance_ws، integration test واقعی
 
-موفق باشید در چت ۱۱! 🚀
+موفق باشید در چت Discovery! 🎯

@@ -1232,8 +1232,11 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 ### 🔗 ارتباطات
 
 - ادامه چت قبل: `TRADING-phase0-part09-v2_11-atomic-update-and-bug50-cleanup`
-- **چت بعد پیشنهادی:** `TRADING-phase2-part01-indicators-base` (شروع فاز ۲ — اندیکاتورها: SMA + EMA + RSI با ExcelDataSource)
-- **تصمیم استراتژیک پایان چت:** Decision #65 (پیشنهادی) — اتصال زنده Binance/Telegram تا فاز ۵+ موکول می‌شود. CCXTDataSource skeleton روی Shelf می‌ماند. دلیل: gradient interface (Decision #61) swap را بدون درد می‌کند — فعلاً اولویت value-delivery با فاز ۲-۴ بر Excel data.
+- **چت بعد پیشنهادی:** `TRADING-phase1to2-transition-discovery` (Discovery Chat — جمع‌بندی فنی فازهای ۲-۸ قبل از ورود به فاز ۲)
+- **تصمیمات استراتژیک پایان چت:**
+  - **Decision #65:** اتصال زنده Binance/Telegram تا فاز ۵+ موکول می‌شود. CCXTDataSource skeleton روی Shelf می‌ماند.
+  - **Decision #66 + قانون #۶۶:** Backup اجباری در پایان هر چت — فرمت `trading-system-chatNN-YYYY-MM-DD.zip` در `claude_workspace/backups/`. پیاده‌سازی اولیه: scripts/63_*.
+  - **Discovery Chat:** چت ۱۱ به discovery اختصاص می‌یابد برای بحث جامع انتظارات + roadmap فاز‌های ۲-۸.
 - **handoff فایل:** `claude_workspace/incoming_permanent/CHAT11_HANDOFF.txt`
 
 ### TASK های DONE شده در این چت

@@ -96,3 +96,5 @@ claude_workspace/screenshots/*
 !claude_workspace/screenshots/.gitkeep
 claude_workspace/zip_temp/*
 !claude_workspace/zip_temp/.gitkeep
+claude_workspace/backups/*
+!claude_workspace/backups/.gitkeep
