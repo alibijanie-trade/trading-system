@@ -1,226 +1,776 @@
-# CHAT11_HANDOFF — پایان چت ۱۰ → شروع چت ۱۱ (Discovery Chat)
+# CHAT11_HANDOFF — پایان چت ۱۰ → شروع چت ۱۱ (Discovery / Architecture Master Chat)
 
 ساخته‌شده توسط: Claude در پایان چت ۱۰ (طبق قانون #۶۲)
 تاریخ: 2026-05-20
 چت قبلی: چت ۱۰ — TRADING-phase1-part01-ccxt-websocket-setup
-چت بعدی پیشنهادی: TRADING-phase1to2-transition-discovery
-Git HEAD پایان چت ۱۰: a7dccca (پس از commit نهایی wrap-up)
+چت بعدی: TRADING-phase1to2-master-architecture-discovery
+Git HEAD پایان چت ۱۰: a29586e
 
-═══════════════════════════════════════════════════════════
-بخش ۰: تصمیم‌های استراتژیک پایان چت ۱۰ ⭐ مهم
-═══════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════╗
+║                                                                      ║
+║   ⚠️⚠️⚠️  هشدار بحرانی — این چت با همه چت‌های قبلی فرق دارد  ⚠️⚠️⚠️    ║
+║                                                                      ║
+║          این چت "مغز متفکر" کل پروژه خواهد بود                       ║
+║   ستون فقرات و پایه اساسی کارایی نهایی سامانه روی همین چت ساخته       ║
+║   می‌شود. اگر این مرحله به‌درستی تحلیل و تصمیم‌گیری نشود، نتیجه:      ║
+║                                                                      ║
+║       یک پروژه زیبا، ساختارمند، تمیز از نظر پیاده‌سازی                ║
+║       ولی فاقد کارایی واقعی در عمل تریدینگ.                          ║
+║                                                                      ║
+║   تأکید: هیچ خط کد در این چت نوشته نمی‌شود.                          ║
+║   فقط تحلیل، تصمیم‌گیری، طراحی روی کاغذ، و mockup های UI.            ║
+║   خروجی نهایی: docs/MASTER_BLUEPRINT.md (سند معماری حرفه‌ای پروژه)   ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
 
-🎯 Decision #65 (پیشنهادی — در ابتدای چت ۱۱ به DECISIONS_LOG اضافه شود):
+═══════════════════════════════════════════════════════════════════════
+بخش 0-: درک مشترک قبل از شروع — بسیار مهم ⭐⭐⭐
+═══════════════════════════════════════════════════════════════════════
 
-   ★ اتصال زنده Binance API و Telegram bot به فاز ۵+ موکول می‌شود.
-   ★ فاز ۲ (اندیکاتورها)، ۳ (استراتژی)، ۴ (بک‌تست) با ExcelDataSource انجام می‌شوند.
-   ★ CCXTDataSource skeleton (چت ۱۰) به‌عنوان "آماده روی Shelf" نگه داشته می‌شود.
-   ★ دلیل: gradient interface (Decision #61) swap بدون درد را ممکن می‌کند.
+این بخش بعد از یک تبادل صریح در پایان چت ۱۰ ثبت شد و چارچوب کلی
+درک مشترک Claude و کاربر را مشخص می‌کند:
 
-🎯 Decision #66 (پیشنهادی — در ابتدای چت ۱۱ ثبت):
+📌 ۱. مثال‌ها فقط راهنما هستند، نه لیست نهایی:
+   تمام مثال‌هایی که در این HANDOFF آورده شده (در ۸ محور، اندیکاتورها،
+   SMC، Price Action، Field Builder، …) فقط برای نمایش **نوع تفکر** و
+   **سطح انعطاف‌پذیری** مورد نیاز هستند. لیست واقعی آیتم‌ها در چت ۱۱
+   توسط کاربر تعیین می‌شود. ممکن است:
+   - برخی مثال‌های آورده‌شده اصلاً مورد نیاز کاربر نباشند
+   - آیتم‌های جدیدی که در مثال‌ها نیامده، اضافه شوند
+   - برخی آیتم‌ها به فاز بعدی موکول شوند
 
-   ★ قانون #۶۶ — Push اجباری در پایان هر چت (نسخه نهایی پس از بحث چت ۱۰)
-   ★ در پایان هر چت: git add . && git commit -m "..." && git push origin main
-   ★ GitHub خودش backup primary است — کاربر می‌تواند با git clone backup داشته باشد
-   ★ .env هرگز در git نیست (فقط .env.example) — استاندارد امنیتی
-   ★ DB در .gitignore می‌ماند (*.db) — کاربر مسئول backup شخصی DB
-   ★ Recovery time در disaster: ~۴۵-۶۰ دقیقه (ماشین آماده)، ۱.۵-۲ ساعت (خالی)
-   ★ اسکریپت scripts/63_backup_project.py optional باقی می‌ماند برای کاربری
-      که می‌خواهد backup شامل DB و .env داشته باشد (در شرایط عادی نیاز نیست)
+📌 ۲. هدف نهایی — وضوح کامل:
+   ❌ این پروژه قرار نیست یک "TradingView جدید" یا نسخه دیگری از
+      یک سامانه عمومی باشد.
+   ✅ این پروژه **برای استفاده شخصی کاربر** ساخته می‌شود.
+   ✅ ولی باید با **استاندارد، اطمینان، و کیفیت حرفه‌ای کامل** پیاده‌سازی
+      شود — یعنی همان‌قدر که سامانه‌های صنعتی روی feature های خودشان
+      مهارت دارند، این سامانه باید روی feature های انتخاب‌شده کاربر
+      هم همان سطح مهارت را داشته باشد.
 
-🎯 درخواست کاربر پایان چت ۱۰ ⭐⭐⭐:
+📌 ۳. اصل طلایی معماری: "امروز ساده، فردا قابل‌توسعه":
+   هر تصمیمی در این چت گرفته می‌شود باید این تست را پاس کند:
+   ❓ "اگر فردا کاربر بخواهد ابزار/فیلد/استراتژی جدیدی اضافه کند که
+      امروز فکرش را نکرده‌ایم، آیا به‌راحتی قابل اضافه‌شدن خواهد بود
+      یا نیاز به refactor بزرگ خواهیم داشت؟"
+   اگر پاسخ "refactor بزرگ" است → تصمیم باید بازنگری شود.
 
-   ★ چت ۱۱ یک "Discovery / Planning Chat" باشد — نه شروع TODO اندیکاتورها
-   ★ هدف: جمع‌بندی فنی جامع از فازهای ۲-۸ قبل از کدنویسی
-   ★ بحث بین کاربر و Claude:
-      - انتظارات کاربر از هر فاز
-      - تصمیم‌های معماری بزرگ‌تر (مدل اندیکاتورها، استراتژی، بک‌تست، …)
-      - scope definition هر فاز
-      - شناسایی ریسک‌ها و dependencies
-      - تعیین roadmap و milestones
-   ★ خروجی: سند جدید docs/PHASE2_PLUS_ROADMAP.md
+📌 ۴. بدون محدودیت تعداد چت:
+   چت ۱۱ (و ادامه‌های آن — ۱۱.۲، ۱۱.۳، …) هر چقدر لازم باشد ادامه
+   پیدا می‌کند. هیچ عجله‌ای برای ورود به فاز ۲ نیست. کیفیت تصمیمات
+   این مرحله از سرعت رسیدن به کد مهم‌تر است.
 
-═══════════════════════════════════════════════════════════
-بخش ۱: وضعیت پروژه در شروع چت ۱۱
-═══════════════════════════════════════════════════════════
+📌 ۵. روش کار در هر محور:
+   به جای اینکه Claude لیست بلندی ارائه دهد و کاربر تأیید کند،
+   روند زیر دنبال می‌شود:
+      گام ۱: Claude **سؤال می‌پرسد** کدام آیتم‌ها برای کاربر اهمیت دارد
+      گام ۲: کاربر **اولویت‌ها و الزامات** خود را بیان می‌کند
+      گام ۳: Claude **عمیق می‌شود** فقط روی آنچه انتخاب شده
+      گام ۴: تصمیمات و trade-off ها روشن می‌شود
+      گام ۵: نتیجه نهایی در MASTER_BLUEPRINT ثبت می‌شود
 
-✅ DONE — G1 (Dependencies): ccxt 4.3.98 + websockets 12.0 نصب
-✅ DONE — G2 (Architecture): Decisions #۶۱-۶۴ ثبت
-✅ DONE — G3 (CCXTDataSource skeleton): base.py + ccxt_source.py + ۵ test mock pass
-✅ DONE — Bug #53 cleanup (BOM در requirements.txt)
-✅ DONE — Documentation update: PENDING (v0.4 — ۹ آیتم)، CHAT_LOG (v1.5)، TROUBLESHOOTING (v1.2)، SESSION_STATUS
-✅ DONE — Git commits ۲ تا (`5cfc7e0`، `a7dccca`)
-✅ DONE — قانون #۶۶ + اسکریپت backup ساخته شد (در چت ۱۰)
+📌 ۶. نقش Claude — پیش‌فعالانه (Pro-active) نه فقط واکنشی:
+   اگر در حین بحث، Claude متوجه شد که نکته مهمی فراموش شده، یا
+   تصمیمی که گرفته می‌شود ممکن است در فازهای بعد مشکل ایجاد کند،
+   یا feature ای که کاربر فکرش را نکرده ولی برای پروژه ارزش بالایی
+   دارد، **باید پیشنهاد دهد** — حتی اگر کاربر نخواسته. هدف نهایی:
+   "کاربردی‌ترین و سودآورترین سامانه برای ترید شخصی در بازارهای مالی"
+   که این هدف یک تعهد دوجانبه است، نه فقط رضایت کاربر.
 
-⚠️ CHECK — قبل از شروع چت ۱۱:
-   ⚠️ CHECK ۱: venv فعال است؟
-   ⚠️ CHECK ۲: backend اجرا می‌شود؟ (uvicorn)
-   ⚠️ CHECK ۳: frontend اجرا می‌شود؟ (npm run dev)
-   ⚠️ CHECK ۴: login admin/1 + نمودار BTC/USDT کار می‌کند؟
-   ⚠️ CHECK ۵: backup ساخته شد؟ ← `ls claude_workspace/backups/` باید `trading-system-chat10-2026-05-20.zip` ببینید
-   ⚠️ CHECK ۶: کندل‌های BTC/USDT 1d در DB (~1714) موجود هستند؟
+📌 ۷. صداقت رادیکال:
+   اگر Claude با ایده کاربر موافق نیست، یا تشخیص می‌دهد رویکرد
+   فنی-اشتباه است، یا پیشنهاد بهتری دارد، **با احترام ولی صریح**
+   بیان می‌کند. تأیید بی‌جا (sycophancy) ممنوع است. هر دو طرف به
+   چالش‌کشیدن همدیگر کمک می‌کنند به نتیجه بهتر برسیم.
 
-💡 NOTE — ۹ آیتم در PENDING_FOR_NEXT_VERSION.md (برای ادغام در v2.12):
-   💡 Z2.1 — M64 (JSX runtime)
-   💡 Z2.2 — M65 (تشخیص shell)
-   💡 Z2.3 — M66 (Filesystem MCP و فایل‌های >200KB)
-   💡 Z2.4 — M67 (BOM لازم برای pip) ⭐ critical
-   💡 Z2.5 — M68 (نسخه‌های pinned با PyPI verify)
-   💡 Z2.6 — M69 (asyncio.run() در FastAPI handler)
-   💡 Z2.7 — اصلاحیه سند جامع v2.11 بخش ۲.۲
-   💡 Z2.8 — bytes خراب در CHAT_LOG (cosmetic)
-   💡 Z2.9 — قانون #۶۶ Backup اجباری ⭐ important
+📌 ۸. استاندارد مشاوره — کاربردی، نه فانتزی (تأکید مجدد کاربر):
+   مشاوره‌ها و پیشنهادهای Claude در این چت (و کل پروژه) باید این
+   ۵ معیار را پاس کنند:
 
-═══════════════════════════════════════════════════════════
-بخش ۲: هدف چت ۱۱ — Discovery / Planning
-═══════════════════════════════════════════════════════════
+   ✅ کاربردی: قابل پیاده‌سازی با stack و منابع فعلی پروژه
+   ✅ مهندسی: مبتنی بر اصول واقعی نرم‌افزار، نه buzzword
+   ✅ صادقانه: اگر چیزی نمی‌دانم، می‌گویم "نمی‌دانم"؛ اگر پیشنهادی
+      ممکن است نتیجه ندهد، می‌گویم؛ اگر دو راه‌حل وجود دارد و
+      دومی بهتر است، نمی‌گویم اولی هم خوب است
+   ✅ بدون تعارف: کاربر چیزی خواست، اگر آن چیز اشتباه است یا راه
+      بهتری هست، Claude نباید فقط برای رضایت کاربر تأیید کند
+   ✅ همه‌جانبه: قبل از پیشنهاد، Claude همه ابعاد را در نظر می‌گیرد:
+      امنیت، performance، maintainability، cost، طول عمر، scalability،
+      UX، آموزش کاربر، debug پذیری، تست پذیری
 
-📋 TODO ۰: ثبت رسمی Decisions در DECISIONS_LOG
-   - Decision #65 (موکول‌کردن اتصال زنده)
-   - Decision #66 (Backup در پایان هر چت)
+   ❌ مشاوره فانتزی ممنوع:
+      - "چون باید چیزی بگویم، یک پیشنهاد می‌دهم"
+      - "این پیشنهاد ظاهر حرفه‌ای دارد ولی در عمل پیاده‌سازی نمی‌شود"
+      - "این فقط برای نشان‌دادن این که فکر کردم بود"
+      - "این از یک blog post خواندم ولی برای پروژه ما مناسب نیست"
 
-📋 TODO ۱: مرور کامل با کاربر — انتظارات از فازهای ۲-۸
+   ❌ پیشنهاد فقط برای رعایت قرارداد ممنوع:
+      کاربر در پیام پایان چت ۱۰ گفت: «نمی‌خواهم صرفاً برای اینکه به
+      قانون بین من و تو که خواستم به من مشاوره بدهی یک مشاوره‌ای
+      داده باشی». Claude این را به‌خاطر می‌سپارد: کمیت مشاوره مهم
+      نیست، کیفیت آن مهم است. گاهی بهترین پاسخ "نیازی به افزودن نیست،
+      آنچه دارید کافی است" است.
 
-   فاز ۲ — اندیکاتورها:
-   - کدام اندیکاتورها مهم‌تر هستند؟ MA/EMA/RSI/MACD/Bollinger/Volume Profile/Stochastic/ATR/...
-   - باید روی نمودار رندر شوند یا فقط backend signals؟
-   - تنظیمات per-user (period دلخواه) یا global presets؟
-   - cache برای performance؟
+═══════════════════════════════════════════════════════════════════════
+بخش ۰: نقش Claude در این چت — نه فقط برنامه‌نویس
+═══════════════════════════════════════════════════════════════════════
 
-   فاز ۳ — استراتژی (Signal Generation):
-   - منطق چه شکلی است؟ Rules-based (if RSI<30 then buy)؟ یا ترکیب چند indicator؟
-   - چند استراتژی همزمان فعال باشد؟
-   - تعریف ورودی/خروجی استراتژی چیست؟
-   - مدل صف سیگنال‌ها (priority، confidence score)؟
+⭐ Claude در این چت همزمان نقش‌های زیر را ایفا می‌کند:
 
-   فاز ۴ — Backtest:
-   - دوره backtest چقدر؟ (1 ساله؟ 5 ساله؟)
-   - متریک‌های ارزیابی چه باشند؟ (Sharpe، MaxDrawdown، Win Rate، …)
-   - یک یا چند نماد همزمان؟
-   - گزارش backtest چه شکلی؟ (تصویری روی نمودار؟ PDF؟ Excel?)
+   1. 👨‍💼 تریدر باتجربه:
+      با درک عمیق از Price Action، Smart Money Concepts، Wyckoff،
+      ICT (Inner Circle Trader)، Volume Profile، Market Structure،
+      Order Flow، Liquidity، Supply/Demand zones، Rally-Base-Drop.
 
-   فاز ۵ — Live/Paper Trading:
-   - اول paper یا مستقیماً live؟ (پیشنهاد: paper)
-   - Position sizing strategy؟ (fixed amount، % portfolio، Kelly criterion، …)
-   - Stop loss / Take profit مدیریت چطور؟
-   - چطور با outage های Binance رفتار کنیم؟
+   2. 🔬 تحلیلگر سیستم خبره:
+      قابلیت decompose کردن نیازمندی‌های مبهم به مدل داده، entity ها،
+      روابط، event flows، state machines. آشنایی با Domain-Driven Design.
 
-   فاز ۶ — Telegram Alerts:
-   - چه نوع notification؟ (هر signal؟ خلاصه روزانه؟ هشدارهای بحرانی؟)
-   - چند کاربر همزمان؟ (شخصی یا multi-user؟)
-   - فرمت پیام (متن ساده، dashboard inline، graph image؟)
+   3. 🧠 پروفسور هوش مصنوعی:
+      تسلط بر ML/DL در بازارهای مالی — LSTM، Transformers،
+      Reinforcement Learning، feature engineering، ensemble methods،
+      نکات avoidance از overfitting و survivorship bias.
 
-   فاز ۷ — Multi-user / RBAC:
-   - چند کاربر همزمان؟ (single-user always، multi-user with auth، یا public SaaS؟)
-   - role types? (admin، trader، viewer)
+   4. 🧑‍💼 مشاور سخت‌گیر و صادق:
+      پیشنهادهای واقعی، نه پیشنهاد برای پیشنهاد دادن.
+      اگر چیزی غیرقابل‌اجرا یا ضعیف است، صریح می‌گوید.
+      اگر گزینه بهتری وجود دارد، حتی اگر کاربر آن را نگفته، مطرح می‌کند.
 
-   فاز ۸ — Production / Deployment:
-   - کجا host شود؟ (VPS شخصی، Vercel، AWS، …)
-   - SSL، domain، monitoring، backup چطور؟
-   - CI/CD pipeline؟
+   5. 👷 مهندس نرم‌افزار درجه یک:
+      آشنایی با Clean Architecture، SOLID، DDD، Event Sourcing، CQRS،
+      database normalization، indexing، performance optimization.
 
-📋 TODO ۲: بحث تصمیم‌های معماری کلان
-   - پایگاه داده: SQLite تا فاز چندم کافی است؟ کی به Postgres مهاجرت کنیم؟
-   - Cache layer: نیاز به Redis داریم؟ از کجا؟
-   - Background jobs: APScheduler ساده، Celery، یا asyncio task ها؟
-   - testing strategy: pytest برای backend، vitest برای frontend، E2E با Playwright؟
-   - Logging و observability: log files، Sentry، Prometheus + Grafana؟
+   6. 📊 مدیر پروژه مبتکر:
+      تقسیم کار به milestones واقعی، تخمین زمان درست،
+      شناسایی dependencies و risks، prioritization.
 
-📋 TODO ۳: تعیین Milestones و Timeline
-   - چند چت برای هر فاز برآورد می‌شود؟
-   - تجربه چت ۱۰: یک "subgoal بزرگ" تقریباً ۱ چت می‌گیرد
-   - فاز ۲: احتمالاً ۳-۵ چت (base + 3-5 اندیکاتور + endpoint + frontend integration + tests)
-   - …
+   7. 🎨 طراح UI/UX:
+      ارائه mockup های ASCII/text قبل از پیاده‌سازی هر صفحه،
+      تا کاربر تصور دقیقی از خروجی نهایی داشته باشد.
 
-📋 TODO ۴: ساخت سند خروجی docs/PHASE2_PLUS_ROADMAP.md
-   - خلاصه همه تصمیمات این چت
-   - جدول فازها با scope، dependencies، estimate
-   - architectural decisions جدید (اگر در این چت گرفته شد)
-   - این سند در ابتدای هر چت فاز ۲+ خوانده می‌شود
+⚠️ Claude در این چت نباید:
+   - به‌سادگی هر چه کاربر گفت تأیید کند (sycophancy).
+   - پیشنهاد سطحی یا کلیشه‌ای بدهد (مثل "از Best practices استفاده کن").
+   - از مواجهه با تصمیم‌های سخت فرار کند.
+   - فقط روی یک جنبه (مثلاً تکنیکال یا فقط فنی) متمرکز شود.
 
-📋 TODO ۵ (اختیاری): به‌روزرسانی سند جامع → v2.12 (Atomic Update)
-   - ادغام ۹ آیتم PENDING (Z2.1-Z2.9)
-   - افزودن Decisions #65، #66
-   - افزودن قانون #۶۶
-   - افزودن بخش ۲۶ — Backup Strategy
-   - افزودن بخش جدید برای Roadmap (یا ارجاع به PHASE2_PLUS_ROADMAP.md)
+⚠️ Claude در این چت باید:
+   - سؤال‌های دقیق و حرفه‌ای از کاربر بپرسد.
+   - گزینه‌های مختلف را با trade-off واضح ارائه دهد.
+   - با مثال‌های واقعی از سامانه‌های مشابه (TradingView، 3commas، Backtrader، …) استدلال کند.
+   - اگر کاربر چیزی گفته که فنی غلط یا ناقص است، با احترام تصحیح کند.
 
-⚠️ CHECK — این چت بحث-محور است نه code-محور
-   ⚠️ بیشتر زمان: سؤال و پاسخ، جمع‌آوری انتظارات کاربر
-   ⚠️ Claude نقش: مشاور فنی، نه coder
-   ⚠️ خروجی فیزیکی: PHASE2_PLUS_ROADMAP.md (1 سند جدید) + احتمالاً Atomic Update v2.12
+═══════════════════════════════════════════════════════════════════════
+بخش ۱: مأموریت بزرگ این چت — ۸ محور اصلی
+═══════════════════════════════════════════════════════════════════════
 
-💡 NOTE — اگر چت ۱۱ روی Discovery تمرکز کند، شروع کدنویسی فاز ۲ به چت ۱۲ موکول می‌شود.
-   نام چت ۱۲ پیشنهادی: TRADING-phase2-part01-indicators-base
+این ۸ محور درواقع همان "مغز متفکر" پروژه هستند. هر کدام باید با عمق
+کامل بررسی، تصمیم‌گیری، و در سند خروجی مستند شوند.
 
-═══════════════════════════════════════════════════════════
-بخش ۳: قوانین مهم برای چت ۱۱
-═══════════════════════════════════════════════════════════
+────────────────────────────────────────────────────────────────────
+🎯 محور ۱: طراحی Toolkit مالی با انعطاف‌پذیری بسیار بالا
+────────────────────────────────────────────────────────────────────
 
-📋 قوانین UX v2.11:
-   - #۶۲ (handoff دائمی) — این فایل را در شروع چت ۱۱ خواند
-   - #۶۳ (🟢 ▶️ EXECUTE) — برای گام‌های اجرایی (در discovery کم خواهد بود)
-   - #۶۴ (عدم نمایش جزئیات تصحیح)
-   - #۶۵ (نمایش درس از اشتباهات)
-   - #۶۱ (پیشنهاد گزینه مطلوب با ⭐)
-   - **#۶۶ (پیشنهادی)** — Push اجباری در پایان چت ۱۱:
-       `git add . && git commit -m "..." && git push origin main`
-       (اسکریپت scripts/63_backup_project.py optional است — معمولاً نیاز نیست)
+نیاز: ابزارهای تحلیل بازار با نهایت دقت، کارایی، و قابلیت توسعه آسان.
+
+دسته‌بندی ابزارها (همه باید پشتیبانی شوند، ولی مرحله‌ای):
+
+   📈 اندیکاتورهای کلاسیک:
+      - Moving Averages (SMA, EMA, WMA, HMA, VWAP, …)
+      - Momentum (RSI, MACD, Stochastic, ROC, CCI, Williams %R)
+      - Volatility (ATR, Bollinger Bands, Keltner Channels, Donchian)
+      - Volume (OBV, MFI, Volume Profile, VWMA, A/D Line)
+      - Trend (ADX, Aroon, Parabolic SAR, Ichimoku)
+
+   🕯️ Price Action (الگوهای کندلی + ساختار):
+      - Single candle patterns (Pin Bar, Doji, Hammer, Shooting Star, Marubozu)
+      - Multi-candle patterns (Engulfing, Inside Bar, 3 Soldiers, Morning Star)
+      - Support & Resistance زinematic (دینامیک + ثابت)
+      - Trend lines (auto-draw)
+      - Chart patterns (Head & Shoulders, Triangles, Flags, Wedges)
+
+   🧠 Smart Money Concepts (SMC) / ICT:
+      - Order Blocks (bullish/bearish OB, breaker, mitigation)
+      - Fair Value Gaps (FVG / Imbalance)
+      - Liquidity zones (Buy-side / Sell-side liquidity sweeps)
+      - Break of Structure (BOS) / Change of Character (CHoCH)
+      - Premium / Discount zones
+      - Optimal Trade Entry (OTE — Fibonacci 0.62-0.79)
+      - Kill Zones (London/NY session times)
+
+   📊 Market Structure / Supply-Demand:
+      - Rally-Base-Drop / Drop-Base-Rally / Rally-Base-Rally / Drop-Base-Drop
+      - Higher Highs / Higher Lows / Lower Highs / Lower Lows
+      - Trend phases (accumulation, markup, distribution, markdown — Wyckoff)
+      - Volume Profile zones (POC, VAH, VAL, HVN, LVN)
+
+   📏 Levels & Zones:
+      - Fibonacci (retracement, extension, time zones, fans, arcs)
+      - Pivot Points (Standard, Camarilla, Fibonacci, Woodie)
+      - Round numbers (psychological levels)
+      - Previous Day/Week/Month High-Low
+      - Anchored VWAP
+
+   🛠️ ابزارهای اختصاصی کاربر (User-Defined Tools):
+      محیطی مخصوص که کاربر با توضیح ساده، ابزار سفارشی بسازد.
+
+      مثال‌های واقعی کاربر (از پیام چت ۱۰):
+        ✦ "از کندل جاری تا ۵ کندل قبل، چند کندل قرمز و چند سبز داشتیم؟"
+        ✦ "طول سایه بالایی / طول کل کندل" (به‌صورت ratio فیلد ذخیره شود)
+        ✦ "همه Rally-Base ها در BTC/USDT تایم‌فریم 4h از ابتدای داده‌ها
+           شناسایی شود — هر کندل بدانیم در کدام ساختار است (rally / base / drop)،
+           اگر base است، چندمین کندل از آن base است، طول کل base چقدر است."
+
+⚠️ سؤالات مهم برای تصمیم در این چت:
+   ⚠️ معماری Tool: ABC ساده یا Plugin system با registry؟
+   ⚠️ Tool به Tool (composability) — یک Tool می‌تواند خروجی Tool دیگر را
+      مصرف کند؟ (مثلاً RSI روی EMA به‌جای close price)
+   ⚠️ هر Tool می‌تواند چندین "output column" تولید کند یا یک column؟
+      (مثلاً MACD = 3 column: macd, signal, histogram)
+   ⚠️ Tool ها stateful اند یا stateless؟ (incremental updates یا full recompute؟)
+   ⚠️ مدل ذخیره خروجی: یک جدول universal (long format) یا جدول-به-Tool؟
+   ⚠️ DSL برای user-defined tools چه شکلی است؟ (Python expression /
+      visual block builder / natural language به کد ترجمه شود؟)
+
+────────────────────────────────────────────────────────────────────
+🎯 محور ۲: ادغام ابزارها و ساخت استراتژی‌های ترکیبی
+────────────────────────────────────────────────────────────────────
+
+نیاز: هر فیلد/ابزار باید به‌راحتی با هر فیلد/ابزار دیگر قابل ترکیب باشد
+تا استراتژی‌های متفاوت تولید و استفاده شوند.
+
+   🔗 Strategy = ترکیب N شرط روی M فیلد در K تایم‌فریم
+      مثال: "اگر RSI(14) روی 4h < 30 AND قیمت در Order Block bullish روی 1h باشد
+            AND BOS صعودی در 15m تأیید شد، خرید با SL پایین OB و TP در FVG بعدی"
+
+   📐 Strategy Composition Patterns:
+      - Rule-based (if-then trees)
+      - Score-based (وزن‌دار، هر شرط نمره می‌دهد، آستانه مشخص)
+      - State machine (entry → in-trade → exit)
+      - Multi-condition multi-timeframe (MTF)
+
+⚠️ سؤالات مهم:
+   ⚠️ DSL استراتژی: JSON config، Python expressions، Visual builder؟
+   ⚠️ Strategy versioning: تغییر استراتژی → version جدید (immutable)؟
+   ⚠️ Strategy reusability: parent strategy + override در child؟
+   ⚠️ Backtest پیش از فعال‌سازی استراتژی اجباری باشد؟ (gate)
+
+────────────────────────────────────────────────────────────────────
+🎯 محور ۳: Backtest با کیفیت حرفه‌ای + شبیه‌سازی Walk-Forward
+────────────────────────────────────────────────────────────────────
+
+نیاز: قابلیت‌های بک‌تست در سطح صنعتی (هم‌سطح TradingView / Backtrader / VectorBT).
+
+   📅 دو نوع Backtest:
+      الف) Historical Backtest — روی داده‌های گذشته بازار
+      ب) Paper Trading — روی داده‌های زنده (live) با پول مجازی
+
+   🎯 ⚠️ بسیار مهم — Walk-Forward Bar-by-Bar Simulation (بدون look-ahead):
+      "بک‌تست طوری انجام شود که از اول بازار فرض کند هر کندل کندل آخر بازار
+       است و استراتژی را اعمال کند."
+
+      یعنی شبیه‌سازی واقعی: هر بار فقط داده تا کندل N در دسترس،
+      استراتژی اعمال شود، نتیجه ثبت، بعد کندل N+1 افشا، و تکرار.
+      این تنها راه جلوگیری از look-ahead bias است.
+
+      ضرورت در طراحی:
+      - Indicator ها نباید روی future data حساب کنند (مثلاً center MA = look-ahead).
+      - Strategy باید snapshot-driven باشد، نه dataset-driven.
+      - باید قابلیت "حال تاریخی" داشته باشیم (time machine).
+
+   📊 متریک‌های backtest (همگی محاسبه و گزارش):
+      - Total Return, CAGR
+      - Sharpe Ratio, Sortino Ratio, Calmar Ratio
+      - Maximum Drawdown (MDD), MDD Duration
+      - Win Rate, Profit Factor, Expectancy
+      - Avg Win, Avg Loss, Largest Win, Largest Loss
+      - Risk/Reward avg actual vs planned
+      - Trades per month, exposure time
+      - Equity curve, Underwater curve
+
+   🎨 خروجی Backtest:
+      - نمودار: equity curve + trades رنگی روی نمودار قیمت + drawdown curve
+      - جدول: trade-by-trade با ورود/خروج/PnL/duration
+      - گزارش متنی/PDF با خلاصه + همه متریک‌ها
+      - مقایسه چند استراتژی side-by-side
+      - export به Excel
+
+⚠️ سؤالات مهم:
+   ⚠️ Engine: VectorBT (سریع، vectorized) یا custom event-driven؟
+      ⭐ پیشنهاد من: event-driven custom — قابل اعتمادتر برای walk-forward
+   ⚠️ Commissions/slippage مدل‌سازی شود؟ (الزامی برای واقع‌گرایی)
+   ⚠️ Position sizing rules قابل تنظیم در strategy یا backtest config؟
+   ⚠️ Multi-asset backtest در فاز ۴ یا موکول به فاز بعد؟
+   ⚠️ Monte Carlo simulation روی backtest results؟ (احتمال آینده)
+
+────────────────────────────────────────────────────────────────────
+🎯 محور ۴: محیط Builder اختصاصی برای فیلدها/ابزارها/استراتژی‌ها
+────────────────────────────────────────────────────────────────────
+
+نیاز: کاربر با توضیح ساده، ابزار مورد نیازش را تولید و استفاده کند.
+
+   🛠️ Field Builder:
+      - کاربر فیلد جدید تعریف می‌کند با: نام، دسته، فرمول/کد، پارامترها
+      - مثال: "candle_red_count_5" = count(red candles in last 5 bars)
+      - ذخیره در DB به‌عنوان user-defined field
+      - استفاده در strategy ها مانند فیلدهای built-in
+
+   🛠️ Tool Builder:
+      - ساخت ابزارهای پیچیده‌تر با چند خروجی
+      - مثال: Custom Rally-Base-Drop detector با پارامترهای دلخواه
+
+   🛠️ Strategy Builder:
+      - composability: ترکیب فیلدها/ابزارهای موجود
+      - شرط‌ها روی چند timeframe
+      - تست سریع روی sample data قبل از save
+
+⚠️ سؤالات مهم:
+   ⚠️ Approach: Visual block builder (مثل n8n / Node-RED) یا Code editor (Python sandboxed)؟
+   ⚠️ Sandboxing security: کد کاربر چطور اجرا شود؟ (RestrictedPython / Subprocess /
+      AST whitelist / WebAssembly)؟
+   ⚠️ تست واحد خودکار برای فیلدهای کاربر-تعریف چطور؟
+   ⚠️ Sharing: کاربران می‌توانند فیلد/ابزار خودشان را با دیگران به اشتراک بگذارند؟ (فاز ۷)
+
+────────────────────────────────────────────────────────────────────
+🎯 محور ۵: Multi-Condition Multi-Timeframe Logic (MCMT)
+────────────────────────────────────────────────────────────────────
+
+نیاز: اعمال ترکیبی شروط در حالت‌های مختلف و تایم‌فریم‌های مختلف.
+
+   مثال‌های واقعی:
+   - "روی 4h روند صعودی AND روی 1h pullback تأیید شد AND روی 15m candle confirmation"
+   - "RSI(14) روی 1d > 50 AND RSI(14) روی 4h < 30 AND price near 4h OB"
+   - "Daily volume > avg(20) * 1.5 AND 15m breakout above pivot"
+
+⚠️ سؤالات مهم:
+   ⚠️ TF synchronization: چطور 1h و 4h در همان لحظه sync شوند؟
+      (Higher TF candle close مرز است یا live update؟)
+   ⚠️ پیش‌محاسبه چندتایم‌فریم چطور cache شود؟
+   ⚠️ Condition group ها: AND/OR/NOT nested چقدر عمق؟
+
+────────────────────────────────────────────────────────────────────
+🎯 محور ۶: مدل داده، نام‌گذاری فیلدها، و DB architecture
+────────────────────────────────────────────────────────────────────
+
+نیاز: ساختار DB طوری باشد که سرعت و دقت و رعایت کلیدهای اصلی/فرعی
+نهایت طراحی حرفه‌ای را داشته باشد. تعداد فیلدها در نهایت بسیار زیاد
+خواهد بود.
+
+   📋 Naming Convention پیشنهادی (باید در این چت نهایی شود):
+      <category>.<tool>.<params>.<output>
+
+      مثال:
+      - ind.rsi.14.value
+      - ind.macd.12_26_9.histogram
+      - pa.candle.color (red/green)
+      - pa.candle.shadow_upper_ratio
+      - smc.ob.bullish.4h.proximity
+      - struct.rbd.is_in_base
+      - struct.rbd.base_position    (چندمین کندل در base)
+      - struct.rbd.base_length      (طول base)
+      - user.{username}.{custom_field_name}
+
+   📊 جدول‌بندی (سؤالات کلیدی):
+      - یک جدول master `ohlcv` (پر شده از Excel)
+      - یک جدول `indicator_values` (long format: symbol_id, timeframe_id,
+        candle_timestamp, field_name, value)
+      - یا N جدول جداگانه برای هر indicator؟ (wide format)
+      - یا hybrid: hot indicators در جدول‌های اختصاصی، rare در universal؟
+
+      ⭐ پیشنهاد من: hybrid + partitioning by symbol+timeframe + index قوی
+
+   ⚠️ Foreign keys & Cascade rules دقیق:
+      - حذف symbol → چه چیزی cascade شود؟
+      - تغییر تعریف فیلد → آیا تاریخچه باید پاک شود یا migration؟
+
+   🔍 UI Search برای فیلدها:
+      - با تعداد فیلدهای زیاد (احتمالاً 1000+)، باید UI search عالی باشد
+      - Hierarchical category browser + fuzzy search + tag system + favorites
+      - autocomplete با preview از sample value
+
+⚠️ سؤالات مهم:
+   ⚠️ DB engine: SQLite تا کجا کافی؟ Postgres از کی؟ (احتمالاً فاز ۴-۵)
+   ⚠️ Time-series optimization: TimescaleDB extension یا continuous aggregates یا قابل صرف‌نظر؟
+   ⚠️ Index strategy: composite indexes بر اساس query patterns
+   ⚠️ Sharding by symbol؟ (احتمالاً فاز ۸+)
+
+────────────────────────────────────────────────────────────────────
+🎯 محور ۷: AI / ML Integration Environment
+────────────────────────────────────────────────────────────────────
+
+نیاز: محیط اختصاصی برای اعمال به‌روزترین الگوریتم‌های هوش مصنوعی
+در تحلیل بازارهای مالی، با استفاده از فیلدها/ابزارهای تولیدی،
+برای کمک به ورود/خروج بهینه.
+
+   🧠 Use cases:
+      1. Predictive modeling — احتمال direction بعدی (classification)
+      2. Regime detection — تشخیص حالت بازار (trending/ranging/volatile)
+      3. Pattern recognition — auto-detect patterns بدون hard-code
+      4. Optimal entry/exit estimation — RL agents
+      5. Risk scoring — قبل از ورود به معامله، احتمال win و risk-reward predicted
+      6. Strategy auto-tuning — hyperparameter optimization
+
+   🛠️ Pipeline پیشنهادی:
+      Features (ما تولید می‌کنیم) → Feature Store → Training Pipeline →
+      Model Registry → Inference API → Strategy Layer
+
+⚠️ سؤالات مهم:
+   ⚠️ کتابخانه‌ها: scikit-learn، LightGBM، PyTorch، TensorFlow، …؟
+      ⭐ پیشنهاد من: شروع با scikit-learn + LightGBM، اضافه PyTorch در فاز AI
+   ⚠️ Online vs Offline learning؟ (هر دو لازم)
+   ⚠️ Walk-forward validation اجباری (نه random K-fold) — این از overfitting جلوگیری می‌کند
+   ⚠️ Model versioning و A/B test؟
+   ⚠️ Inference latency: real-time (<100ms) یا batch؟
+   ⚠️ Explainability (SHAP/LIME)؟ ⭐ بله — برای تصمیمات مالی الزامی
+
+────────────────────────────────────────────────────────────────────
+🎯 محور ۸: Order Management + Live Monitoring + Pre/During/Post Trade
+────────────────────────────────────────────────────────────────────
+
+نیاز:
+   1. ایجاد/ویرایش/بستن اوردرها بر اساس استراتژی به‌صورت اتوماتیک
+   2. رصد آنلاین بازار قبل/حین/بعد از معامله
+   3. قبل از ورود: نقاط بهینه ورود/خروج + win-rate استراتژی + RR
+      محاسبه و در نظر گرفته شود
+
+   📦 Order types:
+      - Market, Limit, Stop, Stop-Limit
+      - OCO (One-Cancels-Other), Trailing Stop
+      - Bracket orders (entry + SL + TP در یک ساختار)
+      - Conditional (trigger by indicator value)
+
+   🔄 Order lifecycle:
+      Strategy signal → Risk check → Pre-trade analysis → Order created
+      → Sent to exchange → Filled/Partial/Rejected → Monitor → Adjust SL
+      (trailing) → Exit (TP/SL/manual) → Post-trade analysis → Learn
+
+   📡 Live Monitoring Dashboard:
+      - Pre-trade: نقاط ورود candidate، RR predicted، win-rate historical
+      - During-trade: قیمت زنده، PnL، نزدیکی به SL/TP، شرایط هنوز معتبر؟
+      - Post-trade: trade journal، آیا طبق پلن بود؟ slippage، lessons
+
+   ⚠️ پیش از ورود به معامله، Claude باید:
+      - استراتژی روی historical data backtest شده باشد
+      - win-rate و RR گزارش شود
+      - شرایط فعلی بازار با شرایط trade های موفق historical مقایسه شود
+      - تخمین probabilistic ارائه شود
+
+⚠️ سؤالات مهم:
+   ⚠️ Paper trading اول یا live از همان فاز ۵؟ ⭐ همیشه paper اول
+   ⚠️ Risk limits: max drawdown / max position / max daily loss
+   ⚠️ Connection loss handling: orders قرار است auto-cancel شوند یا server-side؟
+   ⚠️ Manual override: کاربر می‌تواند هر زمان exit کند؟ (بله، الزامی)
+
+NOTE: این بخش به‌اشتباه دو بار در نسخه قبلی این فایل تکرار شده بود.
+نسخه واقعی این محور بالا است. (بخش پایین حذف شد در نسخه نهایی.)
+
+────────────────────────────────────────────────────────────────────
+🎯 محور ۹: Trading Discipline + Strategies with Real Edge + Risk Management
+────────────────────────────────────────────────────────────────────
+
+⚠️⚠️⚠️ این محور به‌اندازه ۸ محور قبلی مهم است — شاید مهم‌تر ⚠️⚠️⚠️
+
+هر سامانه‌ای، هرچقدر هم از نظر تکنیکال قوی، اگر این ۳ بُعد را
+در طراحی‌اش لحاظ نکند، در عمل شکست می‌خورد. این محور به درخواست
+صریح کاربر در پایان چت ۱۰ اضافه شد و **در سامانه باید پیاده‌سازی
+شود**، نه فقط در رفتار کاربر:
+
+بخش الف) Discipline Trading در سامانه (Pre-Trade Gating):
+────────────────────────────────────────────────────
+
+سامانه باید چارچوب‌هایی داشته باشد که از تخطی کاربر از پلن جلوگیری کند:
+
+   🛡️ Pre-trade Checklist (اجباری قبل از ارسال هر اوردر):
+      - این استراتژی backtest شده است؟ ✓
+      - شرایط بازار با backtest سازگار است؟ ✓
+      - حد ضرر تعریف شده؟ ✓
+      - RR حداقل ۱:۱.۵؟ ✓
+      - position size با risk plan هماهنگ است؟ ✓
+      - این معامله revenge trade نیست؟ ✓ (سامانه بفهمد!)
+      - max daily loss رد نشده؟ ✓
+      - max concurrent positions رد نشده؟ ✓
+
+   🛡️ Cooling-off Periods:
+      - بعد از ۲ ضرر متوالی → ۱ ساعت محدودیت معامله جدید
+      - بعد از hitting daily loss limit → ۲۴ ساعت قفل
+      - معامله بدون استراتژی (manual) → warning + log
+
+   🛡️ Trade Journal اجباری:
+      - بعد از هر معامله، فیلدهای: "چرا وارد شدی؟"، "چرا خارج شدی؟"،
+        "احساس قبل/حین/بعد چه بود؟"، "درس چه بود؟" — پر شوند
+      - این data برای self-analysis در آینده ارزشمند است
+
+   🛡️ FOMO / Revenge Trade Detection:
+      - معامله در ۵ دقیقه بعد از ضرر → flag به‌عنوان revenge potential
+      - معامله در یک سمت بعد از pump/dump سریع → flag FOMO potential
+      - سامانه باید این الگوها را ببیند و هشدار بدهد
+
+بخش ب) استراتژی‌های با Edge واقعی (Strategy Validation):
+────────────────────────────────────────────────────
+
+هیچ استراتژی نباید بدون اثبات statistical edge اجرا شود:
+
+   🎯 Backtest Quality Gates:
+      - حداقل ۱۰۰ trade در backtest period
+      - حداقل ۲ سال historical data
+      - Win rate × Avg Win > (1 - Win rate) × Avg Loss (positive expectancy)
+      - Max Drawdown < ۲۰٪ (یا حد قابل قبول کاربر)
+      - Sharpe Ratio > 1.0
+      - Profit factor > 1.5
+      - **Out-of-sample test** — استراتژی روی داده‌ای که در optimization
+        استفاده نشده تست شود (الزامی!)
+
+   🎯 Robustness Tests:
+      - Walk-forward analysis (نه فقط static backtest)
+      - Monte Carlo simulation روی trades
+      - Sensitivity analysis — تغییر کوچک در پارامتر چقدر نتیجه را تغییر می‌دهد؟
+        (اگر خیلی → overfit؛ علامت خطر)
+      - Different market regimes — استراتژی در trend، range، volatile چه می‌کند؟
+
+   🎯 Edge Decay Detection:
+      - performance live در مقابل backtest tracked شود
+      - اگر live performance < ۵۰٪ از backtest برای ۱ ماه → alert
+      - استراتژی‌ها edge را با زمان از دست می‌دهند — سامانه باید این را ببیند
+
+   ❌ Anti-patterns که سامانه باید جلویشان را بگیرد:
+      - Curve fitting (optimize تا روی historical perfect بشود)
+      - Survivorship bias (تست فقط روی سکه‌های موفق)
+      - Look-ahead bias (استفاده از داده آینده)
+      - Cherry-picking (فقط trade های خوب نشان داده شود)
+
+بخش ج) Risk Management در سطح سامانه:
+────────────────────────────────────────
+
+Risk management باید در همه لایه‌ها enforce شود، نه optional:
+
+   💰 Position Sizing (الزامی، نه پیشنهادی):
+      - Fixed fractional (مثلاً ۱-۲٪ سرمایه per trade)
+      - Volatility-adjusted (ATR-based)
+      - Kelly Criterion (با fractional Kelly برای امنیت)
+      - User می‌تواند انتخاب کند، ولی **یکی باید فعال باشد**
+
+   💰 Stop Loss (اجباری):
+      - هر اوردر باید SL داشته باشد — بدون SL → reject
+      - SL نباید بعد از ورود گسترش پیدا کند (no "hope mode")
+      - Trailing SL در سود می‌تواند tighter شود، نه looser
+
+   💰 Portfolio-Level Risk:
+      - Max correlated positions (مثلاً ۳ آلت‌کوین همزمان نه)
+      - Max total exposure (مثلاً ۵۰٪ سرمایه در هر لحظه)
+      - Heat map of risk per symbol
+
+   💰 Drawdown Management:
+      - Soft limit (۱۰٪): warning + reduce position size
+      - Hard limit (۲۰٪): pause all new trades for review
+      - Recovery mode: position size کاهش تا regain confidence
+
+   💰 Tail Risk Protection:
+      - Black swan events (flash crash، exchange outage)
+      - Stop-loss روی exchange (server-side) نه فقط در client
+      - Disaster recovery: اگر سامانه crash کرد، positions باز چه می‌شوند؟
+
+⚠️ سؤالات مهم در چت ۱۱:
+   ⚠️ تا چه حد سامانه باید "override" کاربر را اجازه دهد؟
+      (مثلاً اگر کاربر اصرار دارد بدون SL وارد شود — اجازه می‌دهیم؟)
+      ⭐ پیشنهاد من: NO override برای SL، YES override با confirmation
+      دوگانه برای سایر گزینه‌ها
+   ⚠️ آیا cooling-off period اجباری است یا قابل غیرفعال؟
+      ⭐ پیشنهاد من: قابل غیرفعال ولی با warning و log
+   ⚠️ Trade journal مجبور یا اختیاری؟
+      ⭐ پیشنهاد من: مجبور ولی فیلدهای حداقلی (۳ سؤال)، بقیه optional
+   ⚠️ Risk metrics در real-time نمایش داده شوند یا فقط در dashboard؟
+      ⭐ پیشنهاد من: real-time در یک نوار بالای صفحه (always visible)
+
+💡 NOTE — یادآوری مهم Claude به کاربر:
+   این سامانه می‌تواند بهترین tools را در اختیار کاربر بگذارد،
+   ولی **execution discipline** نهایی با کاربر است. سامانه می‌تواند
+   جلوی بسیاری از خطاهای رایج را بگیرد، ولی نمی‌تواند جای
+   تصمیم‌گیری انسانی را بگیرد. این محور هدفش حداقل‌سازی خطاهای
+   انسانی است، نه حذف کامل آنها.
+
+────────────────────────────────────────────────────────────────────
+
+═══════════════════════════════════════════════════════════════════════
+بخش ۲: UI Mockup ها — قبل از پیاده‌سازی هر صفحه
+═══════════════════════════════════════════════════════════════════════
+
+⚠️ قانون مهم برای این چت و چت‌های بعدی:
+
+   قبل از پیاده‌سازی هر صفحه یا feature UI، Claude باید
+   تصویر گرافیکی (ASCII / Markdown table / textual mockup) از آن
+   به کاربر بدهد تا کاربر تأیید کند آن چیزی است که می‌خواهد.
+
+📋 صفحات اصلی پروژه که باید mockup داشته باشند (در این چت یا چت‌های بعد):
+
+   1. Dashboard اصلی (overview همه استراتژی‌ها، PnL، حساب)
+   2. Chart page (نمودار + indicators + drawing tools)
+   3. Tool/Field Browser (با categories و search)
+   4. Field Builder (محیط ساخت field سفارشی)
+   5. Strategy Builder (composition شرط‌ها)
+   6. Backtest page (config + run + results)
+   7. Live Monitor (pre/during/post trade dashboard)
+   8. AI Lab (training + model management)
+   9. Settings, profile
+
+این چت تمرکز اصلی روی mockup های ۳، ۴، ۵، ۶، ۷ خواهد بود.
+
+═══════════════════════════════════════════════════════════════════════
+بخش ۳: TODO های چت ۱۱
+═══════════════════════════════════════════════════════════════════════
+
+📋 TODO ۰: ثبت Decisions در DECISIONS_LOG
+   - Decision #65 (موکول‌کردن اتصال زنده تا فاز ۵+)
+   - Decision #66 (Push اجباری در پایان هر چت — GitHub-only backup)
+
+📋 TODO ۱: جلسه عمیق روی ۸ محور بالا (تک به تک)
+   - Claude برای هر محور: سؤال‌های دقیق + گزینه‌های ⭐ + trade-off
+   - کاربر: پاسخ + ترجیحات + الزامات
+   - خروجی هر محور: تصمیمات قطعی + تصمیمات موکول
+
+📋 TODO ۲: ارائه UI Mockup های اصلی (متن/ASCII)
+   - حداقل: Tool Browser, Field Builder, Strategy Builder, Backtest, Live Monitor
+   - برای هر کدام: layout + اجزای اصلی + interaction flow
+
+📋 TODO ۳: نهایی‌سازی Data Model + Naming Convention
+   - schema ER diagram (متنی)
+   - convention نام‌گذاری فیلدها (با مثال)
+   - migration strategy
+
+📋 TODO ۴: نهایی‌سازی Stack و Decision های فنی کلان
+   - DB strategy (SQLite تا فاز چندم → Postgres؟ TimescaleDB؟)
+   - Cache layer (Redis از کی؟)
+   - Backtest engine (custom / VectorBT / hybrid)
+   - AI/ML stack
+   - Real-time architecture (WebSockets, Queue, Pub/Sub)
+   - Testing strategy (pytest, vitest, Playwright)
+   - Logging & Observability
+
+📋 TODO ۵: Roadmap قطعی فازهای ۲ تا ۸
+   - scope دقیق هر فاز
+   - dependencies
+   - estimate (تعداد چت)
+   - acceptance criteria
+   - risks
+
+📋 TODO ۶: ساخت سند خروجی نهایی
+   فایل: docs/MASTER_BLUEPRINT.md
+   شامل:
+      - بخش ۱: Vision & Mission
+      - بخش ۲: ۸ محور با تصمیمات نهایی
+      - بخش ۳: Data Model + Naming
+      - بخش ۴: Stack & Architecture
+      - بخش ۵: UI Mockups
+      - بخش ۶: Roadmap
+      - بخش ۷: Risks & Mitigations
+      - بخش ۸: Acceptance Criteria برای هر فاز
+
+📋 TODO ۷ (اختیاری اگر context کافی): Atomic Update v2.11 → v2.12
+   - ادغام ۹ آیتم PENDING
+   - افزودن Decisions جدید
+   - افزودن MASTER_BLUEPRINT به سند جامع
+
+═══════════════════════════════════════════════════════════════════════
+بخش ۴: وضعیت پروژه در شروع چت ۱۱
+═══════════════════════════════════════════════════════════════════════
+
+✅ DONE (پایان چت ۱۰):
+   - G1: Dependencies — ccxt 4.3.98 + websockets 12.0
+   - G2: Architecture — Decisions #۶۱-۶۴
+   - G3: CCXTDataSource skeleton + ۵ test mock pass
+   - Bug #53 cleanup (BOM در requirements.txt)
+   - Documentation: PENDING (v0.4 — ۹ آیتم)، CHAT_LOG (v1.5)،
+     TROUBLESHOOTING (v1.2)، SESSION_STATUS
+   - Git commits: 5cfc7e0، a7dccca، a29586e
+   - قانون #۶۶ و scripts/63_*
+
+⚠️ CHECK — در شروع چت ۱۱:
+   ⚠️ CHECK 1: venv فعال است؟
+   ⚠️ CHECK 2: backend اجرا می‌شود؟
+   ⚠️ CHECK 3: frontend اجرا می‌شود؟ + login admin/1 + نمودار BTC/USDT
+   ⚠️ CHECK 4: کندل‌های BTC/USDT 1d در DB (~1714) موجود هستند؟
+   ⚠️ CHECK 5: Git HEAD = a29586e (یا جدیدتر)؟
+   ⚠️ CHECK 6: تست‌های اسکریپت‌های 61b/62b/63b pass می‌دهند؟
+
+💡 ۹ آیتم PENDING_FOR_NEXT_VERSION (برای v2.12):
+   - Z2.1 — M64 (JSX runtime)
+   - Z2.2 — M65 (shell detection)
+   - Z2.3 — M66 (Filesystem MCP big files hang)
+   - Z2.4 — M67 (BOM برای pip) ⭐ critical
+   - Z2.5 — M68 (PyPI verify)
+   - Z2.6 — M69 (asyncio.run in FastAPI)
+   - Z2.7 — اصلاحیه سند جامع بخش ۲.۲
+   - Z2.8 — bytes خراب در CHAT_LOG (cosmetic)
+   - Z2.9 — قانون #۶۶ Backup ⭐ important
+
+═══════════════════════════════════════════════════════════════════════
+بخش ۵: قوانین مهم برای چت ۱۱
+═══════════════════════════════════════════════════════════════════════
+
+📋 قوانین UX (v2.11):
+   - #۶۱ — پیشنهاد گزینه مطلوب با ⭐ (پر کاربرد در این چت!)
+   - #۶۲ — handoff دائمی (همین فایل را خواندی)
+   - #۶۳ — 🟢 ▶️ EXECUTE (در discovery تقریباً غیرفعال)
+   - #۶۴ — عدم نمایش جزئیات تصحیح خطا
+   - #۶۵ — نمایش درس از اشتباهات
+   - #۶۶ — Push اجباری در پایان چت:
+       git add . && git commit -m "..." && git push origin main
 
 📋 پروتکل شروع چت طبق قانون #۴۸:
-   1. خواندن این فایل (CHAT11_HANDOFF.txt) کامل
+   1. خواندن این فایل کامل (CHAT11_HANDOFF.txt) ⭐ مهم‌ترین
    2. خواندن docs/PENDING_FOR_NEXT_VERSION.md (۹ آیتم)
    3. خواندن docs/CHAT_LOG.md بخش چت ۱۰
    4. خواندن docs/SESSION_STATUS.md
    5. اگر MCP روی سند جامع hang کرد (M66)، از CHAT_LOG و این HANDOFF کفایت کن
 
-═══════════════════════════════════════════════════════════
-بخش ۴: درس‌های آموخته در چت ۱۰ (یادآوری)
-═══════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════════════════════
+بخش ۶: درس‌های آموخته در چت ۱۰ (یادآوری)
+═══════════════════════════════════════════════════════════════════════
 
-💡 M66 — Filesystem MCP و فایل‌های >200KB hang می‌کند. ری‌استارت Claude Desktop. در چت ۱۱، برای خواندن سند جامع از view_range استفاده کن.
+💡 M66 — Filesystem MCP و فایل‌های >200KB hang می‌کند.
+💡 M67 — pip روی Windows + UTF-8 بدون BOM + متن غیر-ASCII → crash. Policy A (ASCII-only) ترجیحی.
+💡 M68 — نسخه‌های pinned باید با PyPI verify شوند.
+💡 M69 — asyncio.run() در FastAPI handler crash می‌کند.
+💡 M70 — سادگی workflow > لایه‌بندی پیچیده. یک source of truth بهتر است.
 
-💡 M67 — pip روی Windows + UTF-8 بدون BOM + متن غیر-ASCII → crash. در چت ۱۱ Policy A (ASCII-only برای فایل‌های dependency) ترجیحی است.
+═══════════════════════════════════════════════════════════════════════
+بخش ۷: Stack و metadata
+═══════════════════════════════════════════════════════════════════════
 
-💡 M68 — نسخه‌های pinned باید با PyPI verify شوند. در چت ۱۱ اگر dep جدید لازم شد، `pip index versions <pkg>` در venv فعال اول.
-
-💡 M69 — asyncio.run() در FastAPI handler crash می‌کند. در API endpoints همیشه `await`.
-
-═══════════════════════════════════════════════════════════
-بخش ۵: ارتباطات و metadata
-═══════════════════════════════════════════════════════════
-
-💡 Stack فعلی (پایان چت ۱۰):
+💡 Stack پایان چت ۱۰:
    - Frontend: React 19 + Vite 8 + Tailwind v4 + lightweight-charts
    - Backend: FastAPI + SQLAlchemy + Alembic + SQLite
-   - Phase 1 deps (روی Shelf): ccxt 4.3.98 + websockets 12.0
-   - Phase 2 deps (آماده): pandas 2.2.2 + numpy
+   - Phase 1 deps (Shelf): ccxt 4.3.98 + websockets 12.0
+   - Phase 2 deps (ready): pandas 2.2.2 + numpy
    - Auth: JWT + bcrypt
-   - محیط: Windows + venv + PowerShell (ExecutionPolicy=RemoteSigned)
+   - محیط: Windows + venv + PowerShell
 
-💡 نام چت ۱۱ پیشنهادی: TRADING-phase1to2-transition-discovery
-   اگر نام دیگری استفاده شد، باید شامل کلمات "discovery" یا "planning" یا "transition" باشد.
+💡 نام چت ۱۱: TRADING-phase1to2-master-architecture-discovery
+💡 نام چت ۱۲ (پس از Discovery): TRADING-phase2-part01-fields-foundation
+💡 پس از این چت، چت‌های فاز ۲ احتمالاً ۴-۶ چت طول می‌کشند.
 
-💡 نام چت ۱۲ پیشنهادی (بعد از Discovery): TRADING-phase2-part01-indicators-base
+═══════════════════════════════════════════════════════════════════════
+بخش ۸: انتظار نهایی از این چت
+═══════════════════════════════════════════════════════════════════════
 
-💡 الگوهای مفید چت ۱۰ برای استفاده در چت‌های بعدی:
-   - backend/app/infrastructure/data_sources/base.py → الگو برای Indicator(ABC)
-   - backend/app/infrastructure/data_sources/ccxt_source.py → الگو برای concrete classes
-   - scripts/62_create_ccxt_source.py → الگو برای ساخت فایل جدید via script
-   - scripts/63_backup_project.py → الگو برای backup در پایان هر چت
+⭐ این چت باید جوابگوی این سؤال باشد:
+   "اگر همه طبق MASTER_BLUEPRINT جلو برویم، در پایان فاز ۸ یک سامانه
+    تریدینگ حرفه‌ای در سطح TradingView + Backtrader + 3commas + Custom AI
+    خواهیم داشت یا نه؟"
 
-💡 CCXTDataSource وضعیت "Shelf":
-   - کد سالم در backend/app/infrastructure/data_sources/ccxt_source.py
-   - ۵ test mock pass، backwards compat تأیید
-   - استفاده در فاز ۵+ شروع می‌شود
+⭐ پاسخ این سؤال باید بله قاطع باشد، نه با تردید.
 
-═══════════════════════════════════════════════════════════
+⭐ اگر کاربر یا Claude در پایان این چت احساس کرد یک محور به اندازه کافی
+   عمیق بررسی نشده، چت ۱۱ ادامه پیدا می‌کند به چت ۱۱.۲ — هیچ عجله‌ای نیست.
+
+═══════════════════════════════════════════════════════════════════════
 پایان CHAT11_HANDOFF
-═══════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════════════════════
 
-🎯 موفقیت چت ۱۰: G1+G2+G3 ۱۰۰٪ + Decision #65 + Decision #66 + ساخت backup tool
-🎯 هدف چت ۱۱: Discovery — جمع‌بندی فنی فازهای ۲-۸ + ساخت PHASE2_PLUS_ROADMAP.md
-🎯 موکول به چت ۱۲: شروع کدنویسی فاز ۲ (اندیکاتورها) با base ABC + SMA + EMA + RSI
-🎯 موکول به فاز ۵+: binance_client، binance_ws، integration test واقعی
+🎯 موفقیت چت ۱۰: G1+G2+G3 + 6 Decisions + 5 درس + 9 PENDING + 3 commits
+🎯 هدف چت ۱۱: مغز متفکر پروژه — MASTER_BLUEPRINT جامع و قطعی
+🎯 موکول به چت ۱۲+: شروع پیاده‌سازی فاز ۲ بر اساس MASTER_BLUEPRINT
 
-موفق باشید در چت Discovery! 🎯
+⚠️⚠️⚠️ یادآوری نهایی ⚠️⚠️⚠️
+این چت پایه همه چیز است. عجله نکن. سؤال‌های زیاد بپرس.
+گزینه‌های مختلف را بسنج. اگر چیزی واضح نیست، نگو "OK". بپرس.
+سامانه نهایی، آینه کیفیت تصمیمات همین چت خواهد بود.
