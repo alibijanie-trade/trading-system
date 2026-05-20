@@ -1,0 +1,131 @@
+═══════════════════════════════════════════════════════════════
+📨 پیام شروع چت ۹
+═══════════════════════════════════════════════════════════════
+
+⚠️ راهنمای استفاده:
+1. در Claude Desktop یک چت جدید باز کنید (دکمه + بالا)
+2. کل متن زیر (بین خطوط ─────) را copy کنید
+3. در چت جدید paste کنید و send
+4. Claude خودش با Filesystem MCP کار را شروع می‌کند
+
+───────────────────────────────────────────────────────────────
+
+سلام Claude!
+
+چت قبل: TRADING-phase0-part08-pre-phase1-setup
+چت جاری پیشنهادی: TRADING-phase1-part01-ccxt-websocket-setup
+
+⚡ مهم: قبل از شروع کار فنی، چند کار infrastructure انجام دهیم:
+
+1️⃣ **ساخت Project در Claude Desktop**
+   - نام: trading-system
+   - فایل‌های Project Knowledge را از این مسیر آپلود کن:
+     D:\Projects\trading-system\claude_workspace\snapshots\
+     شامل: PROJECT_KNOWLEDGE.md, PROJECT_README.md, CUSTOM_INSTRUCTIONS.md
+
+2️⃣ **خواندن اسناد طبق قانون #۴۸** (به ترتیب):
+   - D:\Projects\trading-system\docs\PROJECT_GOVERNANCE.md (v1.3)
+   - D:\Projects\trading-system\docs\CLAUDE_CHECKLIST.md (v1.3)
+   - D:\Projects\trading-system\docs\SESSION_STATUS.md (snapshot پایان چت ۸)
+   - D:\Projects\trading-system\docs\CHAT_LOG.md (v1.3) - بخش چت ۸
+   - D:\Projects\trading-system\docs\TASK_BACKLOG.md (v1.5)
+   - **مهم:** D:\Projects\trading-system\docs\PENDING_FOR_NEXT_VERSION.md (8 آیتم برای v2.11)
+   - D:\Projects\trading-system\docs\سند_جامع_v2_10.md (به‌خصوص بخش ۱۸ M1-M62)
+   - D:\Projects\trading-system\claude_workspace\incoming_permanent\CHAT8_FINALIZE.md
+
+3️⃣ **بررسی محیط:**
+   - Git HEAD: cae4b0b (push شده به GitHub: alibijanie-trade/trading-system)
+   - فاز ۰: 100% ✅
+   - Tier 2: 16/21 (76%) ✅
+   - فاز ۱: آماده شروع 🚀
+
+4️⃣ **برنامه چت ۹:**
+
+   فاز A — Atomic Update به v2.11 (1-2 ساعت):
+   - ادغام 8 آیتم PENDING:
+     * B5.1: اصلاح .gitignore (minor)
+     * B2.1: اصلاح سند ۲۳.۱ (Memory در Capabilities) ⭐
+     * C1.1: افزودن Settings audit به سند ۲۳.۴
+     * D1.1: مستندسازی pre-commit bug + workaround ⭐
+     * E2.1: cleanup Bug #50 (jsxRuntime + حذف import React) ⭐
+     * D2.1+D3.1: مستندسازی evaluation Claude Code + GitHub MCP
+     * G5.1: قانون #۶۲ — فایل handoff دائمی ⭐
+     * UX1.1: قانون #۶۳ — Convention ▶️ EXECUTE برای گام‌های اجرایی ⭐
+   - Atomic Update همه governance docs به v1.4
+
+   فاز B — شروع فاز ۱:
+   - گام اول: CCXTDataSource skeleton (infrastructure/data_sources/ccxt_source.py)
+   - گام دوم: Binance WebSocket subscriber
+   - گام سوم: تست live data fetching
+
+5️⃣ **یادآوری حیاتی:**
+   - قانون #۶۰: PENDING-EOC در لحظه ثبت با Filesystem MCP
+   - قانون #۶۱: پیشنهاد گزینه مطلوب در سؤالات چندگزینه‌ای
+   - قانون M62: self-binding — قوانین ذکرشده در همان چت اجرا شوند
+
+6️⃣ **سه قانون UX جدید کشف‌شده در پایان چت ۸ (تأییدشده توسط کاربر):**
+
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   🆕 قانون UX-A: Convention `▶️ EXECUTE` با تیتر سبز
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   هر گام اجرایی که نیاز به کپی-پیست/اجرای فرمان توسط کاربر دارد،
+   باید با تیتر زیر شروع شود (تیتر باید با ✅ سبز یا 🟢 شروع شود
+   تا بصری کاملاً متمایز باشد):
+
+   فرمت دقیق:
+
+   ---
+
+   ## 🟢 ▶️ EXECUTE — اقدام لازم
+
+   🟦 **tab «1 backend»** (یا 🟩 «2 scripts»، 🟧 «3 frontend»، 🟥 «4 BACKUP»)
+
+   ```powershell
+   [دستور]
+   ```
+
+   ---
+
+   دلیل: کاربر بصری سریع تشخیص می‌دهد کجا اقدام لازم است،
+   و کجا فقط توضیح است.
+
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   🆕 قانون UX-B: عدم نمایش جزئیات تصحیح خطای کد
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   وقتی کد اشتباه می‌شود و Claude باید آن را اصلاح کند:
+   - Claude به‌صورت عمیق و دقیق علت را بررسی می‌کند (در ذهن خود)
+   - **ولی** توضیحات «چرا خطا داد» و «چه اقداماتی برای تشخیص انجام دادم» را
+     به کاربر نشان نمی‌دهد
+   - فقط گام اجرایی کد اصلاحی را با Convention ▶️ EXECUTE ارائه می‌دهد
+   - شامل نام tab + رنگ tab مطابق قانون #۳۱
+
+   ⚠️ این قانون فقط برای bug fix در کد است. برای موارد زیر کماکان توضیح کامل لازم است:
+   - گزارش کارهای انجام‌شده
+   - گزارش کارهای آینده
+   - درس‌های گرفته‌شده از اشتباهات (برای ثبت در سند جامع)
+   - توضیحات معماری و تصمیمات
+
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   🆕 قانون UX-C: ثبت درس از اشتباهات در سند
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   وقتی Claude اشتباهی می‌کند:
+   - درس گرفته‌شده در سند جامع بخش ۱۸ (M-numbered) ثبت می‌شود
+   - این درس **به کاربر نشان داده می‌شود** (نه پنهان)
+   - تفاوت با UX-B: درس **چه** آموختیم نمایش داده می‌شود، نه **چرا**
+     خطا رخ داد و **چطور** تشخیص دادیم
+
+7️⃣ **چک‌لیست پایان چت ۹ (افزوده توسط چت ۸):**
+   - تولید فایل CHAT10_HANDOFF.txt در claude_workspace/incoming_permanent/
+   - به‌روزرسانی Git HEAD در پیام handoff
+   - ثبت ۸ قانون UX (UX-A, B, C + بقیه) به‌عنوان قوانین #۶۲-۶۴ در v2.11
+
+شروع کن با ساخت Project + خواندن اسناد. پس از تأیید آمادگی، فاز A را شروع می‌کنیم.
+
+───────────────────────────────────────────────────────────────
+
+📅 تولید‌شده در پایان چت ۸: 2026-05-19
+🔧 Git HEAD نهایی چت ۸: cae4b0b (به‌روزرسانی پس از commit آخر)
+📁 مسیر این فایل: D:\Projects\trading-system\claude_workspace\incoming_permanent\CHAT9_HANDOFF.txt
