@@ -4,8 +4,7 @@
 تاریخ: 2026-05-20
 چت قبلی: چت ۱۰ — TRADING-phase1-part01-ccxt-websocket-setup
 چت بعدی: TRADING-phase1to2-master-architecture-discovery
-Git HEAD پایان چت ۱۰: <بعد از commit cleanup توسط کاربر تعیین می‌شود>
-واقعیت: HEAD پیش از cleanup = f42d54f — بعد از cleanup round پایان چت ۱۰ = پس از git log در چت ۱۱
+Git HEAD پایان چت ۱۰: 8ae477c (پس از cleanup round نهایی)
 
 ╔══════════════════════════════════════════════════════════════════════╗
 ║                                                                      ║
@@ -77,7 +76,8 @@ Git HEAD پایان چت ۱۰: <بعد از commit cleanup توسط کاربر �
 ✅ وضعیت پس از cleanup round پایان چت ۱۰:
    ✅ Decisions #۵۸-۶۶ در DECISIONS_LOG backfill شدند (v1.1 → v1.2)
    ✅ PENDING به v0.5 رسید (Z2.1-Z2.13 شامل M71/M72/M73 + Bug #54)
-   ✅ SESSION_STATUS با HEAD واقعی و آمار جدید به‌روز شد
+   ✅ SESSION_STATUS با HEAD واقعی (8ae477c) و آمار جدید به‌روز شد
+   ✅ HANDOFF با همین بخش 0-- و به‌روزرسانی stat ها در همه بخش‌ها
 
 ═══════════════════════════════════════════════════════════════════════
 بخش 0-: درک مشترک قبل از شروع — بسیار مهم ⭐⭐⭐
@@ -87,7 +87,7 @@ Git HEAD پایان چت ۱۰: <بعد از commit cleanup توسط کاربر �
 درک مشترک Claude و کاربر را مشخص می‌کند:
 
 📌 ۱. مثال‌ها فقط راهنما هستند، نه لیست نهایی:
-   تمام مثال‌هایی که در این HANDOFF آورده شده (در ۸ محور، اندیکاتورها،
+   تمام مثال‌هایی که در این HANDOFF آورده شده (در ۹ محور، اندیکاتورها،
    SMC، Price Action، Field Builder، …) فقط برای نمایش **نوع تفکر** و
    **سطح انعطاف‌پذیری** مورد نیاز هستند. لیست واقعی آیتم‌ها در چت ۱۱
    توسط کاربر تعیین می‌شود. ممکن است:
@@ -217,10 +217,10 @@ Git HEAD پایان چت ۱۰: <بعد از commit cleanup توسط کاربر �
    - اگر کاربر چیزی گفته که فنی غلط یا ناقص است، با احترام تصحیح کند.
 
 ═══════════════════════════════════════════════════════════════════════
-بخش ۱: مأموریت بزرگ این چت — ۸ محور اصلی
+بخش ۱: مأموریت بزرگ این چت — ۹ محور اصلی
 ═══════════════════════════════════════════════════════════════════════
 
-این ۸ محور درواقع همان "مغز متفکر" پروژه هستند. هر کدام باید با عمق
+این ۹ محور درواقع همان "مغز متفکر" پروژه هستند. هر کدام باید با عمق
 کامل بررسی، تصمیم‌گیری، و در سند خروجی مستند شوند.
 
 ────────────────────────────────────────────────────────────────────
@@ -241,7 +241,7 @@ Git HEAD پایان چت ۱۰: <بعد از commit cleanup توسط کاربر �
    🕯️ Price Action (الگوهای کندلی + ساختار):
       - Single candle patterns (Pin Bar, Doji, Hammer, Shooting Star, Marubozu)
       - Multi-candle patterns (Engulfing, Inside Bar, 3 Soldiers, Morning Star)
-      - Support & Resistance زinematic (دینامیک + ثابت)
+      - Support & Resistance (دینامیک + ثابت)
       - Trend lines (auto-draw)
       - Chart patterns (Head & Shoulders, Triangles, Flags, Wedges)
 
@@ -517,9 +517,6 @@ Git HEAD پایان چت ۱۰: <بعد از commit cleanup توسط کاربر �
    ⚠️ Connection loss handling: orders قرار است auto-cancel شوند یا server-side؟
    ⚠️ Manual override: کاربر می‌تواند هر زمان exit کند؟ (بله، الزامی)
 
-NOTE: این بخش به‌اشتباه دو بار در نسخه قبلی این فایل تکرار شده بود.
-نسخه واقعی این محور بالا است. (بخش پایین حذف شد در نسخه نهایی.)
-
 ────────────────────────────────────────────────────────────────────
 🎯 محور ۹: Trading Discipline + Strategies with Real Edge + Risk Management
 ────────────────────────────────────────────────────────────────────
@@ -675,10 +672,48 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
 ═══════════════════════════════════════════════════════════════════════
 
 📋 TODO ۰: ثبت Decisions در DECISIONS_LOG
-   - Decision #65 (موکول‌کردن اتصال زنده تا فاز ۵+)
-   - Decision #66 (Push اجباری در پایان هر چت — GitHub-only backup)
+   - تأیید Decisions #58-66 که در cleanup چت ۱۰ backfill شدند
+   - Decisions جدید این چت (#67+) در پایان batch ثبت شوند
 
-📋 TODO ۱: جلسه عمیق روی ۸ محور بالا (تک به تک)
+📋 TODO ۱.الف ⭐ (پیش‌نیاز قبل از محور ۱) — سؤال scope-defining فاز ۲:
+
+   قبل از غرق شدن در جزئیات معماری محور ۱ (Plugin system؟ Composability؟
+   Storage model؟)، یک سؤال زیربنایی باید پاسخ داده شود:
+
+   «در پایان فاز ۲ (یعنی چت‌های ۱۲ تا ~۱۶)، چه چیزی باید قابل demo باشد؟»
+
+   سه scope پیشنهادی:
+
+   Scope الف — "Foundation MVP" (محافظه‌کارانه، شاید ۴ چت):
+      فقط ۵-۸ اندیکاتور کلاسیک (SMA, EMA, RSI, MACD, ATR, Bollinger)
+      + Field Naming Convention + DB schema + UI Browser.
+      هیچ SMC، PA، Builder سفارشی، Strategy، Backtest. آن‌ها در فاز ۳+.
+
+   Scope ب ⭐ — "Toolkit Foundation + Builder Seed" (متعادل، شاید ۶ چت):
+      الف + پایه‌ی Field Builder (با یک DSL ساده — مثلاً Python expression)
+      + ۲-۳ ابزار Price Action ساده (candle color, body/shadow ratios)
+      + ۱-۲ ابزار Structure ساده (HH/HL detector).
+      بدون SMC، بدون Strategy/Backtest. آن‌ها در فاز ۳/۴.
+
+   Scope ج — "Complete Tool Layer" (جاه‌طلب، شاید ۸-۱۰ چت):
+      الف + ب + همه‌ی SMC اصلی (Order Block، FVG، BOS/CHoCH)
+      + Rally-Base-Drop detector + Volume Profile.
+      بدون Strategy/Backtest (فاز ۳).
+
+   استدلال «اول بنیان، بعد ساخت روی آن» (Foundation-First):
+      SMC و RBD اگر بدون اول-تست بنیان (Naming Convention، DB structure،
+      Builder DSL) ساخته شوند، در فاز ۳ احتمال refactor بزرگ بالاست —
+      نقض اصل طلایی ۳ از بخش 0- ("امروز ساده، فردا قابل‌توسعه").
+      اول بنیان، بعد ساخت روی آن.
+
+   ولی این فقط نظر مهندسی است. تصمیم نهایی به کاربر است:
+      - اگر تریدر هست و SMC اولویت بالایی دارد → شاید Scope ج
+      - اگر engineering discipline اولویت دارد → Scope ب ⭐
+      - اگر می‌خواهد سریع value ببیند → Scope الف
+
+   ⚠️ این سؤال باید **قبل از محور ۱** پاسخ داده شود، نه بعد.
+
+📋 TODO ۱.ب: جلسه عمیق روی ۹ محور (تک به تک)
    - Claude برای هر محور: سؤال‌های دقیق + گزینه‌های ⭐ + trade-off
    - کاربر: پاسخ + ترجیحات + الزامات
    - خروجی هر محور: تصمیمات قطعی + تصمیمات موکول
@@ -712,7 +747,7 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
    فایل: docs/MASTER_BLUEPRINT.md
    شامل:
       - بخش ۱: Vision & Mission
-      - بخش ۲: ۸ محور با تصمیمات نهایی
+      - بخش ۲: ۹ محور با تصمیمات نهایی
       - بخش ۳: Data Model + Naming
       - بخش ۴: Stack & Architecture
       - بخش ۵: UI Mockups
@@ -721,7 +756,7 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
       - بخش ۸: Acceptance Criteria برای هر فاز
 
 📋 TODO ۷ (اختیاری اگر context کافی): Atomic Update v2.11 → v2.12
-   - ادغام ۹ آیتم PENDING
+   - ادغام ۱۳ آیتم PENDING
    - افزودن Decisions جدید
    - افزودن MASTER_BLUEPRINT به سند جامع
 
@@ -734,9 +769,12 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
    - G2: Architecture — Decisions #۶۱-۶۴
    - G3: CCXTDataSource skeleton + ۵ test mock pass
    - Bug #53 cleanup (BOM در requirements.txt)
-   - Documentation: PENDING (v0.4 — ۹ آیتم)، CHAT_LOG (v1.5)،
-     TROUBLESHOOTING (v1.2)، SESSION_STATUS
-   - Git commits: 5cfc7e0، a7dccca، a29586e
+   - Decisions #65 + #66 (پایان چت)
+   - Cleanup Round: Decisions #58-66 در DECISIONS_LOG backfill شد
+     + Bug #54 حل + M71/M72/M73 ثبت
+   - Documentation: PENDING (v0.5 — ۱۳ آیتم)، CHAT_LOG (v1.5)،
+     TROUBLESHOOTING (v1.2)، SESSION_STATUS، DECISIONS_LOG (v1.2)
+   - Git commits: 5cfc7e0، a7dccca، a29586e، f42d54f، 8ae477c
    - قانون #۶۶ و scripts/63_*
 
 ⚠️ CHECK — در شروع چت ۱۱:
@@ -744,10 +782,15 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
    ⚠️ CHECK 2: backend اجرا می‌شود؟
    ⚠️ CHECK 3: frontend اجرا می‌شود؟ + login admin/1 + نمودار BTC/USDT
    ⚠️ CHECK 4: کندل‌های BTC/USDT 1d در DB (~1714) موجود هستند؟
-   ⚠️ CHECK 5: Git HEAD = a29586e (یا جدیدتر)؟
+   ⚠️ CHECK 5: Git HEAD = 8ae477c (یا جدیدتر)؟
    ⚠️ CHECK 6: تست‌های اسکریپت‌های 61b/62b/63b pass می‌دهند؟
+   ⚠️ CHECK 7 (M73 audit جدید): cross-document consistency:
+      - HEAD در SESSION_STATUS = git log -1 ?
+      - Decisions در DECISIONS_LOG = ۶۶ pivot sequential ?
+      - PENDING آیتم‌ها = ۱۳ (Z2.1-Z2.13) ?
+      - Decisions count در SESSION_STATUS سازگار با DECISIONS_LOG ?
 
-💡 ۹ آیتم PENDING_FOR_NEXT_VERSION (برای v2.12):
+💡 ۱۳ آیتم PENDING_FOR_NEXT_VERSION (برای v2.12):
    - Z2.1 — M64 (JSX runtime)
    - Z2.2 — M65 (shell detection)
    - Z2.3 — M66 (Filesystem MCP big files hang)
@@ -756,7 +799,11 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
    - Z2.6 — M69 (asyncio.run in FastAPI)
    - Z2.7 — اصلاحیه سند جامع بخش ۲.۲
    - Z2.8 — bytes خراب در CHAT_LOG (cosmetic)
-   - Z2.9 — قانون #۶۶ Backup ⭐ important
+   - Z2.9 — قانون #۶۶ Push اجباری ⭐ important
+   - Z2.10 ⚠️ — M71 Documentation Drift Self-Reference Paradox
+   - Z2.11 ⚠️ — M72 End-of-Chat Verification Checklist
+   - Z2.12 ⚠️ — M73 Cross-Document Consistency Audit
+   - Z2.13 ✅ — Bug #54 Decisions Gap (حل شد در cleanup چت ۱۰)
 
 ═══════════════════════════════════════════════════════════════════════
 بخش ۵: قوانین مهم برای چت ۱۱
@@ -773,20 +820,29 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
 
 📋 پروتکل شروع چت طبق قانون #۴۸:
    1. خواندن این فایل کامل (CHAT11_HANDOFF.txt) ⭐ مهم‌ترین
-   2. خواندن docs/PENDING_FOR_NEXT_VERSION.md (۹ آیتم)
-   3. خواندن docs/CHAT_LOG.md بخش چت ۱۰
-   4. خواندن docs/SESSION_STATUS.md
-   5. اگر MCP روی سند جامع hang کرد (M66)، از CHAT_LOG و این HANDOFF کفایت کن
+   2. خواندن docs/PENDING_FOR_NEXT_VERSION.md (۱۳ آیتم — شامل
+      Z2.10-Z2.13 جدید درباره M71/M72/M73 و Bug #54)
+   3. خواندن docs/DECISIONS_LOG.md (v1.2 — ۶۶ Decision پیوسته)
+   4. خواندن docs/CHAT_LOG.md بخش چت ۱۰
+   5. خواندن docs/SESSION_STATUS.md (HEAD = 8ae477c)
+   6. اجرای M73 audit (cross-document consistency check)
+   7. اگر MCP روی سند جامع hang کرد (M66)، از CHAT_LOG و این HANDOFF کفایت کن
 
 ═══════════════════════════════════════════════════════════════════════
-بخش ۶: درس‌های آموخته در چت ۱۰ (یادآوری)
+بخش ۶: درس‌های آموخته در چت ۱۰ (یادآوری) — M66 تا M73
 ═══════════════════════════════════════════════════════════════════════
 
+درس‌های فنی چت ۱۰ (در PENDING Z2.3-Z2.6 ثبت):
 💡 M66 — Filesystem MCP و فایل‌های >200KB hang می‌کند.
 💡 M67 — pip روی Windows + UTF-8 بدون BOM + متن غیر-ASCII → crash. Policy A (ASCII-only) ترجیحی.
 💡 M68 — نسخه‌های pinned باید با PyPI verify شوند.
 💡 M69 — asyncio.run() در FastAPI handler crash می‌کند.
 💡 M70 — سادگی workflow > لایه‌بندی پیچیده. یک source of truth بهتر است.
+
+درس‌های process چت ۱۰ (cleanup round — در PENDING Z2.10-Z2.13 ثبت):
+💡 M71 — Documentation Drift Self-Reference Paradox (جزئیات در بخش 0--)
+💡 M72 — End-of-Chat Verification Checklist غایب در قانون #۴۸ (جزئیات در بخش 0--)
+💡 M73 — Cross-Document Consistency Audit اجباری در شروع چت (جزئیات در بخش 0--)
 
 ═══════════════════════════════════════════════════════════════════════
 بخش ۷: Stack و metadata
@@ -822,7 +878,8 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
 پایان CHAT11_HANDOFF
 ═══════════════════════════════════════════════════════════════════════
 
-🎯 موفقیت چت ۱۰: G1+G2+G3 + 6 Decisions + 5 درس + 9 PENDING + 3 commits
+🎯 موفقیت چت ۱۰: G1+G2+G3 + 9 Decisions (#58-66) + 8 درس (M66-M73)
+   + 13 PENDING (Z2.1-Z2.13) + 5 commits + cleanup round
 🎯 هدف چت ۱۱: مغز متفکر پروژه — MASTER_BLUEPRINT جامع و قطعی
 🎯 موکول به چت ۱۲+: شروع پیاده‌سازی فاز ۲ بر اساس MASTER_BLUEPRINT
 
