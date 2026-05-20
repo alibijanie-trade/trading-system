@@ -1,0 +1,138 @@
+# CHAT10_HANDOFF — پایان چت ۹ → شروع چت ۱۰
+
+ساخته‌شده توسط: Claude در پایان چت ۹ (طبق قانون #۶۲)
+تاریخ: 2026-05-20
+چت قبلی: چت ۹ — TRADING-phase1-part01-ccxt-websocket-setup (فاز A کامل شد)
+چت بعدی پیشنهادی: TRADING-phase1-part01b-ccxt-skeleton (فاز B خالص)
+Git HEAD پایان چت ۹: (پس از commit نهایی — نگاه به git log)
+
+═══════════════════════════════════════════════════════════
+بخش ۱: وضعیت پروژه در شروع چت ۱۰
+═══════════════════════════════════════════════════════════
+
+✅ DONE — فاز A چت ۹ کامل: همه ۱۰ آیتم PENDING + Bug #50 cleanup ادغام شد
+✅ DONE — سند جامع v2.11 ساخته شد (152,438 chars؛ ۴ قانون UX جدید #۶۲-۶۵ + درس M63)
+✅ DONE — TROUBLESHOOTING.md v1.1 (Bug #52 افزوده شد)
+✅ DONE — Governance docs v1.4 (هر ۴ سند: CLAUDE_CHECKLIST، PROJECT_GOVERNANCE، TASK_BACKLOG، CHAT_LOG)
+✅ DONE — vite.config.js fix شد (jsxRuntime: automatic + esbuild.jsx: automatic)
+✅ DONE — ۱۷ فایل JSX تمیز شد (Bug #50 cleanup: حذف import React + تبدیل React.StrictMode به StrictMode)
+✅ DONE — ۳۰/۳۰ تست vitest pass
+✅ DONE — PENDING_FOR_NEXT_VERSION پاک‌سازی شد (فقط Z2.1/M64 برای v2.12 ماند)
+
+⚠️ CHECK — قبل از شروع کار در چت ۱۰، این موارد را بررسی کن:
+   ⚠️ CHECK ۱: venv فعال است؟ ← cd backend; venv\Scripts\activate
+   ⚠️ CHECK ۲: backend اجرا می‌شود؟ ← uvicorn app.main:app --reload
+   ⚠️ CHECK ۳: frontend اجرا می‌شود؟ ← cd frontend; npm run dev
+   ⚠️ CHECK ۴: login admin/1 کار می‌کند؟
+   ⚠️ CHECK ۵: `python scripts/55b_test_v2_11.py` و `scripts/56b_test_react_imports.py` همه pass می‌دهند؟
+   ⚠️ CHECK ۶: `cd frontend && npm test -- --run` همه ۳۰ تست pass می‌دهد؟
+
+💡 NOTE — یک آیتم در PENDING_FOR_NEXT_VERSION باقی است:
+   💡 Z2.1 — M64 (تنظیم JSX runtime در دو سطح: plugin-react + esbuild)
+   💡 برای ادغام در v2.12 (پایان چت ۱۰ یا چت ۱۱)
+
+💡 NOTE — Git: قبل از commit در چت ۱۰، حتماً env var زیر تنظیم باشد (Bug #52):
+   💡 `$env:PYTHONIOENCODING = "utf-8"`  ← برای session جاری
+   💡 یا دائمی: `[Environment]::SetEnvironmentVariable("PYTHONIOENCODING", "utf-8", "User")`
+
+═══════════════════════════════════════════════════════════
+بخش ۲: هدف چت ۱۰ — فاز B (شروع رسمی فاز ۱)
+═══════════════════════════════════════════════════════════
+
+📋 TODO ۱: بررسی نصب dependencies در `backend/requirements.txt`
+   - آیا `ccxt` موجود است؟ → اگر نه، اضافه شود
+   - آیا `websockets` یا `python-binance` نصب است؟
+   - بررسی نسخه‌ها برای سازگاری با Python 3.11+
+
+📋 TODO ۲: مرور `app/infrastructure/data_sources/base.py`
+   - شناخت interface فعلی DataSource (abstract methods)
+   - تطبیق CCXTDataSource با همان interface
+
+📋 TODO ۳: ساخت `app/infrastructure/data_sources/ccxt_source.py`
+   - skeleton کلاس CCXTDataSource(BaseDataSource)
+   - fetch_ohlcv برای داده‌های تاریخی
+   - استفاده از async/await (سازگار با FastAPI)
+   - error handling: rate limit، network، invalid symbol
+
+📋 TODO ۴: ساخت `app/infrastructure/exchange/binance_client.py`
+   - REST API wrapper برای Binance (با ccxt یا direct)
+   - متدها: get_symbols، get_ticker، get_klines
+
+📋 TODO ۵: ساخت `app/infrastructure/exchange/binance_ws.py`
+   - WebSocket subscriber برای live ticker
+   - reconnect logic
+   - publish به queue یا direct write به repository
+
+📋 TODO ۶: ساخت `app/repositories/exchange_repository.py`
+   - مدیریت `Exchange` و `ExchangeApiKey` در DB
+
+📋 TODO ۷: ساخت `app/api/v1/websocket/` endpoint
+   - WebSocket endpoint برای frontend
+   - publish/subscribe pattern
+
+📋 TODO ۸: تست‌های unit + integration
+   - mock ccxt برای تست بدون API call واقعی
+   - fixture برای OHLCV data نمونه
+
+⚠️ CHECK — قبل از کدنویسی، architecture سؤال‌ها روشن شود:
+   ⚠️ سؤال ۱: Sync یا async برای CCXT? (پیشنهاد: ccxt.async_support چون با FastAPI سازگار است)
+   ⚠️ سؤال ۲: چگونه live data را تست کنیم بدون اتصال واقعی? (mock + recorded fixtures)
+   ⚠️ سؤال ۳: WebSocket subscriber چگونه با repository ارتباط برقرار کند? (queue با asyncio یا direct write)
+   ⚠️ سؤال ۴: rate limiting چطور مدیریت شود? (ccxt خودش دارد یا custom)
+
+💡 NOTE — این TODO ها یک چت کفایت نمی‌کنند. احتمالاً نام چت ۱۱ هم `part01c` یا `part02` خواهد بود.
+
+═══════════════════════════════════════════════════════════
+بخش ۳: قوانین مهم برای چت ۱۰
+═══════════════════════════════════════════════════════════
+
+📋 TODO — رعایت قوانین جدید v2.11:
+   📋 قانون #۶۲: این فایل CHAT10_HANDOFF.txt را در شروع چت ۱۰ بخوان (نه فقط اعتماد به متن inline)
+   📋 قانون #۶۳: هر گام اجرایی با `## 🟢 ▶️ EXECUTE — اقدام لازم` + نام و رنگ tab (طبق #۳۱)
+   📋 قانون #۶۴: عدم نمایش جزئیات تصحیح خطای کد (پنهان: چرا/چطور؛ نمایش: فقط گام اصلاحی با #۶۳)
+   📋 قانون #۶۵: ثبت درس از اشتباهات با نمایش به کاربر (📌 درس جدید (M{N}): ...)
+   📋 درس M63: هر آیتم در handoff باید با prefix صریح باشد (این فایل از این الگو پیروی می‌کند)
+   📋 درس M64: تنظیم JSX runtime در دو سطح جداگانه (plugin-react + esbuild) — نمونه کاربرد در `vite.config.js`
+
+⚠️ CHECK — protocol شروع چت طبق قانون #۴۸:
+   ⚠️ خواندن `docs/سند_جامع_v2_11.md` بخش ۱ (قوانین و رفتارهای Claude)
+   ⚠️ خواندن `docs/PENDING_FOR_NEXT_VERSION.md` (آیتم‌های فعلی برای v2.12)
+   ⚠️ خواندن این فایل (CHAT10_HANDOFF.txt) — کامل، با همه بخش‌ها
+
+═══════════════════════════════════════════════════════════
+بخش ۴: نقاط بحرانی و درس‌های آموخته در چت ۹
+═══════════════════════════════════════════════════════════
+
+💡 NOTE — درس M63: Claude در ابتدای چت ۹ فرض کرد Project در Claude Desktop ساخته نشده (چون در handoff به‌عنوان «اولین گام» ذکر شده بود). کاربر قبلاً ساخته بود. → راه‌حل: prefix صریح ✅/📋/⚠️/💡 در handoff (همین الگو در این فایل).
+
+💡 NOTE — درس M64: پس از Bug #50 cleanup همه ۸ تست JSX fail شدند با خطای "React is not defined". علت: تنظیم `jsxRuntime: 'automatic'` در plugin-react فقط برای production build بود، vitest از esbuild داخلی استفاده می‌کند که این تنظیم را نمی‌بیند. → راه‌حل: افزودن `esbuild: { jsx: 'automatic' }` در سطح top-level `vite.config.js`.
+
+💡 NOTE — درس Workflow: فاز A چت ۹ شامل ۵ بلوک شد. حتی برنامه دقیق هم نتوانست همه را در یک چت گنجاند. → برای فاز B، تقسیم به chunks کوچکتر و موکول دقیق به چت‌های متعدد ضروری است.
+
+⚠️ CHECK — تغییرات frontend که ممکن است در چت ۱۰ به مشکل بخورند:
+   ⚠️ frontend/src/main.jsx: حالا `import { StrictMode }` به جای `import React` (و `<StrictMode>` به جای `<React.StrictMode>`)
+   ⚠️ frontend/vite.config.js: دو سطح تنظیم JSX (plugin + esbuild) — اگر آپدیت plugin-react باشد، شاید این تنظیم دیگر لازم نباشد ولی فعلاً هست
+   ⚠️ هیچ فایل .jsx در src/ شامل `import React from 'react'` نیست — اگر فایل جدید ساختید، فقط `import { useState, useEffect, ... } from 'react'` کافی است
+
+═══════════════════════════════════════════════════════════
+بخش ۵: ارتباطات و metadata
+═══════════════════════════════════════════════════════════
+
+💡 NOTE — Stack فعلی (تأیید‌شده در چت ۹):
+   💡 Frontend: React 19 + Vite 8 + Vitest 3 + @vitejs/plugin-react v6 + Tailwind v4
+   💡 Backend: FastAPI + SQLAlchemy + Alembic + SQLite (فعلاً، Postgres در فاز ۳+)
+   💡 Auth: JWT + bcrypt
+   💡 محیط: Windows + venv + PowerShell
+
+💡 NOTE — اگر در ابتدای چت ۱۰ نام آن `TRADING-phase1-part01b-ccxt-skeleton` نباشد، نگران نباش — هر نامی که با `TRADING-phase1-` شروع شود قابل قبول است.
+
+💡 NOTE — نام فعلی این فایل: `claude_workspace/incoming_permanent/CHAT10_HANDOFF.txt` (طبق قانون #۶۲).
+
+═══════════════════════════════════════════════════════════
+پایان CHAT10_HANDOFF
+═══════════════════════════════════════════════════════════
+
+🎯 موفقیت چت ۹: فاز A (Atomic Update v2.11) ۱۰۰٪ کامل + Bug #50 cleanup + کشف و حل M64
+🎯 هدف چت ۱۰: شروع رسمی فاز ۱ با CCXT integration
+
+موفق باشید در چت ۱۰! 🚀

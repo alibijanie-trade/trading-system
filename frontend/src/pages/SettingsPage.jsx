@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from "react-router-dom";
 import useThemeStore from "../stores/themeStore.js";
 import useConfirmStore from "../stores/confirmStore.js";

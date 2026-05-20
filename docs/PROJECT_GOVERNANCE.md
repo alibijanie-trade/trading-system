@@ -657,9 +657,9 @@ function oldComponent() { ... }
 
 ## 📌 پایان سند PROJECT_GOVERNANCE
 
-**نسخه:** v1.3 (2026-05-19 — چت ۸: +۱ سند PENDING + ۵ مسئولیت C26-C30 + Anti-Pattern A11 + قانون G8 برای #۴۸-۶۱)  
+**نسخه:** v1.4 (2026-05-20 — چت ۹: Atomic Update v2.10→v2.11 + ادغام ۱۰ آیتم PENDING + Bug #50 cleanup + M63-M64)  
 **نسخه پروژه در زمان ایجاد:** v0.4.0  
-**نویسنده:** Claude در چت `TRADING-phase0-part05-...` + به‌روز توسط `TRADING-phase0-part08-pre-phase1-setup`  
+**نویسنده:** Claude در چت `TRADING-phase0-part05-...` + به‌روز توسط `TRADING-phase0-part08-pre-phase1-setup` + `TRADING-phase1-part01-ccxt-websocket-setup`  
 **تأیید کاربر:** ✅
 
 > این سند زنده است. هر تغییر باید مستند شود.
@@ -668,3 +668,4 @@ function oldComponent() { ... }
 - v1.1: bootstrap اولیه (چت ۵.ب)
 - v1.2: افزودن C21-C25 + پایان چت ۷
 - v1.3: 🆕 چت ۸ — +PENDING_FOR_NEXT_VERSION + C26-C30 + A11 + G8 (#۴۸-۶۱)
+- v1.4: 🆕 چت ۹ — Atomic Update v2.11 + UX hardening (#۶۲-۶۵) + M63-M64 + تکمیل T2.18 (Bug #50 cleanup)

@@ -91,5 +91,8 @@ backend/logs/*.log.*
 backups/
 
 # Claude workspace (per rules 56-59)
-claude_workspace/zip_temp/
-claude_workspace/screenshots/
+# (.gitkeep برای حفظ ساختار پوشه‌ها، بقیه ignored)
+claude_workspace/screenshots/*
+!claude_workspace/screenshots/.gitkeep
+claude_workspace/zip_temp/*
+!claude_workspace/zip_temp/.gitkeep

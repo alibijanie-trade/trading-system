@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
 import ToastContainer from "./components/common/ToastContainer.jsx";

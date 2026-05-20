@@ -1,4 +1,3 @@
-import React from 'react';
 /**
  * FontSizeControl — کنترل اندازه فونت با ۴ preset + preview زنده
  *

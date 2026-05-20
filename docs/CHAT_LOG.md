@@ -1028,12 +1028,71 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 - سند ۲۴: claude_workspace Structure
 - سند ۲۵: Skills اختصاصی پروژه (placeholder)
 
-### 🔗 ارتباطات (تا این لحظه)
+### 🔗 ارتباطات (چت ۸)
 
 - ادامه چت قبل: `TRADING-phase0-part07-quality-hardening-continued`
-- **نام چت بعد پیشنهادی:** `TRADING-phase1-part01-ccxt-websocket-setup` (شروع فاز ۱)
+- **چت بعد:** چت ۹ — `TRADING-phase1-part01-ccxt-websocket-setup` (فاز A: ادغام + Bug #50 cleanup)
 
-_بقیه جزئیات در پایان چت تکمیل می‌شود._
+---
+
+## چت ۹ (Session 9) — `TRADING-phase1-part01-ccxt-websocket-setup` (فاز A)
+
+**تاریخ:** 2026-05-20  
+**مدت:** ~۵ ساعت  
+**وضعیت:** ✅ فاز A کامل (فاز B به چت ۱۰ موکول شد)  
+**Git HEAD شروع:** `cae4b0b` (push شده به GitHub)  
+**Tier:** Tier 2 در حال تکمیل
+
+### دستاوردهای کلیدی
+
+- **Atomic Update v2.10 → v2.11:** ادغام ۱۰ آیتم PENDING + ۴ قانون UX جدید + ۱ درس (M63)
+- **Bug #50 cleanup:** حذف ۱۷ خط `import React` + تنظیم `jsxRuntime: 'automatic'` + تبدیل `React.StrictMode` → named `StrictMode`
+- **کشف درس M64:** vitest تنظیم `esbuild.jsx` جداگانه از plugin-react لازم دارد — راه‌حل اعمال شد، ثبت در PENDING برای v2.12
+- **Bug #52 مستند شد:** pre-commit `end-of-file-fixer` با فایل فارسی Windows (TROUBLESHOOTING v1.1)
+- **اصلاحات مستندات:** سند ۲۳.۱ (Capabilities → Memory)، ۲۳.۴ (Settings audit)، `.gitignore` (فرمت پوشه + .gitkeep)
+- **Governance docs v1.4:** هر ۴ سند governance (CLAUDE_CHECKLIST، PROJECT_GOVERNANCE، TASK_BACKLOG، CHAT_LOG)
+- **تست:** 30/30 vitest pass پس از cleanup
+
+### تصمیمات کلیدی
+
+- **DECISION:** فاز B (CCXT skeleton) به چت ۱۰ موکول شد — context محدود بعد از کشف M64 + planning تازه برای CCXT لازم است
+- **DECISION:** سبک تعامل Claude-کاربر با ۴ قانون UX (#۶۲-۶۵) تثبیت شد
+- **DECISION:** فرمت Atomic Update v2.10 → v2.11 با ۷ string-based edit اسکریپت Python (idempotent + read-back verify)
+
+### Bug های جدید
+
+- **Bug #52:** pre-commit `end-of-file-fixer` با نام فایل فارسی روی Windows کرش می‌کند. Workaround: `$env:PYTHONIOENCODING="utf-8"`. راه‌حل دائمی: env var محیطی User-level.
+- **Bug #50 (رفع شد):** `import React from 'react'` اضافه از ۱۵ .jsx حذف شد با تنظیم صریح JSX runtime. در حین حل آن، Bug جدید (M64) کشف شد.
+
+### درس‌های جدید
+
+- **M63** ⭐ (در v2.11 ادغام شد): فرض نکردن وضعیت کارهای infrastructure در handoff — status صریح لازم است (✅/📋/⚠️/💡)
+- **M64** (در PENDING برای v2.12): plugin-react `jsxRuntime` به vitest منتقل نمی‌شود — `esbuild.jsx` top-level لازم است
+
+### قوانین جدید (#۶۲-۶۵)
+
+- **#۶۲** ⭐: فایل handoff دائمی در `claude_workspace/incoming_permanent/CHAT{N+1}_HANDOFF.txt` با prefix صریح
+- **#۶۳** ⭐: Convention بصری برای گام‌های اجرایی (🟢 ▶️ EXECUTE)
+- **#۶۴** ⭐: عدم نمایش جزئیات تصحیح خطای کد
+- **#۶۵** ⭐: ثبت درس از اشتباهات با نمایش به کاربر
+
+### اسناد تغییریافته
+
+- `docs/سند_جامع_v2_11.md` — ایجاد شد (152,438 chars، +5,035 نسبت به v2.10)
+- `docs/TROUBLESHOOTING.md` — v1.0 → v1.1 (Bug #52 افزوده شد)
+- `docs/PENDING_FOR_NEXT_VERSION.md` — v0.1 → v0.2 (پاک‌سازی آیتم‌های ادغام شده + نگه داشتن Z2.1/M64)
+- هر ۴ سند governance v1.3 → v1.4 (CLAUDE_CHECKLIST، PROJECT_GOVERNANCE، TASK_BACKLOG، همین CHAT_LOG)
+- `frontend/vite.config.js` — +`jsxRuntime: 'automatic'` + `esbuild.jsx`
+- `frontend/src/main.jsx` — `React.StrictMode` → named `StrictMode`
+- `frontend/src/**/*.jsx` (۱۷ فایل) — حذف `import React from 'react';`
+- `.gitignore` — فرمت `claude_workspace/{screenshots,zip_temp}/*` + `!.gitkeep`
+- 4 اسکریپت جدید: `scripts/55`، `55b`، `56`، `56b`
+
+### 🔗 ارتباطات
+
+- ادامه چت قبل: `TRADING-phase0-part08-pre-phase1-setup`
+- **چت بعد پیشنهادی:** `TRADING-phase1-part01b-ccxt-skeleton` (فاز B خالص — CCXTDataSource skeleton + WebSocket subscriber)
+- **handoff فایل:** `claude_workspace/incoming_permanent/CHAT10_HANDOFF.txt`
 
 ---
 
@@ -1041,20 +1100,20 @@ _بقیه جزئیات در پایان چت تکمیل می‌شود._
 
 | دسته | تعداد |
 |---|---|
-| چت‌های انجام‌شده | ۸ |
-| اسکریپت‌های تولید‌شده | ~۶۰ (~۱۷ در چت ۷ + ادغام‌های MCP در چت ۸) |
-| Bug های ثبت‌شده | ۵۱ |
-| Decisions ثبت‌شده | ~۵۷ |
-| قوانین قفل‌شده | **۶۱** (با ۲ Reserved) |
-| درس‌نامه ثبت‌شده | **۶۲ ردیف** (۳۷ کشف‌شده + ۲۵ Reserved) |
-| فاز پایان‌یافته | فاز ۰ (۱۰۰٪) + Tier 2 (۱۴/۲۱ ✅) |
-| فاز در حال شروع | فاز ۱ (در چت ۹ پس از پایان چت ۸) |
-| نسخه سند جامع | v2.10 |
+| چت‌های انجام‌شده | ۹ |
+| اسکریپت‌های تولید‌شده | ~۶۴ (~۶۰ تا چت ۸ + ۴ جدید در چت ۹: 55، 55b، 56، 56b) |
+| Bug های ثبت‌شده | ۵۲ (+Bug #52 در چت ۹) |
+| Decisions ثبت‌شده | ~۶۰ (+۳ در چت ۹) |
+| قوانین قفل‌شده | **۶۵** (با ۲ Reserved: #۵۲، #۵۳) |
+| درس‌نامه ثبت‌شده | **۶۳ ردیف** (۳۸ کشف‌شده تا M64 + ۲۵ Reserved) |
+| فاز پایان‌یافته | فاز ۰ (۱۰۰٪) + Tier 2 (۱۶/۲۱ ✅) |
+| فاز در حال شروع | فاز ۱ (skeleton در چت ۱۰) |
+| نسخه سند جامع | **v2.11** (در چت ۹ ایجاد شد) |
 
 ---
 
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v1.3 (2026-05-19 — چت ۸ T2.19: تکمیل چت ۷ stub + افزودن چت ۸ + اصلاح آمار)  
-**به‌روز شده در:** چت `TRADING-phase0-part08-pre-phase1-setup`  
-**به‌روز توسط:** Claude طبق قانون #۲۳ + #۲۶ + #۶۰ — CLAUDE_CHECKLIST v1.3 فاز ۳
+**نسخه:** v1.4 (2026-05-20 — چت ۹: تکمیل چت ۸ stub + افزودن بخش چت ۹ فاز A + تصحیح آمار)  
+**به‌روز شده در:** چت `TRADING-phase1-part01-ccxt-websocket-setup`  
+**به‌روز توسط:** Claude طبق قانون #۲۳ + #۲۶ + #۶۰ — CLAUDE_CHECKLIST v1.4 فاز ۳

@@ -629,5 +629,14 @@ pytest
 
 ## 📌 پایان CLAUDE_CHECKLIST
 
-**نسخه:** v1.3 (2026-05-19 — Atomic Update چت ۸، +۱۴ قانون #۴۸-۶۱ + MCP integration)  
-**مرجع بالاتر:** PROJECT_GOVERNANCE.md + سند جامع v2.10+
+**نسخه:** v1.4 (2026-05-20 — Atomic Update چت ۹: +۴ قانون UX #۶۲-۶۵ + M63-M64 + Bug #50 cleanup)  
+**مرجع بالاتر:** PROJECT_GOVERNANCE.md + سند جامع v2.11+
+
+### تغییرات v1.3 → v1.4
+
+- **۴ قانون UX جدید (#۶۲-۶۵):**
+  - #۶۲: فایل handoff دائمی در `claude_workspace/incoming_permanent/CHAT{N+1}_HANDOFF.txt` با prefix ‌های ✅/📋/⚠️/💡
+  - #۶۳: Convention بصری برای گام‌های اجرایی: `## 🟢 ▶️ EXECUTE — اقدام لازم`
+  - #۶۴: عدم نمایش جزئیات تصحیح خطای کد (پنهان: چرا/چطور؛ نمایش: گام اصلاحی)
+  - #۶۵: ثبت درس از اشتباهات با نمایش به کاربر (📌 درس جدید M{N}: ...)
+- **۲ درس جدید:** M63 (فرض نکردن status در handoff)، M64 (JSX runtime در plugin-react و esbuild جداگانه)

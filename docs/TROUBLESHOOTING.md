@@ -350,6 +350,78 @@ localization: {
 
 ---
 
+### Bug #52 — pre-commit `end-of-file-fixer` با نام فایل فارسی روی Windows کرش می‌کند ⭐
+
+**ثبت‌شده در:** چت ۸ (در PENDING/D1.1) → چت ۹ (به‌صورت رسمی در سند جامع v2.11)  
+**تاریخ:** 2026-05-19  
+**دسته:** Environment (Windows + Python encoding + third-party tool)  
+**شدت:** Medium (workaround در دسترس، کار اصلی hook انجام می‌شود)
+
+#### علائم
+
+اولین commit پس از ادغام v2.10:
+```
+fix end of files.........................................................Failed
+- hook id: end-of-file-fixer
+- exit code: 1
+- files were modified by this hook
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 12-14
+File "...\pre_commit_hooks\end_of_file_fixer.py", line 64, in main
+    print(f'Fixing {filename}')
+  File "C:\Program Files\Python311\Lib\encodings\cp1252.py"
+```
+
+نکته مهم: **کار اصلی hook (افزودن newline) انجام شد** — فقط `print(f'Fixing {filename}')` کرش کرد چون نمی‌تواند نام فارسی را در cp1252 encode کند.
+
+#### علت ریشه‌ای
+
+ترکیب چند عامل:
+1. PowerShell ویندوز default encoding = `cp1252`
+2. نام فایل `سند_جامع_v2_10.md` شامل حروف فارسی (Unicode) است
+3. پکیج `pre-commit-hooks` (نسخه فعلی) از `print(f'Fixing {filename}')` بدون handling برای non-ASCII filenames استفاده می‌کند
+4. Python `print()` تلاش می‌کند خروجی را با encoding default کنسول encode کند → کرش
+
+مشابه قانون #۴۶ است ولی در کد third-party (نه کد ما) — پس قانون #۴۶ به تنهایی نمی‌توانست جلوگیری کند.
+
+#### راه‌حل (Workaround موقت — استفاده شد در چت ۸)
+
+```powershell
+$env:PYTHONIOENCODING = "utf-8"
+git add docs/ claude_workspace/
+git commit -m "..."
+```
+
+این env var به Python می‌گوید stdout را UTF-8 encode کند، پس print با کاراکترهای فارسی کرش نمی‌کند. کار اصلی hook (افزودن newline) از قبل موفق بوده — فقط چاپ پیام موفقیت بود که کرش می‌کرد.
+
+#### راه‌حل دائمی (پیشنهاد برای آینده)
+
+**گزینه A — متغیر محیطی دائمی Windows (پیشنهاد مطلوب):**
+```powershell
+[Environment]::SetEnvironmentVariable("PYTHONIOENCODING", "utf-8", "User")
+```
+یک‌بار اجرا، در همه session های آینده فعال. بعد از اجرا، PowerShell را ببندید و دوباره باز کنید تا env var جدید load شود.
+
+**گزینه B — افزودن به shell profile (`$PROFILE`):**
+```powershell
+# در $PROFILE اضافه شود:
+$env:PYTHONIOENCODING = "utf-8"
+```
+
+**گزینه C — مستندسازی در ONBOARDING:** اضافه به `ONBOARDING_GUIDE.md` که `PYTHONIOENCODING=utf-8` در Windows env vars لازم است (در بخش setup اولیه).
+
+#### پیشگیری در آینده
+
+- **در `ONBOARDING_GUIDE.md`:** قرار دادن `PYTHONIOENCODING=utf-8` به‌عنوان مرحله اجباری Windows setup
+- **در `PRECOMMIT.md`:** هشدار برای پروژه‌هایی با فایل‌های non-ASCII در Windows
+- **در `00b_post_unzip_setup.py`:** اضافه کردن check برای `PYTHONIOENCODING` و در صورت عدم تنظیم، نمایش هشدار به کاربر
+- **درس عمومی:** پکیج‌های Python third-party ممکن است در پروژه‌های با نام فایل non-ASCII روی Windows کرش کنند. تست با فایل‌های فارسی هنگام افزودن tool جدید الزامی است.
+
+#### اسکریپت رفع
+
+اسکریپت کد ندارد — این یک env var setup در سیستم کاربر است، نه bug در کد ما.
+
+---
+
 ## FAQ — سؤالات متداول
 
 ### Q1: چرا اسکریپت‌ها idempotent هستند؟
@@ -457,8 +529,9 @@ npm install --save-dev lightningcss-win32-x64-msvc
 
 ## 📌 پایان TROUBLESHOOTING
 
-**نسخه:** v1.0 (2026-05-17)  
-**Bug های ثبت‌شده با جزئیات:** ۷ (#43-#49)  
+**نسخه:** v1.1 (2026-05-20 — چت ۹: افزودن Bug #52 — pre-commit + فارسی Windows)  
+**Bug های ثبت‌شده با جزئیات:** ۸ (#43-#49، #52)  
 **Bug های خلاصه:** ۴۲ (#1-#42)  
+**Bug های دیگر در PENDING:** #50 (React import cleanup — E2.1)، #51 (python -c escape — لاگ‌شده در درس M)  
 **FAQ:** ۱۰  
 **مشکلات محیطی:** ۷

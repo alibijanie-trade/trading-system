@@ -3,7 +3,13 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({ jsxRuntime: 'automatic' })],
+
+  // M64: vitest از esbuild داخلی استفاده می‌کند که تنظیم plugin-react را نمی‌بیند
+  // — esbuild top-level برای test pipeline لازم است (Bug #50 follow-up)
+  esbuild: {
+    jsx: 'automatic',
+  },
 
   // پیکربندی Vitest — همراه با Vite در یک فایل
   // مرجع: https://vitest.dev/config/

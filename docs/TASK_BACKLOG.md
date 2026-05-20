@@ -217,19 +217,33 @@
 
 > ⚠️ **نکته از چت ۸:** CHAT_LOG.md چت ۷ در پایان آن چت stub باقی ماند (درس M23 — مهم‌ترین درس پروژه). در چت ۸ تکمیل خواهد شد (T2.19).
 
-### چت ۸ (Session 8 - part08) — 2026-05-19 (pre-phase1-setup) — 🚧 IN-PROGRESS
+### چت ۸ (Session 8 - part08) — 2026-05-19 (pre-phase1-setup) — ✅ DONE
 
 | Task | Status |
 |---|---|
 | T2.17 — PENDING_FOR_NEXT_VERSION.md system (قانون #۶۰) | ✅ DONE |
-| T2.18 — Atomic Update Governance docs (A1-A7) | 🚧 IN-PROGRESS |
+| T2.18 — Atomic Update Governance docs (A1-A7) | ✅ DONE — در چت ۹ تکمیل شد |
 | قوانین جدید #۴۸-۶۱ + درس‌های M22-M62 | ✅ DONE — در v2.10 |
 | ۴ بخش جدید سند جامع (۲۲-۲۵) | ✅ DONE |
 | Atomic Update CLAUDE_CHECKLIST v1.2→v1.3 | ✅ DONE |
 | Atomic Update PROJECT_GOVERNANCE v1.2→v1.3 | ✅ DONE |
-| Atomic Update TASK_BACKLOG v1.4→v1.5 | 🚧 IN-PROGRESS (همین لحظه!) |
+| Atomic Update TASK_BACKLOG v1.4→v1.5 | ✅ DONE |
 
-> این بخش در پایان چت ۸ تکمیل می‌شود.
+### چت ۹ (Session 9 - phase1-part01) — 2026-05-20 (ccxt-websocket-setup) — ✅ DONE (فاز A فقط)
+
+| Task | Status |
+|---|---|
+| T2.22 — فاز A: Atomic Update v2.10 → v2.11 | ✅ DONE |
+| T2.23 — ادغام ۴ قانون UX جدید (#۶۲-۶۵) | ✅ DONE — در v2.11 |
+| T2.24 — افزودن M63 (status صریح در handoff) | ✅ DONE — در v2.11 |
+| T2.25 — Bug #50 cleanup (vite.config + ۱۷ JSX file) | ✅ DONE — 30/30 tests pass |
+| T2.26 — کشف M64 + fix vitest esbuild config | ✅ DONE — ثبت در PENDING برای v2.12 |
+| T2.27 — Bug #52 documentation (pre-commit + فارسی) | ✅ DONE — TROUBLESHOOTING v1.1 |
+| T2.28 — اصلاحات سند ۲۳.۱، ۲۳.۴، `.gitignore` | ✅ DONE |
+| T2.29 — Governance docs v1.3 → v1.4 | ✅ DONE — همین لحظه |
+| T2.30 — فاز B (CCXT + WebSocket skeleton) | 🟡 موکول به چت ۱۰ |
+
+> فاز B (شروع فاز ۱) به چت ۱۰ موکول شد — context محدود + نیاز به planning تازه برای CCXT integration.
 
 ---
 
@@ -249,6 +263,6 @@
 
 ## 📌 پایان TASK_BACKLOG
 
-**نسخه:** v1.5 (2026-05-19 — چت ۸: ادغام Tier 2 + ۸ task جدید زیرساخت Claude Desktop)  
-**به‌روز شده در:** چت `TRADING-phase0-part08-pre-phase1-setup`  
-**به‌روز توسط:** Claude (طبق قانون #۲۳ و CLAUDE_CHECKLIST v1.3 فاز ۳)
+**نسخه:** v1.6 (2026-05-20 — چت ۹: تکمیل چت ۸ + افزودن چت ۹ فاز A + tasks T2.22-T2.29)  
+**به‌روز شده در:** چت `TRADING-phase1-part01-ccxt-websocket-setup`  
+**به‌روز توسط:** Claude (طبق قانون #۲۳ و CLAUDE_CHECKLIST v1.4 فاز ۳)
