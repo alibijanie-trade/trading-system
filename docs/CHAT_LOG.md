@@ -1101,7 +1101,7 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 **تاریخ:** 2026-05-20  
 **Claude version:** Claude Opus 4.7 (با Filesystem MCP + قوانین #۶۲-۶۵)  
 **Git HEAD شروع:** `88debb7`  
-**Git HEAD پایان:** *(پس از commit نهایی — TBD)*  
+**Git HEAD پایان:** `5cfc7e0`  
 **فاز شروع:** فاز ۰ کامل (۱۰۰٪) + فاز ۱ آماده شروع  
 **فاز پایان:** **فاز ۱ — CCXTDataSource Skeleton آماده** 🎉
 
@@ -1232,7 +1232,8 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 ### 🔗 ارتباطات
 
 - ادامه چت قبل: `TRADING-phase0-part09-v2_11-atomic-update-and-bug50-cleanup`
-- **چت بعد پیشنهادی:** `TRADING-phase1-part02-binance-client-and-ws` (`binance_client.py` + `binance_ws.py` + integration test ساده)
+- **چت بعد پیشنهادی:** `TRADING-phase2-part01-indicators-base` (شروع فاز ۲ — اندیکاتورها: SMA + EMA + RSI با ExcelDataSource)
+- **تصمیم استراتژیک پایان چت:** Decision #65 (پیشنهادی) — اتصال زنده Binance/Telegram تا فاز ۵+ موکول می‌شود. CCXTDataSource skeleton روی Shelf می‌ماند. دلیل: gradient interface (Decision #61) swap را بدون درد می‌کند — فعلاً اولویت value-delivery با فاز ۲-۴ بر Excel data.
 - **handoff فایل:** `claude_workspace/incoming_permanent/CHAT11_HANDOFF.txt`
 
 ### TASK های DONE شده در این چت

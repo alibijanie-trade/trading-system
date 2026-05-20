@@ -12,9 +12,10 @@
 - **Tier جاری:** Tier 2 + Infrastructure — **۱۶/۲۱ DONE (76%)**
 - **سند جامع:** **v2.11** (152,438 chars؛ نیاز به اصلاح بخش ۲.۲ در v2.12)
 - **Git HEAD شروع چت ۱۰:** `88debb7`
-- **Git HEAD پایان چت ۱۰:** `<TBD — پس از commit>`
+- **Git HEAD پایان چت ۱۰:** `5cfc7e0`
 - **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH via port 443) ✅
-- **چت بعدی پیشنهادی:** `TRADING-phase1-part02-binance-client-and-ws` 🚀
+- **چت بعدی پیشنهادی:** `TRADING-phase2-part01-indicators-base` 🚀
+- **تصمیم استراتژیک چت ۱۰:** Decision #65 (پیشنهادی) — اتصال زنده Binance/Telegram به فاز ۵+ موکول — فاز ۲ (اندیکاتورها) با ExcelDataSource
 
 ---
 
@@ -71,7 +72,7 @@
 - **چت‌های کامل:** **۱۰** (آخرین: همین چت)
 - **Backlog Total:** **۳۴/۸۲ DONE** (T3.01 + T3.02 اضافه شدند)
 - **PENDING برای v2.12:** **۷ آیتم** (Z2.1-Z2.7)
-- **Git commits:** قبل از commit پایان چت ۱۰ — `88debb7`
+- **Git commits:** پایان چت ۱۰ — `5cfc7e0` (از `88debb7` — 18 فایل تغییر، +2154/-129 خط)
 
 ---
 
