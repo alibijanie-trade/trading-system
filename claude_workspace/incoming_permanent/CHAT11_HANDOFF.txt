@@ -1,0 +1,152 @@
+# CHAT11_HANDOFF — پایان چت ۱۰ → شروع چت ۱۱
+
+ساخته‌شده توسط: Claude در پایان چت ۱۰ (طبق قانون #۶۲)
+تاریخ: 2026-05-20
+چت قبلی: چت ۱۰ — TRADING-phase1-part01-ccxt-websocket-setup (G1+G2+G3 کامل شد)
+چت بعدی پیشنهادی: TRADING-phase1-part02-binance-client-and-ws
+Git HEAD پایان چت ۱۰: <پس از commit نهایی — نگاه به git log>
+
+═══════════════════════════════════════════════════════════
+بخش ۱: وضعیت پروژه در شروع چت ۱۱
+═══════════════════════════════════════════════════════════
+
+✅ DONE — G1 (Dependencies): ccxt 4.3.98 + websockets 12.0 + ۱۲ dep جانبی نصب
+✅ DONE — G2 (Architecture): ۴ تصمیم معماری ثبت (Decisions #۶۱-۶۴)
+✅ DONE — G3 (CCXTDataSource skeleton): base.py + ccxt_source.py + ۵ test mock pass
+✅ DONE — Bug #53 cleanup (BOM در requirements.txt)
+✅ DONE — Documentation update: PENDING (v0.4)، CHAT_LOG (v1.5)، TROUBLESHOOTING (v1.2)، SESSION_STATUS
+
+⚠️ CHECK — قبل از شروع کار در چت ۱۱، این موارد را بررسی کن:
+   ⚠️ CHECK ۱: venv فعال است؟ ← cd backend; .\venv\Scripts\Activate.ps1
+   ⚠️ CHECK ۲: backend اجرا می‌شود؟ ← uvicorn app.main:app --reload
+   ⚠️ CHECK ۳: frontend اجرا می‌شود؟ ← cd frontend; npm run dev
+   ⚠️ CHECK ۴: login admin/1 کار می‌کند؟
+   ⚠️ CHECK ۵: pip list | findstr ccxt → ccxt 4.3.98 موجود است؟
+   ⚠️ CHECK ۶: python scripts/61b_test_async_base.py و scripts/62b_test_ccxt_source.py — هر دو pass؟
+   ⚠️ CHECK ۷: BOM در requirements.txt حفظ شده؟ ← python scripts/59b_test_requirements_encoding.py — همه ۴ pass
+
+💡 NOTE — ۷ آیتم در PENDING_FOR_NEXT_VERSION.md باقی است:
+   💡 Z2.1 — M64 (JSX runtime در plugin-react vs esbuild)
+   💡 Z2.2 — M65 (تشخیص shell از prompt)
+   💡 Z2.3 — M66 (Filesystem MCP و فایل‌های >200KB)
+   💡 Z2.4 — M67 (BOM لازم برای pip روی Windows) ⭐ critical
+   💡 Z2.5 — M68 (نسخه‌های pinned با PyPI verify)
+   💡 Z2.6 — M69 (asyncio.run() در FastAPI handler crash)
+   💡 Z2.7 — اصلاحیه سند جامع v2.11 بخش ۲.۲ (ccxt 4.3.0 → 4.3.98)
+
+💡 NOTE — Z2.8 (cosmetic) — خط `| اس��ریپت‌های تولید‌شده |` در CHAT_LOG bytes خراب دارد:
+   💡 رفع در v2.12 با اسکریپت Python (read_bytes/write_bytes) — edit_file نمی‌تواند match کند
+   💡 اطلاعات نادرست در آن خط: ~۶۴ → باید ~۷۴ شود (در چت ۱۰ کامل: 10 اسکریپت جدید)
+
+💡 NOTE — Git: قبل از commit در چت ۱۱، اگر متن فارسی در git commit message استفاده می‌شود:
+   💡 PowerShell: `$env:PYTHONIOENCODING="utf-8"`
+   💡 CMD: `set PYTHONIOENCODING=utf-8`
+
+═══════════════════════════════════════════════════════════
+بخش ۲: هدف چت ۱۱ — ادامه فاز ۱
+═══════════════════════════════════════════════════════════
+
+📋 TODO ۱: مرور آنچه چت ۱۰ ساخت
+   - خواندن `backend/app/infrastructure/data_sources/ccxt_source.py` (کامل)
+   - مرور Decisions #۶۱-۶۴ از CHAT_LOG چت ۱۰
+   - مرور 4 درس جدید (M66-M69) از PENDING
+
+📋 TODO ۲: ساخت binance_client.py (REST wrapper)
+   - مسیر: `backend/app/infrastructure/exchange/binance_client.py`
+   - متدها: get_symbols، get_ticker، get_24hr_stats
+   - استفاده از CCXTDataSource داخلی یا direct REST call
+   - async-first
+
+📋 TODO ۳: ساخت binance_ws.py (WebSocket subscriber)
+   - مسیر: `backend/app/infrastructure/exchange/binance_ws.py`
+   - استفاده از `websockets` library (نه ccxt.pro)
+   - asyncio.Queue واسطه (طبق Decision #۶۳)
+   - reconnect logic
+   - برای @ticker stream (یا @trade)
+
+📋 TODO ۴: تست‌های واحد و integration (با mock)
+   - mock websockets connection با AsyncMock
+   - fixture برای messages binance WS format
+   - تست reconnect behavior
+
+📋 TODO ۵: ابتدا یا انتها — اصلاحیه Bug #53 یا policy تصمیم
+   - تصمیم بین Policy A (ASCII-only) یا Policy B (BOM forever)
+   - اگر A: ترجمه کامنت‌های فارسی در requirements.txt
+   - اگر B: اضافه کردن pre-commit hook که BOM را چک می‌کند
+
+⚠️ CHECK — سؤالات معماری چت ۱۱:
+   ⚠️ سؤال ۱: binance_client.py از CCXTDataSource استفاده کند یا مستقل باشد؟ (احتمالاً مستقل ولی hybrid)
+   ⚠️ سؤال ۲: WebSocket subscriber چه stream هایی subscribe کند؟ (@ticker سراسری یا per-symbol؟)
+   ⚠️ سؤال ۳: reconnect strategy: exponential backoff یا fixed delay؟ (پیشنهاد: exponential)
+   ⚠️ سؤال ۴: ExchangeApiKey مدل آیا الان نیاز است یا موکول به فاز ۲؟ (احتمالاً موکول — فعلاً public endpoint)
+
+💡 NOTE — TODO های موکول به چت ۱۲+:
+   💡 T3.05: exchange_repository.py (همراه ExchangeApiKey)
+   💡 T3.06: WebSocket endpoint برای frontend (broadcast)
+   💡 T3.07: integration test با Binance واقعی (نیاز VPN)
+   💡 T3.08: HTTP Endpoint برای fetch OHLCV (تبدیل CCXTDataSource به REST)
+
+═══════════════════════════════════════════════════════════
+بخش ۳: قوانین مهم برای چت ۱۱
+═══════════════════════════════════════════════════════════
+
+📋 TODO — رعایت قوانین UX v2.11:
+   📋 قانون #۶۲: این فایل CHAT11_HANDOFF.txt را در شروع چت ۱۱ بخوان
+   📋 قانون #۶۳: هر گام اجرایی با `## 🟢 ▶️ EXECUTE — اقدام لازم` + نام و رنگ tab
+   📋 قانون #۶۴: عدم نمایش جزئیات تصحیح خطای کد (پنهان: چرا/چطور؛ نمایش: فقط گام اصلاحی)
+   📋 قانون #۶۵: ثبت درس از اشتباهات با نمایش به کاربر
+   📋 قانون #۶۱: در پاسخ به سؤالات چندگزینه‌ای، پیشنهاد مطلوب با ⭐
+
+⚠️ CHECK — protocol شروع چت طبق قانون #۴۸:
+   ⚠️ خواندن `docs/سند_جامع_v2_11.md` بخش ۱ (قوانین) و ۱۸ (درس‌نامه) — اگر MCP روی فایل بزرگ hang کرد، از CHAT_LOG و این HANDOFF کفایت کن
+   ⚠️ خواندن `docs/PENDING_FOR_NEXT_VERSION.md` (۷ آیتم Z2.1-Z2.8)
+   ⚠️ خواندن این فایل (CHAT11_HANDOFF.txt) — کامل
+   ⚠️ خواندن `docs/CHAT_LOG.md` بخش چت ۱۰ (Decisions #۶۱-۶۴ و M66-M69)
+   ⚠️ خواندن `docs/SESSION_STATUS.md` (snapshot پایان چت ۱۰)
+
+═══════════════════════════════════════════════════════════
+بخش ۴: نقاط بحرانی و درس‌های آموخته در چت ۱۰
+═══════════════════════════════════════════════════════════
+
+💡 NOTE — درس M66: سند جامع v2.11 (216KB) باعث hang کل Filesystem MCP session شد (timeout ۴ دقیقه). راه‌حل: ری‌استارت Claude Desktop. در چت ۱۱، **برای خواندن سند جامع** از view_range روی محدوده کوچک استفاده کن، یا از CHAT_LOG و PENDING که اطلاعات کلیدی را summary کرده‌اند.
+
+💡 NOTE — درس M67: pip روی Windows + فایل UTF-8 بدون BOM + متن فارسی → crash. **در چت ۱۱ اگر فایلی شامل متن غیر-ASCII را با Filesystem MCP بازنویسی کردی، حتماً سپس `python scripts/59_fix_requirements_encoding.py` (یا مشابه برای آن فایل) اجرا شود تا BOM حفظ شود.**
+
+💡 NOTE — درس M68: نسخه‌های pinned در سند جامع `ccxt 4.3.0` بود، در PyPI موجود نبود. در چت ۱۱ اگر نسخه جدیدی pin می‌کنیم، اول `pip index versions <pkg>` در venv فعال اجرا شود.
+
+💡 NOTE — درس M69: `asyncio.run()` در sync wrapper CCXTDataSource. **هرگز در FastAPI handler صدا زده نشود.** در API endpoints همیشه `await source.read_ohlcv_async(...)` استفاده شود.
+
+⚠️ CHECK — وضعیت Tab های توصیه‌شده در چت ۱۱:
+   ⚠️ 🟦 Tab 1 (backend): `(venv) PS D:\Projects\trading-system\backend>` ← uvicorn run
+   ⚠️ 🟧 Tab 2 (frontend): `D:\Projects\trading-system\frontend>` ← npm run dev
+   ⚠️ 🟩 Tab 3 (scripts): `(venv) PS D:\Projects\trading-system>` ← اجرای اسکریپت‌های جدید
+   ⚠️ Tab 4 (Git): `D:\Projects\trading-system>` ← git status/commit/push
+
+═══════════════════════════════════════════════════════════
+بخش ۵: ارتباطات و metadata
+═══════════════════════════════════════════════════════════
+
+💡 NOTE — Stack فعلی (تأییدشده پایان چت ۱۰):
+   💡 Frontend: React 19 + Vite 8 + Vitest 3 + @vitejs/plugin-react v6 + Tailwind v4
+   💡 Backend: FastAPI + SQLAlchemy + Alembic + SQLite + 🆕 ccxt 4.3.98 + websockets 12.0
+   💡 Auth: JWT + bcrypt
+   💡 محیط: Windows + venv + PowerShell (با ExecutionPolicy=RemoteSigned)
+
+💡 NOTE — اگر در ابتدای چت ۱۱ نام آن `TRADING-phase1-part02-binance-client-and-ws` نباشد، نگران نباش — هر نامی که با `TRADING-phase1-` شروع شود قابل قبول است.
+
+💡 NOTE — نام فعلی این فایل: `claude_workspace/incoming_permanent/CHAT11_HANDOFF.txt` (طبق قانون #۶۲).
+
+💡 NOTE — فایل‌های جدید چت ۱۰ که در چت ۱۱ مفید خواهند بود:
+   💡 `backend/app/infrastructure/data_sources/ccxt_source.py` — pattern برای binance_client.py
+   💡 `scripts/62_create_ccxt_source.py` — pattern برای ساخت فایل‌های جدید
+   💡 `scripts/62b_test_ccxt_source.py` — pattern برای تست AsyncMock
+
+═══════════════════════════════════════════════════════════
+پایان CHAT11_HANDOFF
+═══════════════════════════════════════════════════════════
+
+🎯 موفقیت چت ۱۰: G1+G2+G3 ۱۰۰٪ کامل (10 اسکریپت، 25 تست، 0 regression)
+🎯 هدف چت ۱۱: binance_client.py + binance_ws.py (REST + WebSocket subscriber)
+🎯 موکول به چت ۱۲: exchange_repository، WebSocket endpoint، integration test
+
+موفق باشید در چت ۱۱! 🚀

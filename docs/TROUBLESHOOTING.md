@@ -527,11 +527,81 @@ npm install --save-dev lightningcss-win32-x64-msvc
 
 ---
 
+## Bug #53 — pip Windows و فایل UTF-8 بدون BOM با متن غیر-ASCII
+
+**ثبت‌شده در:** چت `TRADING-phase1-part01-ccxt-websocket-setup` (چت ۱۰)  
+**تاریخ:** 2026-05-20  
+**دسته:** Environment (Windows specific)  
+**شدت:** High (pip install کاملاً crash می‌کند)
+
+### علائم
+
+```
+ERROR: Exception:
+Traceback (most recent call last):
+  ...
+  File "C:\Program Files\Python311\Lib\site-packages\pip\_internal\utils\encoding.py", line 34, in auto_decode
+    return data.decode(
+  File "C:\Program Files\Python311\Lib\encodings\cp1252.py", line 15, in decode
+    return codecs.charmap_decode(input,errors,decoding_table)
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x81 in position 159: character maps to <undefined>
+```
+
+### علت ریشه‌ای
+
+- `pip install -r requirements.txt` فایل را با codec سیستمی (`locale.getpreferredencoding()`) decode می‌کند.
+- در Windows با locale فارسی/انگلیسی، این معمولاً `cp1252` است (نه UTF-8).
+- اگر فایل شامل متن غیر-ASCII (مثلاً کامنت‌های فارسی، em-dash `—`) باشد و **BOM نداشته باشد**، pip نمی‌تواند تشخیص دهد UTF-8 است — سعی می‌کند با cp1252 بخواند و crash می‌کند.
+- pip's `auto_decode` اول BOM را چک می‌کند — اگر BOM باشد UTF-8 استفاده می‌کند، وگرنه به locale fallback می‌رود.
+
+**تریگر در چت ۱۰:** اسکریپت `58_add_phase1_deps.py` با `Path.write_text(..., encoding="utf-8")` فایل را بازنویسی کرد — **utf-8 بدون BOM**. اگر فایل اصلی BOM داشته، از دست رفت.
+
+### راه‌حل
+
+اسکریپت `59_fix_requirements_encoding.py`:
+
+```python
+# read with utf-8-sig (BOM را صرف‌نظر می‌کند اگر باشد)
+content = file.read_text(encoding="utf-8-sig")
+# write with utf-8-sig (BOM را اضافه می‌کند)
+file.write_text(content, encoding="utf-8-sig")
+```
+
+`utf-8-sig` encoding در Python خودکار BOM را مدیریت می‌کند:
+- read: اگر BOM باشد حذف می‌کند (idempotent)
+- write: BOM (`\xEF\xBB\xBF`) در ابتدا اضافه می‌کند
+
+### پیشگیری در آینده
+
+**دو راه (در PENDING Z2.4 ثبت شد):**
+
+1. **Policy A (ترجیحی در آینده):** فایل‌های dependency (requirements.txt، package.json) باید **فقط ASCII** باشند — کامنت‌های فارسی به انگلیسی ترجمه شوند.
+2. **Policy B (کنونی):** اگر متن غیر-ASCII لازم است، فایل باید با `utf-8-sig` (BOM) ذخیره شود.
+
+**هشدار مهم:** اگر کاربر فایل را در editor غیر BOM-aware (مثل Notepad پایه Windows و حتی گاهی VS Code اگر تنظیم `files.encoding` روی utf-8 باشد) باز و save کند، BOM از دست می‌رود و Bug #53 دوباره ثبت می‌شود.
+
+**در VS Code تنظیم توصیه‌شده:**
+```json
+{
+  "[plaintext]": { "files.encoding": "utf8bom" },
+  "files.associations": { "requirements*.txt": "plaintext" }
+}
+```
+
+### اسکریپت رفع
+
+- `scripts/59_fix_requirements_encoding.py` — افزودن BOM
+- `scripts/59b_test_requirements_encoding.py` — تأیید BOM و سالم بودن فایل
+
+هر دو Idempotent و با read-back verify.
+
+---
+
 ## 📌 پایان TROUBLESHOOTING
 
-**نسخه:** v1.1 (2026-05-20 — چت ۹: افزودن Bug #52 — pre-commit + فارسی Windows)  
-**Bug های ثبت‌شده با جزئیات:** ۸ (#43-#49، #52)  
+**نسخه:** v1.2 (2026-05-20 — چت ۱۰: افزودن Bug #53 — BOM در requirements.txt برای pip)  
+**Bug های ثبت‌شده با جزئیات:** ۹ (#43-#49، #52، #53)  
 **Bug های خلاصه:** ۴۲ (#1-#42)  
-**Bug های دیگر در PENDING:** #50 (React import cleanup — E2.1)، #51 (python -c escape — لاگ‌شده در درس M)  
+**Bug های دیگر در PENDING:** #50 (React import cleanup — رفع در چت ۹)، #51 (python -c escape — لاگ‌شده در درس M)  
 **FAQ:** ۱۰  
 **مشکلات محیطی:** ۷

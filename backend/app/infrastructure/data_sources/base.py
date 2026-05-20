@@ -11,6 +11,7 @@ WebSocket، فایل CSV، ...) را پشت یک interface واحد قرار د�
     3. تست بنویس
 """
 
+import asyncio
 from abc import ABC, abstractmethod
 from typing import Any
 
@@ -37,6 +38,23 @@ class DataSource(ABC):
               - source_metadata: متادیتای خام منبع (برای debug)
         """
         raise NotImplementedError
+
+    async def read_ohlcv_async(self, source: Any, **kwargs: Any) -> OhlcvImportResult:
+        """
+        نسخه async متد read_ohlcv.
+
+        پیاده‌سازی پیش‌فرض: متد sync را در thread pool اجرا می‌کند
+        تا event loop FastAPI block نشود. کلاس‌هایی که native async
+        دارند (مثل CCXTDataSource) باید این متد را override کنند.
+
+        Args:
+            source: همان argument متد sync
+            **kwargs: همان kwargs
+
+        Returns:
+            OhlcvImportResult (همان sync)
+        """
+        return await asyncio.to_thread(self.read_ohlcv, source, **kwargs)
 
     @property
     @abstractmethod

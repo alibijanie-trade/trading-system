@@ -1,130 +1,145 @@
-# Session Status — وضعیت پایان چت ۸
+# Session Status — وضعیت پایان چت ۱۰
 
-> **آخرین به‌روزرسانی:** 2026-05-19 (پایان چت ۸)  
-> **نسخه پروژه:** v0.4.0  
-> **چت:** `TRADING-phase0-part08-pre-phase1-setup` ✅ COMPLETED
+> **آخرین به‌روزرسانی:** 2026-05-20 (پایان چت ۱۰)  
+> **نسخه پروژه:** v0.5.0 (CCXTDataSource skeleton افزوده شد)  
+> **چت:** `TRADING-phase1-part01-ccxt-websocket-setup` ✅ COMPLETED
 
 ---
 
 ## 📍 وضعیت کلی
 
-- **فاز جاری:** ۰ — **تکمیل ۱۰۰٪** ✅
-- **Tier جاری:** Tier 2 + Infrastructure — **۱۶/۲۱ DONE (76%)** ✅
-- **سند جامع:** **v2.10** (205.6KB) ✅
-- **Git HEAD:** `9b09546` ✨ (push شد به GitHub)
+- **فاز جاری:** ۱ — **Skeleton آماده** ✅ (CCXTDataSource + gradient interface)
+- **Tier جاری:** Tier 2 + Infrastructure — **۱۶/۲۱ DONE (76%)**
+- **سند جامع:** **v2.11** (152,438 chars؛ نیاز به اصلاح بخش ۲.۲ در v2.12)
+- **Git HEAD شروع چت ۱۰:** `88debb7`
+- **Git HEAD پایان چت ۱۰:** `<TBD — پس از commit>`
 - **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH via port 443) ✅
-- **چت بعدی پیشنهادی:** `TRADING-phase1-part01-ccxt-websocket-setup` 🚀
+- **چت بعدی پیشنهادی:** `TRADING-phase1-part02-binance-client-and-ws` 🚀
 
-## 🎯 فاز ۱ — آماده شروع
+---
 
-تمام prerequisites فاز ۱ تأمین شده‌اند:
-- ✅ معماری Repository Layer مستند (ARCHITECTURE.md بخش ۲.۵)
-- ✅ CCXTDataSource design pattern مستند (ARCHITECTURE.md بخش ۵.۱)
-- ✅ Stack: ccxt 4.3.0 + websockets 12.0 (سند ۲.۲)
-- ✅ ExchangeAPIKey model با Fernet encryption (سند ۵.۴)
-- ✅ Repository Layer infrastructure (T2.10 ✅)
-- ✅ Backend test suite (25/25 pytest pass)
-- ✅ GitHub backup (push می‌تواند مرتب انجام شود)
+## 🎯 فاز ۱ — وضعیت
 
-## ✅ کارهای DONE در چت ۸
+### ✅ DONE در چت ۱۰
 
-### بلوک ۱-A — Documentation Backlog
-- A1: ادغام PENDING → سند جامع v2.10 (171KB → 205.6KB)
-- A2-A6: Atomic Updates ۴ سند governance
-- A7: SESSION_STATUS bazūnevisi
+- **G1:** Dependencies (ccxt 4.3.98 + websockets 12.0 + ۱۲ dep جانبی)
+- **G2:** ۴ تصمیم معماری (Decisions #۶۱-۶۴)
+- **G3:** CCXTDataSource skeleton + ۵ تست AsyncMock pass
 
-### بلوک ۱-B — Infrastructure audit
-- B1, B4: MCP working + claude_workspace ساختار
-- B2: Memory toggles ON
-- B5: gitignore policy (minor mismatch ثبت در PENDING)
+### ⏳ TODO برای چت ۱۱+
 
-### بلوک ۲ — Interactive
-- **D1: GitHub setup کامل** ✅
-  - SSH key + config + push
-  - 616 objects، 766.69KB
-  - HEAD `d6bc75c` → `9b09546`
-- C1-C8: Settings audit با ۳ screenshot
+- **T3.03:** `binance_client.py` (REST wrapper)
+- **T3.04:** `binance_ws.py` (WebSocket subscriber با asyncio.Queue)
+- **T3.05:** `exchange_repository.py` (Exchange + ExchangeApiKey)
+- **T3.06:** WebSocket endpoint برای frontend
+- **T3.07:** Integration test با Binance واقعی (نیاز VPN)
+- **T3.08:** Endpoint REST برای fetch OHLCV
 
-### بلوک ۳ — Tier 2 پایانی
-- E1 (T2.10): ARCHITECTURE.md ✅
-- E2 (T2.13): Bug #50 root cause ✅ (cleanup در v2.11)
-- F1: Model Selection Guide ✅ (سند ۱۹.۲)
-- D2, D3: Claude Code + GitHub MCP eval ✅ (موکول به فاز ۴+)
+---
 
-### بلوک ۴ — Finalization
-- G1: PENDING پاک‌سازی + footer
-- G2: CHAT8_FINALIZE.md
-- G3: این فایل
-- G4: PROJECT_KNOWLEDGE snapshot (در پیام handoff به کاربر)
-- G5: پیام handoff
+## ✅ کارهای DONE در چت ۱۰
+
+### G1 — Dependencies (~۹۰ دقیقه)
+- اسکریپت ۵۸: افزودن ccxt + websockets به requirements.txt (۶/۶ pass)
+- اسکریپت ۵۹: رفع Bug #53 با BOM (۴/۴ pass)
+- اسکریپت ۶۰: pin ccxt به 4.3.98 (۵/۵ pass)
+- pip install موفق + import verification
+
+### G2 — Architecture Q&A (~۲۰ دقیقه)
+- مرور `base.py` + `excel_source.py` + `binance_mappings.py`
+- Decisions #۶۱-۶۴ ثبت شدند
+
+### G3 — CCXTDataSource Skeleton (~۶۰ دقیقه)
+- اسکریپت ۶۱: gradient interface در `base.py` (۵/۵ backwards compat pass)
+- اسکریپت ۶۲: ساخت `ccxt_source.py` (7993 bytes) + ۵ تست AsyncMock pass
+
+### پایان چت
+- PENDING update (v0.3 → v0.4، +۵ آیتم Z2.3-Z2.7)
+- CHAT_LOG چت ۱۰ افزوده شد (v1.4 → v1.5)
+- TROUBLESHOOTING Bug #53 افزوده شد (v1.1 → v1.2)
+- این فایل rewrite شد
+
+---
 
 ## 📊 آمار نهایی پروژه
 
-- **قوانین قفل‌شده:** **۶۱** (#۱-۶۱، با ۲ Reserved: #۵۲، #۵۳)
-- **درس‌نامه اشتباهات:** **۶۲ ردیف** (۳۷ کشف‌شده + ۲۵ Reserved، M1-M62)
-- **بخش‌های سند جامع:** **۲۵** (۲۲-۲۵ جدید در v2.10)
-- **سند Markdown در `docs/`:** **۲۰+**
-- **Tests:** ۳۰/۳۰ vitest + ۲۵/۲۵ pytest = **۵۵ pass**
-- **چت‌های کامل:** **۸** (آخرین: همین چت)
-- **Backlog Total:** **۳۲/۷۶ DONE** (42%)
-- **PENDING برای v2.11:** **۶ آیتم**
-- **Git commits:** `9b09546` HEAD، با backup در GitHub
+- **قوانین قفل‌شده:** **۶۵** (#۱-۶۵، با ۲ Reserved: #۵۲، #۵۳)
+- **درس‌نامه اشتباهات:** **۶۷ ردیف** (۴۲ کشف‌شده تا M69 + ۲۵ Reserved)
+- **بخش‌های سند جامع:** **۲۵** (در v2.11)
+- **اسناد Markdown در `docs/`:** **۲۰+**
+- **Tests:** 25/25 pytest + 30/30 vitest + ۲۵ تست script چت ۱۰ = **۸۰ pass**
+- **چت‌های کامل:** **۱۰** (آخرین: همین چت)
+- **Backlog Total:** **۳۴/۸۲ DONE** (T3.01 + T3.02 اضافه شدند)
+- **PENDING برای v2.12:** **۷ آیتم** (Z2.1-Z2.7)
+- **Git commits:** قبل از commit پایان چت ۱۰ — `88debb7`
+
+---
 
 ## 🔧 محیط فعال
 
-- Python 3.11.2 + FastAPI 0.111 + SQLAlchemy 2.0 + aiosqlite 0.20
+- Python 3.11 + FastAPI 0.111 + SQLAlchemy 2.0 + aiosqlite 0.20
+- **🆕 ccxt 4.3.98 + websockets 12.0** (افزوده در چت ۱۰)
+- + aiohttp, aiodns, yarl, multidict, frozenlist, … (deps جانبی ccxt)
 - React 19.2 + Vite 8.0 + Vitest 3.x + Zustand 4.5
 - SQLite (`backend/trading.db`)
 - JWT + bcrypt 4.1
 - pytest 8.2 + pre-commit 3.7 + black 24.4 (Hybrid mode)
 - **Claude Desktop:** Filesystem MCP + Memory ON + GitHub SSH ✅
 
-## 📁 فایل‌های مهم تولید/به‌روز شده
+---
 
-| فایل | وضعیت | حجم |
+## 📁 فایل‌های مهم تولید/به‌روز شده در چت ۱۰
+
+| فایل | وضعیت | اندازه |
 |---|---|---|
-| `docs/سند_جامع_v2_10.md` | 🆕 v2.10 | 205,601 bytes |
-| `docs/PENDING_FOR_NEXT_VERSION.md` | 🆕 (۶ آیتم) | ~16KB |
-| `docs/CHAT_LOG.md` | v1.2 → v1.3 | 51,744 bytes |
-| `docs/CLAUDE_CHECKLIST.md` | v1.2 → v1.3 | 24,268 bytes |
-| `docs/PROJECT_GOVERNANCE.md` | v1.2 → v1.3 | به‌روز |
-| `docs/TASK_BACKLOG.md` | v1.4 → v1.5 | به‌روز |
+| `backend/app/infrastructure/data_sources/ccxt_source.py` | 🆕 | 7993 bytes |
+| `backend/app/infrastructure/data_sources/base.py` | به‌روز (+async) | ~3KB |
+| `backend/requirements.txt` | به‌روز (+2 deps + BOM) | ~1.5KB |
+| `scripts/58_*` تا `62_*` (و `*b_*` تست‌ها) | 🆕 | ۱۰ اسکریپت |
+| `docs/PENDING_FOR_NEXT_VERSION.md` | v0.3 → v0.4 | ~17KB |
+| `docs/CHAT_LOG.md` | v1.4 → v1.5 | ~62KB |
+| `docs/TROUBLESHOOTING.md` | v1.1 → v1.2 | ~21KB |
 | `docs/SESSION_STATUS.md` | rewrite | همین فایل |
-| `docs/ARCHITECTURE.md` | mini-update v2.10 | به‌روز |
-| `claude_workspace/incoming_permanent/CHAT8_FINALIZE.md` | 🆕 | ~6KB |
-
-## 🚧 PENDING برای v2.11 (۶ آیتم)
-
-همه در `docs/PENDING_FOR_NEXT_VERSION.md`:
-
-1. **B5.1** (💡) — `.gitignore` format
-2. **B2.1** (🎯) — Memory در Capabilities
-3. **C1.1** (📊) — Settings audit results
-4. **D1.1** (🔴) — Bug pre-commit + فارسی
-5. **E2.1** (🟡) — Bug #50 cleanup
-6. **D2.1+D3.1** (🟢) — Claude Code + GitHub MCP (فاز ۴+)
-
-## 🚀 اولین گام‌های چت ۹
-
-1. **🆕 ساخت Project در Claude Desktop** (قبل از هر کار فنی)
-2. **خواندن قانون #۴۸:** بخش ۱۸ + PENDING
-3. **ادغام v2.10 → v2.11** (۶ آیتم PENDING)
-4. **Bug #50 cleanup** (E2.1)
-5. **شروع فاز ۱:** CCXT + Binance WebSocket
-
-## 🔑 کلید موفقیت چت ۸: قانون #۶۰ عملی شد!
-
-PENDING-EOC در لحظه با Filesystem MCP ثبت شد:
-- آیتم B5.1 در بلوک ۱-B ثبت شد (هنگام کشف)
-- آیتم B2.1 در بلوک ۲ ثبت شد (هنگام audit screenshot)
-- آیتم D1.1 در بلوک ۲ ثبت شد (هنگام pre-commit fail)
-- آیتم E2.1 در بلوک ۳ ثبت شد (هنگام تحلیل Bug #50)
-- آیتم D2.1+D3.1 در بلوک ۳ ثبت شد (هنگام evaluation)
-
-این **اولین چت** است که M23 برای همیشه حل شده — همه PENDING در فایل ثبت شده‌اند، نه فقط در حافظه.
+| `claude_workspace/incoming_permanent/CHAT11_HANDOFF.txt` | 🆕 (در پاسخ بعدی) | ~6KB |
 
 ---
 
-**ساخته توسط:** Claude در چت ۸ (پایان چت)  
-**نسخه این فایل:** نهایی چت ۸  
-**به‌روز توسط:** Claude در شروع چت ۹ پس از خواندن
+## 🐛 Bug ها در چت ۱۰
+
+- **Bug #53** (در TROUBLESHOOTING ثبت شد): pip روی Windows + فایل UTF-8 بدون BOM + متن غیر-ASCII → UnicodeDecodeError. رفع: utf-8-sig
+
+---
+
+## 🚧 PENDING برای v2.12 (۷ آیتم)
+
+همه در `docs/PENDING_FOR_NEXT_VERSION.md`:
+
+1. **Z2.1** (🎯) — M64 JSX runtime در plugin-react vs esbuild
+2. **Z2.2** (🟡) — M65 تشخیص shell از prompt
+3. **Z2.3** (🎯) — M66 Filesystem MCP و فایل‌های >200KB
+4. **Z2.4** (🔴) — M67 BOM لازم برای pip روی Windows
+5. **Z2.5** (🎯) — M68 نسخه‌های pinned با PyPI verify
+6. **Z2.6** (🟡) — M69 asyncio.run() در FastAPI handler
+7. **Z2.7** (💡) — اصلاحیه سند جامع v2.11 بخش ۲.۲ (ccxt 4.3.0 → 4.3.98)
+
+---
+
+## 🚀 اولین گام‌های چت ۱۱
+
+1. **خواندن قانون #۴۸:** بخش ۱ سند جامع + PENDING + CHAT_LOG چت ۱۰
+2. **خواندن `claude_workspace/incoming_permanent/CHAT11_HANDOFF.txt`**
+3. **چک ۶ ⚠️ CHECK:** venv فعال، backend اجرا، frontend اجرا، login، تست‌های ۵۸b-۶۲b
+4. **شروع T3.03:** `binance_client.py` (REST wrapper) — یا T3.04 (binance_ws.py) بسته به انتخاب کاربر
+5. **در پایان چت ۱۱:** بسته‌بندی + PENDING update + احتمالاً ادغام Z2.x به v2.12
+
+---
+
+## 🔑 کلید موفقیت چت ۱۰: قانون #۶۱ (پیشنهاد گزینه مطلوب) به‌خوبی کار کرد
+
+در ۶+ ask_user_input، پیشنهاد مطلوب من با ⭐ مشخص بود و کاربر هر بار آن را انتخاب کرد. این الگوی تعاملی سرعت و کیفیت تصمیم‌گیری را بالا برد. توصیه: ادامه این رویکرد در چت ۱۱.
+
+---
+
+**ساخته توسط:** Claude در پایان چت ۱۰  
+**نسخه این فایل:** نهایی چت ۱۰  
+**به‌روز توسط:** Claude در شروع چت ۱۱ پس از خواندن

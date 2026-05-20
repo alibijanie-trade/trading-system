@@ -30,7 +30,7 @@
 3. بررسی افزودن Bug #53 به TROUBLESHOOTING.md (پیوست Bug #50)
 4. بررسی افزودن قانون جدید (شاید #۶۶) درباره `esbuild.jsx` و `plugin-react jsxRuntime` به‌عنوان دو سطح مستقل
 
-**ادغام در:** v2.12 (احتمالاً پایان چت ۱۰ یا چت ۱۱)  
+**ادغام در:** v2.12 (احتمالاً پایان چت ۱۱ یا چت ۱۲)  
 **ثبت‌شده توسط:** قانون #۶۰ + قانون #۶۵ (درس با نمایش)  
 **نشان داده شده به کاربر:** ✅ (طبق قانون #۶۵)
 
@@ -54,8 +54,6 @@ Claude باید از prompt ترمینال شناسایی کند کاربر در
 | `(venv) PS D:\path>` | PowerShell با venv فعال | `$env:VAR = "value"` |
 | `user@host:~/path$` | bash (Linux/macOS/WSL/Git Bash) | `export VAR=value` |
 
-در چت ۸، Bug #52 با `$env:PYTHONIOENCODING = "utf-8"` رفع شد، ولی وقتی در چت ۹ دوباره در CMD تلاش شد، خطا داد: "The filename, directory name, or volume label syntax is incorrect." چون CMD این syntax را تفسیر نمی‌کند.
-
 **اقدامات لازم در v2.12:**
 
 1. افزودن M65 به جدول ۱۸.۲ سند جامع (درس‌نامه)
@@ -65,7 +63,138 @@ Claude باید از prompt ترمینال شناسایی کند کاربر در
 
 **ادغام در:** v2.12 (در همان batch با Z2.1)  
 **ثبت‌شده توسط:** قانون #۶۰ + قانون #۶۵ (درس با نمایش)  
-**نشان داده شده به کاربر:** ✅ (طبق قانون #۶۵)
+**نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.3: M66 — Filesystem MCP و فایل‌های بزرگ
+
+**کشف‌شده در:** چت ۱۰ (2026-05-20) — هنگام تلاش برای خواندن سند جامع v2.11 (216KB)  
+**وضعیت:** 🟢 workaround در چت ۱۰: استفاده از conversation_search + خواندن CHAT_LOG برای محتوای بخش‌های مرتبط  
+**اثر فعلی:** هیچ کار از دست نرفت — اطلاعات از منابع جایگزین به‌دست آمد
+
+**درس کلی (M66):**
+
+فایل‌های `>200KB` (مثل سند جامع v2.11) ممکن است Filesystem MCP را hang کنند، **حتی با `head=N`/`tail=N` parameter**. اگر MCP hang کرد، بقیه دستورات همان session هم timeout می‌دهند — نیاز به ری‌استارت Claude Desktop.
+
+**استراتژی توصیه‌شده:**
+
+1. در شروع چت، اول `list_allowed_directories` (سریع) برای تأیید responsive بودن MCP
+2. برای فایل‌های بزرگ، استفاده از `search_files` با pattern برای یافتن خط/بخش مرتبط
+3. خواندن chunk کوچک با `view_range` در فایل‌های >100KB
+4. اگر CHAT_LOG را خوانده‌اید، اطلاعات بخش‌های مهم سند جامع معمولاً در summary چت‌های قبل موجود است — کفایت‌بخش‌تر از خواندن مجدد
+
+**اقدامات لازم در v2.12:**
+
+1. افزودن M66 به جدول ۱۸.۲ سند جامع
+2. به‌روزرسانی سند ۲۲ (Filesystem MCP Integration) با محدودیت اندازه فایل
+3. بررسی افزودن قانون جدید: «در شروع چت، اگر سند جامع >200KB است، فقط بخش‌های مرتبط با scope چت با `view_range` خوانده شوند»
+
+**ادغام در:** v2.12  
+**ثبت‌شده توسط:** قانون #۶۰ + قانون #۶۵  
+**نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.4: M67 — BOM در فایل‌های UTF-8 با متن غیر-ASCII روی Windows
+
+**کشف‌شده در:** چت ۱۰ (2026-05-20) — هنگام pip install پس از تغییر requirements.txt  
+**وضعیت:** 🟢 رفع شد در چت ۱۰ با اسکریپت `59_fix_requirements_encoding.py` (افزودن BOM با utf-8-sig)  
+**اثر فعلی:** pip install حالا کار می‌کند. **Bug #53 در TROUBLESHOOTING ثبت شد.**
+
+**درس کلی (M67):**
+
+وقتی فایلی شامل کاراکترهای غیر-ASCII (متن فارسی، em-dash `—`، …) دارد و **BOM ندارد**، pip روی Windows با locale فارسی سعی می‌کند با codec سیستمی (cp1252) آن را decode کند و crash می‌کند با:
+```
+UnicodeDecodeError: 'charmap' codec can't decode byte 0xXX in position N
+```
+
+**علت ریشه‌ای:** ابزارهایی مثل `Filesystem:write_file` (Claude Desktop) به‌صورت پیش‌فرض **بدون BOM** می‌نویسند. اگر فایل قبلی BOM داشته، با rewrite اول BOM از دست می‌رود.
+
+**راه‌حل دائمی برای v2.12:**
+
+1. **policy A (preferred):** فایل‌های dependency (requirements.txt، package.json، pyproject.toml) **فقط ASCII** باشند — همه کامنت‌های فارسی به انگلیسی ترجمه شوند
+2. **policy B (workaround):** اگر فارسی لازم است، با utf-8-sig (با BOM) ذخیره شود
+
+**اقدامات لازم در v2.12:**
+
+1. افزودن M67 به جدول ۱۸.۲ سند جامع
+2. افزودن Anti-pattern A11 به ANTI_PATTERNS.md: «متن غیر-ASCII در فایل dependency بدون BOM»
+3. بررسی افزودن قانون جدید: «فایل‌های dependency باید ASCII-only باشند یا با BOM ذخیره شوند»
+4. تصمیم نهایی: ترجمه کامنت‌های فارسی requirements.txt به انگلیسی (policy A) یا حفظ BOM (policy B)
+
+**ادغام در:** v2.12  
+**ثبت‌شده توسط:** قانون #۶۰ + قانون #۶۵  
+**نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.5: M68 — نسخه‌های pinned باید با PyPI verify شوند
+
+**کشف‌شده در:** چت ۱۰ (2026-05-20) — هنگام تلاش pip install ccxt==4.3.0  
+**وضعیت:** 🟢 رفع شد در چت ۱۰: pin به `4.3.98` (آخرین stable در 4.3.x) — اسکریپت `60_pin_ccxt_to_4_3_98.py`  
+**اثر فعلی:** ccxt و websockets با موفقیت نصب شدند
+
+**درس کلی (M68):**
+
+سند جامع v2.11 بخش ۲.۲ (Stack) نسخه `ccxt 4.3.0` را pin کرده بود — این نسخه **هرگز در PyPI منتشر نشد** (یا توسط author yank شد). تنها هنگام تلاش نصب fail کشف شد.
+
+**این یک Documentation Drift است:** documentation با reality نمی‌خواند، چون در زمان نوشتن سند، نسخه با PyPI verify نشد.
+
+**اقدامات لازم در v2.12:**
+
+1. **اصلاح سند جامع v2.11 → v2.12 بخش ۲.۲:** `ccxt 4.3.0` → `ccxt 4.3.98`
+2. افزودن M68 به جدول ۱۸.۲ سند جامع
+3. بررسی افزودن قانون جدید: «وقتی نسخه‌ای را در سند pin می‌کنیم، آن را با `pip index versions <pkg>` در همان لحظه verify کنیم»
+4. بررسی pre-commit hook A12: cross-check نسخه‌های requirements.txt با PyPI
+
+**ادغام در:** v2.12  
+**ثبت‌شده توسط:** قانون #۶۰ + قانون #۶۵  
+**نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.6: M69 — `asyncio.run()` در FastAPI handler crash می‌کند
+
+**کشف‌شده در:** چت ۱۰ (2026-05-20) — هنگام طراحی sync wrapper برای CCXTDataSource.read_ohlcv  
+**وضعیت:** 🟡 **در docstring CCXTDataSource تذکر داده شد** — ولی هنوز در سند رسمی نیست  
+**اثر فعلی:** فعلاً مشکلی ایجاد نکرده چون sync wrapper فقط در test plain script استفاده می‌شود
+
+**درس کلی (M69):**
+
+`asyncio.run()` event loop جدید می‌سازد. اگر در محیط async (مثل FastAPI handler) فراخوانی شود، خطای زیر می‌دهد:
+```
+RuntimeError: asyncio.run() cannot be called from a running event loop
+```
+
+**در CCXTDataSource:** `read_ohlcv` (sync wrapper) از `asyncio.run(read_ohlcv_async(...))` استفاده می‌کند. **هرگز** نباید در FastAPI handler صدا زده شود — همیشه `await source.read_ohlcv_async(...)` استفاده شود.
+
+**اقدامات لازم در v2.12:**
+
+1. افزودن M69 به جدول ۱۸.۲ سند جامع
+2. افزودن Anti-pattern A13: «asyncio.run() در FastAPI handler»
+3. بررسی افزودن یک linter check: scan کد FastAPI handlers برای `asyncio.run` calls
+4. در ARCHITECTURE.md، بخش CCXTDataSource، تأکید روی این تذکر
+
+**ادغام در:** v2.12  
+**ثبت‌شده توسط:** قانون #۶۰ + قانون #۶۵  
+**نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.7: اصلاحیه سند جامع v2.11 بخش ۲.۲ (Stack)
+
+**کشف‌شده در:** چت ۱۰ — مرتبط با Z2.5 (M68)  
+**وضعیت:** 📌 یادآوری برای v2.12 — هنوز در v2.11 نوشته شده
+
+**تغییر لازم:**
+
+در سند `docs/سند_جامع_v2_11.md` بخش ۲.۲ (Stack):
+- `ccxt 4.3.0` → `ccxt 4.3.98`
+- اضافه کردن یادداشت: «در 2026-05-20 با PyPI verify شد»
+
+**ادغام در:** v2.12  
+**ثبت‌شده توسط:** قانون #۶۰ + قانون #۲۴ (No-Deletion — اصلاح در نسخه بعد، نه edit مستقیم)
 
 ---
 
@@ -75,18 +204,18 @@ Claude باید از prompt ترمینال شناسایی کند کاربر در
 
 | کد | عنوان | محل ادغام |
 |---|---|---|
-| B5.1 | فرمت `.gitignore` با `*` + `!.gitkeep` | فایل `.gitignore` (نه v2.11 — سند درست بود) |
+| B5.1 | فرمت `.gitignore` با `*` + `!.gitkeep` | فایل `.gitignore` |
 | B2.1 | اصلاح مسیر Memory toggles | سند ۲۳.۱ v2.11 |
 | C1.1 | Settings audit کامل (12 ردیف) | سند ۲۳.۴ v2.11 |
 | D1.1 | مستندسازی Bug pre-commit + فارسی | Bug #52 در TROUBLESHOOTING v1.1 |
-| E2.1 | Bug #50 cleanup (React import) | `vite.config.js` + ۱۷ JSX file (فعلی) |
+| E2.1 | Bug #50 cleanup (React import) | `vite.config.js` + ۱۷ JSX file |
 | G5.1 | قانون #۶۲ (فایل handoff دائمی) | جدول ۱.۹ v2.11 |
 | UX1.1 | قانون #۶۳ (Convention 🟢 ▶️ EXECUTE) | جدول ۱.۹ v2.11 |
 | UX2.1 | قانون #۶۴ (عدم نمایش جزئیات تصحیح خطا) | جدول ۱.۹ v2.11 |
 | UX3.1 | قانون #۶۵ (نمایش درس از اشتباهات) | جدول ۱.۹ v2.11 |
 | Z1.1 | M63 (status صریح در handoff) | جدول ۱۸.۲ v2.11 |
 
-**مجموع:** ۱۰ آیتم ادغام شد. برای جزئیات کامل هر یک، رجوع به CHAT_LOG چت ۹ یا سند جامع v2.11 (بخش «خلاصه تغییرات v2.10 → v2.11»).
+**مجموع:** ۱۰ آیتم ادغام شد.
 
 ---
 
@@ -94,28 +223,34 @@ Claude باید از prompt ترمینال شناسایی کند کاربر در
 
 ### D2.1 + D3.1: ارزیابی Claude Code + GitHub MCP
 
-**موکول به:** فاز ۴+ (پس از تثبیت معماری backend و کاربرد روزانه پروژه)  
-**علت:** در فاز ۰-۱ Filesystem MCP کفایت می‌کند. Claude Code برای automation پیچیده و GitHub MCP برای PR workflow در فازهای بالاتر مفید است.
+**موکول به:** فاز ۴+  
+**علت:** در فاز ۰-۲ Filesystem MCP کفایت می‌کند.
 
 ---
 
 ## 📌 پایان فایل
 
-**نسخه:** v0.3 (2026-05-20 — پایان چت ۹: پاک‌سازی پس از ادغام v2.11 + Z2.1 (M64) + Z2.2 (M65))  
+**نسخه:** v0.4 (2026-05-20 — پایان چت ۱۰: افزودن Z2.3-Z2.7 برای ادغام در v2.12)  
 **ساخته توسط:** Claude در چت ۸ (`TRADING-phase0-part08-pre-phase1-setup`)  
-**به‌روز توسط:** Claude در پایان چت ۹ طبق پروتکل ۷.۳  
-**ادغام بعدی:** سند جامع v2.12 (در چت ۱۰+)
+**به‌روز توسط:** Claude در پایان چت ۱۰ طبق پروتکل ۷.۳  
+**ادغام بعدی:** سند جامع v2.12 (در چت ۱۱ یا چت ۱۲)
 
-## 📊 خلاصه آیتم های PENDING برای v2.12
+## 📊 خلاصه آیتم‌های PENDING برای v2.12
 
 | آیتم | سطح | توضیح |
 |---|---|---|
-| **Z2.1** 🆕 | 🎯 important | M64 — JSX runtime در plugin-react vs esbuild (دو سطح جداگانه) |
-| **Z2.2** 🆕 | 🟡 medium | M65 — تشخیص shell از prompt و adaptation دستورات (CMD vs PowerShell vs bash) |
+| **Z2.1** | 🎯 important | M64 — JSX runtime در plugin-react vs esbuild |
+| **Z2.2** | 🟡 medium | M65 — تشخیص shell از prompt و adaptation دستورات |
+| **Z2.3** 🆕 | 🎯 important | M66 — Filesystem MCP و فایل‌های بزرگ (>200KB hang) |
+| **Z2.4** 🆕 | 🔴 important | M67 — BOM لازم برای فایل UTF-8 با غیر-ASCII روی Windows pip |
+| **Z2.5** 🆕 | 🎯 important | M68 — نسخه‌های pinned باید با PyPI verify شوند |
+| **Z2.6** 🆕 | 🟡 medium | M69 — `asyncio.run()` در FastAPI handler crash می‌کند |
+| **Z2.7** 🆕 | 💡 minor | اصلاحیه سند جامع v2.11 بخش ۲.۲ (ccxt 4.3.0 → 4.3.98) |
+| **Z2.8** 🆕 | 💡 minor (cosmetic) | خط `| اس‫‬ریپت‌های تولید‌شده |` در CHAT_LOG bytes خراب دارد — رفع با اسکریپت Python (read_bytes/write_bytes) |
 
-**تعداد:** ۲ آیتم  
-**اولویت ادغام:** Z2.1 و Z2.2 در v2.12
+**تعداد:** ۸ آیتم  
+**اولویت ادغام:** Z2.4 (critical bug)، Z2.1 (already-fixed lesson)، بقیه
 
 ---
 
-> 💡 **نکته برای چت ۱۰:** این فایل را خوانده و در پایان چت ۱۰ اگر آیتم جدیدی کشف شد، طبق قانون #۶۰ در همین فایل ثبت شود. آیتم‌های فعلی (Z2.1، Z2.2) فقط پس از تأیید کاربر در زمان ادغام v2.12 پاک خواهند شد.
+> 💡 **نکته برای چت ۱۱:** این فایل را خوانده و در پایان چت ۱۱ اگر آیتم جدیدی کشف شد، طبق قانون #۶۰ در همین فایل ثبت شود.

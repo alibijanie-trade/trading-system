@@ -1096,24 +1096,179 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 
 ---
 
+## چت ۱۰ (Session 10) — `TRADING-phase1-part01-ccxt-websocket-setup`
+
+**تاریخ:** 2026-05-20  
+**Claude version:** Claude Opus 4.7 (با Filesystem MCP + قوانین #۶۲-۶۵)  
+**Git HEAD شروع:** `88debb7`  
+**Git HEAD پایان:** *(پس از commit نهایی — TBD)*  
+**فاز شروع:** فاز ۰ کامل (۱۰۰٪) + فاز ۱ آماده شروع  
+**فاز پایان:** **فاز ۱ — CCXTDataSource Skeleton آماده** 🎉
+
+### 📌 موضوع کلی
+
+اولین چت رسمی **فاز ۱** (Market Data). سه گام بنیادی:
+
+1. **G1 — Dependencies** (~۹۰ دقیقه با ۴ iteration رفع bug):
+   - افزودن `ccxt`, `websockets` به requirements.txt
+   - رفع Bug #53 (BOM برای pip روی Windows)
+   - pin ccxt به نسخه موجود در PyPI (4.3.98 به‌جای 4.3.0)
+   - نصب موفق در venv فعال + verification با import
+
+2. **G2 — Architecture Q&A** (~۲۰ دقیقه):
+   - مرور `base.py` + `excel_source.py` + `binance_mappings.py`
+   - ۴ تصمیم معماری (Decisions #۶۱-۶۴)
+
+3. **G3 — CCXTDataSource Skeleton** (~۶۰ دقیقه):
+   - بلوک ۱: gradient interface در `base.py` (read_ohlcv_async با default impl)
+   - بلوک ۲: ساخت `ccxt_source.py` با ~۲۰۰ خط + ۵ تست AsyncMock
+
+### 🎯 گام‌های انجام‌شده
+
+#### G1 — Dependencies
+
+**اسکریپت‌ها:** `58_*`, `59_*`, `60_*` (و تست‌های همراه)
+
+- **58:** افزودن `ccxt==4.3.0` و `websockets==12.0` به requirements.txt + comment update — ۶/۶ pass
+- **59:** افزودن BOM (utf-8-sig) برای رفع Bug #53 — ۴/۴ pass
+- **60:** تغییر ccxt به `4.3.98` (آخرین stable در 4.3.x) — ۵/۵ pass
+- **pip install:** 14 package جدید (شامل ccxt 4.3.98، websockets 12.0، aiohttp، yarl، multidict، …)
+- **verification:** `import ccxt, websockets, ccxt.async_support` → OK
+
+**نکته جانبی:** pip بطور خودکار `websockets-16.0` موجود را به `12.0` downgrade کرد (Pinning موفق).
+
+#### G2 — Architecture Decisions (Decisions #۶۱-۶۴)
+
+| # | تصمیم | مزیت |
+|---|---|---|
+| **#۶۱** | Gradient interface: `DataSource.read_ohlcv_async` با default impl = `asyncio.to_thread(self.read_ohlcv, ...)` | backwards compat با ExcelDataSource، async-first در FastAPI |
+| **#۶۲** | Mock strategy: `AsyncMock` در fixtures (نه VCR، نه live) | سریع، deterministic، بدون شبکه |
+| **#۶۳** | WS ↔ repository: `asyncio.Queue` واسطه (نه direct write) | decoupling، batch write، multi-consumer در آینده |
+| **#۶۴** | Rate limiting: ccxt built-in `enableRateLimit=True` | ساده، کار می‌کند، YAGNI برای custom |
+
+#### G3 — CCXTDataSource Skeleton
+
+**اسکریپت‌ها:** `61_*`, `62_*` (و تست‌های همراه)
+
+- **61:** Atomic edit روی `base.py` — افزودن `import asyncio` + متد `read_ohlcv_async` با default impl. Backwards compat ExcelDataSource تأیید شد (۵/۵ pass)
+- **62:** ساخت `backend/app/infrastructure/data_sources/ccxt_source.py` (7993 bytes)
+  - کلاس `CCXTDataSource(DataSource)` با `__init__`, `name`, `_get_exchange`, `close`, `read_ohlcv_async`, `read_ohlcv` (sync wrapper)
+  - Error mapping: `BadSymbol` → `ValidationError(CCXT_BAD_SYMBOL)`، بقیه → `BusinessLogicError(CCXT_FETCH_ERROR)`
+  - Documentation کامل با docstring فارسی
+- **62b:** ۵ تست با AsyncMock — همه pass در اولین تلاش (exception signatures و schema fields صحیح بود)
+
+### 📁 فایل‌های جدید/تغییریافته
+
+#### Backend جدید
+- `backend/app/infrastructure/data_sources/ccxt_source.py` ⭐ (7993 bytes)
+
+#### Backend به‌روز
+- `backend/requirements.txt` (+ccxt==4.3.98, +websockets==12.0, +BOM)
+- `backend/app/infrastructure/data_sources/base.py` (+import asyncio, +read_ohlcv_async)
+
+#### Scripts جدید (۱۰)
+- `scripts/58_add_phase1_deps.py` + `58b_test_phase1_deps.py`
+- `scripts/59_fix_requirements_encoding.py` + `59b_test_requirements_encoding.py`
+- `scripts/60_pin_ccxt_to_4_3_98.py` + `60b_test_ccxt_pin.py`
+- `scripts/61_add_async_to_base_datasource.py` + `61b_test_async_base.py`
+- `scripts/62_create_ccxt_source.py` + `62b_test_ccxt_source.py`
+
+#### Docs به‌روز (پایان چت)
+- `docs/PENDING_FOR_NEXT_VERSION.md` (v0.3 → v0.4)
+- `docs/CHAT_LOG.md` (این بخش)
+- `docs/TROUBLESHOOTING.md` (افزودن Bug #53)
+- `docs/SESSION_STATUS.md` (rewrite برای شروع چت ۱۱)
+
+### 🐛 Bug های جدید
+
+- **Bug #53:** pip روی Windows فارسی-locale فایل UTF-8 بدون BOM با متن غیر-ASCII را crash می‌کند با `UnicodeDecodeError: 'charmap' codec can't decode byte 0x81`. راه‌حل: utf-8-sig (با BOM). در TROUBLESHOOTING ثبت شد.
+
+### 🎓 درس‌های جدید کشف‌شده (M66-M69)
+
+| ID | شرح | وضعیت |
+|---|---|---|
+| **M66** | Filesystem MCP و فایل‌های >200KB (hang کل session) | در PENDING برای v2.12 |
+| **M67** | BOM لازم برای فایل UTF-8 + غیر-ASCII روی Windows pip | در PENDING (همراه Bug #53 در TROUBLESHOOTING) |
+| **M68** | نسخه‌های pinned باید با PyPI verify شوند هنگام مستندسازی | در PENDING |
+| **M69** | `asyncio.run()` در FastAPI handler crash می‌کند (در docstring CCXTDataSource ذکر شد) | در PENDING |
+
+### 🏛️ تصمیمات معماری (Decisions #۶۱-۶۴)
+
+به DECISIONS_LOG ادغام می‌شود در ابتدای چت ۱۱ یا v2.12. متن کامل در بخش G2 بالا.
+
+### 📜 قوانین جدید
+
+**هیچ قانون جدیدی در چت ۱۰ ساخته نشد.** ۴ قانون UX (#۶۲-۶۵) که در v2.11 ادغام شده بودند، در عمل تست شدند و کار کردند:
+
+- **#۶۲** (handoff دائمی): فایل CHAT10_HANDOFF خوانده شد ✅
+- **#۶۳** (🟢 ▶️ EXECUTE): در ۱۰+ گام استفاده شد ✅
+- **#۶۴** (عدم نمایش جزئیات تصحیح): در حل Bug #53 رعایت شد ✅
+- **#۶۵** (نمایش درس): M66-M69 به کاربر نمایش داده شدند ✅
+
+### ⚠️ نکات مهم برای آینده (چت ۱۱+)
+
+- **`ccxt_source.py` skeleton است** — هنوز با Binance واقعی تست نشده. در چت ۱۱ یا ۱۲ یک integration test با اتصال واقعی انجام شود (احتیاج: VPN در ایران)
+- **`binance_client.py` و `binance_ws.py` هنوز ساخته نشده‌اند** — در `backend/app/infrastructure/exchange/` (فقط `__init__.py` موجود)
+- **`exchange_repository.py` هنوز نیست** — برای مدیریت `Exchange` و `ExchangeApiKey` در DB
+- **WebSocket endpoint API برای frontend هنوز ساخته نشده**
+- **Bug #53 fix در `requirements.txt` BOM دارد** — اگر کاربر فایل را با editor بدون BOM-aware باز و save کند، BOM از دست می‌رود و pip دوباره crash می‌کند. نگه‌داری مهم است.
+
+### 📊 آمار این چت
+
+| متریک | مقدار |
+|---|---|
+| اسکریپت‌های اصلی (تعداد ID مستقل) | ۵ (`58`, `59`, `60`, `61`, `62`) |
+| اسکریپت‌های تست همراه | ۵ (`58b`, `59b`, `60b`, `61b`, `62b`) |
+| **مجموع اسکریپت‌ها** | **۱۰** |
+| تست‌های static + integration | ۲۵ (۶+۴+۵+۵+۵) |
+| فایل‌های جدید Backend | ۱ (`ccxt_source.py`) |
+| فایل‌های تغییریافته Backend | ۲ (`requirements.txt`, `base.py`) |
+| Bug رفع‌شده | ۱ (Bug #53 — BOM) |
+| Decision جدید | ۴ (#۶۱-۶۴) |
+| درس جدید | ۴ (M66-M69) |
+| قوانین جدید | ۰ (۴ قانون UX چت ۹ در عمل تست شدند) |
+| فایل‌های دیگر تغییریافته | ۴ (PENDING، CHAT_LOG، TROUBLESHOOTING، SESSION_STATUS) |
+
+### 🔗 ارتباطات
+
+- ادامه چت قبل: `TRADING-phase0-part09-v2_11-atomic-update-and-bug50-cleanup`
+- **چت بعد پیشنهادی:** `TRADING-phase1-part02-binance-client-and-ws` (`binance_client.py` + `binance_ws.py` + integration test ساده)
+- **handoff فایل:** `claude_workspace/incoming_permanent/CHAT11_HANDOFF.txt`
+
+### TASK های DONE شده در این چت
+
+- T3.01 (پیشنهادی) — CCXTDataSource skeleton + ۵ test mock
+- T3.02 (پیشنهادی) — DataSource async extension (gradient interface)
+
+### TASK های جدید کشف‌شده برای چت ۱۱+
+
+- T3.03 — binance_client.py (REST wrapper)
+- T3.04 — binance_ws.py (WebSocket subscriber با asyncio.Queue)
+- T3.05 — exchange_repository.py (Exchange + ExchangeApiKey)
+- T3.06 — WebSocket endpoint برای frontend
+- T3.07 — integration test با Binance واقعی (نیاز به VPN در ایران)
+- T3.08 — انتشار Endpoint REST برای fetch OHLCV (تبدیل CCXTDataSource به HTTP endpoint)
+
+---
+
 ## آمار کلی پروژه
 
 | دسته | تعداد |
 |---|---|
-| چت‌های انجام‌شده | ۹ |
+| چت‌های انجام‌شده | ۱۰ |
 | اسکریپت‌های تولید‌شده | ~۶۴ (~۶۰ تا چت ۸ + ۴ جدید در چت ۹: 55، 55b، 56، 56b) |
-| Bug های ثبت‌شده | ۵۲ (+Bug #52 در چت ۹) |
-| Decisions ثبت‌شده | ~۶۰ (+۳ در چت ۹) |
+| Bug های ثبت‌شده | ۵۳ (+Bug #53 در چت ۱۰ — BOM در requirements.txt) |
+| Decisions ثبت‌شده | ~۶۴ (+۴ در چت ۱۰: #۶۱-۶۴ معماری CCXT) |
 | قوانین قفل‌شده | **۶۵** (با ۲ Reserved: #۵۲، #۵۳) |
-| درس‌نامه ثبت‌شده | **۶۳ ردیف** (۳۸ کشف‌شده تا M64 + ۲۵ Reserved) |
-| فاز پایان‌یافته | فاز ۰ (۱۰۰٪) + Tier 2 (۱۶/۲۱ ✅) |
-| فاز در حال شروع | فاز ۱ (skeleton در چت ۱۰) |
+| درس‌نامه ثبت‌شده | **۶۷ ردیف** (۴۲ کشف‌شده تا M69 + ۲۵ Reserved) |
+| فاز پایان‌یافته | فاز ۰ (۱۰۰٪) + Tier 2 (۱۶/۲۱ ✅) + فاز ۱ skeleton |
+| فاز در حال انجام | فاز ۱ — binance_client.py + binance_ws.py (چت ۱۱+) |
 | نسخه سند جامع | **v2.11** (در چت ۹ ایجاد شد) |
 
 ---
 
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v1.4 (2026-05-20 — چت ۹: تکمیل چت ۸ stub + افزودن بخش چت ۹ فاز A + تصحیح آمار)  
-**به‌روز شده در:** چت `TRADING-phase0-part09-v2_11-atomic-update-and-bug50-cleanup`  
+**نسخه:** v1.5 (2026-05-20 — چت ۱۰: افزودن بخش چت ۱۰ — CCXTDataSource skeleton + ۴ Decision + ۴ درس)  
+**به‌روز شده در:** چت `TRADING-phase1-part01-ccxt-websocket-setup`  
 **به‌روز توسط:** Claude طبق قانون #۲۳ + #۲۶ + #۶۰ — CLAUDE_CHECKLIST v1.4 فاز ۳
