@@ -4,7 +4,9 @@
 تاریخ: 2026-05-20
 چت قبلی: چت ۱۰ — TRADING-phase1-part01-ccxt-websocket-setup
 چت بعدی: TRADING-phase1to2-master-architecture-discovery
-Git HEAD پایان چت ۱۰: 8ae477c (پس از cleanup round نهایی)
+Git HEAD پایان چت ۱۰: <بعد از همه commit ها از git log -1 --format=%h بخوان>
+⚠️ درس M77: مقدار قطعی برای HEAD در این فایل نمی‌نویسیم چون هر تغییر، HEAD فایل را عوض می‌کند.
+اجرا در چت ۱۱: `git log -1 --format="%h"` برای HEAD واقعی.
 
 ╔══════════════════════════════════════════════════════════════════════╗
 ║                                                                      ║
@@ -68,16 +70,49 @@ Git HEAD پایان چت ۱۰: 8ae477c (پس از cleanup round نهایی)
 در شروع این چت، Claude باید یک audit سریع انجام دهد:
    □ HEAD در SESSION_STATUS = HEAD در CHAT_LOG = `git log -1 --format=%h` ?
    □ تعداد Decisions در DECISIONS_LOG = آمار در SESSION_STATUS ?
-   □ Decisions sequential (بدون gap) ?
+   □ Decisions sequential (بدون gap) ? — توجه: gap های reserved مجاز هستند
    □ تعداد Bug در TROUBLESHOOTING = آمار ?
 
 اگر تناقضی پیدا کرد، صریح گزارش دهد و اصلاح پیشنهاد کند (مثل Claude در چت ۱۱).
 
-✅ وضعیت پس از cleanup round پایان چت ۱۰:
-   ✅ Decisions #۵۸-۶۶ در DECISIONS_LOG backfill شدند (v1.1 → v1.2)
-   ✅ PENDING به v0.5 رسید (Z2.1-Z2.13 شامل M71/M72/M73 + Bug #54)
-   ✅ SESSION_STATUS با HEAD واقعی (8ae477c) و آمار جدید به‌روز شد
-   ✅ HANDOFF با همین بخش 0-- و به‌روزرسانی stat ها در همه بخش‌ها
+⚠️⚠️⚠️ M74-M79 — درس‌های جدید از audit چت ۱۱ ⚠️⚠️⚠️
+─────────────────────────────────────────────────────────────
+
+در چت ۱۱، Claude در audit اولیه ۴ تناقض پیدا کرد که در چت ۱۰ توسط من (Claude) دیده نشد.
+این تناقض‌ها در cleanup round 2 fix شدند و ۶ درس جدید (M74-M79) استخراج شد:
+
+⚠️ M74 — Full-Range Decision Audit (نه Local):
+   Bug #۵۴ را برای gap #۵۷→#۶۵ حل کردم، ولی gap های قدیمی‌تر (#۱۶-۱۹، #۴۹) را ندیدم.
+   راه‌حل: در پایان هر چت، کل range را audit کن — نه فقط اطراف تغییر.
+
+⚠️ M75 — Within-File Consistency Check:
+   SESSION_STATUS دو بخش PENDING count داشت — یکی به‌روز، دیگری قدیمی.
+   راه‌حل: هر edit ، کل فایل را برای تکرار عدد search کن.
+
+⚠️ M76 — Decision vs Rule تمایز مبهم:
+   قانون #۶۶ = Decision Accepted (در DECISIONS_LOG) ولی Rule Proposed (در PENDING، هنوز در Constitution نیست).
+   راه‌حل: در هر reference، صریح بنویس "#N (Locked)" یا "#N (Proposed)".
+
+⚠️ M77 — HEAD Self-Reference نباید Hardcode باشد:
+   M71 گفت "دو commit جداگانه". این کافی نیست — commit backfill خود HEAD جدید تولید می‌کند.
+   راه‌حل: HEAD فقط placeholder `<git log -1>` یا در فایل جدا (docs/HEADS.md).
+
+⚠️ M78 — Re-read After Edit (عدم اتکا به diff):
+   در چت ۱۰ بعد از update بخش آمار SESSION_STATUS ، فرض کردم fine است. چت ۱۱ نشان داد بخش دیگری هم عدد قدیمی داشت.
+   راه‌حل: پس از هر batch edit، فایل را کامل read_text_file کن.
+
+⚠️ M79 — Reserved IDs باید Explicit مستند شوند:
+   Decisions #۱۶-۱۹، #۴۹ "reserved" بودند در categorization، ولی در جدول آمار تمایز "Max ID" vs "Recorded" غایب بود.
+   راه‌حل: در جدول آمار دو عدد جدا: Max ID و Recorded. Reserved صریح ثبت شود.
+
+✅ وضعیت پس از cleanup round 2 پایان چت ۱۰ (پیگیری audit چت ۱۱):
+   ✅ Decisions #۵۸-۶۶ در DECISIONS_LOG backfill شدند (v1.1 → v1.3)
+   ✅ تمایز Max ID vs Recorded اصلاح شد (Max=۶۶، Recorded=۶۱، Reserved=۵)
+   ✅ Reserved IDs (#۱۶-۱۹، #۴۹) در دسته‌بندی موضوعی explicit مستند شدند
+   ✅ SESSION_STATUS دو بخش PENDING سینک شدند (هر دو الان ۱۹ آیتم)
+   ✅ HEAD references در SESSION_STATUS و این فایل به placeholder تغییر کردند (M77)
+   ✅ PENDING به v0.6 رسید (Z2.1-Z2.19 شامل M74-M79 جدید)
+   ✅ تمایز Decision vs Rule روشن شد (M76): #۶۶ = Decision Accepted ولی Rule Proposed
 
 ═══════════════════════════════════════════════════════════════════════
 بخش 0-: درک مشترک قبل از شروع — بسیار مهم ⭐⭐⭐
@@ -782,15 +817,15 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
    ⚠️ CHECK 2: backend اجرا می‌شود؟
    ⚠️ CHECK 3: frontend اجرا می‌شود؟ + login admin/1 + نمودار BTC/USDT
    ⚠️ CHECK 4: کندل‌های BTC/USDT 1d در DB (~1714) موجود هستند؟
-   ⚠️ CHECK 5: Git HEAD = 8ae477c (یا جدیدتر)؟
+   ⚠️ CHECK 5: Git HEAD = از git log -1 بخوان (مقدار قطعی در این فایل نیست — M77)
    ⚠️ CHECK 6: تست‌های اسکریپت‌های 61b/62b/63b pass می‌دهند؟
-   ⚠️ CHECK 7 (M73 audit جدید): cross-document consistency:
-      - HEAD در SESSION_STATUS = git log -1 ?
-      - Decisions در DECISIONS_LOG = ۶۶ pivot sequential ?
-      - PENDING آیتم‌ها = ۱۳ (Z2.1-Z2.13) ?
-      - Decisions count در SESSION_STATUS سازگار با DECISIONS_LOG ?
+   ⚠️ CHECK 7 (M73 audit اجباری): cross-document consistency:
+      - HEAD واقعی git = HEAD در SESSION_STATUS ?
+      - PENDING آیتم‌ها = ۱۹ (Z2.1-Z2.19) ?
+      - DECISIONS_LOG: Max ID = ۶۶ و Recorded = ۶۱، Reserved = ۵ (#۱۶-۱۹، #۴۹) ?
+      - SESSION_STATUS دو بخش PENDING count سینک هستند ?
 
-💡 ۱۳ آیتم PENDING_FOR_NEXT_VERSION (برای v2.12):
+💡 ۱۹ آیتم PENDING_FOR_NEXT_VERSION (برای v2.12):
    - Z2.1 — M64 (JSX runtime)
    - Z2.2 — M65 (shell detection)
    - Z2.3 — M66 (Filesystem MCP big files hang)
@@ -799,23 +834,29 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
    - Z2.6 — M69 (asyncio.run in FastAPI)
    - Z2.7 — اصلاحیه سند جامع بخش ۲.۲
    - Z2.8 — bytes خراب در CHAT_LOG (cosmetic)
-   - Z2.9 — قانون #۶۶ Push اجباری ⭐ important
+   - Z2.9 — قانون #۶۶ (Proposed Rule — هنوز در Constitution Locked نیست)
    - Z2.10 ⚠️ — M71 Documentation Drift Self-Reference Paradox
    - Z2.11 ⚠️ — M72 End-of-Chat Verification Checklist
    - Z2.12 ⚠️ — M73 Cross-Document Consistency Audit
    - Z2.13 ✅ — Bug #54 Decisions Gap (حل شد در cleanup چت ۱۰)
+   - Z2.14 ⚠️ — M74 Full-Range Decision Audit (نه Local)
+   - Z2.15 ⚠️ — M75 Within-File Consistency Check
+   - Z2.16 ⚠️ — M76 Decision vs Rule تمایز مبهم
+   - Z2.17 ⚠️ — M77 HEAD Self-Reference نباید Hardcode باشد (⭐ critical)
+   - Z2.18 ⚠️ — M78 Re-read After Edit
+   - Z2.19 ⚠️ — M79 Reserved IDs Explicit مستند شوند
 
 ═══════════════════════════════════════════════════════════════════════
 بخش ۵: قوانین مهم برای چت ۱۱
 ═══════════════════════════════════════════════════════════════════════
 
 📋 قوانین UX (v2.11):
-   - #۶۱ — پیشنهاد گزینه مطلوب با ⭐ (پر کاربرد در این چت!)
-   - #۶۲ — handoff دائمی (همین فایل را خواندی)
-   - #۶۳ — 🟢 ▶️ EXECUTE (در discovery تقریباً غیرفعال)
-   - #۶۴ — عدم نمایش جزئیات تصحیح خطا
-   - #۶۵ — نمایش درس از اشتباهات
-   - #۶۶ — Push اجباری در پایان چت:
+   - #۶۱ (Locked) — پیشنهاد گزینه مطلوب با ⭐
+   - #۶۲ (Locked) — handoff دائمی
+   - #۶۳ (Locked) — 🟢 ▶️ EXECUTE
+   - #۶۴ (Locked) — عدم نمایش جزئیات تصحیح خطا
+   - #۶۵ (Locked) — نمایش درس از اشتباهات
+   - #۶۶ (**Proposed** — در PENDING Z2.9، هنوز در Constitution Locked نیست) — Push اجباری در پایان چت:
        git add . && git commit -m "..." && git push origin main
 
 📋 پروتکل شروع چت طبق قانون #۴۸:
@@ -839,10 +880,18 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
 💡 M69 — asyncio.run() در FastAPI handler crash می‌کند.
 💡 M70 — سادگی workflow > لایه‌بندی پیچیده. یک source of truth بهتر است.
 
-درس‌های process چت ۱۰ (cleanup round — در PENDING Z2.10-Z2.13 ثبت):
+درس‌های process چت ۱۰ (cleanup round 1 — در PENDING Z2.10-Z2.13 ثبت):
 💡 M71 — Documentation Drift Self-Reference Paradox (جزئیات در بخش 0--)
 💡 M72 — End-of-Chat Verification Checklist غایب در قانون #۴۸ (جزئیات در بخش 0--)
 💡 M73 — Cross-Document Consistency Audit اجباری در شروع چت (جزئیات در بخش 0--)
+
+درس‌های پس از cleanup round 2 (کشف‌شده در چت ۱۱ audit — در PENDING Z2.14-Z2.19 ثبت):
+💡 M74 — Full-Range Decision Audit (نه Local) — کشف gap های قدیمی‌تر
+💡 M75 — Within-File Consistency Check (دو بخش SESSION_STATUS متناقض)
+💡 M76 — Decision vs Rule تمایز مبهم (Locked vs Proposed)
+💡 M77 — HEAD Self-Reference نباید Hardcode باشد (placeholder الزامی) ⭐ critical
+💡 M78 — Re-read After Edit (عدم اتکا به diff)
+💡 M79 — Reserved IDs Explicit مستند شوند (#۱۶-۱۹، #۴۹)
 
 ═══════════════════════════════════════════════════════════════════════
 بخش ۷: Stack و metadata
@@ -878,8 +927,8 @@ Risk management باید در همه لایه‌ها enforce شود، نه optio
 پایان CHAT11_HANDOFF
 ═══════════════════════════════════════════════════════════════════════
 
-🎯 موفقیت چت ۱۰: G1+G2+G3 + 9 Decisions (#58-66) + 8 درس (M66-M73)
-   + 13 PENDING (Z2.1-Z2.13) + 5 commits + cleanup round
+🎯 موفقیت چت ۱۰: G1+G2+G3 + 9 Decisions (#58-66) + 14 درس (M66-M79)
+   + 19 PENDING (Z2.1-Z2.19) + 7+ commits + 2 cleanup rounds
 🎯 هدف چت ۱۱: مغز متفکر پروژه — MASTER_BLUEPRINT جامع و قطعی
 🎯 موکول به چت ۱۲+: شروع پیاده‌سازی فاز ۲ بر اساس MASTER_BLUEPRINT
 

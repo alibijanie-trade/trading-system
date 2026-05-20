@@ -336,6 +336,113 @@ RuntimeError: asyncio.run() cannot be called from a running event loop
 
 ---
 
+## 🆕 درس‌های پس از cleanup round (کشف‌شده در چت ۱۱ audit) — M74-M79
+
+### Z2.14: M74 — Full-Range Decision Audit (نه Local) ⚠️
+
+**کشف‌شده در:** چت ۱۱ (audit Claude) — پیگیری در پایان چت ۱۰
+
+**درس (M74):**  
+وقتی Bug غایب (gap) در سری‌بندی پیدا می‌کنید (مثل #۵۷→#۶۵)، **کل range را audit کن، نه فقط local**.
+
+**تجربه چت ۱۰:**  
+برای Bug #۵۴ (gap #۵۷→#۶۵) در پایان چت ۱۰، فقط #۵۸-۶۶ را backfill کردم. gap های قدیمی‌تر (#۱۶-۱۹ و #۴۹) را ندیدم. Claude در چت ۱۱ در audit جامع آن‌ها را پیدا کرد.
+
+**راه‌حل:**  
+در پایان هر چت، یک اسکریپت `scripts/audit_decisions_continuity.py` اجرا شود که از #۱ تا Max ID بررسی کند و gap ها را نشان دهد.
+
+**ادغام در:** v2.12 — **نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.15: M75 — Within-File Consistency Check ⚠️
+
+**درس (M75):**  
+وقتی یک عدد در چند جای یک فایل تکرار می‌شود (مثل "تعداد PENDING")، تغییر فقط در یک جا ناسازگاری ایجاد می‌کند.
+
+**تجربه چت ۱۰:**  
+SESSION_STATUS دو بخش "تعداد PENDING" داشت:
+- بخش آمار بالا: ۱۳ ✅
+- بخش لیست پایین: ۷ ❌ (فقط Z2.1-Z2.7 لیست شده بود)
+
+**راه‌حل:**  
+در هر fields edit، کل فایل را search کن برای تکرار های همان مفهوم. یا Single Source of Truth pattern: یک بار عدد را تعریف کن و جاهای دیگر reference بده.
+
+**ادغام در:** v2.12 — **نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.16: M76 — Decision vs Rule تمایز مبهم ⚠️
+
+**درس (M76):**  
+تمایز نیاز است:
+- **Decision (در DECISIONS_LOG):** تصمیم گرفته شده در یک چت (Accepted ولی هنوز در constitution نیست)
+- **Proposed Rule (در PENDING):** Decision پیشنهادی برای ادغام در vبعدی
+- **Locked Rule (در سند جامع):** قانون رسمی اعمال شده در atomic update
+
+**تجربه چت ۱۰:**  
+«قانون #۶۶ Push اجباری» در HANDOFF به‌عنوان «feat» و در SESSION_STATUS به‌عنوان «غایب در constitution» صحبت شد. تمایز نامشخص بود. در حقیقت: Decision #۶۶ Accepted ✔ ، ولی Rule #۶۶ در Constitution ✖ (فقط Proposed).
+
+**راه‌حل:**  
+در HANDOFF و هر reference به قانون، صریح نوشته شود:
+- "قانون #N (Locked)" → در Constitution
+- "قانون #N (Proposed)" → در PENDING
+
+**ادغام در:** v2.12 — **نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.17: M77 — HEAD Self-Reference نباید Hardcode باشد ⚠️
+
+**درس (M77):**  
+M71 گفت "دو commit جداگانه backfill بساز". این **هم کافی نیست** — commit backfill خودش یک HEAD جدید تولید می‌کند که فایل reflect نمی‌کند.
+
+**راه‌حل واقعی:**  
+HEAD reference در هر فایل که خودش commit می‌شود باید placeholder باشد:
+```
+Git HEAD: <با git log -1 در چت بعد پر کن>
+```
+یا فایل جدا `docs/HEADS.md` که فقط در شروع چت بعد پر می‌شود.
+
+**ادغام در:** v2.12 — **نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.18: M78 — Re-read After Edit (عدم اتکا به diff) ⚠️
+
+**درس (M78):**  
+پس از هر file edit ، باید کل فایل re-read شود، نه فقط diff verify شود. diff فقط تغییرات را نشان می‌دهد، نه پیامدهای آن را در سایر جاهای فایل.
+
+**تجربه چت ۱۰:**  
+بعد از update بخش آمار SESSION_STATUS، فرض کردم fine است. چت ۱۱ نشان داد بخش دیگری هم تعداد قدیمی داشت.
+
+**راه‌حل:**  
+پس از هر batch edit، فایل را کامل با read_text_file بخوان. در خودبینی بدون verification اعتماد نکن.
+
+**ادغام در:** v2.12 — **نشان داده شده به کاربر:** ✅
+
+---
+
+### Z2.19: M79 — Reserved IDs باید Explicit مستند شوند ⚠️
+
+**درس (M79):**  
+Decisions #۱۶-۱۹ و #۴۹ در دسته‌بندی موضوعی DECISIONS_LOG "reserved" هستند، ولی این فقط در categorization معلوم بود. در جدول آمار ("Accepted: ۶۶") تمایز بین "Max ID" و "Recorded" غایب بود.
+
+**راه‌حل:**  
+در جدول آمار DECISIONS_LOG دو عدد جدا:
+- **Max ID:** ۶۶
+- **Recorded:** ~۶۱
+- **Reserved (غیر ثبت‌شده):** #۱۶-۱۹، #۴۹ — توضیح: برای renumbering یا reservation آینده
+
+همچنین باید تصمیم گرفت:
+- (الف) Reserved بماند → رفتار فعلی، ولی صریح مستند
+- (ب) Renumber → همه Decisions پیوسته شوند (پیچیده: رفرنس‌ها در چت ها تغییر نمی‌کنند)
+- (ج ⭐) Backfill تصمیمات واقعی از تاریخچه پروژه برای پر‌کردن gap (اگر قابل پیدا کردن)
+
+**ادغام در:** v2.12 — **نشان داده شده به کاربر:** ✅
+
+---
+
 ## 📜 آیتم‌های ادغام‌شده در v2.11 (تاریخچه — حذف شد)
 
 تمام آیتم‌های زیر در پایان چت ۹ (فاز A) با ساخت سند جامع v2.11 ادغام شدند و طبق پروتکل ۷.۳ از این فایل پاک شدند:
@@ -368,7 +475,7 @@ RuntimeError: asyncio.run() cannot be called from a running event loop
 
 ## 📌 پایان فایل
 
-**نسخه:** v0.5 (2026-05-20 — پایان چت ۱۰ cleanup: افزودن Z2.10-Z2.13 — M71/M72/M73 + Bug #54)  
+**نسخه:** v0.6 (2026-05-20 — پایان چت ۱۰ round 2 cleanup: افزودن Z2.14-Z2.19 — M74-M79 کشف‌شده در چت ۱۱ audit)  
 **ساخته توسط:** Claude در چت ۸ (`TRADING-phase0-part08-pre-phase1-setup`)  
 **به‌روز توسط:** Claude در پایان چت ۱۰ طبق پروتکل ۷.۳  
 **ادغام بعدی:** سند جامع v2.12 (در چت ۱۱ یا چت ۱۲)
@@ -390,8 +497,14 @@ RuntimeError: asyncio.run() cannot be called from a running event loop
 | **Z2.11** 🆕⚠️ | 🔴 **important** | M72 — End-of-Chat Verification Checklist غایب در قانون #۴۸ |
 | **Z2.12** 🆕⚠️ | 🔴 **important** | M73 — Cross-Document Consistency Audit اجباری در پایان چت |
 | **Z2.13** ✅ | 🟡 medium | Bug #54 — Decisions منقطع (#57→#65) — حل شد در پایان چت ۱۰ |
+| **Z2.14** 🆕⚠️ | 🔴 **important** | M74 — Full-Range Decision Audit (نه Local) — کشف gap های قدیمی‌تر در چت ۱۱ |
+| **Z2.15** 🆕⚠️ | 🔴 **important** | M75 — Within-File Consistency Check (دو بخش SESSION_STATUS متناقض) |
+| **Z2.16** 🆕⚠️ | 🔴 **important** | M76 — Decision vs Rule تمایز مبهم (Locked vs Proposed) |
+| **Z2.17** 🆕⚠️ | 🔴 **critical** | M77 — HEAD Self-Reference نباید Hardcode باشد (placeholder الزامی) |
+| **Z2.18** 🆕⚠️ | 🎯 important | M78 — Re-read After Edit (عدم اتکا به diff) |
+| **Z2.19** 🆕⚠️ | 🎯 important | M79 — Reserved IDs باید Explicit مستند شوند (#۱۶-۱۹، #۴۹) |
 
-**تعداد:** ۱۳ آیتم  
+**تعداد:** ۱۹ آیتم  
 **اولویت ادغام:** Z2.4 (critical bug)، Z2.1 (already-fixed lesson)، بقیه
 
 ---

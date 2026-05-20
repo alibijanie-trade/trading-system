@@ -12,7 +12,7 @@
 - **Tier جاری:** Tier 2 + Infrastructure — **۱۶/۲۱ DONE (76%)**
 - **سند جامع:** **v2.11** (152,438 chars؛ نیاز به اصلاح بخش ۲.۲ در v2.12)
 - **Git HEAD شروع چت ۱۰:** `88debb7`
-- **Git HEAD پایان چت ۱۰:** `f42d54f` (پس از cleanup round و بک‌فیل Decisions #۵۸-۶۶)
+- **Git HEAD پایان چت ۱۰:** `<بعد از همه commit ها از git log بخوان>` (M71 self-reference paradox — مقدار قطعی نمی‌نویسیم چون هر تغییر در این فایل، HEAD آن را عوض می‌کند. واقعی: تا e6480ff رسیده، شاید بیشتر)
 - **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH via port 443) ✅
 - **چت بعدی پیشنهادی:** `TRADING-phase1to2-transition-discovery` 🎯 (Discovery Chat — درخواست کاربر پایان چت ۱۰)
 - **تصمیمات استراتژیک چت ۱۰:**
@@ -76,7 +76,7 @@
 - **چت‌های کامل:** **۱۰** (آخرین: همین چت)
 - **Backlog Total:** **۳۴/۸۲ DONE** (T3.01 + T3.02 اضافه شدند)
 - **PENDING برای v2.12:** **۱۳ آیتم** (Z2.1-Z2.13 — شامل M71/M72/M73 و Bug #54 حل‌شده در cleanup round)
-- **Git commits:** پایان چت ۱۰ — `5cfc7e0` → `a7dccca` → `a29586e` → `f42d54f` → `<جدید cleanup>` (از `88debb7`)
+- **Git commits:** پایان چت ۱۰ — chain از `88debb7` تا آخرین commit (برای لیست کامل: `git log 88debb7..HEAD --oneline`)
 
 ---
 
@@ -115,10 +115,9 @@
 
 ---
 
-## 🚧 PENDING برای v2.12 (۷ آیتم)
+## 🚧 PENDING برای v2.12 (۱۳ آیتم — sync با docs/PENDING_FOR_NEXT_VERSION.md)
 
-همه در `docs/PENDING_FOR_NEXT_VERSION.md`:
-
+**درس‌های فنی چت ۱۰ (M66-M70):**
 1. **Z2.1** (🎯) — M64 JSX runtime در plugin-react vs esbuild
 2. **Z2.2** (🟡) — M65 تشخیص shell از prompt
 3. **Z2.3** (🎯) — M66 Filesystem MCP و فایل‌های >200KB
@@ -126,16 +125,38 @@
 5. **Z2.5** (🎯) — M68 نسخه‌های pinned با PyPI verify
 6. **Z2.6** (🟡) — M69 asyncio.run() در FastAPI handler
 7. **Z2.7** (💡) — اصلاحیه سند جامع v2.11 بخش ۲.۲ (ccxt 4.3.0 → 4.3.98)
+8. **Z2.8** (💡) — bytes خراب در CHAT_LOG (cosmetic)
+
+**درس‌های process چت ۱۰ (M71-M73 cleanup round):**
+9. **Z2.9** (🔴) — قانون #۶۶ Push اجباری در پایان هر چت
+10. **Z2.10** (🔴) — M71 Documentation Drift Self-Reference Paradox
+11. **Z2.11** (🔴) — M72 End-of-Chat Verification Checklist
+12. **Z2.12** (🔴) — M73 Cross-Document Consistency Audit
+13. **Z2.13** (🟡 ✅ RESOLVED) — Bug #54 Decisions Numbering Gap (#57→#65)
+
+**نکته مهم درباره آمار Decisions:**  
+DECISIONS_LOG.md دارای **Max ID = ۶۶** است، ولی **تعداد Recorded ≈ ۶۱**. 
+gap های #۱۶-۱۹ و #۴۹ به‌عنوان "Reserved" در دسته‌بندی موضوعی فایل ثبت شده‌اند، نه bug. 
+(این تمایز در v2.12 صریح‌تر مستند می‌شود — درس M79 جدید.)
 
 ---
 
-## 🚀 اولین گام‌های چت ۱۱
+## 🚀 اولین گام‌های چت ۱۱ (Discovery / Master Architecture)
 
-1. **خواندن قانون #۴۸:** بخش ۱ سند جامع + PENDING + CHAT_LOG چت ۱۰
-2. **خواندن `claude_workspace/incoming_permanent/CHAT11_HANDOFF.txt`**
-3. **چک ۶ ⚠️ CHECK:** venv فعال، backend اجرا، frontend اجرا، login، تست‌های ۵۸b-۶۲b
-4. **شروع T3.03:** `binance_client.py` (REST wrapper) — یا T3.04 (binance_ws.py) بسته به انتخاب کاربر
-5. **در پایان چت ۱۱:** بسته‌بندی + PENDING update + احتمالاً ادغام Z2.x به v2.12
+⚠️ توجه: چت ۱۱ یک **Discovery Chat** است (نه coding). T3.03+ موکول به چت ۱۲+.
+
+1. **خواندن HANDOFF کامل:** `claude_workspace/incoming_permanent/CHAT11_HANDOFF.txt`
+2. **خواندن طبق قانون #۴۸:** این فایل + PENDING + CHAT_LOG چت ۱۰ + DECISIONS_LOG
+3. **اجرای M73 audit (اجباری):** cross-document consistency check
+   - HEAD واقعی با `git log -1` چک شود (نه از این فایل!)
+   - شمارش PENDING آیتم‌ها (انتظار: ۱۳)
+   - تعداد Recorded Decisions (انتظار: ~۶۱ با Max ID = ۶۶، gap های reserved)
+   - تأیید آمار در همه اسناد سازگار است
+4. **چک ۷ ⚠️ CHECK** از بخش ۴ HANDOFF (شامل CHECK 7 جدید M73 audit)
+5. **TODO ۱.الف:** بحث Scope فاز ۲ (الف/ب⭐/ج) قبل از محور ۱
+6. **TODO ۱.ب:** شروع جلسه ۹-محوری با روش پرسش-محور ۵-مرحله‌ای
+7. **خروجی نهایی:** `docs/MASTER_BLUEPRINT.md`
+8. **در پایان:** M72 checklist (۷ مرحله) + GitHub push اجباری
 
 ---
 

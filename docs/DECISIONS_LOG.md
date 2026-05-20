@@ -63,7 +63,12 @@
 | **Auth & Security** | #11, #12, #13 |
 | **Frontend Architecture** | #20-#29 |
 | **Theme & UI Design** | #30-#48 |
-| **Process & Governance** | #50-#54 |
+| **Process & Governance** | #50-#57 |
+| **Quality Hardening (Tier 2)** | #55, #56, #57 |
+| **Pre-commit & Git** | #58, #59, #60 |
+| **CCXT & Architecture (Phase 1)** | #61, #62, #63, #64 |
+| **Strategic (End of Chat 10)** | #65, #66 |
+| **Reserved (غیر-ثبت‌شده)** | #16, #17, #18, #19, #49 — برای renumbering آینده یا backfill تصمیمات تاریخی گم‌شده (درس M79) |
 
 ---
 
@@ -793,15 +798,23 @@ Binance API rate limits دارد. آیا custom token bucket بسازیم؟
 
 | Status | تعداد |
 |---|---|
-| ✅ Accepted | ۶۶ |
+| ✅ Accepted (Recorded) | ۶۱ |
+| ⬜ Reserved (غیر-ثبت‌شده) | ۵ (#۱۶-۱۹، #۴۹) |
 | ⚠️ Superseded | ۰ |
 | ❌ Rejected | ۰ |
 | ⏳ Pending | ۰ |
+
+**Max Decision ID:** ۶۶  
+**Total Recorded:** ۶۱  
+**Reserved Slots:** ۵ (در دسته‌بندی موضوعی بالا مستند شد)
+
+**تصمیم برای Reserved IDs (پایان چت ۱۰ round 2):**  
+دسته "ج" از Z2.19 (PENDING) → backfill تصمیمات واقعی تاریخی در v2.12 اگر در CHAT_LOG چت‌های ۲-۵ پیدا شدند. در غیر این صورت، "Reserved" دائمی شوند و فقط برای تست‌پذیری تاریخی نگه داشته می‌شوند.
 
 ---
 
 ## 📌 پایان DECISIONS_LOG
 
-**نسخه:** v1.2 (2026-05-20 — پایان چت ۱۰: backfill Decisions #58-66 + cleanup Documentation Drift M71)  
-**تصمیمات ثبت‌شده:** ۶۶  
+**نسخه:** v1.3 (2026-05-20 — پایان چت ۱۰ round 2: اصلاح تمایز Max ID vs Recorded + مستندسازی Reserved IDs بر اساس M79)  
+**تصمیمات ثبت‌شده:** ۶۱ (Max ID ۶۶ — ۵ اسلات Reserved)  
 **Status کلی:** همه Accepted
