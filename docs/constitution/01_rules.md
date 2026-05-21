@@ -125,9 +125,9 @@ Claude در تمام مراحل پروژه همزمان در نقش‌های ز�
 
 ---
 
-## ۱.۹ جدول قوانین قفل‌شده (#۱-۶۶)
+## ۱.۹ جدول قوانین قفل‌شده (#۱-۶۷)
 
-> این جدول authoritative است. هر قانون با کلیک روی شماره به شرح کامل پایین‌تر می‌رود. در v2.12، قانون #۶۶ افزوده شد.
+> این جدول authoritative است. هر قانون با کلیک روی شماره به شرح کامل پایین‌تر می‌رود. در v2.13، قانون #۶۷ افزوده شد.
 
 | # | قانون قفل‌شده | نسخه |
 |---|---|---|
@@ -197,6 +197,7 @@ Claude در تمام مراحل پروژه همزمان در نقش‌های ز�
 | **۶۴ ⭐ 🆕** | عدم نمایش جزئیات تصحیح خطای کد — فقط گام اجرایی، نه «چرا/چطور تشخیص» | v2.11 |
 | **۶۵ ⭐ 🆕** | ثبت درس از اشتباهات با نمایش — درس کلی به کاربر نمایش، جزئیات تشخیص پنهان | v2.11 |
 | **۶۶ ⭐⭐⭐ 🆕** | Push اجباری در پایان هر چت (در branch infra/، پس از هر commit) | v2.12 |
+| **۶۷ ⭐⭐⭐ 🆕** | Cross-shell EXECUTE blocks اجباری — PowerShell-only cmdlets ممنوع مگر با label `[SHELL-SPECIFIC: PowerShell]` | v2.13 |
 
 ---
 
@@ -639,6 +640,50 @@ git commit -m "feat(...): description"
 #### Cross-refs
 - **Bug مرتبط:** #۵۴ در `03_bugs.md` (Decisions Numbering Gap)
 - **درس مرتبط:** M71 (Documentation Drift) در `02_lessons.md`
+
+### قانون #۶۷ ⭐⭐⭐ — Cross-shell EXECUTE blocks اجباری
+
+**نسخه افزوده:** v2.13 (تبدیل از PENDING Z2.20 / M87 candidate به Locked)
+**سطح:** 🔒 Locked
+**کشف‌شده در:** چت ۱۱.۰.الف با enforcement test M85 (نوشتن قانون و نقض فوری)
+
+#### متن قانون
+
+هر EXECUTE block باید **به‌طور پیش‌فرض cross-shell** باشد. دستورات shell-specific (به‌خصوص PowerShell-only cmdlets) **ممنوع** هستند مگر با label صریح `[SHELL-SPECIFIC: PowerShell]` در header بلوک.
+
+#### Cmdlet‌های ممنوع (در EXECUTE block پیش‌فرض)
+
+- `Copy-Item` → استفاده از `copy` (cross-shell)
+- `Get-ChildItem` / `gci` → استفاده از `dir`
+- `Test-Path` → استفاده از `if exist` (CMD-style)
+- `New-Item -ItemType Directory` → استفاده از `mkdir`
+- `Remove-Item` → استفاده از `del`
+- `Move-Item` → استفاده از `move`
+- `Out-File` / `Select-String` / `Where-Object` / دیگر cmdlets پایتون‌دار → جایگزین cross-shell یا اسکریپت Python
+
+**جدول مرجع کامل:** `02_lessons.md` بخش ۲.۸ (جزئیات M85)
+
+#### استثنا (با label اجباری)
+
+اگر دستوری واقعاً فقط در PowerShell کار می‌کند و معادل CMD ندارد (مثل `Set-ExecutionPolicy`)، EXECUTE block باید با header شروع شود:
+
+```markdown
+## 🟢 ▶️ EXECUTE — اقدام لازم [SHELL-SPECIFIC: PowerShell]
+
+🟩 tab «2 scripts» (فقط PowerShell):
+```
+
+#### استدلال
+
+۱. **اجتناب از violation در CMD users:** پروژه PowerShell + venv را default پذیرفته، ولی CMD هم باید کار کند
+۲. **Positive constraint > Negative reminder:** تجربه M85 نشان داد «حواست باشد» کافی نیست
+۳. **تقلید از الگوی موفق قانون #۴۶:** ASCII-only در print() تقریباً هرگز نقض نشده — چون lists صریح دارد
+۴. **رفع ریشه‌ای M87:** Active-writing self-binding failure (چت ۱۱.۰.الف enforcement test)
+
+#### Cross-refs
+- **درس مرتبط:** M85 (Terminal Type Awareness) + M87 (Active-Writing Self-Binding Failure) در `02_lessons.md`
+- **اصل:** "positive constraint" در `04_principles.md`
+- **Template:** Pre-EXECUTE verification در `06_meta.md` بخش ۶.۳ Template 9
 
 ---
 

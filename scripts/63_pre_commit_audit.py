@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Pre-commit Audit Script (Layer 1) - Constitution v2.12
+Pre-commit Audit Script (Layer 1) - Constitution v2.13
 
 Purpose: Documentation consistency check before each commit.
 
@@ -76,8 +76,11 @@ RESERVED_LESSON_IDS.add(81)
 # Reserved rule IDs
 RESERVED_RULE_IDS = {52, 53}
 
-# Current active version of Constitution
-CURRENT_VERSION = "v2.12"
+# Current active version of Constitution + acceptable versions in module headers.
+# Module headers may reference structural version (v2.12 Modular split) or current (v2.13).
+# Both are valid - check_6 accepts any version in ACCEPTABLE_VERSIONS.
+CURRENT_VERSION = "v2.13"
+ACCEPTABLE_VERSIONS = ["v2.12", "v2.13"]
 
 # Git hash pattern: 7-40 hex chars
 GIT_HASH_PATTERN = re.compile(r"\b[a-f0-9]{7,40}\b")
@@ -509,8 +512,9 @@ def check_5_head_hardcode() -> CheckResult:
 
 def check_6_version_consistency() -> CheckResult:
     """
-    Verify all modular constitution files reference the current version (v2.12).
-    Each file's header section (first 30 lines) should mention v2.12.
+    Verify all modular constitution files reference an acceptable version.
+    Each file's header section (first 30 lines) should mention one of ACCEPTABLE_VERSIONS.
+    Module headers may reference structural version (v2.12 Modular) or current (v2.13).
     """
     name = "check_6_version_consistency"
     details: List[str] = []
@@ -525,20 +529,28 @@ def check_6_version_consistency() -> CheckResult:
         with fpath.open("r", encoding="utf-8") as f:
             header = "".join(f.readline() for _ in range(30))
 
-        if CURRENT_VERSION not in header:
+        # Accept if ANY of the acceptable versions appears in header
+        if not any(v in header for v in ACCEPTABLE_VERSIONS):
             missing_version.append(fpath.name)
 
-    details.append(f"Checked {len(MODULAR_FILES)} modular files for '{CURRENT_VERSION}' in header")
+    details.append(
+        f"Checked {len(MODULAR_FILES)} modular files for any of {ACCEPTABLE_VERSIONS} in header"
+    )
 
     if missing_version:
         return CheckResult(
             name,
             False,
-            f"{len(missing_version)} file(s) missing {CURRENT_VERSION} in header",
+            f"{len(missing_version)} file(s) missing acceptable version in header",
             details + [f"Missing: {f}" for f in missing_version],
         )
 
-    return CheckResult(name, True, f"all modular files reference {CURRENT_VERSION}", details)
+    return CheckResult(
+        name,
+        True,
+        f"all modular files reference acceptable version ({ACCEPTABLE_VERSIONS})",
+        details,
+    )
 
 
 # =============================================================================
@@ -608,7 +620,7 @@ ALL_CHECKS: List[Callable[[], CheckResult]] = [
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Pre-commit Audit (Layer 1) for Constitution v2.12",
+        description="Pre-commit Audit (Layer 1) for Constitution v2.13",
     )
     parser.add_argument(
         "--verbose", action="store_true", help="Show details for passing checks too"
@@ -629,7 +641,7 @@ def main():
     else:
         checks_to_run = ALL_CHECKS
 
-    print("Pre-commit Audit (Layer 1) - Constitution v2.12")
+    print("Pre-commit Audit (Layer 1) - Constitution v2.13")
     print("=" * 60)
     print(f"Repo root: {REPO_ROOT}")
     print(f"Running {len(checks_to_run)} check(s)...")

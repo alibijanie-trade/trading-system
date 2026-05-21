@@ -1,11 +1,12 @@
-# Constitution سامانه هوشمند ترید — v2.12 (Modular)
+# Constitution سامانه هوشمند ترید — v2.13 (Modular)
 
 > **Intelligent Trading System — Modular Constitution**
 > در بازارهای مالی | ارز دیجیتال و فارکس
 >
-> **نسخه:** 2.12 (modular split از v2.11)
+> **نسخه:** 2.13 (atomic amendment از v2.12 modular split)
 > **تاریخ شروع split:** اردیبهشت ۱۴۰۵ (May 2026)
-> **چت مسئول:** ۱۱.۰.الف (`TRADING-infra-governance-constitution-split`)
+> **تاریخ v2.13:** خرداد ۱۴۰۵ (May 2026)
+> **چت مسئول:** ۱۱.۰.ج (`TRADING-infra-governance-finalize-and-merge`)
 > **Branch:** `infra/governance-overhaul`
 > **Created in commit:** `<git log -1 --format=%h پس از commit 1 پر شود>`
 
@@ -28,7 +29,7 @@
 |---|---|---|
 | **[main.md](./main.md)** | این فایل — index + cross-refs + Vision + Quick-start | ~8KB |
 | **[01_rules.md](./01_rules.md)** | قوانین Locked #۱-N (با شرح کامل، نمونه، استثناها) | ~45KB |
-| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M86) با علت ریشه‌ای و راه‌حل | ~50KB |
+| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M87) با علت ریشه‌ای و راه‌حل | ~50KB |
 | **[03_bugs.md](./03_bugs.md)** | کاتالوگ Bug ها (#1-#54+) با علائم، علت، fix | ~30KB |
 | **[04_principles.md](./04_principles.md)** | ۸ اصل بنیادی + سطح‌بندی 🔒/🎯/💡 + No-Deletion + Atomic Updates | ~12KB |
 | **[05_architecture.md](./05_architecture.md)** | Stack + DB Schema + Backend + Frontend + UI/UX + Security + Roadmap | ~40KB |
@@ -78,6 +79,7 @@
 - **#۶۴** عدم نمایش جزئیات تصحیح خطا → `01_rules.md#قانون-64`
 - **#۶۵** ثبت درس از اشتباهات با نمایش → `01_rules.md#قانون-65`
 - **#۶۶** Push اجباری در پایان هر چت (Locked در v2.12) → `01_rules.md#قانون-66`
+- **#۶۷** Cross-shell EXECUTE blocks اجباری (Locked در v2.13) → `01_rules.md#قانون-67`
 
 ### درس‌های مهم در `02_lessons.md`
 
@@ -87,6 +89,7 @@
 - **M74-M79** درس‌های cleanup round 2 → `02_lessons.md#m74-m79`
 - **M82** Verification Claim Must Be Verified → `02_lessons.md#m82`
 - **M83** Retry First, Restructure Last → `02_lessons.md#m83`
+- **M87** Active-Writing Self-Binding Failure (v2.13) → `02_lessons.md#m87`
 
 ### اصول بنیادی در `04_principles.md`
 
@@ -117,16 +120,16 @@
 
 ---
 
-## 📊 آمار Constitution v2.12
+## 📊 آمار Constitution v2.13
 
 | دسته | تعداد |
 |---|---|
-| قوانین Locked | ۶۶ ثبت‌شده (#۱-۶۶) + ۲ Reserved (#۵۲, #۵۳) |
-| درس‌نامه ردیف | M1-M86 ثبت‌شده + ۲۸ Reserved (M22, M24, M29, M32-M43, M45-M55, M80, M81) |
+| قوانین Locked | ۶۷ ثبت‌شده (#۱-۶۷) + ۲ Reserved (#۵۲, #۵۳) |
+| درس‌نامه ردیف | M1-M87 ثبت‌شده + ۲۸ Reserved (M22, M24, M29, M32-M43, M45-M55, M80, M81) |
 | Bug ها | ۱۶ ثبت‌شده در `03_bugs.md` + ۳۰+ در `docs/TROUBLESHOOTING.md` |
 | ماژول‌ها | ۷ (شامل main.md) + archive |
-| اندازه کل واقعی | ~۱۷۲KB توزیع‌شده (هر ماژول <۵۰KB، MCP-safe) |
-| بزرگترین ماژول | `05_architecture.md` (~۳۳KB) |
+| اندازه کل واقعی | ~۱۷۵KB توزیع‌شده (هر ماژول <۵۰KB، MCP-safe) |
+| بزرگترین ماژول | `02_lessons.md` (~۳۸KB) |
 
 ---
 
@@ -149,6 +152,7 @@
 
 | نسخه | تاریخ | چت(ها) | تغییرات اصلی |
 |---|---|---|---|
+| v2.13 | May 2026 | ۱۱.۰.ج | **Cross-shell mandatory** — قانون #۶۷ + M87 (Active-Writing Self-Binding Failure) + Pre-EXECUTE verification template |
 | v2.12 | May 2026 | ۱۱.۰.الف+ب+ج | **Modular split** — تقسیم به ۶ ماژول + atomic update با ادغام PENDING |
 | v2.11 | May 2026 | ۸+۹ | UX hardening — قوانین #۶۲-۶۵ |
 | v2.10 | May 2026 | ۷+۸ | Filesystem MCP + claude_workspace |

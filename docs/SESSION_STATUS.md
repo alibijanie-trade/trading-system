@@ -1,8 +1,8 @@
-# Session Status — وضعیت پایان چت ۱۱.۰.الف
+# Session Status — وضعیت پایان چت ۱۱.۰.ج
 
-> **آخرین به‌روزرسانی:** 2026-05-21 (پایان چت ۱۱.۰.الف)
-> **نسخه پروژه:** v0.5.0 (پس از modular split v2.12)
-> **چت:** `TRADING-infra-governance-constitution-split` ✅ COMPLETED
+> **آخرین به‌روزرسانی:** 2026-05-21 (پایان چت ۱۱.۰.ج — atomic update v2.13)
+> **نسخه پروژه:** v0.6.0 (پس از atomic update v2.13 — Cross-shell mandatory)
+> **چت:** `TRADING-infra-governance-finalize-and-merge` ✅ COMPLETED
 
 ---
 
@@ -10,7 +10,7 @@
 
 - **فاز جاری:** ۱ — **Skeleton آماده** ✅ (CCXTDataSource + gradient interface از چت ۱۰)
 - **Tier جاری:** Infrastructure overhaul (subgoal ۱۱.۰.الف کامل، ب و ج باقی)
-- **Constitution:** **v2.12 (Modular)** — ۷ ماژول در `docs/constitution/` + archive
+- **Constitution:** **v2.13 (Modular)** — ۷ ماژول در `docs/constitution/` + archive + atomic amendments (v2.13 = Cross-shell mandatory)
 - **Git HEAD پایان چت ۱۱.۰.الف:** `ac1266b` (push شده به GitHub)
 - **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH) ✅
 - **Branch جاری:** `infra/governance-overhaul` ⏳ (آماده merge به `main` در پایان چت ۱۱.۰.ج)
@@ -48,8 +48,8 @@
 
 ## 📊 آمار نهایی پروژه (پس از چت ۱۱.۰.الف)
 
-- **قوانین قفل‌شده:** **۶۶** (#۱-۶۶ با ۲ Reserved: #۵۲، #۵۳) ⭐ افزایش از ۶۵
-- **درس‌نامه اشتباهات:** **M1-M86** ثبت‌شده (با ۲۸ Reserved: M22, M24, M29, M32-M43, M45-M55, M80, M81)
+- **قوانین قفل‌شده:** **۶۷** (#۱-۶۷ با ۲ Reserved: #۵۲، #۵۳) ⭐ افزایش از ۶۶ (#۶۷ Cross-shell mandatory در v2.13)
+- **درس‌نامه اشتباهات:** **M1-M87** ثبت‌شده (با ۲۸ Reserved: M22, M24, M29, M32-M43, M45-M55, M80, M81) ⭐ افزایش از M86 (M87 Active-Writing Self-Binding Failure)
 - **Bug ها:** **۱۶ ثبت‌شده در `03_bugs.md`** + ۳۰+ در `docs/TROUBLESHOOTING.md`
 - **Constitution ماژول‌ها:** **۷** (main + ۶ ماژول) + archive
 - **اندازه Constitution:** ~۱۷۲KB توزیع‌شده (هر ماژول <۵۰KB، MCP-safe)

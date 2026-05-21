@@ -451,6 +451,9 @@ Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude De
 - **M85** Terminal Type Awareness (CMD vs PowerShell prompt)
 - **M86** Two-step commit-then-push (همیشه در دو کادر جدا) — جزئیات در ۲.۸
 
+### درس چت ۱۱.۰.ج (M87)
+- **M87** ⭐⭐⭐ Active-Writing Self-Binding Failure — جزئیات در ۲.۸ (تبدیل از Z2.20 PENDING به Locked، پشتیبان قانون #۶۷)
+
 ---
 
 ## ۲.۸ توضیحات کامل critical lessons M82-M86
@@ -539,6 +542,28 @@ git commit -m "عنوان" -m "پاراگراف ۲" -m "پاراگراف ۳"
 **اشتباه:** دستورات commit + push در یک کادر یکجا داده شد، کاربر فقط بخش اول را paste کرد.
 **راه‌حل:** commit در یک کادر کد، push در کادر کد جداگانه بعدی — در دو مرحله EXECUTE block. این برای اتمینان از انجام هر دو گام است.
 
+### M87 ⭐⭐⭐ — Active-Writing Self-Binding Failure (v2.13)
+
+**کشف‌شده در:** چت ۱۱.۰.الف enforcement test M85 | **اهمیت:** 🔴 critical | **Cross-refs:** M62, M85, قانون #۶۷
+
+**اشتباه:** Claude در چت ۱۱.۰.الف، M85 (Terminal Type Awareness) را نوشت و بلافاصله در EXECUTE block بعدی، به کاربر CMD دستورات PowerShell-only (Copy-Item، Test-Path، Get-Item) داد. خروجی خطا: «not recognized».
+
+**علت:** نوشتن قانون ≠ ساختن habit. Memory از "just wrote X" ضعیف‌تر از pattern عادتی است.
+
+**تفاوت با M62:**
+- M62 (Self-binding): Claude قانون موجود را ذکر می‌کند ولی فراموش می‌کند
+- M87 (Active-Writing): Claude قانون جدید را می‌سازد ولی در همان چت نقض می‌کند — چون writing جدید القای رعایت می‌کند بدون انکه habit واقعی بسازد
+
+**راه‌حل سه‌لایه در v2.13:**
+
+*Layer 1 — Positive Constraint:* قانون #۶۷ با لیست صریح cmdlets ممنوع و label اجباری. تقلید الگوی موفق قانون #۴۶ (ASCII-only).
+
+*Layer 2 — Visible Pre-EXECUTE Verification:* Claude قبل از هر EXECUTE block، یک خط verification در پاسخ بنویسد که visible باشد برای کاربر. جزئیات: `06_meta.md` Template 9.
+
+*Layer 3 — Audit Extension (آینده):* Layer 1 audit می‌تواند گسترش یابد. در v2.13 پیاده نشده.
+
+**درس عمیق‌تر:** «نوشتن یک درس در constitution، باعث رعایت آن توسط Claude در همان چت نمی‌شود.» برای رفع واقعی، نیاز به تغییر ساختاری: positive constraint + explicit list در قانون (نه صرفاً «حواست باشد» در درس).
+
 ---
 
 ## 🚧 وضعیت این ماژول
@@ -552,7 +577,7 @@ git commit -m "عنوان" -m "پاراگراف ۲" -m "پاراگراف ۳"
 - M80-M81 (Reserved)
 - M82-M86 (چت ۱۱.۰.الف): خلاصه در ۲.۷ + جزئیات کامل در ۲.۸
 
-جمع جدید: ۶۳ درس ثبت + ۲۸ Reserved.
+جمع جدید: ۶۴ درس ثبت + ۲۸ Reserved.
 
 ---
 
