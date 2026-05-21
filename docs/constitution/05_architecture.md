@@ -32,14 +32,34 @@
 
 🔒 نام tab ها حرف به حرف باید مطابق بالا باشد (قانون #۱۷ + #۳۱).
 
-### ۵.۱.۲ Shell Configuration
+### 5.1.2 Shell Configuration — اصلاحیه v2.12 ✅
 
-> ⚠️ **توجه v2.12:** بخش "Default profile = Command Prompt" در v2.11 وجود داشت. در عمل پروژه روی **PowerShell + venv فعال** است. این تناقض ۹ در commit 8 با اصلاحیه رسمی patch می‌شود (طبق No-Deletion #۲۴، متن قدیمی در commit این فایل حفظ شده).
+🔒 **Default shell در پروژه = PowerShell + venv فعال**
 
-**در عمل (واقعیت پروژه):**
-- Default shell: **PowerShell** (`(venv) PS D:\Projects\trading-system>`)
-- venv activated همیشه: `backend\venv\Scripts\activate`
-- alternative: CMD کار می‌کند ولی برخی دستورات multi-line (مثل git commit -m چندخطی) سخت‌تر هستند (M84)
+#### تاریخچه تغییر (درس برای پروژه)
+
+در v2.11 و پایین‌تر (سند ۱.۷)، متن گفته بود «Default profile در Windows Terminal باید Command Prompt باشد»، در حالی که در عمل در تمام پروژه از PowerShell به‌عنوان shell اصلی استفاده شده است. این تناقض (تناقض ۹ در Discovery چت ۱۱.۰.الف) در v2.12 رسماً رفع شد.
+
+بخش ۱.۷.۱ قدیمی (CMD profiles) به‌عنوان رفرنس تاریخی نگه داشته می‌شود (طبق قانون #۲۴ No-Deletion).
+
+#### تنظیمات واقعی پروژه
+
+| مورد | مقدار |
+|---|---|
+| **Default shell** | **PowerShell** در Windows Terminal |
+| **Prompt نمایشی** | `(venv) PS D:\Projects\trading-system>` |
+| **venv activation** | `.\backend\venv\Scripts\Activate.ps1` |
+| **تغییر drive** | `cd D:\` (PowerShell بدون `/d` کار می‌کند) |
+| **alternative** | CMD هم کار می‌کند ولی برخی دستورات multi-line در CMD دشوارتر است (M84) |
+
+نکته مهم: در PowerShell، دستورات چندخطی git commit با multiple `-m` تکراری کار می‌کند. در CMD باید در یک خط بودن رعایت شود (M84).
+
+#### چرا PowerShell ترجیح‌شده؟
+
+۱. پشتیبانی بهتر از multi-line commands و strings با escape
+۲. توابع بیشتر (مثل `Get-ChildItem`, `Test-Path`, `Get-Content`)
+۳. UTF-8 native (کمتر مشکل encoding cp1252 نسبت به CMD)
+۴. سازگاری بهتر با git operations پیچیده
 
 ### ۵.۱.۳ نکات Cross-shell
 

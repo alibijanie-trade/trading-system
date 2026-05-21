@@ -125,9 +125,9 @@ Claude در تمام مراحل پروژه همزمان در نقش‌های ز�
 
 ---
 
-## ۱.۹ جدول قوانین قفل‌شده (#۱-۶۵)
+## ۱.۹ جدول قوانین قفل‌شده (#۱-۶۶)
 
-این جدول authoritative است. هر قانون با کلیک روی شماره به شرح کامل پایین‌تر می‌رود.
+> این جدول authoritative است. هر قانون با کلیک روی شماره به شرح کامل پایین‌تر می‌رود. در v2.12، قانون #۶۶ افزوده شد.
 
 | # | قانون قفل‌شده | نسخه |
 |---|---|---|
@@ -196,10 +196,11 @@ Claude در تمام مراحل پروژه همزمان در نقش‌های ز�
 | **۶۳ ⭐ 🆕** | Convention `🟢 ▶️ EXECUTE` — هر گام اجرایی با تیتر `## 🟢 ▶️ EXECUTE — اقدام لازم` + نام tab + رنگ tab | v2.11 |
 | **۶۴ ⭐ 🆕** | عدم نمایش جزئیات تصحیح خطای کد — فقط گام اجرایی، نه «چرا/چطور تشخیص» | v2.11 |
 | **۶۵ ⭐ 🆕** | ثبت درس از اشتباهات با نمایش — درس کلی به کاربر نمایش، جزئیات تشخیص پنهان | v2.11 |
+| **۶۶ ⭐⭐⭐ 🆕** | Push اجباری در پایان هر چت (در branch infra/، پس از هر commit) | v2.12 |
 
 ---
 
-## شرح کامل قوانین مهم #۱۴-۶۵
+## شرح کامل قوانین مهم #۱۴-۶۶
 
 > برای صرفه‌جویی در فضا، شرح کامل قوانین #۱-۱۳ که از v2.0 پایه‌ای هستند، در توضیحات بالا (بندهای ۱.۱-۱.۸) آمده است. این بخش به قوانین #۱۴+ که هر کدام نیاز به شرح مفصل‌تر دارند می‌پردازد.
 
@@ -575,16 +576,88 @@ python scripts/19_test_excel_reader.py
 
 ---
 
-## 🚧 وضعیت این ماژول
+### قانون #۶۶ ⭐⭐⭐ — Push اجباری در پایان هر چت
 
-✅ **Migration کامل از v2.11** — قوانین #۱-۶۵ با شرح authoritative.
+**نسخه افزوده:** v2.12 (تبدیل از Proposed در PENDING Z2.9 به Locked)
+**سطح:** 🔒 Locked
+**کشف‌شده در:** چت ۱۰ با Bug #۵۴ (Decisions Numbering Gap)
 
-🔮 **افزوده‌های آینده (در commit 8 Atomic Update v2.12):**
-- قانون #۶۶ Locked (Push اجباری در پایان هر چت — تبدیل از Proposed در PENDING Z2.9)
-- قوانین جدید مشتق از M71-M82 (احتمالاً #۶۷ تا #۷۵)
-- اصلاح قانون #۱.۷ shell default (CMD → PowerShell+venv، تناقض ۹)
-- اصلاح قانون #۴۸ ترتیب خواندن (آپدیت برای ساختار Modular)
+#### متن قانون
+
+در پایان هر چت (و در branch های infra/، پس از هر commit جزئی)، Claude باید دستور را صریح به کاربر بدهد تا push روی ریپوزیتوری remote انجام شود:
+
+```bash
+git push origin <branch-name>
+```
+
+#### استدلال
+
+۱. **Backup فوری** — در صورت crash hard disk یا حذف تصادفی، کار حفظ می‌شود
+۲. **جلوگیری از تناقض local/remote** — چت‌های بعدی از remote pull می‌کنند و باید به‌روز باشد
+۳. **Time-machine کامل** — دسترسی به تاریخچه از هر دستگاه
+۴. **رفع ریشه‌ای Bug #۵۴** — در چت ۱۰ Decisions #۵۸-۶۶ بدون push باقی ماندند تا cleanup در پایان
+۵. **سازگاری با #۳۳** — zip backup دیگر primary نیست، GitHub است. zip فقط برای handoff به چت جدید مفید است.
+
+#### الگوی عملی در branch های مختلف
+
+| Branch Type | Push frequency |
+|---|---|
+| `main` | تنها پس از merge از develop/feature، هرگز direct push |
+| `develop` | پایان هر چت |
+| `feature/[name]` | پایان هر چت یا تغییرات بزرگ |
+| `fix/[name]` | پایان هر چت |
+| `hotfix/[name]` | فوراً پس از fix |
+| `infra/[name]` 🆕 v2.12 | **پس از هر commit** (برای granularity بالا) |
+
+#### مثال صحیح
+
+```bash
+🟩 tab «2 scripts»
+git add .
+git commit -m "feat(...): description" -m "detail line 2" -m "refs: M{N}"
+git push origin <branch>
+git log -1 --oneline   # verify HEAD == origin/HEAD
+```
+
+#### مثال غلط
+
+```bash
+git add .
+git commit -m "feat(...): description"
+# فراموش شد push! — نقض #۶۶
+```
+
+#### استثنائات
+
+- **ریپوزیتوری local-only** (بدون remote پیکربندی‌شده) — در این حالت Claude باید هشدار دهد.
+- **وضعیت غیر‌عادی** (مثل conflict حل‌نشده) — push موکول به resolve conflict می‌شود.
+
+#### قوانین مرتبط
+- **#۳۳** Backup فقط در پایان چت (با v2.12 به‌روز شد، GitHub primary شد)
+- **#۶۲** فایل handoff دائمی — در پایان چت همراه push ساخته می‌شود
+
+#### Cross-refs
+- **Bug مرتبط:** #۵۴ در `03_bugs.md` (Decisions Numbering Gap)
+- **درس مرتبط:** M71 (Documentation Drift) در `02_lessons.md`
 
 ---
 
-**📌 پایان 01_rules.md (commit 2 — migration completed)**
+---
+
+## 🚧 وضعیت این ماژول
+
+✅ **Migration کامل از v2.11 + Atomic Update v2.12** — قوانین #۱-۶۶ با شرح authoritative.
+
+✅ **افزوده‌های v2.12 اعمال‌شده:**
+- قانون #۶۶ Locked (Push اجباری) — تبدیل از Proposed در PENDING Z2.9
+- شرح کامل در بخش بالا آمده
+
+🔮 **افزوده‌های بعدی (در چت ۱۱.۰.ب + چت ۱۱.۰.ج بررسی می‌شوند):**
+- قوانین جدید مشتق از M82-M86 (احتمالاً #۶۷-#۷۰، پس از تلاش عملی) — در chat 11.0.ج
+- اصلاح قانون #۴۸ ترتیب خواندن (آپدیت برای ساختار Modular)
+- Pre-commit audit script (چت ۱۱.۰.ب)
+- Finalize Chat Script + Threshold Rules (چت ۱۱.۰.ج)
+
+---
+
+**📌 پایان 01_rules.md (commit 8 — atomic update v2.12 applied)**

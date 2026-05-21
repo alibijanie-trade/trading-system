@@ -121,27 +121,27 @@
 
 | دسته | تعداد |
 |---|---|
-| قوانین Locked | <ادغام در مرحله ۴ پر می‌شود> |
-| درس‌نامه ردیف | <ادغام در مرحله ۴ پر می‌شود> |
-| Bug ها | <ادغام در مرحله ۴ پر می‌شود> |
-| ماژول‌ها | ۷ (شامل main.md) |
-| اندازه کل (تقریبی) | ~۲۲۰KB توزیع شده در ۷ فایل |
-| بزرگترین ماژول | <ادغام در مرحله ۴ پر می‌شود> |
+| قوانین Locked | ۶۶ ثبت‌شده (#۱-۶۶) + ۲ Reserved (#۵۲, #۵۳) |
+| درس‌نامه ردیف | M1-M86 ثبت‌شده + ۲۸ Reserved (M22, M24, M29, M32-M43, M45-M55, M80, M81) |
+| Bug ها | ۱۶ ثبت‌شده در `03_bugs.md` + ۳۰+ در `docs/TROUBLESHOOTING.md` |
+| ماژول‌ها | ۷ (شامل main.md) + archive |
+| اندازه کل واقعی | ~۱۷۲KB توزیع‌شده (هر ماژول <۵۰KB، MCP-safe) |
+| بزرگترین ماژول | `05_architecture.md` (~۳۳KB) |
 
 ---
 
-## 🚧 وضعیت Migration (در حین چت ۱۱.۰.الف)
+## ✅ وضعیت Migration (چت ۱۱.۰.الف — کامل)
 
-- [x] Skeleton (commit 1) — این فایل + ۶ ماژول خالی + archive
-- [ ] Migrate سند ۱ → `01_rules.md` (commit 2)
-- [ ] Migrate سند ۱۸ → `02_lessons.md` (commit 3)
-- [ ] Migrate Bug catalog → `03_bugs.md` (commit 4)
-- [ ] Migrate principles → `04_principles.md` (commit 5)
-- [ ] Migrate سند ۲-۸+۱۲ → `05_architecture.md` (commit 6)
-- [ ] Migrate سند ۱۳-۱۷+۱۹-۲۵ → `06_meta.md` (commit 7)
-- [ ] Archive سند قدیمی + Atomic Update v2.12 (commit 8)
+- [x] Skeleton (commit 1) ✅
+- [x] Migrate سند ۱ → `01_rules.md` (commit 2) ✅
+- [x] Migrate سند ۱۸ → `02_lessons.md` (commit 3) ✅
+- [x] Migrate Bug catalog → `03_bugs.md` (commit 4) ✅
+- [x] Migrate principles → `04_principles.md` (commit 5) ✅
+- [x] Migrate سند ۲-۸+۱۲ → `05_architecture.md` (commit 6) ✅
+- [x] Migrate سند ۱۳-۱۷+۱۹-۲۵ → `06_meta.md` (commit 7) ✅
+- [x] Archive سند قدیمی + Atomic Update v2.12 (commit 8) ✅
 
-پس از merge این branch به main، این لیست به‌روز می‌شود.
+**Branch:** `infra/governance-overhaul` (آماده merge به `main` در پایان چت ۱۱.۰.ج)
 
 ---
 

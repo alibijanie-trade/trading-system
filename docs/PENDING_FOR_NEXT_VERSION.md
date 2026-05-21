@@ -503,9 +503,10 @@ Decisions #۱۶-۱۹ و #۴۹ در دسته‌بندی موضوعی DECISIONS_LO
 | **Z2.17** 🆕⚠️ | 🔴 **critical** | M77 — HEAD Self-Reference نباید Hardcode باشد (placeholder الزامی) |
 | **Z2.18** 🆕⚠️ | 🎯 important | M78 — Re-read After Edit (عدم اتکا به diff) |
 | **Z2.19** 🆕⚠️ | 🎯 important | M79 — Reserved IDs باید Explicit مستند شوند (#۱۶-۱۹، #۴۹) |
+| **Z2.20** 🆕⚠️ | 🔴 **critical** | M87 candidate — «Writing rule then violating it in same chat» — با enforcement test M85 در چت ۱۱.۰.الف ثابت شد. نوشتن قانون باعث رعایت آن در همان چت نمی‌شود. نیاز به اعمال فعال با self-check قبل از هر EXECUTE block. جزئیات: در 02_lessons.md M85 بخش «Enforcement Test واقعی». **تصمیم در چت ۱۱.۰.ج:** آیا M87 جدا ثبت شود یا M85 کافی است؟
 
-**تعداد:** ۱۹ آیتم  
-**اولویت ادغام:** Z2.4 (critical bug)، Z2.1 (already-fixed lesson)، بقیه
+**تعداد:** ۲۰ آیتم (Z2.20 افزوده شد در commit 8 چت ۱۱.۰.الف)  
+**اولویت ادغام:** Z2.4 (critical bug)، Z2.1 (already-fixed lesson)، Z2.20 (ارزیابی M87)، بقیه
 
 ---
 

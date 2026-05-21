@@ -417,7 +417,9 @@ Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude De
 
 ✅ **Migration کامل از v2.11** — درس‌های M1-M63 (با ۲۶ Reserved explicit) ثبت شدند.
 
-🔮 **افزوده‌های آینده (در commit 8 Atomic Update v2.12):**
+## ۲.۷ درس‌های جدید v2.12 (M64-M86) — اعمال‌شده در commit 8
+
+> خلاصه لیست پایین canonical است. توضیحات کامل در chat history چت‌های ۱۰، ۱۱، ۱۱.۰.الف تحلیل شده. M82-M86 (critical) در بخش ۲.۸ با جزئیات بیشتر آمده.
 
 ### درس‌های فنی چت ۱۰ (M64-M70)
 - **M64** JSX runtime در plugin-react vs esbuild
@@ -441,14 +443,117 @@ Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude De
 - **M78** Re-read After Edit
 - **M79** Reserved IDs Explicit مستند شوند
 
-### درس‌های چت ۱۱.۰.الف (M82-M86)
+### درس‌های چت ۱۱.۰.الف (M80-M86)
 - **M80, M81** → Reserved (سیاست gap)
-- **M82** ⭐ Verification Claim Must Be Verified Itself
-- **M83** Retry First, Restructure Last
-- **M84** Multi-line `-m` در CMD vs PowerShell
+- **M82** ⭐ Verification Claim Must Be Verified Itself — جزئیات در ۲.۸
+- **M83** Retry First, Restructure Last — جزئیات در ۲.۸
+- **M84** Multi-line `-m` در CMD vs PowerShell — جزئیات در ۲.۸
 - **M85** Terminal Type Awareness (CMD vs PowerShell prompt)
-- **M86** Two-step commit-then-push (همیشه در دو کادر جدا)
+- **M86** Two-step commit-then-push (همیشه در دو کادر جدا) — جزئیات در ۲.۸
 
 ---
 
-**📌 پایان 02_lessons.md (commit 3 — migration completed)**
+## ۲.۸ توضیحات کامل critical lessons M82-M86
+
+### M82 ⭐ — Verification Claim Must Be Verified Itself
+
+**کشف‌شده در:** چت ۱۱.۰.الف | **اهمیت:** 🔴 critical | **Cross-refs:** M1, M37, M61
+
+**اشتباه:** Claude در cleanup round 1 چت ۱۰ ادعا کرد «همه سند sync شدند» بدون این‌که خودش را verify کند. تناقض واقعی در چت ۱۱ کشف شد.
+**علت:** فرض «ادعای انجام = انجام واقعی» — تکیه به memory به‌جای read-back.
+**راه‌حل:** هر ادعای «X انجام شد» خودش یک claim است که نیاز به verify دارد. در پروژه فعلی: پس از هر write_file/edit_file، حتماً read_text_file با head/tail برای verify — نه تکیه به diff output.
+
+### M83 — Retry First, Restructure Last
+
+**کشف‌شده در:** چت ۱۱.۰.الف | **اهمیت:** 🟡 medium
+
+**اشتباه:** در واجهه با transient MCP failure، پیشنهاد rename/restructure.
+**ترتیب درست در tool failure:**
+1. **Retry ساده** — خیلی رایج، MCP transient bugs
+2. **Restart MCP/tool_search مجدد** — اگر retry کار نکرد
+3. **Workaround موقت** — مثل روش جایگزین
+4. **تغییر ساختاری دائمی** — آخرین گزینه (تغییر نام فایل، بازسازی ساختار)
+
+**مثال عملی:** در چت ۱۱.۰.الف edit_file با‌ «could not find match» غلط داد. با خواندن دوباره فایل (پیروی از M83) معلوم شد اختلاف در arrow character (`←` vs `→`) بود. بدون restructure حل شد.
+
+### M84 — Multi-line `-m` در CMD vs PowerShell
+
+**کشف‌شده در:** چت ۱۱.۰.الف (commit 1) | **اهمیت:** 🟡 medium | **Cross-refs:** M85
+
+**اشتباه:** `git commit -m "خط 1\nخط 2"` در CMD فقط خط اول را commit کرد، بقیه به‌عنوان دستور CMD اجرا شدند.
+**علت:** CMD و PowerShell دستورات multi-line را متفاوت parse می‌کنند. `\n` literal در CMD تفسیر نمی‌شود.
+**راه‌حل (cross-shell):** استفاده از چند `-m` پشت سر هم (یک `-m` برای هر پاراگراف). git خود خط خالی بین آن‌ها قرار می‌دهد. در هر دو shell کار می‌کند.
+
+```bash
+git commit -m "عنوان" -m "پاراگراف ۲" -m "پاراگراف ۳"
+```
+
+### M85 — Terminal Type Awareness
+
+**کشف‌شده در:** چت ۱۱.۰.الف | **اهمیت:** 🟠 high (ارتقا از medium پس از enforcement test) | **Cross-refs:** M65
+
+| Terminal | Prompt | ویژگی |
+|---|---|---|
+| PowerShell | `(venv) PS D:\...>` | UTF-8 native، multi-line friendly |
+| CMD | `(venv) D:\...>` | cp1252، سنتی‌تر |
+
+**راه‌حل:** Claude در هر خروجی terminal، prompt را verify کند. دستورات را cross-shell بدهد (M84 روش).
+
+#### ⭐ Enforcement Test واقعی (در همین چت)
+
+**تاریخ:** ۲۰۲۶-۰۵-۲۱ | **رویداد:** Claude در همان چتی که M85 را نوشت، آن را نقض کرد.
+
+**سناریو:** در commit 8 EXECUTE block برای copy فایل archive، Claude PowerShell cmdlets داد (Copy-Item, Test-Path, Get-Item) در حالی که prompt کاربر صریح `(venv) D:\Projects\trading-system>` (CMD) بود.
+
+**خروجی خطا:**
+```
+'Copy-Item' is not recognized as an internal or external command
+'Test-Path' is not recognized as an internal or external command
+'Get-Item' is not recognized as an internal or external command
+```
+
+**درس عمیق‌تر:**
+- نوشتن یک قانون در constitution، باعث رعایت آن توسط Claude در همان چت نمی‌شود
+- writing pattern A سپس violating pattern A یک فرم جدید از documentation drift است (احتمالاً M87 در چت ۱۱.۰.ج)
+- ورود اجباری: Claude **پیش از هر EXECUTE block،** باید آخرین prompt واقعی کاربر را صریح verify کند — نه memory جلسه لحظه‌ای
+
+**اصلاح اعمال‌شده:** از commit 8 به بعد، هر EXECUTE block باید cross-shell باشد. برای فایل operations: `copy`/`dir` (در هر دو کار می‌کند) ترجیح داده شود بر PowerShell-only cmdlets.
+
+**Cross-shell جدول مرجع:**
+
+| عملیات | CMD-only | PowerShell-only | Cross-shell ✅ |
+|---|---|---|---|
+| copy file | `copy A B` | `Copy-Item A B` | `copy A B` (هم در PS تعریف شده) |
+| list files | `dir` | `Get-ChildItem` / `gci` | `dir` (alias در هر دو) |
+| check exists | `if exist A ...` | `Test-Path A` | git-style یا تفکیک |
+| change dir | `cd /d D:\...` | `cd D:\...` | `cd D:\...` (در PS بدون /d کار می‌کند، در CMD /d لازم است تنها اگر drive تغییر کند) |
+| remove file | `del A` | `Remove-Item A` | `del A` |
+| make dir | `mkdir A` | `New-Item -ItemType Directory A` | `mkdir A` |
+
+**کلید طلایی:** دستورات سبک CMD تقریباً همیشه در PowerShell هم کار می‌کنند (جهت backward-compat). عکس آن صحیح نیست. **در شک → CMD-style.**
+
+### M86 — Two-step commit-then-push
+
+**کشف‌شده در:** چت ۱۱.۰.الف (commits 1، 2) | **اهمیت:** 🟡 medium | **Cross-refs:** قانون #۶۶
+
+**اشتباه:** دستورات commit + push در یک کادر یکجا داده شد، کاربر فقط بخش اول را paste کرد.
+**راه‌حل:** commit در یک کادر کد، push در کادر کد جداگانه بعدی — در دو مرحله EXECUTE block. این برای اتمینان از انجام هر دو گام است.
+
+---
+
+## 🚧 وضعیت این ماژول
+
+✅ **Migration کامل از v2.11 + Atomic Update v2.12** — درس‌های M1-M86 ثبت شد.
+
+✅ **افزوده‌های v2.12 اعمال‌شده:**
+- M64-M70 (فنی چت ۱۰): خلاصه در ۲.۷
+- M71-M73 (process cleanup round 1): خلاصه در ۲.۷
+- M74-M79 (cleanup round 2): خلاصه در ۲.۷
+- M80-M81 (Reserved)
+- M82-M86 (چت ۱۱.۰.الف): خلاصه در ۲.۷ + جزئیات کامل در ۲.۸
+
+جمع جدید: ۶۳ درس ثبت + ۲۸ Reserved.
+
+---
+
+**📌 پایان 02_lessons.md (commit 8 — atomic update v2.12 applied)**
