@@ -1,0 +1,312 @@
+# -*- coding: utf-8 -*-
+"""
+Test Script for 63_pre_commit_audit.py
+
+Per Rule #22: every {N}_*.py must have {N}b_test_*.py companion.
+
+Tests:
+    test_1_script_imports          - audit script imports without error
+    test_2_all_check_functions     - all 7 check functions exist and callable
+    test_3_run_on_real_project     - audit run on real project state (info only)
+    test_4_persian_digit_translation - to_ascii_digits() works
+    test_5_constants_valid         - all path constants resolve
+    test_6_reserved_lesson_ids     - RESERVED_LESSON_IDS set is correct (28 IDs)
+    test_7_help_output             - --help works (CLI sanity)
+
+Exit codes:
+    0 - all tests passed
+    1 - one or more failures
+"""
+
+import importlib.util
+import subprocess
+import sys
+from pathlib import Path
+
+# Force UTF-8 stdout on Windows (Rule #46)
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
+THIS_DIR = Path(__file__).resolve().parent
+AUDIT_SCRIPT = THIS_DIR / "63_pre_commit_audit.py"
+REPO_ROOT = THIS_DIR.parent
+
+
+def load_audit_module():
+    """Dynamically load the audit script as a module."""
+    spec = importlib.util.spec_from_file_location("audit", str(AUDIT_SCRIPT))
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Cannot load module from {AUDIT_SCRIPT}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+# =============================================================================
+# Tests
+# =============================================================================
+
+
+def test_1_script_imports():
+    """Audit script imports without syntax errors."""
+    if not AUDIT_SCRIPT.exists():
+        return False, f"audit script not found: {AUDIT_SCRIPT}"
+    try:
+        load_audit_module()
+        return True, "audit script imports cleanly"
+    except Exception as e:
+        return False, f"import failed: {e}"
+
+
+def test_2_all_check_functions():
+    """All 7 check functions are exported and callable."""
+    expected_names = [
+        "check_1_rule_counts",
+        "check_2_lesson_counts",
+        "check_3_decision_max_id",
+        "check_4_reserved_ids_explicit",
+        "check_5_head_hardcode",
+        "check_6_version_consistency",
+        "check_7_pending_count",
+    ]
+    try:
+        module = load_audit_module()
+    except Exception as e:
+        return False, f"cannot load module: {e}"
+
+    missing = []
+    for fname in expected_names:
+        fn = getattr(module, fname, None)
+        if fn is None:
+            missing.append(fname + " (missing)")
+        elif not callable(fn):
+            missing.append(fname + " (not callable)")
+
+    if missing:
+        return False, f"problems: {missing}"
+
+    # Also verify ALL_CHECKS list contains exactly 7 items
+    all_checks = getattr(module, "ALL_CHECKS", None)
+    if all_checks is None:
+        return False, "ALL_CHECKS list not exported"
+    if len(all_checks) != 7:
+        return False, f"ALL_CHECKS has {len(all_checks)} items, expected 7"
+
+    return True, "all 7 check functions present and callable"
+
+
+def test_3_run_on_real_project():
+    """
+    Run the audit script as subprocess against real project.
+    This is INFORMATIONAL - we report results but don't fail the test if
+    some checks fail (real drift may exist; that is what the audit is for).
+    """
+    if not AUDIT_SCRIPT.exists():
+        return False, "audit script missing"
+
+    try:
+        result = subprocess.run(
+            [sys.executable, str(AUDIT_SCRIPT)],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",  # M67: avoid cp1252 crash on Persian output
+            errors="replace",  # safety net for any decode issue
+            timeout=30,
+            cwd=str(REPO_ROOT),
+        )
+    except subprocess.TimeoutExpired:
+        return False, "audit script timed out (>30s)"
+    except Exception as e:
+        return False, f"subprocess failed: {e}"
+
+    # Report what we found
+    info = []
+    info.append(f"exit code: {result.returncode}")
+
+    # stdout may be None if subprocess failed weirdly - defensive
+    stdout = result.stdout or ""
+    # Count PASS / FAIL in output
+    pass_count = stdout.count("[PASS]")
+    fail_count = stdout.count("[FAIL]")
+    info.append(f"PASS: {pass_count}, FAIL: {fail_count}")
+
+    # Test succeeds if script ran (returncode 0 or 1, not 2 or crash)
+    if result.returncode not in (0, 1):
+        return (
+            False,
+            f"audit exited with unexpected code {result.returncode}: {result.stderr[:200]}",
+        )
+
+    return True, "audit ran successfully (" + ", ".join(info) + ")"
+
+
+def test_4_persian_digit_translation():
+    """to_ascii_digits() correctly converts Persian to ASCII."""
+    try:
+        module = load_audit_module()
+    except Exception as e:
+        return False, f"cannot load module: {e}"
+
+    fn = getattr(module, "to_ascii_digits", None)
+    if fn is None:
+        return False, "to_ascii_digits not exported"
+
+    # Test cases (Persian numerals -> ASCII)
+    test_cases = [
+        ("\u06f1\u06f2\u06f3", "123"),  # 123
+        ("\u06f6\u06f6", "66"),  # 66 (rule count)
+        ("v\u06f2.\u06f1\u06f2", "v2.12"),  # version
+        ("plain ASCII 123", "plain ASCII 123"),  # passthrough
+        ("", ""),  # empty
+    ]
+
+    for src, expected in test_cases:
+        got = fn(src)
+        if got != expected:
+            return False, f"to_ascii_digits('{src}') = '{got}', expected '{expected}'"
+
+    return True, f"all {len(test_cases)} translation cases passed"
+
+
+def test_5_constants_valid():
+    """All path constants point to existing files (or are parent dirs of valid files)."""
+    try:
+        module = load_audit_module()
+    except Exception as e:
+        return False, f"cannot load module: {e}"
+
+    # Files that MUST exist (the modular constitution)
+    required_files = [
+        "MAIN_MD",
+        "RULES_MD",
+        "LESSONS_MD",
+        "BUGS_MD",
+        "PRINCIPLES_MD",
+        "ARCH_MD",
+        "META_MD",
+    ]
+
+    missing = []
+    for const_name in required_files:
+        path = getattr(module, const_name, None)
+        if path is None:
+            missing.append(f"{const_name} (constant not defined)")
+        elif not Path(path).exists():
+            missing.append(f"{const_name} ({path}) - file not found")
+
+    if missing:
+        return False, f"missing: {missing}"
+
+    return True, f"all {len(required_files)} required modular files exist"
+
+
+def test_6_reserved_lesson_ids():
+    """RESERVED_LESSON_IDS contains the expected 28 IDs."""
+    try:
+        module = load_audit_module()
+    except Exception as e:
+        return False, f"cannot load module: {e}"
+
+    reserved = getattr(module, "RESERVED_LESSON_IDS", None)
+    if reserved is None:
+        return False, "RESERVED_LESSON_IDS not exported"
+
+    expected = {22, 24, 29, 80, 81}
+    expected.update(range(32, 44))  # M32-M43 = 12
+    expected.update(range(45, 56))  # M45-M55 = 11
+
+    if reserved != expected:
+        diff_missing = expected - reserved
+        diff_extra = reserved - expected
+        return False, f"mismatch - missing: {sorted(diff_missing)}, extra: {sorted(diff_extra)}"
+
+    if len(reserved) != 28:
+        return False, f"expected 28 IDs, got {len(reserved)}"
+
+    return True, "RESERVED_LESSON_IDS contains all 28 expected IDs"
+
+
+def test_7_help_output():
+    """--help works without error."""
+    try:
+        result = subprocess.run(
+            [sys.executable, str(AUDIT_SCRIPT), "--help"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",  # M67: avoid cp1252 crash
+            errors="replace",
+            timeout=10,
+            cwd=str(REPO_ROOT),
+        )
+    except Exception as e:
+        return False, f"subprocess failed: {e}"
+
+    if result.returncode != 0:
+        return False, f"--help exited {result.returncode}: {result.stderr[:200]}"
+
+    if "verbose" not in result.stdout or "check" not in result.stdout:
+        return False, "--help output missing expected flags"
+
+    return True, "--help output looks correct"
+
+
+# =============================================================================
+# Main
+# =============================================================================
+
+ALL_TESTS = [
+    ("test_1_script_imports", test_1_script_imports),
+    ("test_2_all_check_functions", test_2_all_check_functions),
+    ("test_3_run_on_real_project", test_3_run_on_real_project),
+    ("test_4_persian_digit_translation", test_4_persian_digit_translation),
+    ("test_5_constants_valid", test_5_constants_valid),
+    ("test_6_reserved_lesson_ids", test_6_reserved_lesson_ids),
+    ("test_7_help_output", test_7_help_output),
+]
+
+
+def main():
+    print("Test Suite: 63b_test_pre_commit_audit")
+    print("=" * 60)
+    print(f"Target: {AUDIT_SCRIPT}")
+    print(f"Total tests: {len(ALL_TESTS)}")
+    print()
+
+    passed = 0
+    failed = 0
+    results = []
+
+    for test_name, test_fn in ALL_TESTS:
+        try:
+            ok, msg = test_fn()
+        except Exception as e:
+            ok = False
+            msg = f"test raised exception: {e}"
+
+        status = "PASS" if ok else "FAIL"
+        results.append((test_name, ok, msg))
+        print(f"  [{status}] {test_name}")
+        print(f"         {msg}")
+        print()
+
+        if ok:
+            passed += 1
+        else:
+            failed += 1
+
+    print("=" * 60)
+    print(f"Results: {passed} passed, {failed} failed (of {len(ALL_TESTS)})")
+
+    if failed == 0:
+        print("All tests passed [OK]")
+        return 0
+    else:
+        print(f"{failed} test(s) FAILED")
+        return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1255,24 +1255,448 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 
 ---
 
+---
+
+## چت ۱۱.۰.الف (Session 11.0.الف) — `TRADING-infra-governance-constitution-split`
+
+**تاریخ:** 2026-05-21
+**Claude version:** Claude Opus 4.7 + Filesystem MCP + Project Knowledge
+**Git HEAD شروع:** `c5d2580` (main پس از چت ۱۰)
+**Git HEAD پایان:** `ac1266b` (روی `infra/governance-overhaul`)
+**Branch:** `infra/governance-overhaul` (جدید از main + tag `pre-split-checkpoint`)
+**فاز:** Tier infrastructure overhaul — subgoal ۱۱.۰.الف (اول از ۳ چت: الف/ب/ج)
+
+### 📌 موضوع کلی
+
+**Constitution Modular Split** — تقسیم سند جامع v2.11 (~۲۱۶KB monolithic) به ۶ ماژول + main + archive، پلاس atomic update v2.12 با ادغام PENDING items.
+
+**علت اصلی:** Filesystem MCP در فایل‌های >۲۰۰KB کند یا hang می‌کرد (M66). Modular split این را رفع کرد: هر ماژول <۵۰KB، MCP-safe.
+
+### 📦 ورودی‌های چت
+
+- سند جامع v2.11 در `docs/سند_جامع_v2_11.md` (~۲۱۶KB)
+- CHAT11_HANDOFF.txt از چت ۱۰
+- پیشنهاد کاربر: تقسیم سند برای رفع M66
+
+### 🎯 گام‌های انجام‌شده — ۸ commit
+
+#### Phase 1 — Discovery (بدون commit)
+
+- Read tail سند جامع v2.11 (پیروی از M66 — tail:3000 جای head)
+- Audit تناقض‌ها: ۹ inconsistency کشف شد، با اولویت‌بندی
+- برنامه ۸-commit ساخته شد و تأیید گرفت
+
+#### Commit 1 — Skeleton (`5285fb6`)
+- ایجاد پوشه `docs/constitution/` + `docs/constitution/archive/`
+- ۷ فایل ماژول (main + ۶ ماژول) + .gitkeep برای archive
+- main.md با statistics placeholder + cross-refs + Quick-start
+- ۲۷KB توزیع‌شده
+
+#### Commit 2 — 01_rules.md migration (`1eb1196`)
+- Migration کامل سند ۱ + بخش ۱.۹ (جدول قوانین #۱-۶۵)
+- شرح کامل برای قوانین #۱۴-۶۵
+- ۳۰.۵KB
+
+#### Commit 3 — 02_lessons.md migration (`b09f4f8`)
+- Migration کامل سند ۱۸ (درس‌نامه)
+- M1-M63 با ۲۶ Reserved explicit (M22, M24, M29, M32-M43, M45-M55)
+- ۲.۲ fast-look + ۲.۳ جدول کامل + ۲.۴ critical lessons کامل
+- ۲۸.۸KB
+
+#### Commit 4 — 03_bugs.md migration (`ae21a9a`)
+- Bug catalog #۳۱-#۵۴ + ۳ Reserved (#۵۰-۵۲)
+- ۴ Critical bugs (#۳۸, #۳۹, #۴۰, #۵۳) با جزئیات کامل
+- Cross-ref به `docs/TROUBLESHOOTING.md` برای Bug #۱-#۳۰
+- ۱۶.۹KB
+
+#### Commit 5 — 04_principles.md migration (`452960e`)
+- ۸ اصل مشاوره + ۳ ضد-اصل
+- سطح‌بندی 🔒/🎯/💡
+- No-Deletion (#۲۴) + Atomic Updates (#۲۶) توضیح کامل
+- ۷-step process پیشنهاد تغییر
+- Metarules preview (توضیح کامل در commit 8)
+- ۱۴.۷KB
+
+#### Commit 6 — 05_architecture.md migration (`0160769`)
+- ۱۶ بخش از سند ۲-۱۲ (بزرگ‌ترین ماژول)
+- محیط + Backend Stack (۲۰+ dep) + Frontend Stack + .env
+- Layered Architecture + ساختار پوشه‌بندی
+- ۱۳ جدول DB + FK diagram + ایندکس‌ها
+- Backend API endpoints کامل + WebSocket auth + RBAC
+- UI/UX standards + Theme Engine + Variant Pattern + ۴ format تاریخ
+- Security (bcrypt + JWT + Fernet + RBAC + headers)
+- Code Quality + Testing
+- Roadmap ۱۵ فاز
+- ۳۲.۹KB (زیر ۵۰KB MCP-safe ✅)
+
+#### Commit 7 — 06_meta.md migration (`22c8b6c`)
+- ۱۲ بخش از سند ۱۳-۲۵ (Session/Tooling)
+- SESSION_STATUS + PROJECT_CONTEXT + CHAT_LOG templates
+- Chat start پروتکل modular
+- ۷-step Chat Handoff Protocol
+- ۱۰ پاسخ Templates Claude
+- Claude MAX model selection table
+- Pre-commit Hybrid mode
+- GitHub ۵-step setup + auth
+- Filesystem MCP tools + permissions + safety cycle + troubleshooting (شامل M83)
+- Claude Desktop config + Memory + Project Knowledge
+- claude_workspace ۵-folder structure
+- Skills roadmap
+- ۳۰.۸KB
+
+#### Commit 8 — Atomic Update v2.12 + Archive (`ac1266b`)
+
+**چندین تغییر در یک commit (atomic):**
+
+1. **Archive** `سند_جامع_v2_11.md` (~۲۱۶KB) → `docs/constitution/archive/v2_11_legacy.md` با header note (طبق #۲۴ No-Deletion)
+2. **main.md** — statistics refresh + migration checklist all checked
+3. **01_rules.md** — افزودن قانون #۶۶ Locked (Push اجباری) با جزئیات کامل + جدول #۱.۹ به‌روز
+4. **02_lessons.md** — افزودن M64-M86 (۲۳ درس جدید) با critical details برای M82-M86
+5. **05_architecture.md** — اصلاح shell default (CMD → PowerShell+venv، تناقض #۹ Discovery)
+6. **PROJECT_CONSTITUTION.md** — redirect stub جدید
+7. **PENDING_FOR_NEXT_VERSION.md** — Z2.20 افزوده شد (M87 candidate)
+
+**آمار:** ۳۹۵۷ insertions, ۴۰ deletions, ۷ files changed
+
+### 🛠️ ابزارهای تولیدشده (Filesystem MCP)
+
+برخلاف چت‌های قبل، این چت **هیچ اسکریپت Python** تولید نکرد. همه تغییرات روی فایل‌ها از طریق **Filesystem MCP** (`write_file` + `edit_file`) انجام شد. گیت دستورات توسط کاربر در PowerShell/CMD اجرا شد.
+
+### 🐛 Bug ها
+
+**هیچ Bug functional جدید** — این چت infrastructure بود نه code.
+
+**خطاهای کشف‌شده و رفع‌شده (درس):**
+
+- **edit_file ناموفق** با arrow character mismatch (`←` vs `→`) — با M83 retry حل شد
+- **EXECUTE block PowerShell** در CMD — M85 enforcement test
+- **multi-line `-m`** در CMD — M84 cross-shell fix
+
+### 🏛️ تصمیمات معماری
+
+**هیچ Decision جدید در DECISIONS_LOG** (این چت infrastructure refactor بود). ولی تصمیمات ساختاری:
+
+- Modular split به ۶ ماژول جدا (نه ۱ ماژول بزرگ)
+- Single-purpose commits برای granularity بالا (برای revert/audit آسان)
+- Push بعد از هر commit در branch `infra/` (نه فقط پایان چت)
+- چت‌های subgoal: الف (split) → ب (audit script) → ج (finalize + merge)
+
+### 📜 قوانین جدید
+
+- **#۶۶ ⭐⭐⭐ 🆕 v2.12:** Push اجباری در پایان هر چت (در branch infra/، پس از هر commit) — تبدیل از Proposed (PENDING Z2.9) به Locked
+
+### 🎓 درس‌های جدید (M82-M86 + Z2.20)
+
+- **M82** ⭐ Verification Claim Must Be Verified Itself — critical
+- **M83** Retry First, Restructure Last — medium (با enforcement test در همین چت)
+- **M84** Multi-line `-m` در CMD vs PowerShell — medium
+- **M85** Terminal Type Awareness — high (ارتقا از medium پس از enforcement test)
+- **M86** Two-step commit-then-push — medium
+- **Z2.20** (M87 candidate) — «Writing rule then violating it in same chat» — critical، برای ارزیابی در ۱۱.۰.ج
+
+### ⚠️ نکات مهم برای چت‌های آینده
+
+- **ساختار modular استفاده شود:** Claude بعدی باید طبق ترتیب `06_meta.md` بخش ۶.۱ اسناد را بخواند (نه سند جامع قدیمی)
+- **Archive فقط برای reference تاریخی:** فایل `archive/v2_11_legacy.md` دست نخورد — فقط برای reference
+- **Branch `infra/governance-overhaul` در حال توسعه:** merge به main فقط در پایان چت ۱۱.۰.ج پس از validation کامل
+- **README و SESSION_STATUS و CHAT_LOG (همین فایل) به‌روز شدند** در پایان چت ۱۱.۰.الف
+
+### 📊 آمار این چت
+
+| متریک | مقدار |
+|---|---|
+| Commits | ۸ (همگی push شدند) |
+| فایل‌های جدید (created) | ۹ (۷ ماژول + archive + PROJECT_CONSTITUTION redirect) |
+| فایل‌های به‌روز (modified) | ۳ (PENDING, README, SESSION_STATUS, CHAT_LOG) |
+| اسکریپت Python جدید | ۰ (همه با Filesystem MCP) |
+| تغییر در git (کل commits) | ~۴۰۰۰ insertions, ۱۰۰ deletions |
+| Bug | ۰ functional |
+| Decisions جدید | ۰ |
+| **قوانین جدید** | **۱ (#۶۶ Push اجباری Locked)** |
+| **درس‌های جدید** | **۲۳ (M64-M86 ادغام + ۵ critical M82-M86)** |
+| **تناقض‌های حل‌شده** | **۹ از ۹ (Discovery audit)** |
+
+### 🔗 ارتباطات
+
+- ادامه چت قبل: `TRADING-phase1-part01-ccxt-websocket-setup` (چت ۱۰)
+- **چت بعد:** `TRADING-infra-governance-precommit-audit-script` (چت ۱۱.۰.ب — Layer 1 audit)
+- **چت بعدی بعد آن:** `TRADING-infra-governance-finalize-and-merge` (چت ۱۱.۰.ج)
+- **handoff:** `claude_workspace/incoming_permanent/CHAT11_0_B_HANDOFF.txt` (در صورت ساخت)
+
+### TASK های DONE شده در این چت
+
+- Subgoal ۱۱.۰.الف — Constitution Modular Split + Atomic Update v2.12
+  - Discovery و ادیت تناقض‌ها
+  - Skeleton + ۶ migration commit + atomic update
+  - Archive سند v2.11
+  - README + SESSION_STATUS + CHAT_LOG به‌روز
+
+### TASK های جدید کشف‌شده برای چت‌های ۱۱.۰.ب + ۱۱.۰.ج
+
+- **چت ۱۱.۰.ب:** Pre-commit audit script (Layer 1) — SESSION_STATUS/DECISIONS_LOG/Constitution consistency check
+- **چت ۱۱.۰.ج:** Finalize chat script + Threshold rules + ارزیابی M87 candidate + merge to main
+
+---
+
+## چت ۱۱.۰.ب (Session 11.0.b) — `TRADING-infra-governance-precommit-audit-script`
+
+**تاریخ:** 2026-05-21
+**Claude version:** Claude Opus 4.7 + Filesystem MCP
+**Git HEAD شروع:** `1f55ace` (پس از چت ۱۱.۰.الف)
+**Git HEAD پایان:** `bd51a07`
+**Branch:** `infra/governance-overhaul` (ادامه از ۱۱.۰.الف)
+**فاز:** subgoal ۱۱.۰.ب — Pre-commit Layer 1 audit
+
+### 📌 موضوع کلی
+
+ساخت اسکریپت Pre-commit Documentation Audit (Layer 1) — ۷ چک خودکار برای جلوگیری از documentation drift bugs مثل Bug #۵۴ (Decisions Numbering Gap) و مسائل M77/M79.
+
+### 🎯 گام‌های انجام‌شده
+
+#### تصمیم scope: سطح B (Standard)
+
+سه گزینه پیشنهاد شد: A (Minimal، ۳ check)، B (Standard، ۷ check)، C (Comprehensive، ۷ + git checks). توضیح صادقانه داده شد که C **پیچیده‌تر است ولی به همان نسبت مفیدتر نیست** — git checks متعلق به pre-push hook هستند نه pre-commit (نقض Single Responsibility و Layer #۷۰).
+
+کاربر سطح B را انتخاب کرد.
+
+#### Iteration ۱: ساخت اولیه + ۲ FAIL کشف
+
+- **`scripts/63_pre_commit_audit.py`** (~۴۳۰ خط) با ۷ check function:
+  - `check_1_rule_counts` — تعداد قوانین در ۳ فایل
+  - `check_2_lesson_counts` — تعداد درس‌ها در ۳ فایل
+  - `check_3_decision_max_id` — Max ID Decisions
+  - `check_4_reserved_ids_explicit` — Reserved IDs explicit
+  - `check_5_head_hardcode` — HEAD hash نباید hardcode باشد
+  - `check_6_version_consistency` — v2.12 در همه ماژول‌ها
+  - `check_7_pending_count` — Z2.N count
+- **`scripts/63b_test_pre_commit_audit.py`** (~۲۸۰ خط) با ۷ test function (per قانون #۲۲)
+
+اولین اجرا: **۵/۷ PASS**. دو FAIL:
+- `check_2` regex فقط table rows match می‌کرد، M64-M86 در bullets نوشته بودند
+- `check_5` false positives: `ed25519` (SSH key type) + `08348dca2b9a` (Alembic migration ID)
+
+همزمان drift واقعی در `main.md` کشف: `M1-M83+` (قبل از atomic v2.12) باید `M1-M86` می‌بود.
+
+#### Iteration ۲: سه fix + main.md drift
+
+1. **regex check_2 expand:** `\*\*M(\d+)(?:\s*[-,]\s*M?(\d+))?\*\*` برای match هر دو table rows و bullets
+2. **check_5 false positives:** اضافه‌کردن `KNOWN_NON_HASHES` set (ed25519, ed448, ecdsa, ...) + `CONTEXT_EXEMPTIONS` (Migration head, Alembic, ssh-keygen, ...)
+3. **subprocess encoding:** `encoding="utf-8"` + `errors="replace"` در `subprocess.run` (M67 — cp1252 crash با خروجی فارسی)
+4. **main.md drift:** `M1-M83+` → `M1-M86`
+
+دومین اجرا: **۷/۷ PASS** ✅
+
+#### Integration به pre-commit
+
+- `pre-commit run layer1-audit --all-files` → **Passed** (تست standalone قبل از deploy، قانون #۴۷)
+- اضافه‌کردن hook به `.pre-commit-config.yaml` با `pass_filenames: false` + `always_run: true`
+- `commit + push` موفق — black دو فایل را reformat کرد در iteration اول (طبیعی، M15 pattern)
+
+### 🛠️ فایل‌های ساخته‌شده/تغییریافته
+
+| فایل | تغییر | اندازه |
+|---|---|---|
+| `scripts/63_pre_commit_audit.py` | 🆕 | ~۲۲KB |
+| `scripts/63b_test_pre_commit_audit.py` | 🆕 | ~۱۲KB |
+| `.pre-commit-config.yaml` | +layer1-audit hook | +۱۳ خط |
+| `docs/constitution/main.md` | drift fix (`M83+` → `M86`) | -۱/+۱ خط |
+
+### 🐛 Bug ها
+
+هیچ Bug جدید. ۳ bug در iteration اول fix شد (همه در همان چت).
+
+### 🎓 درس‌های اثبات‌شده (نه ثبت جدید)
+
+- **M15** — اولین pre-commit، فایل‌های جدید reformat می‌شوند (black). پذیرفته شد، re-commit شد.
+- **M47** — تست hook قبل از deploy: `pre-commit run layer1-audit --all-files` موفق بود
+- **M61** — Full safety cycle: preview → write → read-back → verify → confirm — کامل اجرا شد
+- **M67** — subprocess + Persian text + cp1252 → crash. `encoding="utf-8"` لازم بود.
+- **M82** — read-back verify بعد از هر write
+- **dogfooding** — audit script خودش اولین drift (main.md) را کشف کرد در اولین run
+
+### 🏛️ تصمیمات معماری
+
+- **Decision: Layer 1 vs Layer 2 vs Layer 3 separation** — Layer 1 (drift detection) در pre-commit، Layer 2 (git state) در pre-push آینده، Layer 3 (comprehensive) در CI/CD
+- **Decision: scope سطح B** — رد سطح C با استدلال SRP نقض می‌شود
+- **Decision: ACCEPTABLE_VERSIONS list** — اضافه‌شد بعداً در v2.13 برای پذیرش هم v2.12 (structural) هم v2.13 (current amendment)
+
+### 📜 قوانین جدید
+
+هیچ. (قوانین #۶۷ در v2.13 / چت ۱۱.۰.ج اضافه شد)
+
+### 📊 آمار این چت
+
+| متریک | مقدار |
+|---|---|
+| Commits | ۱ (`bd51a07`) |
+| فایل‌های جدید | ۲ (audit + test) |
+| فایل‌های به‌روز | ۲ (`.pre-commit-config.yaml`, `main.md`) |
+| اسکریپت Python جدید | ۲ (~۳۴KB total) |
+| Audit checks | ۷/۷ PASS |
+| Test checks | ۷/۷ PASS |
+| Drift های واقعی کشف‌شده | ۱ (main.md M83→M86) |
+| Bug های script در iteration | ۳ (همه fix در همان چت) |
+
+### 🔗 ارتباطات
+
+- ادامه چت قبل: چت ۱۱.۰.الف (`TRADING-infra-governance-constitution-split`)
+- **چت بعد:** ۱۱.۰.ج (`TRADING-infra-governance-finalize-and-merge`) — در همان چت ادامه یافت
+
+### TASK های DONE
+
+- Subgoal ۱۱.۰.ب — Pre-commit Layer 1 audit
+  - Design + implementation (~۴۳۰ + ۲۸۰ خط Python)
+  - 7 audit checks + 7 test functions
+  - Standalone test before deploy
+  - Integration to pre-commit
+  - First drift detected and fixed (main.md)
+
+---
+
+## چت ۱۱.۰.ج (Session 11.0.c) — `TRADING-infra-governance-finalize-and-merge`
+
+**تاریخ:** 2026-05-21
+**Claude version:** Claude Opus 4.7 + Filesystem MCP
+**Git HEAD شروع:** `bd51a07` (پس از چت ۱۱.۰.ب)
+**Git HEAD پایان:** `04a674a+`
+**Branch:** `infra/governance-overhaul` (پایانی)
+**فاز:** subgoal ۱۱.۰.ج — Atomic v2.13 + Merge to main
+
+### 📌 موضوع کلی
+
+Finalize subgoal سه‌گانه ۱۱.۰. تصمیم درباره M87 candidate (Z2.20)، طراحی راه‌حل سه‌لایه برای active-writing self-binding failure، atomic update v2.13، cleanup docs، merge به main.
+
+### 🎯 گام‌های انجام‌شده
+
+#### تصمیم M87 (با تأیید کاربر)
+
+بررسی شد: Z2.20 ثبت کنیم یا M85 کافی است؟
+
+**استدلال صادقانه:** M87 یک پدیده مستقل از M62 است:
+- M62 = Claude قانون موجود را ذکر می‌کند، بعد فراموش می‌کند
+- M87 = Claude قانون جدید را می‌سازد، بعد در همان چت نقض می‌کند
+
+M87 یک «active writing fallacy» است — writing جدید القای آموختن می‌کند بدون شکل‌گیری habit.
+
+**ولی** صادقانه گفته شد: «فقط ثبت M87 تقریباً بی‌اثر است» (تجربه چت ۱۱.۰.الف نشان داد M85 نوشته شد، پشت سرش نقض شد).
+
+**راه‌حل پیشنهادی: سه‌لایه** (تأیید کاربر):
+- **Layer 1 — Positive Constraint:** قانون #۶۷ با لیست صریح cmdlets ممنوع (تقلید الگوی موفق #۴۶ ASCII-only)
+- **Layer 2 — Visible Pre-EXECUTE Verification:** خط verification visible برای کاربر
+- **Layer 3 — Audit Extension:** آینده، نه الان
+
+#### Atomic update v2.12 → v2.13
+
+۶ فایل به‌صورت atomic بروز شد در یک commit:
+
+1. **`main.md`** — بروز به v2.13 + stats refresh (۶۷ قانون، M1-M87) + version history row + cross-refs #۶۷ و M87
+2. **`01_rules.md`** — جدول ۱.۹ بروز به #۱-۶۷ + شرح کامل قانون #۶۷ Cross-shell mandatory
+3. **`02_lessons.md`** — section ۲.۷ M87 entry + section ۲.۸ M87 details با تمایز M62/M87
+4. **`PENDING_FOR_NEXT_VERSION.md`** — Z2.20 marked ✅ RESOLVED v2.13
+5. **`SESSION_STATUS.md`** — rewrite برای پایان چت ۱۱.۰.ج با v0.6.0
+6. **`scripts/63_pre_commit_audit.py`** — CURRENT_VERSION → v2.13 + ACCEPTABLE_VERSIONS list + check_6 update
+
+چند bug در edit_file (M83 retry pattern):
+- اولین edit_file برای main.md به‌خاطر «+ main +» اضافی در version history fail شد. read-back + retry → success.
+- 02_lessons.md M86 details اضافی text داشت. retry بدون اضافات → success.
+
+#### Validation قبل از commit
+
+- `python scripts\63_pre_commit_audit.py` → **۷/۷ PASS** ✅
+- `python scripts\63b_test_pre_commit_audit.py` → **۷/۷ PASS** ✅
+- `git commit` → pre-commit hooks همگی PASS
+- `git push` → موفق
+
+#### Cleanup docs (در همین commit بعدی)
+
+- `docs/CHAT_LOG.md` — افزودن بخش چت ۱۱.۰.ب و چت ۱۱.۰.ج (این بخش)
+
+### 🛠️ فایل‌های تغییریافته در atomic v2.13
+
+| فایل | تغییر |
+|---|---|
+| `docs/constitution/main.md` | bump به v2.13 + stats + version history + cross-refs |
+| `docs/constitution/01_rules.md` | +#۶۷ Locked در جدول و شرح کامل |
+| `docs/constitution/02_lessons.md` | +M87 در section ۲.۷ و ۲.۸ |
+| `docs/PENDING_FOR_NEXT_VERSION.md` | Z2.20 ✅ RESOLVED |
+| `docs/SESSION_STATUS.md` | rewrite پایان چت ۱۱.۰.ج |
+| `scripts/63_pre_commit_audit.py` | CURRENT_VERSION + ACCEPTABLE_VERSIONS + check_6 |
+
+### 🐛 Bug ها
+
+هیچ Bug جدید. ۲ edit_file fail در حین کار با M83 retry حل شد.
+
+### 🏛️ تصمیمات معماری
+
+- **Decision: M87 جدا از M62 ثبت شود** — تأیید کاربر بعد از تحلیل صادقانه
+- **Decision: راه‌حل سه‌لایه** — Layer 1 الزامی، Layer 2 best-effort، Layer 3 آینده
+- **Decision: ACCEPTABLE_VERSIONS list** — هم v2.12 (structural) هم v2.13 (current) — اجتناب از forced rebump همه ۷ ماژول headers
+- **Decision: skip threshold rules** — YAGNI: هنوز هیچ ماژول نزدیک ۵۰KB نیست
+- **Decision: finalize chat script (G) موکول به چت آینده** — اسکریپت ~۳۰۰ خط جداگانه نیاز به chat اختصاصی دارد
+
+### 📜 قوانین جدید
+
+- **#۶۷ ⭐⭐⭐ 🆕 v2.13:** Cross-shell EXECUTE blocks اجباری. PowerShell-only cmdlets ممنوع مگر با label `[SHELL-SPECIFIC: PowerShell]`.
+
+### 🎓 درس‌های جدید
+
+- **M87 ⭐⭐⭐:** Active-Writing Self-Binding Failure — extension of M62. نوشتن قانون جدید ≠ ساختن habit در همان چت.
+
+### 📊 آمار این چت
+
+| متریک | مقدار |
+|---|---|
+| Commits | ۱+ (`04a674a` + CHAT_LOG cleanup + merge آینده) |
+| فایل‌های به‌روز در atomic v2.13 | ۶ |
+| قوانین جدید | ۱ (#۶۷ Cross-shell mandatory) |
+| درس‌های جدید | ۱ (M87 Active-Writing Self-Binding Failure) |
+| Z2 items resolved | ۱ (Z2.20) |
+| تناقض‌های حل‌شده | ۰ (همه قبلاً حل شده بودند) |
+| Audit checks before commit | ۷/۷ PASS |
+| Test checks before commit | ۷/۷ PASS |
+
+### 🔗 ارتباطات
+
+- ادامه چت قبل: چت ۱۱.۰.ب (`TRADING-infra-governance-precommit-audit-script`)
+- **چت بعد پیشنهادی:** **`TRADING-phase1-part02-binance-client`** (شروع رسمی فاز ۱ — `binance_client.py` + REST wrapper)
+  - یا اگر کاربر می‌خواهد finalize chat script (G) را اول کند: **`TRADING-infra-governance-finalize-chat-script`**
+- **merge to main:** پایان همین چت
+- **tag:** `v0.6.0` پایان همین چت
+
+### TASK های DONE
+
+- Subgoal ۱۱.۰.ج — Finalize and merge
+  - تصمیم M87 + threshold rules
+  - Atomic update v2.12 → v2.13
+  - Cleanup CHAT_LOG (این بخش)
+  - Merge to main + tag v0.6.0 (در ادامه همین چت)
+
+### TASK های جدید کشف‌شده برای چت‌های بعد
+
+- **Finalize chat script (G):** اسکریپت `64_finalize_chat.py` که ۱۲ مرحله CLAUDE_CHECKLIST را اتمیشن کند — موکول به چت اختصاصی
+- **Layer 2 (pre-push hook):** git state checks در pre-push — آینده
+- **Layer 3 audit extension:** اسکن chat history برای PowerShell cmdlets — آینده
+
+---
+
 ## آمار کلی پروژه
 
 | دسته | تعداد |
 |---|---|
-| چت‌های انجام‌شده | ۱۰ |
-| اسکریپت‌های تولید‌شده | ~۶۴ (~۶۰ تا چت ۸ + ۴ جدید در چت ۹: 55، 55b، 56، 56b) |
-| Bug های ثبت‌شده | ۵۳ (+Bug #53 در چت ۱۰ — BOM در requirements.txt) |
-| Decisions ثبت‌شده | ~۶۴ (+۴ در چت ۱۰: #۶۱-۶۴ معماری CCXT) |
-| قوانین قفل‌شده | **۶۵** (با ۲ Reserved: #۵۲، #۵۳) |
-| درس‌نامه ثبت‌شده | **۶۷ ردیف** (۴۲ کشف‌شده تا M69 + ۲۵ Reserved) |
-| فاز پایان‌یافته | فاز ۰ (۱۰۰٪) + Tier 2 (۱۶/۲۱ ✅) + فاز ۱ skeleton |
-| فاز در حال انجام | فاز ۱ — binance_client.py + binance_ws.py (چت ۱۱+) |
-| نسخه سند جامع | **v2.11** (در چت ۹ ایجاد شد) |
+| چت‌های انجام‌شده | ۱۱+ (شامل چت ۱۱.۰.الف + ۱۱.۰.ب + ۱۱.۰.ج) ⭐ |
+| اسکریپت‌های تولید‌شده | ~۶۶ (~۶۴ تا چت ۱۰ + ۲ در چت ۱۱.۰.ب: `63_pre_commit_audit.py` و `63b_test_pre_commit_audit.py`) |
+| Bug های ثبت‌شده | ۵۴ |
+| Decisions ثبت‌شده | ~۶۶ (Max ID, ۶۱ Recorded) |
+| **قوانین قفل‌شده** | **۶۷** (#۱-۶۷ با ۲ Reserved: #۵۲, #۵۳) ⭐ افزایش از ۶۶ (#۶۷ Cross-shell mandatory در v2.13) |
+| **درس‌نامه ثبت‌شده** | **M1-M87** (با ۲۸ Reserved) ⭐ افزایش از M86 (M87 Active-Writing Self-Binding Failure) |
+| **فاز پایان‌یافته** | فاز ۰ (۱۰۰٪) + Tier 2 (۱۶/۲۱) + فاز ۱ skeleton + **Modular Constitution v2.13** ⭐ + Layer 1 audit |
+| **فاز در حال انجام** | آماده شروع فاز ۱ کامل (`binance_client.py` + `binance_ws.py`) در چت بعد |
+| **نسخه Constitution** | **v2.13 (Modular)** — atomic amendment پس از v2.12 modular split |
 
 ---
 
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v1.5 (2026-05-20 — چت ۱۰: افزودن بخش چت ۱۰ — CCXTDataSource skeleton + ۴ Decision + ۴ درس)  
-**به‌روز شده در:** چت `TRADING-phase1-part01-ccxt-websocket-setup`  
+**نسخه:** v1.7 (2026-05-21 — چت ۱۱.۰.ج: افزودن بخش‌های چت ۱۱.۰.ب (Layer 1 audit) + چت ۱۱.۰.ج (atomic v2.13 + merge) + بروز آمار کلی به ۶۷ قانون و M1-M87)
+**به‌روز شده در:** چت `TRADING-infra-governance-finalize-and-merge`
 **به‌روز توسط:** Claude طبق قانون #۲۳ + #۲۶ + #۶۰ — CLAUDE_CHECKLIST v1.4 فاز ۳

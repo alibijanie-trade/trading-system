@@ -503,9 +503,10 @@ Decisions #۱۶-۱۹ و #۴۹ در دسته‌بندی موضوعی DECISIONS_LO
 | **Z2.17** 🆕⚠️ | 🔴 **critical** | M77 — HEAD Self-Reference نباید Hardcode باشد (placeholder الزامی) |
 | **Z2.18** 🆕⚠️ | 🎯 important | M78 — Re-read After Edit (عدم اتکا به diff) |
 | **Z2.19** 🆕⚠️ | 🎯 important | M79 — Reserved IDs باید Explicit مستند شوند (#۱۶-۱۹، #۴۹) |
+| **Z2.20** ✅ RESOLVED v2.13 | 🔴 **critical** | M87 ثبت شد به‌عنوان درس جداگانه از M62. تبدیل از PENDING به Locked در v2.13 با راه‌حل سه‌لایه: قانون #۶۷ (Positive Constraint) + Template 9 Pre-EXECUTE verification (Visible) + Layer 1 audit (آینده). جزئیات: 02_lessons.md بخش ۲.۸ M87.
 
-**تعداد:** ۱۹ آیتم  
-**اولویت ادغام:** Z2.4 (critical bug)، Z2.1 (already-fixed lesson)، بقیه
+**تعداد:** ۰ آیتم باز (همه Z2.۱-Z2.۲۰ در v2.12 و v2.13 ادغام شدند)
+**وضعیت:** آماده شروع v2.14 در چت‌های بعد
 
 ---
 

@@ -1,171 +1,170 @@
-# Session Status — وضعیت پایان چت ۱۰
+# Session Status — وضعیت پایان چت ۱۱.۰.ج
 
-> **آخرین به‌روزرسانی:** 2026-05-20 (پایان چت ۱۰)  
-> **نسخه پروژه:** v0.5.0 (CCXTDataSource skeleton افزوده شد)  
-> **چت:** `TRADING-phase1-part01-ccxt-websocket-setup` ✅ COMPLETED
+> **آخرین به‌روزرسانی:** 2026-05-21 (پایان چت ۱۱.۰.ج — atomic update v2.13)
+> **نسخه پروژه:** v0.6.0 (پس از atomic update v2.13 — Cross-shell mandatory)
+> **چت:** `TRADING-infra-governance-finalize-and-merge` ✅ COMPLETED
 
 ---
 
 ## 📍 وضعیت کلی
 
-- **فاز جاری:** ۱ — **Skeleton آماده** ✅ (CCXTDataSource + gradient interface)
-- **Tier جاری:** Tier 2 + Infrastructure — **۱۶/۲۱ DONE (76%)**
-- **سند جامع:** **v2.11** (152,438 chars؛ نیاز به اصلاح بخش ۲.۲ در v2.12)
-- **Git HEAD شروع چت ۱۰:** `88debb7`
-- **Git HEAD پایان چت ۱۰:** `<بعد از همه commit ها از git log بخوان>` (M71 self-reference paradox — مقدار قطعی نمی‌نویسیم چون هر تغییر در این فایل، HEAD آن را عوض می‌کند. واقعی: تا e6480ff رسیده، شاید بیشتر)
-- **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH via port 443) ✅
-- **چت بعدی پیشنهادی:** `TRADING-phase1to2-transition-discovery` 🎯 (Discovery Chat — درخواست کاربر پایان چت ۱۰)
-- **تصمیمات استراتژیک چت ۱۰:**
-  - Decision #65: اتصال زنده Binance/Telegram به فاز ۵+ موکول — فاز ۲-۴ با ExcelDataSource
-  - Decision #66 + قانون جدید #۶۶: Push اجباری در پایان هر چت (GitHub-only backup)
-  - Discovery Chat قبل از فاز ۲: جمع‌بندی فنی فازهای ۲-۸ با PHASE2_PLUS_ROADMAP.md
-  - **Cleanup Round پایانی:** Decisions #۵۸-۶۶ در DECISIONS_LOG backfill شدند + M71/M72/M73 ثبت
+- **فاز جاری:** ۱ — **Skeleton آماده** ✅ (CCXTDataSource + gradient interface از چت ۱۰)
+- **Tier جاری:** Infrastructure overhaul (subgoal ۱۱.۰.الف کامل، ب و ج باقی)
+- **Constitution:** **v2.13 (Modular)** — ۷ ماژول در `docs/constitution/` + archive + atomic amendments (v2.13 = Cross-shell mandatory)
+- **Git HEAD پایان چت ۱۱.۰.الف:** `ac1266b` (push شده به GitHub)
+- **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH) ✅
+- **Branch جاری:** `infra/governance-overhaul` ⏳ (آماده merge به `main` در پایان چت ۱۱.۰.ج)
+- **چت بعدی پیشنهادی:** **چت ۱۱.۰.ب** — `TRADING-infra-governance-precommit-audit-script` 🎯 (Layer 1 audit script)
 
 ---
 
-## 🎯 فاز ۱ — وضعیت
+## 🎯 چت ۱۱.۰.الف — وضعیت (✅ کامل)
 
-### ✅ DONE در چت ۱۰
+### ✅ DONE در چت ۱۱.۰.الف
 
-- **G1:** Dependencies (ccxt 4.3.98 + websockets 12.0 + ۱۲ dep جانبی)
-- **G2:** ۴ تصمیم معماری (Decisions #۶۱-۶۴)
-- **G3:** CCXTDataSource skeleton + ۵ تست AsyncMock pass
+- **commit 1 — Skeleton (`5285fb6`):** ۷ فایل modular + پوشه archive
+- **commit 2 — `01_rules.md` (`1eb1196`):** Migration سند ۱ — ۳۰.۵KB
+- **commit 3 — `02_lessons.md` (`b09f4f8`):** Migration سند ۱۸ — ۲۸.۸KB
+- **commit 4 — `03_bugs.md` (`ae21a9a`):** Migration Bug catalog — ۱۶.۹KB
+- **commit 5 — `04_principles.md` (`452960e`):** Migration اصول — ۱۴.۷KB
+- **commit 6 — `05_architecture.md` (`0160769`):** Migration سند ۲-۱۲ — ۳۲.۹KB
+- **commit 7 — `06_meta.md` (`22c8b6c`):** Migration سند ۱۳-۲۵ — ۳۰.۸KB
+- **commit 8 — Atomic Update v2.12 + archive (`ac1266b`):** قانون #۶۶ Locked + M64-M86 + shell fix + redirect stub + archive
 
-### ⏳ TODO برای چت ۱۱+
+### ⏳ TODO برای چت ۱۱.۰.ب + ۱۱.۰.ج
 
-- **T3.03:** `binance_client.py` (REST wrapper)
-- **T3.04:** `binance_ws.py` (WebSocket subscriber با asyncio.Queue)
-- **T3.05:** `exchange_repository.py` (Exchange + ExchangeApiKey)
-- **T3.06:** WebSocket endpoint برای frontend
-- **T3.07:** Integration test با Binance واقعی (نیاز VPN)
-- **T3.08:** Endpoint REST برای fetch OHLCV
+**چت ۱۱.۰.ب:** Pre-commit audit script (Layer 1)
+- اسکریپت Python برای consistency check بین SESSION_STATUS + DECISIONS_LOG + Constitution
+- shipping در `scripts/` با test همراه
+- اضافه‌شدن به pre-commit hooks
 
----
-
-## ✅ کارهای DONE در چت ۱۰
-
-### G1 — Dependencies (~۹۰ دقیقه)
-- اسکریپت ۵۸: افزودن ccxt + websockets به requirements.txt (۶/۶ pass)
-- اسکریپت ۵۹: رفع Bug #53 با BOM (۴/۴ pass)
-- اسکریپت ۶۰: pin ccxt به 4.3.98 (۵/۵ pass)
-- pip install موفق + import verification
-
-### G2 — Architecture Q&A (~۲۰ دقیقه)
-- مرور `base.py` + `excel_source.py` + `binance_mappings.py`
-- Decisions #۶۱-۶۴ ثبت شدند
-
-### G3 — CCXTDataSource Skeleton (~۶۰ دقیقه)
-- اسکریپت ۶۱: gradient interface در `base.py` (۵/۵ backwards compat pass)
-- اسکریپت ۶۲: ساخت `ccxt_source.py` (7993 bytes) + ۵ تست AsyncMock pass
-
-### پایان چت
-- PENDING update (v0.3 → v0.4، +۵ آیتم Z2.3-Z2.7)
-- CHAT_LOG چت ۱۰ افزوده شد (v1.4 → v1.5)
-- TROUBLESHOOTING Bug #53 افزوده شد (v1.1 → v1.2)
-- این فایل rewrite شد
+**چت ۱۱.۰.ج:** Finalize chat script + Threshold rules + merge to main
+- اسکریپت پایان چت atomic
+- قوانین threshold (مثلاً اندازه ماژول < ۵۰KB)
+- ارزیابی M87 candidate (writing-then-violating در همان چت)
+- merge `infra/governance-overhaul` → `main`
 
 ---
 
-## 📊 آمار نهایی پروژه
+## 📊 آمار نهایی پروژه (پس از چت ۱۱.۰.الف)
 
-- **قوانین قفل‌شده:** **۶۵** (#۱-۶۵، با ۲ Reserved: #۵۲، #۵۳)
-- **درس‌نامه اشتباهات:** **۶۷ ردیف** (۴۲ کشف‌شده تا M69 + ۲۵ Reserved)
-- **بخش‌های سند جامع:** **۲۵** (در v2.11)
+- **قوانین قفل‌شده:** **۶۷** (#۱-۶۷ با ۲ Reserved: #۵۲، #۵۳) ⭐ افزایش از ۶۶ (#۶۷ Cross-shell mandatory در v2.13)
+- **درس‌نامه اشتباهات:** **M1-M87** ثبت‌شده (با ۲۸ Reserved: M22, M24, M29, M32-M43, M45-M55, M80, M81) ⭐ افزایش از M86 (M87 Active-Writing Self-Binding Failure)
+- **Bug ها:** **۱۶ ثبت‌شده در `03_bugs.md`** + ۳۰+ در `docs/TROUBLESHOOTING.md`
+- **Constitution ماژول‌ها:** **۷** (main + ۶ ماژول) + archive
+- **اندازه Constitution:** ~۱۷۲KB توزیع‌شده (هر ماژول <۵۰KB، MCP-safe)
 - **اسناد Markdown در `docs/`:** **۲۰+**
-- **Tests:** 25/25 pytest + 30/30 vitest + ۲۵ تست script چت ۱۰ = **۸۰ pass**
-- **چت‌های کامل:** **۱۰** (آخرین: همین چت)
-- **Backlog Total:** **۳۴/۸۲ DONE** (T3.01 + T3.02 اضافه شدند)
-- **PENDING برای v2.12:** **۱۳ آیتم** (Z2.1-Z2.13 — شامل M71/M72/M73 و Bug #54 حل‌شده در cleanup round)
-- **Git commits:** پایان چت ۱۰ — chain از `88debb7` تا آخرین commit (برای لیست کامل: `git log 88debb7..HEAD --oneline`)
+- **Tests:** 25/25 pytest + 30/30 vitest + ۲۵ تست script چت ۱۰ = **۸۰ pass** (نخوردند)
+- **چت‌های کامل:** **۱۱+** (آخرین: چت ۱۱.۰.الف modular split)
+- **Backlog Total:** **۳۴/۸۲ DONE** (بدون تغییر)
+- **PENDING برای v2.13:** **۱ آیتم باز** (Z2.20 — ارزیابی M87 candidate در چت ۱۱.۰.ج)
+- **Git commits chat 11.0.الف:** ۸ commit (`5285fb6` تا `ac1266b`)
+
+### 🔄 PENDING items — وضعیت پس از Atomic Update v2.12
+
+تمام Z2.1-Z2.19 در commit 8 atomic update **ادغام شد**:
+- ✅ Z2.1-Z2.7 (درس‌های فنی M64-M70) → در `02_lessons.md` بخش ۲.۷
+- ✅ Z2.8 (cosmetic) → ناچیز، skip
+- ✅ Z2.9 (قانون #۶۶) → در `01_rules.md` به‌عنوان Locked
+- ✅ Z2.10-Z2.19 (M71-M79) → در `02_lessons.md` بخش ۲.۷
+- ✅ Bug #54 (Z2.13) → resolved در cleanup چت ۱۰
+
+**Z2.20 جدید (افزوده در commit 8):** M87 candidate — «writing rule then violating it in same chat» — تصمیم در چت ۱۱.۰.ج.
 
 ---
 
 ## 🔧 محیط فعال
 
 - Python 3.11 + FastAPI 0.111 + SQLAlchemy 2.0 + aiosqlite 0.20
-- **🆕 ccxt 4.3.98 + websockets 12.0** (افزوده در چت ۱۰)
-- + aiohttp, aiodns, yarl, multidict, frozenlist, … (deps جانبی ccxt)
+- ccxt 4.3.98 + websockets 12.0 (افزوده در چت ۱۰)
 - React 19.2 + Vite 8.0 + Vitest 3.x + Zustand 4.5
 - SQLite (`backend/trading.db`)
 - JWT + bcrypt 4.1
 - pytest 8.2 + pre-commit 3.7 + black 24.4 (Hybrid mode)
 - **Claude Desktop:** Filesystem MCP + Memory ON + GitHub SSH ✅
+- **Shell default:** PowerShell + venv (اصلاحیه v2.12 در `05_architecture.md` §5.1.2)
 
 ---
 
-## 📁 فایل‌های مهم تولید/به‌روز شده در چت ۱۰
+## 📁 فایل‌های مهم تولید/به‌روز شده در چت ۱۱.۰.الف
 
-| فایل | وضعیت | اندازه |
+### فایل‌های جدید (created)
+
+| فایل | محل | اندازه |
 |---|---|---|
-| `backend/app/infrastructure/data_sources/ccxt_source.py` | 🆕 | 7993 bytes |
-| `backend/app/infrastructure/data_sources/base.py` | به‌روز (+async) | ~3KB |
-| `backend/requirements.txt` | به‌روز (+2 deps + BOM) | ~1.5KB |
-| `scripts/58_*` تا `62_*` (و `*b_*` تست‌ها) | 🆕 | ۱۰ اسکریپت |
-| `docs/PENDING_FOR_NEXT_VERSION.md` | v0.3 → v0.4 | ~17KB |
-| `docs/CHAT_LOG.md` | v1.4 → v1.5 | ~62KB |
-| `docs/TROUBLESHOOTING.md` | v1.1 → v1.2 | ~21KB |
-| `docs/SESSION_STATUS.md` | rewrite | همین فایل |
-| `claude_workspace/incoming_permanent/CHAT11_HANDOFF.txt` | 🆕 (در پاسخ بعدی) | ~6KB |
+| `docs/constitution/main.md` | constitution index | ~۸KB |
+| `docs/constitution/01_rules.md` | قوانین Locked #۱-۶۶ | ~۳۵KB |
+| `docs/constitution/02_lessons.md` | درس‌نامه M1-M86 | ~۳۷KB |
+| `docs/constitution/03_bugs.md` | Bug catalog | ~۱۷KB |
+| `docs/constitution/04_principles.md` | اصول | ~۱۵KB |
+| `docs/constitution/05_architecture.md` | Stack/معماری | ~۳۳KB |
+| `docs/constitution/06_meta.md` | Session/Tooling | ~۳۱KB |
+| `docs/constitution/archive/v2_11_legacy.md` | snapshot v2.11 | ~۲۲۰KB |
+| `docs/PROJECT_CONSTITUTION.md` | redirect stub | ~۲.۴KB |
+
+### فایل‌های به‌روز
+
+| فایل | تغییر |
+|---|---|
+| `docs/PENDING_FOR_NEXT_VERSION.md` | Z2.20 افزوده شد (M87 candidate) |
+| `README.md` | آمار + اشاره modular constitution + نسخه v0.5.0 + تاریخ |
+| `docs/SESSION_STATUS.md` | همین فایل (rewrite) |
+| `docs/CHAT_LOG.md` | افزوده بخش چت ۱۱.۰.الف |
 
 ---
 
-## 🐛 Bug ها در چت ۱۰
+## 🐛 Bug ها در چت ۱۱.۰.الف
 
-- **Bug #53** (در TROUBLESHOOTING ثبت شد): pip روی Windows + فایل UTF-8 بدون BOM + متن غیر-ASCII → UnicodeDecodeError. رفع: utf-8-sig
-
----
-
-## 🚧 PENDING برای v2.12 (۱۳ آیتم — sync با docs/PENDING_FOR_NEXT_VERSION.md)
-
-**درس‌های فنی چت ۱۰ (M66-M70):**
-1. **Z2.1** (🎯) — M64 JSX runtime در plugin-react vs esbuild
-2. **Z2.2** (🟡) — M65 تشخیص shell از prompt
-3. **Z2.3** (🎯) — M66 Filesystem MCP و فایل‌های >200KB
-4. **Z2.4** (🔴) — M67 BOM لازم برای pip روی Windows
-5. **Z2.5** (🎯) — M68 نسخه‌های pinned با PyPI verify
-6. **Z2.6** (🟡) — M69 asyncio.run() در FastAPI handler
-7. **Z2.7** (💡) — اصلاحیه سند جامع v2.11 بخش ۲.۲ (ccxt 4.3.0 → 4.3.98)
-8. **Z2.8** (💡) — bytes خراب در CHAT_LOG (cosmetic)
-
-**درس‌های process چت ۱۰ (M71-M73 cleanup round):**
-9. **Z2.9** (🔴) — قانون #۶۶ Push اجباری در پایان هر چت
-10. **Z2.10** (🔴) — M71 Documentation Drift Self-Reference Paradox
-11. **Z2.11** (🔴) — M72 End-of-Chat Verification Checklist
-12. **Z2.12** (🔴) — M73 Cross-Document Consistency Audit
-13. **Z2.13** (🟡 ✅ RESOLVED) — Bug #54 Decisions Numbering Gap (#57→#65)
-
-**نکته مهم درباره آمار Decisions:**  
-DECISIONS_LOG.md دارای **Max ID = ۶۶** است، ولی **تعداد Recorded ≈ ۶۱**. 
-gap های #۱۶-۱۹ و #۴۹ به‌عنوان "Reserved" در دسته‌بندی موضوعی فایل ثبت شده‌اند، نه bug. 
-(این تمایز در v2.12 صریح‌تر مستند می‌شود — درس M79 جدید.)
+- **هیچ Bug جدید functional** — این چت infrastructure بود نه code.
+- **خطاهای کشف‌شده و رفع‌شده** (به‌عنوان درس):
+  - M82 verification: Claude در ابتدا ادعای cleanup را verify نکرد
+  - M83 retry: edit_file با arrow character mismatch خراب شد، با read+retry حل شد
+  - M84 multi-line `-m`: در CMD literal `\n` کار نکرد
+  - M85 enforcement test: Claude خودش M85 را نقض کرد (Copy-Item در CMD)
+  - M86 two-step: کاربر فقط نیمه اول commands را paste کرد
 
 ---
 
-## 🚀 اولین گام‌های چت ۱۱ (Discovery / Master Architecture)
+## 🚧 PENDING برای v2.13 (پس از commit 8)
 
-⚠️ توجه: چت ۱۱ یک **Discovery Chat** است (نه coding). T3.03+ موکول به چت ۱۲+.
+- **Z2.20** 🆕⚠️ (🔴 critical) — M87 candidate: «Writing rule then violating it in same chat» — ارزیابی در چت ۱۱.۰.ج، اگر تأیید شد، در atomic update v2.13 ثبت می‌شود
 
-1. **خواندن HANDOFF کامل:** `claude_workspace/incoming_permanent/CHAT11_HANDOFF.txt`
-2. **خواندن طبق قانون #۴۸:** این فایل + PENDING + CHAT_LOG چت ۱۰ + DECISIONS_LOG
-3. **اجرای M73 audit (اجباری):** cross-document consistency check
-   - HEAD واقعی با `git log -1` چک شود (نه از این فایل!)
-   - شمارش PENDING آیتم‌ها (انتظار: ۱۳)
-   - تعداد Recorded Decisions (انتظار: ~۶۱ با Max ID = ۶۶، gap های reserved)
-   - تأیید آمار در همه اسناد سازگار است
-4. **چک ۷ ⚠️ CHECK** از بخش ۴ HANDOFF (شامل CHECK 7 جدید M73 audit)
-5. **TODO ۱.الف:** بحث Scope فاز ۲ (الف/ب⭐/ج) قبل از محور ۱
-6. **TODO ۱.ب:** شروع جلسه ۹-محوری با روش پرسش-محور ۵-مرحله‌ای
-7. **خروجی نهایی:** `docs/MASTER_BLUEPRINT.md`
-8. **در پایان:** M72 checklist (۷ مرحله) + GitHub push اجباری
+**جمع PENDING:** ۱ آیتم باز.
 
 ---
 
-## 🔑 کلید موفقیت چت ۱۰: قانون #۶۱ (پیشنهاد گزینه مطلوب) به‌خوبی کار کرد
+## 🚀 اولین گام‌های چت ۱۱.۰.ب (Pre-commit Audit Script)
 
-در ۶+ ask_user_input، پیشنهاد مطلوب من با ⭐ مشخص بود و کاربر هر بار آن را انتخاب کرد. این الگوی تعاملی سرعت و کیفیت تصمیم‌گیری را بالا برد. توصیه: ادامه این رویکرد در چت ۱۱.
+⚠️ توجه: چت ۱۱.۰.ب یک **Python development chat** است. تمرکز روی اسکریپت audit.
+
+1. **خواندن HANDOFF کامل:** `claude_workspace/incoming_permanent/CHAT11_0_B_HANDOFF.txt` (در پایان همین چت ساخته می‌شود)
+2. **خواندن طبق قانون #۴۸ (modular):**
+   - `docs/constitution/main.md` (index)
+   - `docs/constitution/04_principles.md` (فلسفه)
+   - `docs/constitution/01_rules.md` (قوانین Locked)
+   - `docs/constitution/02_lessons.md` (M82-M86 جدید!)
+   - `docs/PENDING_FOR_NEXT_VERSION.md` (Z2.20)
+   - این فایل (SESSION_STATUS)
+3. **اجرای M73 audit** — cross-document consistency
+4. **شروع کار Layer 1:**
+   - طراحی اسکریپت `scripts/63_pre_commit_audit.py`
+   - بررسی consistency بین SESSION_STATUS + DECISIONS_LOG + Constitution
+   - تست همراه `63b_test_pre_commit_audit.py`
+   - یکپارچه‌سازی با `.pre-commit-config.yaml`
+5. **پایان چت:** commit + push (طبق قانون #۶۶) + handoff به چت ۱۱.۰.ج
 
 ---
 
-**ساخته توسط:** Claude در پایان چت ۱۰  
-**نسخه این فایل:** نهایی چت ۱۰  
-**به‌روز توسط:** Claude در شروع چت ۱۱ پس از خواندن
+## 🔑 درس‌های کلیدی چت ۱۱.۰.الف
+
+1. **Modular split برنده بود:** فایل ۲۱۶KB با MCP کند بود (M66). الان هر ماژول <۵۰KB، MCP-safe.
+2. **M83 (Retry First) ثابت شد:** ۲ بار transient failure با retry حل شد، بدون restructure.
+3. **M85 enforcement test:** خود Claude در همان چتی که M85 را نوشت، آن را نقض کرد. تأیید قوی برای قانون.
+4. **Two-step commit-push (M86):** کاربر یک‌بار فقط نیمه اول را paste کرد. Pattern صحیح: کادر جدا.
+5. **قانون #۶۶ Locked شد:** Push اجباری در پایان هر چت (و در branch infra/ پس از هر commit) — backup فوری.
+
+---
+
+**ساخته توسط:** Claude در پایان چت ۱۱.۰.الف
+**نسخه این فایل:** نهایی چت ۱۱.۰.الف
+**به‌روز توسط:** Claude در شروع چت ۱۱.۰.ب پس از خواندن

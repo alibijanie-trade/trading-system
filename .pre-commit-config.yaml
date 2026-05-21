@@ -59,3 +59,14 @@ repos:
         language: system
         types: [python]
         pass_filenames: false
+
+      - id: layer1-audit
+        name: Layer 1 — Documentation Consistency Audit (v2.12)
+        entry: python scripts/63_pre_commit_audit.py
+        language: system
+        pass_filenames: false
+        always_run: true
+        # پوشش M71-M79: drift detection در modular constitution + SESSION_STATUS + DECISIONS_LOG + PENDING
+        # به پیوست Bug #54 (Decisions Numbering Gap) + قانون #۶۶
+        # Bypass در اضطرار (قانون #۴۲):
+        #   git commit --no-verify -m "[skip-hooks: REASON] ..."
