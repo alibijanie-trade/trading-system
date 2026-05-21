@@ -223,17 +223,29 @@ Components                ← style={{ color: "var(--color-primary)" }}
 
 ## 📜 قوانین کلیدی
 
-این پروژه ۲۶ قانون قفل‌شده دارد (در سند جامع v2.7). مهم‌ترین‌ها:
+این پروژه **۶۶ قانون قفل‌شده** دارد که در **Constitution v2.12 (Modular)** ثبت شده‌اند. ساختار جدید مدولار (از v2.12) در `docs/constitution/`:
+
+- [`main.md`](docs/constitution/main.md) — فهرست و navigation
+- [`01_rules.md`](docs/constitution/01_rules.md) — ۶۶ قانون Locked
+- [`02_lessons.md`](docs/constitution/02_lessons.md) — درس‌نامه M1-M86
+- [`03_bugs.md`](docs/constitution/03_bugs.md) — Bug catalog
+- [`04_principles.md`](docs/constitution/04_principles.md) — ۸ اصل بنیادی
+- [`05_architecture.md`](docs/constitution/05_architecture.md) — Stack و معماری
+- [`06_meta.md`](docs/constitution/06_meta.md) — Session و Templates و Tooling
+
+مهم‌ترین قوانین:
 
 - **#۱:** هر فایل Python باید با `# -*- coding: utf-8 -*-` شروع شود
 - **#۲۱:** هر چیز قابل تست با کد، با کد تست شود (نه Swagger UI)
 - **#۲۲:** هر اسکریپت `{N}_*.py` باید `{N}b_test_*.py` همراه داشته باشد
 - **#۲۳:** هر چت، CHAT_LOG با بخش جدید آپدیت شود
-- **#۲۴:** سند جامع فقط افزوده/اصلاح می‌شود — **هرگز حذف نمی‌شود**
+- **#۲۴:** سند جامع فقط افزوده/اصلاح می‌شود — **هرگز حذف نمی‌شود** (No-Deletion)
 - **#۲۵:** Claude در شروع چت چک‌لیست ۸ مرحله را انجام دهد
 - **#۲۶:** تغییرات اسناد به‌صورت اتمیک اعمال شوند
+- **#۶۰ ⭐⭐⭐:** PENDING-EOC در لحظه در `docs/PENDING_FOR_NEXT_VERSION.md` ثبت شود
+- **#۶۶ ⭐⭐⭐ 🆕 v2.12:** Push اجباری در پایان هر چت (در branch infra/، پس از هر commit)
 
-برای لیست کامل: **سند جامع v2.7 بخش قوانین**.
+برای لیست کامل: **`docs/constitution/01_rules.md`** (بخش ۱.۹ جدول authoritative).
 
 ---
 
@@ -286,17 +298,20 @@ Components                ← style={{ color: "var(--color-primary)" }}
 
 | متریک | مقدار |
 |---|---|
-| چت‌های انجام‌شده | ۶ |
-| اسکریپت‌های idempotent | ~۳۲ |
-| اسکریپت‌های تست همراه | ~۲۰ |
-| Bug های رفع‌شده | ۴۹ |
-| تصمیمات معماری ثبت‌شده | ۵۴ |
-| قوانین قفل‌شده | ۲۶ |
+| چت‌های انجام‌شده | ۱۱+ (شامل چت ۱۱.۰.الف modular split) |
+| اسکریپت‌های idempotent | ~۶۴ |
+| اسکریپت‌های تست همراه | ~۴۰ |
+| Bug های رفع‌شده | ۵۴ (#۱‌-۵۴ با ۳ Reserved: #۵۰-۵۲) |
+| تصمیمات معماری ثبت‌شده | ~۶۶ (Max ID; ۶۱ Recorded با ۵ Reserved) |
+| **قوانین قفل‌شده** | **۶۶** (#۱-۶۶ با ۲ Reserved: #۵۲, #۵۳) |
+| **درس‌نامه ردیف‌ها** | M1-M86 (با ۲۸ Reserved) |
+| **نسخه Constitution** | **v2.12 (Modular)** |
 | تم‌های built-in | ۵ |
-| اسناد مرجع | ۱۲ |
+| اسناد مرجع | ۱۲ (governance) + ۷ (modular constitution) |
 | Lines of code (frontend) | ~۲۵۰۰ |
 | Lines of code (backend) | ~۳۰۰۰ |
 | Bundle size (gzipped) | ~۱۴۴KB |
+| GitHub | `alibijanie-trade/trading-system` (Private) |
 
 ---
 
@@ -312,6 +327,7 @@ Components                ← style={{ color: "var(--color-primary)" }}
 
 ---
 
-**نسخه فعلی:** v0.4.0
-**فاز:** ۰ تکمیل شده
-**به‌روز:** 2026-05-17
+**نسخه فعلی:** v0.5.0 (پس از modular split v2.12)
+**فاز:** ۰ تکمیل‌شده + فاز ۱ skeleton + Modular Constitution v2.12
+**برنچ جاری:** `infra/governance-overhaul` (آماده merge به `main` در پایان چت ۱۱.۰.ج)
+**به‌روز:** 2026-05-21

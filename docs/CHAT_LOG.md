@@ -1255,24 +1255,207 @@ Authentication کامل با JWT + OAuth2، اولین API endpoint برای OHL
 
 ---
 
+---
+
+## چت ۱۱.۰.الف (Session 11.0.الف) — `TRADING-infra-governance-constitution-split`
+
+**تاریخ:** 2026-05-21
+**Claude version:** Claude Opus 4.7 + Filesystem MCP + Project Knowledge
+**Git HEAD شروع:** `c5d2580` (main پس از چت ۱۰)
+**Git HEAD پایان:** `ac1266b` (روی `infra/governance-overhaul`)
+**Branch:** `infra/governance-overhaul` (جدید از main + tag `pre-split-checkpoint`)
+**فاز:** Tier infrastructure overhaul — subgoal ۱۱.۰.الف (اول از ۳ چت: الف/ب/ج)
+
+### 📌 موضوع کلی
+
+**Constitution Modular Split** — تقسیم سند جامع v2.11 (~۲۱۶KB monolithic) به ۶ ماژول + main + archive، پلاس atomic update v2.12 با ادغام PENDING items.
+
+**علت اصلی:** Filesystem MCP در فایل‌های >۲۰۰KB کند یا hang می‌کرد (M66). Modular split این را رفع کرد: هر ماژول <۵۰KB، MCP-safe.
+
+### 📦 ورودی‌های چت
+
+- سند جامع v2.11 در `docs/سند_جامع_v2_11.md` (~۲۱۶KB)
+- CHAT11_HANDOFF.txt از چت ۱۰
+- پیشنهاد کاربر: تقسیم سند برای رفع M66
+
+### 🎯 گام‌های انجام‌شده — ۸ commit
+
+#### Phase 1 — Discovery (بدون commit)
+
+- Read tail سند جامع v2.11 (پیروی از M66 — tail:3000 جای head)
+- Audit تناقض‌ها: ۹ inconsistency کشف شد، با اولویت‌بندی
+- برنامه ۸-commit ساخته شد و تأیید گرفت
+
+#### Commit 1 — Skeleton (`5285fb6`)
+- ایجاد پوشه `docs/constitution/` + `docs/constitution/archive/`
+- ۷ فایل ماژول (main + ۶ ماژول) + .gitkeep برای archive
+- main.md با statistics placeholder + cross-refs + Quick-start
+- ۲۷KB توزیع‌شده
+
+#### Commit 2 — 01_rules.md migration (`1eb1196`)
+- Migration کامل سند ۱ + بخش ۱.۹ (جدول قوانین #۱-۶۵)
+- شرح کامل برای قوانین #۱۴-۶۵
+- ۳۰.۵KB
+
+#### Commit 3 — 02_lessons.md migration (`b09f4f8`)
+- Migration کامل سند ۱۸ (درس‌نامه)
+- M1-M63 با ۲۶ Reserved explicit (M22, M24, M29, M32-M43, M45-M55)
+- ۲.۲ fast-look + ۲.۳ جدول کامل + ۲.۴ critical lessons کامل
+- ۲۸.۸KB
+
+#### Commit 4 — 03_bugs.md migration (`ae21a9a`)
+- Bug catalog #۳۱-#۵۴ + ۳ Reserved (#۵۰-۵۲)
+- ۴ Critical bugs (#۳۸, #۳۹, #۴۰, #۵۳) با جزئیات کامل
+- Cross-ref به `docs/TROUBLESHOOTING.md` برای Bug #۱-#۳۰
+- ۱۶.۹KB
+
+#### Commit 5 — 04_principles.md migration (`452960e`)
+- ۸ اصل مشاوره + ۳ ضد-اصل
+- سطح‌بندی 🔒/🎯/💡
+- No-Deletion (#۲۴) + Atomic Updates (#۲۶) توضیح کامل
+- ۷-step process پیشنهاد تغییر
+- Metarules preview (توضیح کامل در commit 8)
+- ۱۴.۷KB
+
+#### Commit 6 — 05_architecture.md migration (`0160769`)
+- ۱۶ بخش از سند ۲-۱۲ (بزرگ‌ترین ماژول)
+- محیط + Backend Stack (۲۰+ dep) + Frontend Stack + .env
+- Layered Architecture + ساختار پوشه‌بندی
+- ۱۳ جدول DB + FK diagram + ایندکس‌ها
+- Backend API endpoints کامل + WebSocket auth + RBAC
+- UI/UX standards + Theme Engine + Variant Pattern + ۴ format تاریخ
+- Security (bcrypt + JWT + Fernet + RBAC + headers)
+- Code Quality + Testing
+- Roadmap ۱۵ فاز
+- ۳۲.۹KB (زیر ۵۰KB MCP-safe ✅)
+
+#### Commit 7 — 06_meta.md migration (`22c8b6c`)
+- ۱۲ بخش از سند ۱۳-۲۵ (Session/Tooling)
+- SESSION_STATUS + PROJECT_CONTEXT + CHAT_LOG templates
+- Chat start پروتکل modular
+- ۷-step Chat Handoff Protocol
+- ۱۰ پاسخ Templates Claude
+- Claude MAX model selection table
+- Pre-commit Hybrid mode
+- GitHub ۵-step setup + auth
+- Filesystem MCP tools + permissions + safety cycle + troubleshooting (شامل M83)
+- Claude Desktop config + Memory + Project Knowledge
+- claude_workspace ۵-folder structure
+- Skills roadmap
+- ۳۰.۸KB
+
+#### Commit 8 — Atomic Update v2.12 + Archive (`ac1266b`)
+
+**چندین تغییر در یک commit (atomic):**
+
+1. **Archive** `سند_جامع_v2_11.md` (~۲۱۶KB) → `docs/constitution/archive/v2_11_legacy.md` با header note (طبق #۲۴ No-Deletion)
+2. **main.md** — statistics refresh + migration checklist all checked
+3. **01_rules.md** — افزودن قانون #۶۶ Locked (Push اجباری) با جزئیات کامل + جدول #۱.۹ به‌روز
+4. **02_lessons.md** — افزودن M64-M86 (۲۳ درس جدید) با critical details برای M82-M86
+5. **05_architecture.md** — اصلاح shell default (CMD → PowerShell+venv، تناقض #۹ Discovery)
+6. **PROJECT_CONSTITUTION.md** — redirect stub جدید
+7. **PENDING_FOR_NEXT_VERSION.md** — Z2.20 افزوده شد (M87 candidate)
+
+**آمار:** ۳۹۵۷ insertions, ۴۰ deletions, ۷ files changed
+
+### 🛠️ ابزارهای تولیدشده (Filesystem MCP)
+
+برخلاف چت‌های قبل، این چت **هیچ اسکریپت Python** تولید نکرد. همه تغییرات روی فایل‌ها از طریق **Filesystem MCP** (`write_file` + `edit_file`) انجام شد. گیت دستورات توسط کاربر در PowerShell/CMD اجرا شد.
+
+### 🐛 Bug ها
+
+**هیچ Bug functional جدید** — این چت infrastructure بود نه code.
+
+**خطاهای کشف‌شده و رفع‌شده (درس):**
+
+- **edit_file ناموفق** با arrow character mismatch (`←` vs `→`) — با M83 retry حل شد
+- **EXECUTE block PowerShell** در CMD — M85 enforcement test
+- **multi-line `-m`** در CMD — M84 cross-shell fix
+
+### 🏛️ تصمیمات معماری
+
+**هیچ Decision جدید در DECISIONS_LOG** (این چت infrastructure refactor بود). ولی تصمیمات ساختاری:
+
+- Modular split به ۶ ماژول جدا (نه ۱ ماژول بزرگ)
+- Single-purpose commits برای granularity بالا (برای revert/audit آسان)
+- Push بعد از هر commit در branch `infra/` (نه فقط پایان چت)
+- چت‌های subgoal: الف (split) → ب (audit script) → ج (finalize + merge)
+
+### 📜 قوانین جدید
+
+- **#۶۶ ⭐⭐⭐ 🆕 v2.12:** Push اجباری در پایان هر چت (در branch infra/، پس از هر commit) — تبدیل از Proposed (PENDING Z2.9) به Locked
+
+### 🎓 درس‌های جدید (M82-M86 + Z2.20)
+
+- **M82** ⭐ Verification Claim Must Be Verified Itself — critical
+- **M83** Retry First, Restructure Last — medium (با enforcement test در همین چت)
+- **M84** Multi-line `-m` در CMD vs PowerShell — medium
+- **M85** Terminal Type Awareness — high (ارتقا از medium پس از enforcement test)
+- **M86** Two-step commit-then-push — medium
+- **Z2.20** (M87 candidate) — «Writing rule then violating it in same chat» — critical، برای ارزیابی در ۱۱.۰.ج
+
+### ⚠️ نکات مهم برای چت‌های آینده
+
+- **ساختار modular استفاده شود:** Claude بعدی باید طبق ترتیب `06_meta.md` بخش ۶.۱ اسناد را بخواند (نه سند جامع قدیمی)
+- **Archive فقط برای reference تاریخی:** فایل `archive/v2_11_legacy.md` دست نخورد — فقط برای reference
+- **Branch `infra/governance-overhaul` در حال توسعه:** merge به main فقط در پایان چت ۱۱.۰.ج پس از validation کامل
+- **README و SESSION_STATUS و CHAT_LOG (همین فایل) به‌روز شدند** در پایان چت ۱۱.۰.الف
+
+### 📊 آمار این چت
+
+| متریک | مقدار |
+|---|---|
+| Commits | ۸ (همگی push شدند) |
+| فایل‌های جدید (created) | ۹ (۷ ماژول + archive + PROJECT_CONSTITUTION redirect) |
+| فایل‌های به‌روز (modified) | ۳ (PENDING, README, SESSION_STATUS, CHAT_LOG) |
+| اسکریپت Python جدید | ۰ (همه با Filesystem MCP) |
+| تغییر در git (کل commits) | ~۴۰۰۰ insertions, ۱۰۰ deletions |
+| Bug | ۰ functional |
+| Decisions جدید | ۰ |
+| **قوانین جدید** | **۱ (#۶۶ Push اجباری Locked)** |
+| **درس‌های جدید** | **۲۳ (M64-M86 ادغام + ۵ critical M82-M86)** |
+| **تناقض‌های حل‌شده** | **۹ از ۹ (Discovery audit)** |
+
+### 🔗 ارتباطات
+
+- ادامه چت قبل: `TRADING-phase1-part01-ccxt-websocket-setup` (چت ۱۰)
+- **چت بعد:** `TRADING-infra-governance-precommit-audit-script` (چت ۱۱.۰.ب — Layer 1 audit)
+- **چت بعدی بعد آن:** `TRADING-infra-governance-finalize-and-merge` (چت ۱۱.۰.ج)
+- **handoff:** `claude_workspace/incoming_permanent/CHAT11_0_B_HANDOFF.txt` (در صورت ساخت)
+
+### TASK های DONE شده در این چت
+
+- Subgoal ۱۱.۰.الف — Constitution Modular Split + Atomic Update v2.12
+  - Discovery و ادیت تناقض‌ها
+  - Skeleton + ۶ migration commit + atomic update
+  - Archive سند v2.11
+  - README + SESSION_STATUS + CHAT_LOG به‌روز
+
+### TASK های جدید کشف‌شده برای چت‌های ۱۱.۰.ب + ۱۱.۰.ج
+
+- **چت ۱۱.۰.ب:** Pre-commit audit script (Layer 1) — SESSION_STATUS/DECISIONS_LOG/Constitution consistency check
+- **چت ۱۱.۰.ج:** Finalize chat script + Threshold rules + ارزیابی M87 candidate + merge to main
+
+---
+
 ## آمار کلی پروژه
 
 | دسته | تعداد |
 |---|---|
-| چت‌های انجام‌شده | ۱۰ |
-| اسکریپت‌های تولید‌شده | ~۶۴ (~۶۰ تا چت ۸ + ۴ جدید در چت ۹: 55، 55b، 56، 56b) |
-| Bug های ثبت‌شده | ۵۳ (+Bug #53 در چت ۱۰ — BOM در requirements.txt) |
-| Decisions ثبت‌شده | ~۶۴ (+۴ در چت ۱۰: #۶۱-۶۴ معماری CCXT) |
-| قوانین قفل‌شده | **۶۵** (با ۲ Reserved: #۵۲، #۵۳) |
-| درس‌نامه ثبت‌شده | **۶۷ ردیف** (۴۲ کشف‌شده تا M69 + ۲۵ Reserved) |
-| فاز پایان‌یافته | فاز ۰ (۱۰۰٪) + Tier 2 (۱۶/۲۱ ✅) + فاز ۱ skeleton |
-| فاز در حال انجام | فاز ۱ — binance_client.py + binance_ws.py (چت ۱۱+) |
-| نسخه سند جامع | **v2.11** (در چت ۹ ایجاد شد) |
+| چت‌های انجام‌شده | ۱۱+ (شامل چت ۱۱.۰.الف modular split) |
+| اسکریپت‌های تولید‌شده | ~۶۴ (تا چت ۱۰؛ چت ۱۱.۰.الف بدون اسکریپت) |
+| Bug های ثبت‌شده | ۵۴ |
+| Decisions ثبت‌شده | ~۶۶ (Max ID, ۶۱ Recorded) |
+| **قوانین قفل‌شده** | **۶۶** (#۱-۶۶ با ۲ Reserved: #۵۲, #۵۳) ⭐ افزایش از ۶۵ |
+| **درس‌نامه ثبت‌شده** | **M1-M86** (با ۲۸ Reserved) |
+| **فاز پایان‌یافته** | فاز ۰ (۱۰۰٪) + Tier 2 (۱۶/۲۱) + فاز ۱ skeleton + **Modular Constitution v2.12** |
+| **فاز در حال انجام** | infra overhaul (subgoals ب + ج باقی‌مانده) |
+| **نسخه Constitution** | **v2.12 (Modular)** — در چت ۱۱.۰.الف ایجاد شد |
 
 ---
 
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v1.5 (2026-05-20 — چت ۱۰: افزودن بخش چت ۱۰ — CCXTDataSource skeleton + ۴ Decision + ۴ درس)  
-**به‌روز شده در:** چت `TRADING-phase1-part01-ccxt-websocket-setup`  
+**نسخه:** v1.6 (2026-05-21 — چت ۱۱.۰.الف: افزودن بخش چت ۱۱.۰.الف — Modular split + Atomic v2.12 + جدول آمار تا چت ۱۱+)
+**به‌روز شده در:** چت `TRADING-infra-governance-constitution-split`
 **به‌روز توسط:** Claude طبق قانون #۲۳ + #۲۶ + #۶۰ — CLAUDE_CHECKLIST v1.4 فاز ۳
