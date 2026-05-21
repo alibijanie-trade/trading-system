@@ -28,7 +28,7 @@
 |---|---|---|
 | **[main.md](./main.md)** | این فایل — index + cross-refs + Vision + Quick-start | ~8KB |
 | **[01_rules.md](./01_rules.md)** | قوانین Locked #۱-N (با شرح کامل، نمونه، استثناها) | ~45KB |
-| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M83+) با علت ریشه‌ای و راه‌حل | ~50KB |
+| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M86) با علت ریشه‌ای و راه‌حل | ~50KB |
 | **[03_bugs.md](./03_bugs.md)** | کاتالوگ Bug ها (#1-#54+) با علائم، علت، fix | ~30KB |
 | **[04_principles.md](./04_principles.md)** | ۸ اصل بنیادی + سطح‌بندی 🔒/🎯/💡 + No-Deletion + Atomic Updates | ~12KB |
 | **[05_architecture.md](./05_architecture.md)** | Stack + DB Schema + Backend + Frontend + UI/UX + Security + Roadmap | ~40KB |
