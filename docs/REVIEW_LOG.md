@@ -12,7 +12,7 @@
 
 | ID | Date | Slug | Subject | Trigger | Status | Resolution |
 |---|---|---|---|---|---|---|
-| 001 | 2026-05-22 | mdrs-v2-review-infrastructure-bootstrap | Bootstrap of MDRS v2 review workflow per Decision #65. Selected internal markdown + REVIEW_LOG over Notion external, GitHub Issues only, or Jira/Linear. | §2.2 + §2.3 + §2.4 | **Proposed** | `<pending S2.3-S2.4>` |
+| 001 | 2026-05-22 | mdrs-v2-review-infrastructure-bootstrap | Bootstrap of MDRS v2 review workflow per Decision #65. Selected internal markdown + REVIEW_LOG over Notion external, GitHub Issues only, or Jira/Linear. | §2.2 + §2.3 + §2.4 | **Implemented** | `4726b38` (D4) → `d9747b5` (D5) → this S2.3 atomic commit (D6) |
 
 ---
 
@@ -95,4 +95,4 @@ Proposed (Draft written, in discussion)
 
 **نسخه:** v1.0 (S2 D5 از MDRS v2)
 **ساخته توسط:** Claude در `TRADING-phase1-part03-mdrs-v2-implementation`
-**Initial entry:** Review #001 با Status=Proposed، Resolution=`<pending S2.3-S2.4>`. در S2.3 atomic update به Implemented (per Triple-Rule prevention pattern).
+**Initial entry:** Review #001 با Status=Implemented در S2.3 atomic commit (همراه با ساخت `docs/reviews/README.md` و `docs/reviews/2026-05-22-mdrs-v2-review-infrastructure-bootstrap.md`). Triple-Rule prevention pattern موفق applied — هیچ dangling reference. Scope-closed طبق M98 candidate principle — D7 (PRE_ADD_CHECKLIST) در scope این Review نیست.
