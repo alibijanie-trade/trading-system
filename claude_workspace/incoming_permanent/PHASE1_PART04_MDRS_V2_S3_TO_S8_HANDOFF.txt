@@ -4,7 +4,61 @@
 > Date: 2026-05-22 (end of Stage S2)
 > Branch: infra/v2.14-source-of-truth
 > Final commit S2: af63e9b
+> Final commit chat-end: e290b36
 > Next Chat Title: TRADING-phase1-part04-mdrs-v2-completion
+
+---
+
+## CRITICAL CONTEXT AWARENESS (READ FIRST)
+
+You (the Claude reading this in the next chat) have NO MEMORY of the previous chat. Each chat is an independent AI instance. What you have available:
+
+1. THIS handoff file (boot guidance)
+2. Filesystem MCP for reading all project files
+3. GitHub remote (git log, git show for full history)
+4. docs/SESSION_STATUS.md, docs/CHAT_LOG.md, docs/PENDING_FOR_NEXT_VERSION.md for state-of-record
+
+What you DO NOT have:
+
+1. Conversational context from the previous chat (negotiations, user catches, iteration loops)
+2. Tone and partnership style established in the previous chat
+3. Any memory of past decisions — all must be reconstructed from files
+
+CRITICAL Anti-patterns (M56 + M77 + M100):
+- DO NOT claim from memory anything you have not read in a file
+- DO NOT write "I remember from the previous chat..." — this is a false claim
+- If something is unclear, ASK — do not assume
+
+The user expects partnership-style work with:
+- Preview-then-approve for substantive document creation
+- Visible pre-add checklist execution (M100): explicit Yes/No + reasoning per check in chat surface
+- Triple-Rule honored (M93): SESSION_STATUS + CHAT_LOG + PROJECT_MANIFEST atomic in one commit at stage boundaries
+- -F flag for long commits (M99): git commit -F claude_workspace/commit_msg_{stage}.txt
+- ASCII-only commit messages (M95 + M97): no metacharacters (|, >, <, &, ^, %, em-dash, arrows, smart-quotes)
+- Read-back verify after every write (Rule #37)
+- Helper chat consultation at major decision points
+- User catches drive lesson discovery — visibility in preview enables this
+
+Before proceeding to any task in this chat, you MUST:
+1. Read all files listed in "FILES TO READ ON BOOT" section below
+2. Run git state verification commands (git status, git log --oneline -12)
+3. Ask the user the 5 sign-off questions in the "BOOT QUESTIONS" section
+4. Wait for user approval before starting Stage S3
+
+If at any point you are tempted to act from memory rather than from files, STOP. Read the file. Quote the file. Then act.
+
+---
+
+## FILES TO READ ON BOOT (in order)
+
+1. docs/SESSION_STATUS.md (current state, includes Hand-off section)
+2. docs/PENDING_FOR_NEXT_VERSION.md (v2.14 section at the end — 27 items for S3)
+3. THIS file (claude_workspace/incoming_permanent/PHASE1_PART04_MDRS_V2_S3_TO_S8_HANDOFF.txt)
+4. docs/PROJECT_MANIFEST.md (274 files classified after D2 re-run)
+5. docs/REVIEW_PROTOCOL.md + docs/REVIEW_LOG.md + docs/PRE_ADD_CHECKLIST.md (governance framework built in S2)
+6. docs/reviews/2026-05-22-mdrs-v2-review-infrastructure-bootstrap.md (Review #001 substantive proof-of-value)
+7. docs/CHAT_LOG.md (section 8 “Chat-end Hand-off” for transition context)
+8. The 10 mandatory constitution files per Rule #68.2 Boot Protocol
 
 ---
 
@@ -235,25 +289,19 @@ Last sub-commit of each stage:
 
 ---
 
+## BOOT QUESTIONS
+
+Ask the user explicitly before starting S3:
+
+1. Confirm branch infra/v2.14-source-of-truth is current HEAD (e290b36)?
+2. Confirm Constitution still v2.13 (no manual edits between chats)?
+3. Confirm execution plan for S3 (4 sub-commits as outlined in this handoff)?
+4. Any new context or constraint discovered between chats?
+5. Confirm M-lesson IDs M88, M93-M100 numbering is correct (no overlap with existing M85-M87 in 02_lessons.md)?
+
+---
+
 ## CONTEXT FOR BOOT IN NEXT CHAT
-
-The next chat is TRADING-phase1-part04-mdrs-v2-completion. Boot protocol from rule #68.2:
-
-1. Read 10 mandatory constitution files
-2. Read docs/SESSION_STATUS.md (current state)
-3. Read docs/PENDING_FOR_NEXT_VERSION.md (find the v2.14 section)
-4. Read THIS handoff file (you are reading it now)
-5. Read docs/PROJECT_MANIFEST.md to confirm manifest state
-6. Read docs/REVIEW_PROTOCOL.md + docs/PRE_ADD_CHECKLIST.md (governance framework just built)
-7. Verify branch state: git status, git log --oneline -12, git branch -a
-8. Confirm with user before starting S3
-
-Boot questions to ask user:
-1. Confirm branch infra/v2.14-source-of-truth is current HEAD
-2. Confirm Constitution still v2.13 (no manual edits between chats)
-3. Confirm execution plan for S3 (4 sub-commits as outlined)
-4. Confirm any new context or constraint discovered between chats
-5. Confirm M-lesson IDs M88, M93-M100 are still correct numbering (no overlap with existing M85-M87)
 
 ---
 
