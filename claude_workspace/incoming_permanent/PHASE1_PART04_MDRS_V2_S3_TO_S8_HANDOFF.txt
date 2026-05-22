@@ -1,0 +1,334 @@
+# PHASE1 PART04 — MDRS v2 S3-S8 Completion HANDOFF
+
+> Chat Source: TRADING-phase1-part03-mdrs-v2-implementation
+> Date: 2026-05-22 (end of Stage S2)
+> Branch: infra/v2.14-source-of-truth
+> Final commit S2: af63e9b
+> Next Chat Title: TRADING-phase1-part04-mdrs-v2-completion
+
+---
+
+## EXECUTIVE SUMMARY
+
+MDRS v2 framework is 7/23 deliverables complete. S1 (Manifest Bootstrap, D1-D3) and S2 (Review Infrastructure, D4-D7) are done and pushed. The branch infra/v2.14-source-of-truth contains 10 commits beyond main.
+
+This chat ended at S2 completion with a deliberate handoff decision (Option B):
+- S3 is the largest atomic stage (Constitution v2.13 to v2.14 update)
+- Splitting an atomic stage between chats is high-risk
+- The current chat has accumulated significant context
+- Better to start S3 in a fresh chat with focused context
+
+All state-of-record is committed and pushed. The tracker file MDRS_V2_PENDING_DRAFT.md has been atomically transferred to docs/PENDING_FOR_NEXT_VERSION.md (and will be deleted in the final chat-end commit). The atomic-end policy is honored.
+
+---
+
+## CURRENT STATE (as of end of chat)
+
+**Branch state:**
+- main: 5730173 (Z3.11 fix-up, pushed)
+- infra/v2.14-source-of-truth: af63e9b (S2.5 stage-end, pushed)
+- v0.6.0 tag remains on main:65d0159
+- v0.7.0 will be tagged at end of S8 (drift cleanup + merge)
+
+**Constitution:**
+- Current: v2.13 (Modular)
+- Target: v2.14 (MDRS v2) via S3 atomic update
+- Rules currently locked: 67 (will extend to 76 in S3)
+- Lessons currently locked: M1-M87 (will extend to M100 in S3)
+
+**MDRS v2 Progress:**
+- Done: D1-D7 (S1 + S2)
+- Pending: D8-D23 (S3-S8)
+
+**Manifest:**
+- 274 classified files
+- T1=22 T2=20 T3=216 T4.1=12 T4.2=4
+- T1 hosts new review docs (REVIEW_PROTOCOL, REVIEW_LOG, PRE_ADD_CHECKLIST, reviews/) per S1 design foresight
+
+**Tracker status:**
+- claude_workspace/MDRS_V2_PENDING_DRAFT.md still exists at handoff write time
+- Content already transferred to docs/PENDING_FOR_NEXT_VERSION.md
+- To be deleted in the final chat-end commit (along with this handoff sequence)
+
+---
+
+## NEW ITEMS FOR v2.14 (Already in PENDING_FOR_NEXT_VERSION.md)
+
+**Total: 27 items**
+- 17 Z3.x drift items (Z3.1 to Z3.17; Z3.11 technically resolved)
+- 9 M-candidate lessons (M88, M93-M100)
+- 1 Principle (Golden Rule)
+
+**Plus proposed additions:**
+- 9 new Rules (#68-76)
+- 2 new Templates (11-12)
+- 4 new Audit Checks (#8-11)
+
+See docs/PENDING_FOR_NEXT_VERSION.md tail section for full structured tables.
+
+---
+
+## STAGE S3 — DETAILED EXECUTION PLAN
+
+**Goal:** Atomic update Constitution v2.13 to v2.14 with MDRS v2 enforcement framework.
+
+**Estimate:** 3 atomic sub-commits + 1 stage-end commit (per user-confirmed refinement from Phase 4 of part03 chat).
+
+### S3 Sub-commit Structure (user-confirmed)
+
+| Sub | Scope | Files | Commit message |
+|---|---|---|---|
+| S3.1 | Rules + Lessons additions | 01_rules.md + 02_lessons.md | docs(constitution): add MDRS v2 rules and lessons (D8 + D9 of v2.14) |
+| S3.2 | Principle + Templates | 04_principles.md + 06_meta.md | docs(constitution): add Golden Rule principle + Templates 11-12 (D10 of v2.14) |
+| S3.3 | Version bump + audit | main.md + scripts/63_pre_commit_audit.py | docs(constitution): bump v2.13 to v2.14 + update audit CURRENT_VERSION (D11 + D13 of v2.14) |
+| S3.4 | Stage-end | SESSION_STATUS + CHAT_LOG + PROJECT_MANIFEST | docs(state): stage-end S3 - atomic v2.14 reconciliation |
+
+### S3.1 — Rules + Lessons (D8 + D9)
+
+**File: docs/constitution/01_rules.md**
+
+Add 9 new rules in order #68 through #76. Use Reserved positions if needed (check existing reserved IDs in current file via Filesystem read first).
+
+Suggested numbering and titles:
+- #68: MDRS v2 Source-of-Truth Hierarchy
+- #69: Review Trigger Enforcement
+- #70: Path Validator Enforcement
+- #71: VERSION Single Source of Truth
+- #72: Manifest Self-Awareness
+- #73: Atomic Stage-end State Reconciliation
+- #74: Z-ID Permanence Boundary
+- #75: Review Scope Closure Mandate
+- #76: Pre-Action Checklist Visibility
+
+**File: docs/constitution/02_lessons.md**
+
+Add 9 new M-lessons. Confirm sequence: M88, M93-M100.
+
+Critical M-lessons with full text reasoning available in part03 chat transcript:
+- M88: Hidden Regeneration Hazard
+- M93: Triple-Rule Atomic Boundary
+- M94: Black Auto-Reformat Re-Stage Pattern
+- M95: CMD Pipe Character in Commit Messages
+- M96: Z-ID Permanence Anti-pattern
+- M97: CMD Quote-Tracking Catastrophic Failure
+- M98: Review Scope Closure
+- M99: CMD Long-Command Paste-Break + -F Flag Standard
+- M100: Hidden-Checklist Completion
+
+Note: M89, M90, M91, M92 already exist in v2.13 from earlier chats. Verify with Filesystem read before assigning new IDs.
+
+**Commit pattern:** Use git commit -F flag with temp file in claude_workspace (M99 standard). Commit message will be long.
+
+### S3.2 — Principle + Templates (D10)
+
+**File: docs/constitution/04_principles.md**
+
+Add Golden Rule as new principle entry. Body: "Tier rules in manifest are NOT git tracking. Scope is by role in the project, not by tracked status in git. This applies to manifest tier classification, audit detection, and all governance decisions about file visibility."
+
+**File: docs/constitution/06_meta.md**
+
+Add 2 new Templates:
+- Template 11: Commit Message Short — inline -m pattern with ASCII-only, no metachars (M95, M97 prevention)
+- Template 12: Commit Message Long — git commit -F flag with temp file in claude_workspace (M99 standard)
+
+### S3.3 — Version Bump + Audit (D11 + D13)
+
+**File: docs/constitution/main.md**
+
+Version header: v2.13 to v2.14.
+Stats refresh:
+- Rules: 67 to 76
+- Lessons: M1-M87 to M1-M100
+- Add version history entry: v2.14 (2026-XX-XX) - MDRS v2 framework integration: 9 new rules, 9 new lessons, 1 new principle, 2 new templates
+
+**File: scripts/63_pre_commit_audit.py**
+
+Update CURRENT_VERSION:
+- CURRENT_VERSION = "v2.14"
+- Update ACCEPTABLE_VERSIONS list if it exists
+
+Also update name field in .pre-commit-config.yaml from "Layer 1 (v2.12)" to "Layer 1 (v2.14)" (Z3.12 fix).
+
+### S3.4 — Stage-end (Atomic Reconciliation)
+
+Full refactor of SESSION_STATUS.md for S3 completion state. Add S3 sub-section to CHAT_LOG.md. D2 re-run if PROJECT_MANIFEST.md changes (likely not, since 01_rules.md etc are T1 already).
+
+---
+
+## STAGES S4-S8 — OVERVIEW
+
+After S3:
+- S4 (D12): Extend scripts/63_pre_commit_audit.py with new Audit Checks #8-11
+- S5 (D14): Second Review Report (Review #002 - subject TBD based on what triggers in S3/S4)
+- S6 (D15-D18): GitHub Issue Templates + ISSUE_WORKFLOW.md
+- S7 (D19-D23): Path validator (scripts/65_doc_path_validator.py) + VERSION SSoT file + Audit Checks #12-13 + Rules formalization
+- S8: Z3.x cleanup hybrid policy + merge to main + tag v0.7.0
+
+User-confirmed refinement: After S4 or S5, do context budget self-check. If less than 50% remaining, hand off to part05.
+
+---
+
+## CRITICAL LESSONS APPLIED IN THIS CHAT (DO NOT FORGET)
+
+These were the user catches that emerged as M-lesson candidates. The next chat MUST honor them from boot:
+
+### M93 — Triple-Rule Atomic Boundary
+Stage-end commits must include SESSION_STATUS.md + CHAT_LOG.md + (optionally) PROJECT_MANIFEST.md in the SAME atomic commit, before push. Never leave modifications uncommitted at chat-end. Discovered via Z3.11 (chat 11.0.ج SESSION_STATUS was modified but not committed).
+
+### M96 — Z-ID Permanence
+Z-IDs (Z3.X format) live only in the gitignored tracker file (MDRS_V2_PENDING_DRAFT.md). Permanent docs must NEVER reference Z-IDs. Use M-candidate IDs, Rule numbers, Decision numbers, or generic descriptive language. Discovered in S2.2 design via user Q4 catch.
+
+### M97 — CMD Em-Dash + Redirect Catastrophe
+Multi-byte Unicode characters (em-dash, en-dash, arrows, smart quotes) in CMD commit messages can break quote-tracking and trigger redirect side effects. Evidence: stray file `M` was created in project root during S2.2 attempt 1.
+
+### M98 — Review Scope Closure
+Reviews must be temporally closed. Forward references to upcoming work (TBD hashes, [upcoming], unbounded placeholders) are anti-pattern. Discovered via user Q3+Q4+Catch trio in S2.3 design.
+
+### M99 — Git Commit -F Flag Standard
+For long commit messages (3+ -m flags OR 500+ chars), ALWAYS use git commit -F with a temp file in claude_workspace/. Inline -m chains have 100% failure rate for long commits in S2. The -F flag eliminates all CMD quoting issues.
+
+### M100 — Hidden-Checklist Completion
+Pre-action checklists (PRE_ADD_CHECKLIST §3, CLAUDE_CHECKLIST steps) must be visible in chat surface. Mental/implicit completion is invisible to partner (user or future audit). Each check needs Yes/No + brief reasoning. Discovered in S2.4 design via user Q4 catch.
+
+---
+
+## CRITICAL OPERATIONAL PATTERNS
+
+### Commit Pattern (M99 + M95 + M97 applied)
+
+For any commit with body content (most MDRS v2 commits):
+
+1. Claude writes message to claude_workspace/commit_msg_{stage}.txt via Filesystem:write_file
+2. User executes:
+   ```
+   git add {files}
+   git commit -F claude_workspace/commit_msg_{stage}.txt
+   del claude_workspace\commit_msg_{stage}.txt
+   ```
+3. Always ASCII-only in commit messages, even though `-F` reduces metachar risk
+
+### Pre-Add Checklist Pattern (M100)
+
+When the user proposes adding any new artifact (T1/T2 doc, script, etc.), Claude must:
+1. Output the explicit 10-check pre-add checklist from docs/PRE_ADD_CHECKLIST.md
+2. Mark each check with Yes/No + brief reasoning
+3. Show explicit Decision (Proceed, Trigger Review, or Defer/Reject)
+4. Only then proceed to design or implementation
+
+### Review-Then-Approve Pattern
+
+For substantive document creation in S3:
+1. Claude writes preview in chat (full document body)
+2. User reviews and provides refinements (often discovering new lessons)
+3. Claude integrates refinements + writes file
+4. Read-back diff verify
+5. Stage + commit (with -F) + push
+
+### Atomic Stage-end Pattern (M93)
+
+Last sub-commit of each stage:
+- SESSION_STATUS.md full refactor (not append)
+- CHAT_LOG.md new sub-section append
+- PROJECT_MANIFEST.md D2 re-run if file changes warrant
+- All three in ONE atomic commit
+- Push immediately after commit
+
+---
+
+## CONTEXT FOR BOOT IN NEXT CHAT
+
+The next chat is TRADING-phase1-part04-mdrs-v2-completion. Boot protocol from rule #68.2:
+
+1. Read 10 mandatory constitution files
+2. Read docs/SESSION_STATUS.md (current state)
+3. Read docs/PENDING_FOR_NEXT_VERSION.md (find the v2.14 section)
+4. Read THIS handoff file (you are reading it now)
+5. Read docs/PROJECT_MANIFEST.md to confirm manifest state
+6. Read docs/REVIEW_PROTOCOL.md + docs/PRE_ADD_CHECKLIST.md (governance framework just built)
+7. Verify branch state: git status, git log --oneline -12, git branch -a
+8. Confirm with user before starting S3
+
+Boot questions to ask user:
+1. Confirm branch infra/v2.14-source-of-truth is current HEAD
+2. Confirm Constitution still v2.13 (no manual edits between chats)
+3. Confirm execution plan for S3 (4 sub-commits as outlined)
+4. Confirm any new context or constraint discovered between chats
+5. Confirm M-lesson IDs M88, M93-M100 are still correct numbering (no overlap with existing M85-M87)
+
+---
+
+## FILES TO PRESERVE / TO DELETE
+
+**Preserve (must remain after this chat):**
+- All files in docs/ (T1 + T2)
+- All files in scripts/
+- docs/PENDING_FOR_NEXT_VERSION.md with the new v2.14 section appended
+- claude_workspace/incoming_permanent/ (this handoff file lives here)
+
+**Delete in final chat-end commit:**
+- claude_workspace/MDRS_V2_PENDING_DRAFT.md (atomic transfer complete)
+
+**Do NOT touch:**
+- docs/constitution/* (will be modified in S3 of next chat)
+- main branch
+- Any tag
+
+---
+
+## KEY TRANSCRIPTS AND COMMITS REFERENCE
+
+Chat transcript with full reasoning:
+- Path on Claude desktop: not accessible from this chat (will be auto-created)
+- Title: TRADING-phase1-part03-mdrs-v2-implementation
+- Previous chat compacted: /mnt/transcripts/2026-05-22-10-56-27-trading-mdrs-v2-s1-complete.txt
+
+Commits made in this chat (11 total):
+1. 5730173 (main) — fix(docs): Z3.11 fix-up SESSION_STATUS
+2. 3b660a4 — chore(git): .gitignore MDRS patterns
+3. e45dda4 — feat(scripts): 64_generate_manifest.py D2
+4. 832c9f4 — test(scripts): 64b_test_manifest.py D3
+5. c71edd4 — feat(docs): first PROJECT_MANIFEST.md D1
+6. f5c5004 — docs(state): stage-end S1
+7. 4726b38 — docs(governance): REVIEW_PROTOCOL.md D4
+8. d9747b5 — docs(governance): REVIEW_LOG.md D5
+9. 35a634f — docs(governance): reviews/ + Review 001 + LOG atomic D6
+10. c18f132 — docs(governance): PRE_ADD_CHECKLIST.md D7
+11. af63e9b — docs(state): stage-end S2 full reconciliation
+
+To read any commit details:
+```
+git show {hash}
+```
+
+To read the structured tracker content (already transferred to PENDING but kept until final commit):
+```
+type claude_workspace\MDRS_V2_PENDING_DRAFT.md
+```
+
+---
+
+## USER META-PRINCIPLES (PRESERVED)
+
+The user articulated these in the previous chat and in part03:
+- "همیشه برای من درست و حرفه ای انجام شدن کار مهم است. اگر مشمول زمان و انرژی بیشتری می شود مهم نیست"
+  (Correctness and professionalism take priority over time/energy efficiency)
+- Preview-first approach for any substantive document change
+- Read-back verify after every write (Rule #37)
+- Triple-Rule honored at every stage boundary (no exceptions)
+- User catches drive lesson discovery — visibility in preview enables this
+
+---
+
+## FINAL STATE-OF-RECORD CONFIRMATION
+
+When the part03 chat-end commit completes:
+- docs/PENDING_FOR_NEXT_VERSION.md will include 27 items for v2.14
+- claude_workspace/MDRS_V2_PENDING_DRAFT.md will be deleted
+- docs/SESSION_STATUS.md will mention "ready for part04 chat"
+- docs/CHAT_LOG.md will have final chat summary for part03
+- Branch infra/v2.14-source-of-truth will be at chat-end commit
+- All pushed to origin
+
+The next chat starts with full context retrieval via boot protocol.
+
+End of HANDOFF.

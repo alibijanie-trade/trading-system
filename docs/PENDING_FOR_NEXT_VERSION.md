@@ -506,8 +506,117 @@ Decisions #۱۶-۱۹ و #۴۹ در دسته‌بندی موضوعی DECISIONS_LO
 | **Z2.20** ✅ RESOLVED v2.13 | 🔴 **critical** | M87 ثبت شد به‌عنوان درس جداگانه از M62. تبدیل از PENDING به Locked در v2.13 با راه‌حل سه‌لایه: قانون #۶۷ (Positive Constraint) + Template 9 Pre-EXECUTE verification (Visible) + Layer 1 audit (آینده). جزئیات: 02_lessons.md بخش ۲.۸ M87.
 
 **تعداد:** ۰ آیتم باز (همه Z2.۱-Z2.۲۰ در v2.12 و v2.13 ادغام شدند)
-**وضعیت:** آماده شروع v2.14 در چت‌های بعد
+**وضعیت v2.14:** در ادامه بخش جدید پایین
 
 ---
 
 > 💡 **نکته برای چت ۱۱:** این فایل را خوانده و در پایان چت ۱۱ اگر آیتم جدیدی کشف شد، طبق قانون #۶۰ در همین فایل ثبت شود.
+
+---
+
+## 🔴 آیتم‌های جدید — برای ادغام در v2.14 (MDRS v2)
+
+**منبع:** Atomic transfer از tracker `claude_workspace/MDRS_V2_PENDING_DRAFT.md` در پایان چت `TRADING-phase1-part03-mdrs-v2-implementation` (2026-05-22 — پایان Stage S2)
+
+**وضعیت پروژه:** S1+S2 کامل (D1-D7 از D1-D23). S3 (atomic update v2.13 → v2.14) باقی در چت بعد.
+
+**تعداد:** **۱۷ Z3.x drift** + **۹ M-candidate lessons** + **۱ Principle (Golden Rule)** = ۲۷ آیتم
+
+### خلاصه جدول Z3.x دریفت‌ها — برای S8 cleanup در v2.14
+
+| ID | Severity | Source | Action در S8 |
+|---|---|---|---|
+| Z3.1 | medium | Batch 5 | Decision reference drift در backend code |
+| Z3.2 | high | Batch 5 | Migrations directory drift (backend/alembic to backend/migrations) |
+| Z3.3 | low | Batch 5 | CCXTDataSource deferred (tracked only) |
+| Z3.4 | medium | Batch 5 | alembic.ini ASCII-only constraint undocumented |
+| Z3.5 | medium | Batch 7 | Duplicate script numbering (55, 56, 63) |
+| Z3.6 | high | Batch 7 | Anti-Pattern implementation gap (5/10 in check_anti_patterns.py) |
+| Z3.7 | high | Batch 7 | install_git_hooks.py emoji violation rule 46 |
+| Z3.8 | critical | Batch 7 | Hidden Regeneration Hazard in doc generators (M88 candidate) |
+| Z3.9 | high | Batch 8 | CHANGELOG.md 2 versions behind |
+| Z3.10 | critical | Batch 8 | claude_workspace/snapshots/* outdated (Project Settings hazard) |
+| Z3.11 RESOLVED | high | Phase 3 | Triple-Rule violation, fixed in 5730173, lesson formalization in M93 |
+| Z3.12 | low | Phase 3 | Pre-commit hook label drift (v2.12 to v2.13 in yaml) |
+| Z3.13 | high | S1 D2 | 6 Pre-Modular legacy sand-documents misplaced (~1MB) |
+| Z3.14 | medium | S1 D2 | v2.11 sand-document duplication |
+| Z3.15 | medium | S1 D2 | Self-reference first-run gap (D2 manifest) |
+| Z3.16 | medium | S2.2 | Review numbering integrity audit |
+| Z3.17 | high | S2.2 | Z-ID Permanence anti-pattern (M96 candidate) |
+
+### M-lesson candidates — برای افزودن به 02_lessons.md در S3 atomic update v2.14
+
+| ID | عنوان | Severity | منبع |
+|---|---|---|---|
+| M88 | Hidden Regeneration Hazard | critical | Z3.8 (Batch 7) |
+| M93 | Triple-Rule Atomic Boundary | high | Z3.11 (Phase 3) |
+| M94 | Black Auto-Reformat Re-Stage Pattern | positive | S1 sub-commits 2, 3 |
+| M95 | CMD Pipe Character in Commit Messages | high | S2.1 attempt 1 |
+| M96 | Z-ID Permanence Anti-pattern | high | Z3.17 (S2.2 design, user catch) |
+| M97 | CMD Quote-Tracking Catastrophic Failure (em-dash + redirect) | critical | S2.2 attempt 1 (stray file M evidence) |
+| M98 | Review Scope Closure (Temporally Closed Reviews) | high | S2.3 design (user trio catches) |
+| M99 | CMD Long-Command Paste-Break + -F Flag Standard | critical | S2.3 attempt 1 (100% inline failure) |
+| M100 | Hidden-Checklist Completion (Implicit Validation Failure) | high | S2.4 design (user catch) |
+
+### Principle جدید — برای افزودن به 04_principles.md در S3
+
+**Golden Rule** — Tier rules در manifest ≠ git tracking. Scope by **role** in project, not by **tracked** in git. منبع: S1 D2 design discovery (کاربر).
+
+### Rules جدید پیشنهادی برای 01_rules.md در S3 (D8)
+
+| ID پیشنهادی | عنوان | منبع |
+|---|---|---|
+| #68 | MDRS v2 Source-of-Truth Hierarchy (Tier 1-5 enforcement) | MDRS framework |
+| #69 | Review Trigger Enforcement (PRE_ADD_CHECKLIST + REVIEW_PROTOCOL) | S2 governance |
+| #70 | Path Validator Enforcement | D19-D21 |
+| #71 | VERSION Single Source of Truth | D22-D23 |
+| #72 | Manifest Self-Awareness (D2 + Audit Check #8-9) | D12 audit extensions |
+| #73 | Atomic Stage-end State Reconciliation | M93 enforcement |
+| #74 | Z-ID Permanence Boundary | M96 enforcement |
+| #75 | Review Scope Closure Mandate | M98 enforcement |
+| #76 | Pre-Action Checklist Visibility | M100 enforcement |
+
+### Templates جدید پیشنهادی — برای 06_meta.md در S3
+
+| ID | عنوان | منبع |
+|---|---|---|
+| Template 11 | Commit Message Short (inline -m pattern) | M95 + M97 prevention |
+| Template 12 | Commit Message Long (-F flag pattern with temp file) | M99 standard |
+
+### Audit Checks جدید پیشنهادی — برای scripts/63_pre_commit_audit.py در S4 (D12)
+
+| ID پیشنهادی | عنوان | منشأ |
+|---|---|---|
+| Check #8 | Detect uncommitted state files (SESSION_STATUS/PENDING/CHAT_LOG modified) | M93 enforcement |
+| Check #9 | Manifest self-row existence + first-run gap detection | Z3.15 |
+| Check #10 | Review numbering integrity (LOG to docs/reviews/) | Z3.16 |
+| Check #11 | Z-ID Permanence (no Z-refs in permanent docs) | Z3.17 + M96 |
+
+### جزئیات کامل هر آیتم
+
+جزئیات کامل هر Z3.x، هر M-candidate، هر Rule پیشنهادی، و هر Template در commit history برانچ `infra/v2.14-source-of-truth` دسترس پذیر است:
+- چت: `TRADING-phase1-part03-mdrs-v2-implementation`
+- Branch: `infra/v2.14-source-of-truth`
+- Final commit S2: `af63e9b` (docs(state): stage-end S2)
+- Tracker source: `claude_workspace/MDRS_V2_PENDING_DRAFT.md` (در پایان چت delete می‌شود)
+
+برای بازیابی جزئیات، در چت `TRADING-phase1-part04-mdrs-v2-completion`:
+1. خواندن transcript chat قبل برای full reasoning هر lesson/Z-item
+2. خواندن handoff file `claude_workspace/incoming_permanent/PHASE1_PART04_MDRS_V2_S3_TO_S8_HANDOFF.txt`
+3. گرفتن commits S2 (`4726b38`, `d9747b5`, `35a634f`, `c18f132`, `af63e9b`) برای context implementation
+
+### Action در چت بعد (`TRADING-phase1-part04-mdrs-v2-completion`)
+
+Stage S3 — Atomic Update Constitution v2.13 to v2.14:
+- D8: docs/constitution/01_rules.md — 9 rule جدید (#68-76)
+- D9: docs/constitution/02_lessons.md — 9 M-lesson (M88, M93-M100)
+- D10: docs/constitution/04_principles.md — Golden Rule
+- D11: docs/constitution/main.md — version bump v2.13 to v2.14 + stats refresh
+- D13: scripts/63_pre_commit_audit.py — CURRENT_VERSION update + ACCEPTABLE_VERSIONS list extend
+- Plus: 06_meta.md — Templates 11-12 جدید
+
+Stage S4-S8 طبق plan اصلی MDRS v2 (handoff file جزئیات را دارد).
+
+**تعداد:** 27 آیتم باز برای v2.14 (17 Z3.x + 9 M-lessons + 1 Principle)
+**وضعیت:** آماده atomic update در S3 چت `TRADING-phase1-part04-mdrs-v2-completion`
+**آخرین به‌روزرسانی:** 2026-05-22 (پایان چت `TRADING-phase1-part03-mdrs-v2-implementation` در پایان Stage S2)

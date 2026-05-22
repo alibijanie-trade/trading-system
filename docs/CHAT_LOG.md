@@ -1925,7 +1925,43 @@ S2 شامل ۳ long commit message inline attempt بود (S2.1#1، S2.2#1، S2.3
 | 11 | [this commit] | infra/v2.14-source-of-truth | Stage-end S2 |
 
 ### وضعیت ادامه
-پس از این commit، **S2 رسماً COMPLETE**. ادامه با **Stage S3** (D8-D11 + D13: Atomic update Constitution v2.13 → v2.14). پس از S4 یا S5، context budget self-check طبق refinement کاربر.
+پس از این commit، **S2 رسماً COMPLETE**. تصمیم hand-off (Option B) پس از helper chat تأیید گرفت چون:
+- S3 بزرگ‌ترین atomic stage است (Constitution v2.13 → v2.14)
+- Splitting atomic stage بین چت‌ها = high risk
+- Fresh chat برای S3 = correct در user goal (correctness over efficiency)
+
+### مرحله ۸: Chat-end Hand-off
+
+**Atomic transfer:** Tracker content (`claude_workspace/MDRS_V2_PENDING_DRAFT.md`) به `docs/PENDING_FOR_NEXT_VERSION.md` منتقل شد در فرم جدول structured:
+- ۱۷ Z3.x drift items (Z3.1-Z3.17)
+- ۹ M-candidate lessons (M88, M93-M100)
+- ۱ Principle (Golden Rule)
+- ۹ Rules پیشنهادی (#68-76)
+- ۲ Templates جدید (11, 12)
+- ۴ Audit Checks جدید (#8-11)
+
+**Handoff file:** `claude_workspace/incoming_permanent/PHASE1_PART04_MDRS_V2_S3_TO_S8_HANDOFF.txt` ساخته شد با جزئیات S3 sub-commit structure + critical operational patterns + boot guidance.
+
+**Tracker delete:** `claude_workspace/MDRS_V2_PENDING_DRAFT.md` در همین commit chat-end deleted می‌شود.
+
+**چت بعدی:** `TRADING-phase1-part04-mdrs-v2-completion`.
+
+### Commits این چت تا chat-end
+
+| # | Hash | Branch | شرح |
+|---|---|---|---|
+| 1 | `5730173` | main | Z3.11 fix-up SESSION_STATUS |
+| 2 | `3b660a4` | infra/v2.14-source-of-truth | `.gitignore` MDRS patterns |
+| 3 | `e45dda4` | infra/v2.14-source-of-truth | D2 generator |
+| 4 | `832c9f4` | infra/v2.14-source-of-truth | D3 companion test |
+| 5 | `c71edd4` | infra/v2.14-source-of-truth | D1 PROJECT_MANIFEST.md |
+| 6 | `f5c5004` | infra/v2.14-source-of-truth | Stage-end S1 |
+| 7 | `4726b38` | infra/v2.14-source-of-truth | D4 REVIEW_PROTOCOL |
+| 8 | `d9747b5` | infra/v2.14-source-of-truth | D5 REVIEW_LOG |
+| 9 | `35a634f` | infra/v2.14-source-of-truth | D6 reviews/ + Review #001 + LOG atomic |
+| 10 | `c18f132` | infra/v2.14-source-of-truth | D7 PRE_ADD_CHECKLIST |
+| 11 | `af63e9b` | infra/v2.14-source-of-truth | Stage-end S2 |
+| 12 | [this commit] | infra/v2.14-source-of-truth | Chat-end hand-off (PENDING transfer + handoff file + tracker delete) |
 
 ---
 
@@ -1947,6 +1983,6 @@ S2 شامل ۳ long commit message inline attempt بود (S2.1#1، S2.2#1، S2.3
 
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v1.9 (2026-05-22 — چت ۱۲: افزودن S2 sub-section با D4-D7 deliverables + ۶ M-lesson candidates جدید (M95-M100) + ۲ Z3.x جدید (Z3.16, Z3.17) + Bugs Encountered evidence)
+**نسخه:** v2.0 (2026-05-22 — چت ۱۲ hand-off: بستن S1+S2 + atomic transfer PENDING + handoff file برای چت ۱۳ `TRADING-phase1-part04-mdrs-v2-completion`)
 **به‌روز شده در:** چت `TRADING-phase1-part03-mdrs-v2-implementation` (پایان Stage S2)
 **به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ (Triple-Rule honored)
