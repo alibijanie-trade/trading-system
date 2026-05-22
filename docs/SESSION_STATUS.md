@@ -1,172 +1,162 @@
-# Session Status — وضعیت پایان چت ۱۱.۰.ج
+# Session Status — وضعیت در حال جریان چت TRADING-phase1-part03-mdrs-v2-implementation
 
-> **آخرین به‌روزرسانی:** 2026-05-21 (پایان چت ۱۱.۰.ج — atomic update v2.13)
-> **نسخه پروژه:** v0.6.0 (پس از atomic update v2.13 — Cross-shell mandatory)
-> **چت:** `TRADING-infra-governance-finalize-and-merge` ✅ COMPLETED
+> **آخرین به‌روزرسانی:** 2026-05-22 (پایان Stage S1 از MDRS v2 — اولین ۳ deliverable D1-D3)
+> **نسخه پروژه:** v0.6.0 (tag همچنان روی main:65d0159، v0.7.0 در پایان MDRS v2)
+> **چت جاری:** `TRADING-phase1-part03-mdrs-v2-implementation` 🔄 IN PROGRESS
+> **چت قبل:** `TRADING-phase1-part02-mdrs-v2-deep-audit` ✅ COMPLETED (compacted)
 
 ---
 
 ## 📍 وضعیت کلی
 
-- **فاز جاری:** ۱ — **Skeleton آماده** ✅ (CCXTDataSource + gradient interface از چت ۱۰)
-- **Tier جاری:** ✅ Infrastructure overhaul **کامل شد** (subgoal ۱۱.۰.الف + ب + ج هر سه تمام)
-- **Constitution:** **v2.13 (Modular)** — ۷ ماژول در `docs/constitution/` + archive + atomic amendments (v2.13 = Cross-shell mandatory)
-- **Git HEAD `main`:** `65d0159` (merge commit — push شده به GitHub)
-- **Git HEAD `infra/governance-overhaul`:** `7e9a2b9` (۱۲ commits merged به main)
-- **Tag فعلی:** `v0.6.0` (Constitution Modular v2.13 + Layer 1 audit) ⭐
+- **فاز جاری:** ۱ — Skeleton آماده ✅ + **MDRS v2 Implementation در حال جریان** 🔄
+- **Tier جاری:** ✅ Infrastructure overhaul (11.0.الف+ب+ج) + ✅ Phase 1-4 deep audit + 🔄 **S1 of MDRS v2 کامل** (S2-S8 باقی)
+- **Constitution:** **v2.13 (Modular)** — در حال آماده‌سازی برای **v2.14 (MDRS v2)** atomic update در پایان MDRS v2
+- **Git HEAD `main`:** `5730173` (Z3.11 fix-up، push شده)
+- **Git HEAD `infra/v2.14-source-of-truth`:** پس از این sub-commit 5 به‌روز می‌شود (sub-commit 4 = `c71edd4`)
+- **Git HEAD `infra/governance-overhaul`:** `7e9a2b9` (legacy، not touched)
+- **Tag فعلی:** `v0.6.0` (همچنان روی main:65d0159) — **`v0.7.0` در پایان MDRS v2**
 - **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH) ✅
-- **Branch جاری:** `main` (بعد از merge moved به main)
-- **چت بعدی پیشنهادی:** ⭐ **`TRADING-phase1-part03-mdrs-v2-implementation`** — MDRS v2 implementation + drift cleanup (طبق Decision #۶۵)
+- **Branch جاری:** `infra/v2.14-source-of-truth` 🔄 active development
+- **چت بعدی پیشنهادی:** ادامه در همین چت تا S2-S5 + context budget check → اگر >۵۰٪ → S6-S8 + Phase 6؛ در غیر این صورت → `TRADING-phase1-part04-mdrs-v2-completion`
 
 ---
 
-## 🎯 چت ۱۱.۰.الف — وضعیت (✅ کامل)
+## 🎯 MDRS v2 Progress (D1-D23)
 
-### ✅ DONE در چت ۱۱.۰.الف
+### Stage S1 — Manifest Bootstrap ✅ COMPLETED
 
-- **commit 1 — Skeleton (`5285fb6`):** ۷ فایل modular + پوشه archive
-- **commit 2 — `01_rules.md` (`1eb1196`):** Migration سند ۱ — ۳۰.۵KB
-- **commit 3 — `02_lessons.md` (`b09f4f8`):** Migration سند ۱۸ — ۲۸.۸KB
-- **commit 4 — `03_bugs.md` (`ae21a9a`):** Migration Bug catalog — ۱۶.۹KB
-- **commit 5 — `04_principles.md` (`452960e`):** Migration اصول — ۱۴.۷KB
-- **commit 6 — `05_architecture.md` (`0160769`):** Migration سند ۲-۱۲ — ۳۲.۹KB
-- **commit 7 — `06_meta.md` (`22c8b6c`):** Migration سند ۱۳-۲۵ — ۳۰.۸KB
-- **commit 8 — Atomic Update v2.12 + archive (`ac1266b`):** قانون #۶۶ Locked + M64-M86 + shell fix + redirect stub + archive
+| Sub-commit | Hash | فایل/تغییر |
+|---|---|---|
+| 1 | `3b660a4` | `.gitignore` — patterns برای MDRS temp files |
+| 2 | `e45dda4` | `scripts/64_generate_manifest.py` — D2 generator |
+| 3 | `832c9f4` | `scripts/64b_test_manifest.py` — D3 companion test (8/8 PASS) |
+| 4 | `c71edd4` | `docs/PROJECT_MANIFEST.md` — D1 اولین output (268 files) |
+| 5 | [این commit] | `SESSION_STATUS.md` + `CHAT_LOG.md` — stage-end |
 
-### ⏳ TODO برای چت ۱۱.۰.ب + ۱۱.۰.ج
+### Stage S2-S8 — TODO
 
-**چت ۱۱.۰.ب:** Pre-commit audit script (Layer 1)
-- اسکریپت Python برای consistency check بین SESSION_STATUS + DECISIONS_LOG + Constitution
-- shipping در `scripts/` با test همراه
-- اضافه‌شدن به pre-commit hooks
+- **S2:** D4-D7 — REVIEW_PROTOCOL.md, REVIEW_LOG.md, docs/reviews/, PRE_ADD_CHECKLIST.md
+- **S3:** D8-D11, D13 — Atomic update v2.13 → v2.14 (Rules #۶۸-۷۲ + درس‌های M88, M93, M94 + Templates ۱۱-۱۲ + Golden Rule principle)
+- **S4:** D12 — Audit Checks #۸-۱۱ (extend `63_pre_commit_audit.py` + Check #9 برای Z3.15 self-row)
+- **S5:** D14 — اولین Review Report در `docs/reviews/`
+- **S6:** D15-D18 — GitHub Issue Templates + ISSUE_WORKFLOW.md
+- **S7:** D19-D23 — Path validator + VERSION SSoT + Audit #12-#13 + Rule #73 + M93
+- **S8:** Drift cleanup (Z3.1-Z3.15 hybrid: fix یا PENDING) + merge + tag v0.7.0
 
-**چت ۱۱.۰.ج:** Finalize chat script + Threshold rules + merge to main
-- اسکریپت پایان چت atomic
-- قوانین threshold (مثلاً اندازه ماژول < ۵۰KB)
-- ارزیابی M87 candidate (writing-then-violating در همان چت)
-- merge `infra/governance-overhaul` → `main`
+### Context Budget Self-Check
+طبق refinement کاربر در Phase 4: پس از S4 یا S5، چک context budget. اگر >۵۰٪ باقی → ادامه تا S8 در همین چت؛ در غیر این صورت → handoff `part04`.
 
 ---
 
-## 📊 آمار نهایی پروژه (پس از چت ۱۱.۰.الف)
+## 📊 آمار نهایی پروژه (پس از Stage S1)
 
-- **قوانین قفل‌شده:** **۶۷** (#۱-۶۷ با ۲ Reserved: #۵۲، #۵۳) ⭐ افزایش از ۶۶ (#۶۷ Cross-shell mandatory در v2.13)
-- **درس‌نامه اشتباهات:** **M1-M87** ثبت‌شده (با ۲۸ Reserved: M22, M24, M29, M32-M43, M45-M55, M80, M81) ⭐ افزایش از M86 (M87 Active-Writing Self-Binding Failure)
+- **قوانین قفل‌شده:** **۶۷** (#۱-۶۷ با ۲ Reserved: #۵۲، #۵۳) — بدون تغییر، در S3 به #۶۸+ گسترش
+- **درس‌نامه اشتباهات:** **M1-M87** (با ۲۸ Reserved) — بدون تغییر، در S3 به M88+ گسترش
 - **Bug ها:** **۱۶ ثبت‌شده در `03_bugs.md`** + ۳۰+ در `docs/TROUBLESHOOTING.md`
 - **Constitution ماژول‌ها:** **۷** (main + ۶ ماژول) + archive
-- **اندازه Constitution:** ~۱۷۲KB توزیع‌شده (هر ماژول <۵۰KB، MCP-safe)
-- **اسناد Markdown در `docs/`:** **۲۰+**
-- **Tests:** 25/25 pytest + 30/30 vitest + ۲۵ تست script چت ۱۰ = **۸۰ pass** (نخوردند)
-- **چت‌های کامل:** **۱۱+** (آخرین: چت ۱۱.۰.الف modular split)
-- **Backlog Total:** **۳۴/۸۲ DONE** (بدون تغییر)
-- **PENDING برای v2.13:** **۱ آیتم باز** (Z2.20 — ارزیابی M87 candidate در چت ۱۱.۰.ج)
-- **Git commits chat 11.0.الف:** ۸ commit (`5285fb6` تا `ac1266b`)
+- **Tests:** 25/25 pytest + 30/30 vitest + ۳۳ script tests (۲۵ قدیم + ۸ جدید D3) = **۸۸ pass**
+- **چت‌های کامل:** **۱۲+** (شامل deep-audit + this chat)
+- **MDRS v2 Deliverables DONE:** **۳/۲۳** (D1, D2, D3 از S1)
+- **Z3.x Drift Catalog (tracker):** **۱۵ آیتم** (Z3.11 ✅ resolved + ۱۴ open برای S2-S8)
+- **Lesson candidates برای v2.14:** **۴** (M88, M93, M94 + Golden Rule principle)
+- **PROJECT_MANIFEST.md:** ساخته شد — ۲۶۸ files classified (T1=16, T2=20, T3=216, T4.1=12, T4.2=4)
+- **Git commits این چت:** ۵ + sub-commit 5 (این) = ۶ کل (شامل Z3.11 fix-up روی main + ۵ روی infra/v2.14-source-of-truth)
 
-### 🔄 PENDING items — وضعیت پس از Atomic Update v2.12
+### 🔄 Z3.x PENDING items (tracker در `claude_workspace/MDRS_V2_PENDING_DRAFT.md`)
 
-تمام Z2.1-Z2.19 در commit 8 atomic update **ادغام شد**:
-- ✅ Z2.1-Z2.7 (درس‌های فنی M64-M70) → در `02_lessons.md` بخش ۲.۷
-- ✅ Z2.8 (cosmetic) → ناچیز، skip
-- ✅ Z2.9 (قانون #۶۶) → در `01_rules.md` به‌عنوان Locked
-- ✅ Z2.10-Z2.19 (M71-M79) → در `02_lessons.md` بخش ۲.۷
-- ✅ Bug #54 (Z2.13) → resolved در cleanup چت ۱۰
+⚠️ **این فایل tracker موقت است (gitignored).** در پایان چت atomic به `docs/PENDING_FOR_NEXT_VERSION.md` منتقل می‌شود.
 
-**Z2.20 جدید (افزوده در commit 8):** M87 candidate — «writing rule then violating it in same chat» — تصمیم در چت ۱۱.۰.ج.
+| Severity | Count | Items |
+|---|---|---|
+| 🔴 critical | ۲ | Z3.8 (Hidden Regeneration Hazard, M88 candidate), Z3.10 (snapshots outdated) |
+| 🟠 high | ۵ | Z3.2, Z3.6, Z3.7, Z3.9, Z3.13 — Z3.11 ✅ resolved |
+| 🟡 medium | ۵ | Z3.1, Z3.4, Z3.5, Z3.14, **Z3.15** (self-reference first-run gap) |
+| 🟢 low | ۲ | Z3.3 (tracked-only), Z3.12 (yaml label) |
+
+### 🆕 درس‌های جدید کشف‌شده (M-candidates برای v2.14)
+
+| ID candidate | عنوان | منشأ |
+|---|---|---|
+| **M88** | Hidden Regeneration Hazard | Z3.8 (Batch 7) |
+| **M93** | Triple-Rule Atomic Boundary | Z3.11 (Phase 3) |
+| **M94** | Black Auto-Reformat Re-Stage Pattern | S1 sub-commits 2, 3 |
+| **Principle** (نه lesson) | Golden Rule — Tier rules ≠ git tracking | S1 D2 design |
 
 ---
 
 ## 🔧 محیط فعال
 
 - Python 3.11 + FastAPI 0.111 + SQLAlchemy 2.0 + aiosqlite 0.20
-- ccxt 4.3.98 + websockets 12.0 (افزوده در چت ۱۰)
+- ccxt 4.3.98 + websockets 12.0
 - React 19.2 + Vite 8.0 + Vitest 3.x + Zustand 4.5
 - SQLite (`backend/trading.db`)
 - JWT + bcrypt 4.1
 - pytest 8.2 + pre-commit 3.7 + black 24.4 (Hybrid mode)
 - **Claude Desktop:** Filesystem MCP + Memory ON + GitHub SSH ✅
-- **Shell default:** PowerShell + venv (اصلاحیه v2.12 در `05_architecture.md` §5.1.2)
+- **Shell default:** CMD + venv (per قانون #۶۷ Cross-shell)
 
 ---
 
-## 📁 فایل‌های مهم تولید/به‌روز شده در چت ۱۱.۰.الف
+## 📁 فایل‌های جدید/به‌روز در S1
 
-### فایل‌های جدید (created)
-
-| فایل | محل | اندازه |
+### Created
+| فایل | Tier | Stage |
 |---|---|---|
-| `docs/constitution/main.md` | constitution index | ~۸KB |
-| `docs/constitution/01_rules.md` | قوانین Locked #۱-۶۶ | ~۳۵KB |
-| `docs/constitution/02_lessons.md` | درس‌نامه M1-M86 | ~۳۷KB |
-| `docs/constitution/03_bugs.md` | Bug catalog | ~۱۷KB |
-| `docs/constitution/04_principles.md` | اصول | ~۱۵KB |
-| `docs/constitution/05_architecture.md` | Stack/معماری | ~۳۳KB |
-| `docs/constitution/06_meta.md` | Session/Tooling | ~۳۱KB |
-| `docs/constitution/archive/v2_11_legacy.md` | snapshot v2.11 | ~۲۲۰KB |
-| `docs/PROJECT_CONSTITUTION.md` | redirect stub | ~۲.۴KB |
+| `scripts/64_generate_manifest.py` | T3 | D2 |
+| `scripts/64b_test_manifest.py` | T3 | D3 |
+| `docs/PROJECT_MANIFEST.md` | T1 | D1 |
 
-### فایل‌های به‌روز
-
+### Updated
 | فایل | تغییر |
 |---|---|
-| `docs/PENDING_FOR_NEXT_VERSION.md` | Z2.20 افزوده شد (M87 candidate) |
-| `README.md` | آمار + اشاره modular constitution + نسخه v0.5.0 + تاریخ |
-| `docs/SESSION_STATUS.md` | همین فایل (rewrite) |
-| `docs/CHAT_LOG.md` | افزوده بخش چت ۱۱.۰.الف |
+| `.gitignore` | ۳ pattern برای MDRS temp files |
+| `docs/SESSION_STATUS.md` | rewrite (همین فایل) |
+| `docs/CHAT_LOG.md` | بخش جدید برای این چت |
 
 ---
 
-## 🐛 Bug ها در چت ۱۱.۰.الف
+## 🐛 Bug ها در این چت
 
-- **هیچ Bug جدید functional** — این چت infrastructure بود نه code.
-- **خطاهای کشف‌شده و رفع‌شده** (به‌عنوان درس):
-  - M82 verification: Claude در ابتدا ادعای cleanup را verify نکرد
-  - M83 retry: edit_file با arrow character mismatch خراب شد، با read+retry حل شد
-  - M84 multi-line `-m`: در CMD literal `\n` کار نکرد
-  - M85 enforcement test: Claude خودش M85 را نقض کرد (Copy-Item در CMD)
-  - M86 two-step: کاربر فقط نیمه اول commands را paste کرد
+- **هیچ Bug functional** — این چت infrastructure است.
+- **Black auto-reformat retry pattern** (نه bug — یک expected workflow): `64_*.py` و `64b_*.py` در اولین commit hook توسط black reformat شدند. الگوی correct: re-stage + retry. این observation → **M94 candidate** برای v2.14.
 
 ---
 
-## 🚧 PENDING برای v2.13 (پس از commit 8)
+## 🚧 PENDING برای v2.14 (پس از S1)
 
-- **Z2.20** 🆕⚠️ (🔴 critical) — M87 candidate: «Writing rule then violating it in same chat» — ارزیابی در چت ۱۱.۰.ج، اگر تأیید شد، در atomic update v2.13 ثبت می‌شود
-
-**جمع PENDING:** ۱ آیتم باز.
-
----
-
-## 🚀 اولین گام‌های چت ۱۱.۰.ب (Pre-commit Audit Script)
-
-⚠️ توجه: چت ۱۱.۰.ب یک **Python development chat** است. تمرکز روی اسکریپت audit.
-
-1. **خواندن HANDOFF کامل:** `claude_workspace/incoming_permanent/CHAT11_0_B_HANDOFF.txt` (در پایان همین چت ساخته می‌شود)
-2. **خواندن طبق قانون #۴۸ (modular):**
-   - `docs/constitution/main.md` (index)
-   - `docs/constitution/04_principles.md` (فلسفه)
-   - `docs/constitution/01_rules.md` (قوانین Locked)
-   - `docs/constitution/02_lessons.md` (M82-M86 جدید!)
-   - `docs/PENDING_FOR_NEXT_VERSION.md` (Z2.20)
-   - این فایل (SESSION_STATUS)
-3. **اجرای M73 audit** — cross-document consistency
-4. **شروع کار Layer 1:**
-   - طراحی اسکریپت `scripts/63_pre_commit_audit.py`
-   - بررسی consistency بین SESSION_STATUS + DECISIONS_LOG + Constitution
-   - تست همراه `63b_test_pre_commit_audit.py`
-   - یکپارچه‌سازی با `.pre-commit-config.yaml`
-5. **پایان چت:** commit + push (طبق قانون #۶۶) + handoff به چت ۱۱.۰.ج
+- **۱۴ Z3.x آیتم باز** در tracker — برای S8 cleanup یا transfer به PENDING (طبق سیاست hybrid)
+- **M93 candidate** — Triple-Rule lesson formalization در S3
+- **M88 candidate** — Hidden Regeneration Hazard lesson formalization در S3
+- **M94 candidate** — Black Auto-Reformat Re-Stage Pattern formalization در S3
+- **Golden Rule principle** — افزودن به `04_principles.md` در S3
+- **D4-D23** — ۲۰ deliverable باقی
 
 ---
 
-## 🔑 درس‌های کلیدی چت ۱۱.۰.الف
+## 🚀 اولین گام‌های ادامه — Stage S2
 
-1. **Modular split برنده بود:** فایل ۲۱۶KB با MCP کند بود (M66). الان هر ماژول <۵۰KB، MCP-safe.
-2. **M83 (Retry First) ثابت شد:** ۲ بار transient failure با retry حل شد، بدون restructure.
-3. **M85 enforcement test:** خود Claude در همان چتی که M85 را نوشت، آن را نقض کرد. تأیید قوی برای قانون.
-4. **Two-step commit-push (M86):** کاربر یک‌بار فقط نیمه اول را paste کرد. Pattern صحیح: کادر جدا.
-5. **قانون #۶۶ Locked شد:** Push اجباری در پایان هر چت (و در branch infra/ پس از هر commit) — backup فوری.
+⚠️ S2 شامل D4-D7: نوشتن ۴ فایل governance:
+- `docs/REVIEW_PROTOCOL.md` — پروتکل add artifact
+- `docs/REVIEW_LOG.md` — لاگ مرورها
+- `docs/reviews/` — پوشه برای Review Reports (می‌تواند شامل `.gitkeep` initially)
+- `docs/PRE_ADD_CHECKLIST.md` — چک‌لیست قبل از add
+
+`.md` خالص، نیاز به black/test ندارد. تخمین: ۱-۲ پاسخ Claude، ۴ sub-commit جداگانه (granular per file).
 
 ---
 
-**ساخته توسط:** Claude در پایان چت ۱۱.۰.الف
-**نسخه این فایل:** نهایی چت ۱۱.۰.الف
-**به‌روز توسط:** Claude در شروع چت ۱۱.۰.ب پس از خواندن
+## 🔑 درس‌های کلیدی این چت (تا اینجا)
+
+1. **Triple-Rule Boundary (M93 candidate):** #۲۶ + #۶۰ + #۶۶ یک زنجیره‌اند — شکست یکی = شکست همه. مثال: Z3.11 SESSION_STATUS uncommitted در 11.0.ج.
+2. **Golden Rule (principle):** Tier rules بر اساس role، نه git tracking. این از D2 design discovery user emerged.
+3. **Hidden Regeneration Hazard (M88 candidate):** doc generators با hardcoded content overwrite manual edits silently — Z3.8 از script 37 reveal شد.
+4. **Black Auto-Reformat Re-Stage (M94 candidate):** هر اولین commit `.py` با black hook ممکن است reformat شود → expected. الگوی correct: re-stage + retry.
+5. **Self-Reference First-Run (Z3.15):** D2 first-run خود manifest را شامل نمی‌کند (scan قبل از write). Two-pass scan راه‌حل پیشنهادی برای v2.14.
+6. **Proof-of-value D2:** اولین run، ۲ drift critical (Z3.13, Z3.14) کشف کرد که audit Layer 1 نمی‌دید — این evidence ROI MDRS است.
+
+---
+
+**ساخته توسط:** Claude در پایان Stage S1 از MDRS v2
+**نسخه این فایل:** S1 complete (mid-chat checkpoint)
+**به‌روز توسط:** ادامه در همین چت یا چت بعد (طبق context budget check)

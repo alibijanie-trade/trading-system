@@ -1679,24 +1679,166 @@ M87 یک «active writing fallacy» است — writing جدید القای آم�
 
 ---
 
+## چت ۱۲ — TRADING-phase1-part03-mdrs-v2-implementation 🔄 IN PROGRESS
+
+> **تاریخ شروع:** 2026-05-22
+> **چت قبل:** TRADING-phase1-part02-mdrs-v2-deep-audit (compacted)
+> **هدف اصلی:** MDRS v2 implementation (D1-D23) + drift cleanup طبق Decision #۶۵
+
+### مرحله ۱-۲: Boot + Phase 1-2 (Deep Audit)
+
+- قانون #۶۸.۲ Continuation Chat Boot: ۱۰ فایل constitution mandatory خوانده شد
+- ۵ سؤال sign-off کاربر تأیید شد (محیط، intent، MDRS scope، T2.20+T2.21 inclusion، branch strategy)
+- معمای `database.py` در chat قبل حل شد — این یک **package** است نه فایل (`__init__.py` facade + base.py + engine.py + session.py)
+- Batches 5, 7, 8 deep read با scope reduction:
+  - **Batch 5:** Database + Models (×۱۵) + Data Sources + Tests + Migrations (~۲۸ فایل)
+  - **Batch 7:** Scripts — فقط ۵ active infrastructure (نه ۱۰۰+ one-shot)
+  - **Batch 8:** Workspace + root files
+  - **Batch 6 (Frontend) deferred** به S8 (طبق توصیه کاربر)
+
+### مرحله ۳: Phase 3 — GitHub Status + Z3.11 Fix-up
+
+⚠️ کشف critical: `docs/SESSION_STATUS.md` modified ولی **uncommitted** از چت 11.0.ج (یا deep-audit). ۹ خط valid + ۱ خط outdated (binance-client به‌جای mdrs-v2).
+
+**Z3.11 Triple-Rule Violation analysis:**
+- Primary: قانون #۲۶ (Atomic Updates)
+- Secondary: قانون #۶۰ (Continuous PENDING)
+- Tertiary: قانون #۶۶ (Push) — تابع شکست #۲۶
+
+**عمل:** Fix-up commit روی main با اصلاح خط outdated:
+- `5730173` fix(docs): complete chat 11.0.ج SESSION_STATUS update + correct next-chat ref
+- Push immediate موفق (`65d0159..5730173 main -> main`)
+
+### مرحله ۴: Phase 4 — Comprehensive Findings Report
+
+Coverage matrix (Phases + Batches)، 12 Z3.x drift، Pattern recognition، Stage plan S1-S8، Risk Assessment R1-R6، ۵ سؤال pre-S1 sign-off. کاربر همه ⭐ defaults + ۳ refinement تأیید کرد (S3 sub-commit structure، context budget check، D2 scan-based).
+
+### مرحله ۵: Branch Creation + S1 Pre-checks
+
+Branch: `infra/v2.14-source-of-truth` ایجاد و push با `-u`.
+
+پیش از D2 write، ۸ ابهام پرسیده و حل شد:
+- T5 EXCLUDED clarification + **اصلاح حیاتی:** `data/excel_imports/*.xlsx` → **T4.2 (نه T5)**
+- MANIFEST.md location → `docs/`
+- خود-ارجاع → `<self>` placeholder
+- Hash → sha256[:16]
+- Format → markdown با T3 group-by-dir
+- Tracker gitignore policy → اضافه به .gitignore
+- S8 vs PENDING policy → hybrid (نهایی در S8)
+- T4 ساختار → T4.1/T4.2 subsection
+
+**کشف principle — Golden Rule:**
+> Tier rules ≠ git tracking. Manifest scope بر اساس **role در پروژه**، نه **tracked در git**.
+> 
+> چون: excel data + snapshots gitignored هستند ولی **critical assets**. اگر T5 شوند، drift detection برای آن‌ها غیرفعال است — contradiction.
+
+D2 algorithm: filesystem walk با priority-ordered tier matching (T1→T2→T3→T4.1→T4.2)، T5 implicit (no match = silent skip).
+
+### مرحله ۶: Stage S1 — Manifest Bootstrap (D1, D2, D3)
+
+#### Sub-commit 1 — `.gitignore` (`3b660a4`)
+۳ pattern برای MDRS temp files (tracker، handoff، inventory).
+
+#### Sub-commit 2 — `scripts/64_generate_manifest.py` (`e45dda4`)
+~۶۳۲ خط (پس از black):
+- Tier rules priority order
+- Segment-based glob matching (custom `_match_parts` با `**` support — fix bug که در fnmatch `*` cross-segment match می‌کرد)
+- 18 SKIP_DIRS comprehensive
+- ASCII-only output (قانون #۴۶)
+- `write_if_changed` idempotent pattern (از script 37)
+- Self-reference `<self>` placeholder (Z3.8 anti-pattern)
+- CLI: `--dry-run`, `--verbose`
+
+**Black auto-reformat در اولین commit:** Failed → re-stage + retry → Passed. الگوی expected (→ M94 candidate).
+
+#### Sub-commit 3 — `scripts/64b_test_manifest.py` (`832c9f4`)
+۸ test (قانون #۲۲ compliance):
+1. Script imports clean
+2. Constants valid (PROJECT_ROOT, MANIFEST_PATH, TIER_RULES, SKIP_DIRS)
+3. Glob segment-based regression
+4. Classify priority order (شامل Golden Rule case)
+5. No-match returns None
+6. SKIP_DIRS (شامل snapshots NOT skipped)
+7. Subprocess `--dry-run` + ۹ marker
+8. `--help` flag visibility
+
+نتیجه: **۸/۸ PASS** ✅
+
+#### Sub-commit 4 — `docs/PROJECT_MANIFEST.md` (`c71edd4`)
+اولین D2 run: **268 files classified** (T1=16, T2=20, T3=216, T4.1=12, T4.2=4). Total 3.62 MB scope.
+
+**Proof-of-value:** ۲ drift critical کشف شد که audit Layer 1 نمی‌دید:
+- **Z3.13** — ۶ legacy sand-document در `docs/` (`سند_جامع_v2_6` تا `v2_11`، ~۹۹۷KB): superseded توسط Modular v2.13، باید به `archive/` منتقل شوند
+- **Z3.14** — `docs/سند_جامع_v2_11.md` duplicate با `docs/constitution/archive/v2_11_legacy.md` (~۰.۶KB LF/CRLF diff)
+
+**Z3.15 (known wart formal):** Self-Reference First-Run Gap — first-run manifest خود را شامل نمی‌کند (scan قبل از write). Second run می‌بیند ولی idempotency churn باقی می‌ماند. Two-pass scan راه‌حل پیشنهادی در D12.
+
+#### Sub-commit 5 — Stage-end
+این commit (SESSION_STATUS + CHAT_LOG).
+
+### Z3.x Drift Catalog این چت
+
+۱۵ آیتم در tracker `claude_workspace/MDRS_V2_PENDING_DRAFT.md` (gitignored):
+
+| Z3.x | Severity | منشأ |
+|---|---|---|
+| Z3.1 | 🟡 | Batch 5 — backend code comments |
+| Z3.2 | 🟠 | Batch 5 — docs claim `backend/alembic/` |
+| Z3.3 | 🟢 | Batch 5 — CCXTDataSource deferred |
+| Z3.4 | 🟡 | Batch 5 — alembic.ini ASCII constraint |
+| Z3.5 | 🟡 | Batch 7 — duplicate scripts numbering |
+| Z3.6 | 🟠 | Batch 7 — check_anti_patterns gap (۵/۱۰) |
+| Z3.7 | 🟠 | Batch 7 — install_git_hooks emoji نقض #۴۶ |
+| **Z3.8** | 🔴 | Batch 7 — doc generators regeneration hazard |
+| Z3.9 | 🟠 | Batch 8 — CHANGELOG ۲ نسخه عقب |
+| **Z3.10** | 🔴 | Batch 8 — snapshots outdated (Project Settings) |
+| Z3.11 | 🟠 | Phase 3 — SESSION_STATUS uncommitted → ✅ `5730173` |
+| Z3.12 | 🟢 | Phase 3 — pre-commit yaml label "v2.12" |
+| Z3.13 | 🟠 | S1 D2 run — ۶ legacy sand-docs misplaced |
+| Z3.14 | 🟡 | S1 D2 run — v2.11 duplication |
+| Z3.15 | 🟡 | S1 D2 run — self-reference first-run gap |
+
+### Lesson Candidates (برای S3 atomic update v2.14)
+
+- **M88** — Hidden Regeneration Hazard (از Z3.8)
+- **M93** — Triple-Rule Atomic Boundary (از Z3.11)
+- **M94** — Black Auto-Reformat Re-Stage Pattern (از S1 sub-commits 2, 3): درس پوزیتیو — expected workflow، نه violation
+- **Principle (نه lesson)** — Golden Rule: Manifest scope by role, not git tracking (برای `04_principles.md`)
+
+### Commits این چت
+
+| # | Hash | Branch | شرح |
+|---|---|---|---|
+| 1 | `5730173` | main | Z3.11 fix-up SESSION_STATUS |
+| 2 | `3b660a4` | infra/v2.14-source-of-truth | `.gitignore` MDRS patterns |
+| 3 | `e45dda4` | infra/v2.14-source-of-truth | D2 generator |
+| 4 | `832c9f4` | infra/v2.14-source-of-truth | D3 companion test |
+| 5 | `c71edd4` | infra/v2.14-source-of-truth | D1 PROJECT_MANIFEST.md |
+| 6 | [this commit] | infra/v2.14-source-of-truth | Stage-end S1 |
+
+### وضعیت ادامه
+پس از این commit، ادامه با **Stage S2** (D4-D7: REVIEW_PROTOCOL + REVIEW_LOG + reviews/ + PRE_ADD_CHECKLIST). پس از S4 یا S5، context budget self-check طبق refinement کاربر.
+
+---
+
 ## آمار کلی پروژه
 
 | دسته | تعداد |
 |---|---|
-| چت‌های انجام‌شده | ۱۱+ (شامل چت ۱۱.۰.الف + ۱۱.۰.ب + ۱۱.۰.ج) ⭐ |
-| اسکریپت‌های تولید‌شده | ~۶۶ (~۶۴ تا چت ۱۰ + ۲ در چت ۱۱.۰.ب: `63_pre_commit_audit.py` و `63b_test_pre_commit_audit.py`) |
+| چت‌های انجام‌شده | ۱۲+ (شامل چت deep-audit + چت ۱۲ = TRADING-phase1-part03-mdrs-v2-implementation) ⭐ |
+| اسکریپت‌های تولید‌شده | ~۶۸ (~۶۴ تا چت ۱۰ + ۲ در چت ۱۱.۰.ب + ۲ در چت ۱۲: `64_generate_manifest.py` و `64b_test_manifest.py`) |
 | Bug های ثبت‌شده | ۵۴ |
 | Decisions ثبت‌شده | ~۶۶ (Max ID, ۶۱ Recorded) |
 | **قوانین قفل‌شده** | **۶۷** (#۱-۶۷ با ۲ Reserved: #۵۲, #۵۳) ⭐ افزایش از ۶۶ (#۶۷ Cross-shell mandatory در v2.13) |
 | **درس‌نامه ثبت‌شده** | **M1-M87** (با ۲۸ Reserved) ⭐ افزایش از M86 (M87 Active-Writing Self-Binding Failure) |
 | **فاز پایان‌یافته** | فاز ۰ (۱۰۰٪) + Tier 2 (۱۶/۲۱) + فاز ۱ skeleton + **Modular Constitution v2.13** ⭐ + Layer 1 audit |
-| **فاز در حال انجام** | آماده شروع فاز ۱ کامل (`binance_client.py` + `binance_ws.py`) در چت بعد |
+| **فاز در حال انجام** | MDRS v2 implementation در حال جریان — S1 از ۸ stage کامل، D1-D3 از D1-D23 deliverable (طبق Decision #۶۵) |
 | **نسخه Constitution** | **v2.13 (Modular)** — atomic amendment پس از v2.12 modular split |
 
 ---
 
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v1.7 (2026-05-21 — چت ۱۱.۰.ج: افزودن بخش‌های چت ۱۱.۰.ب (Layer 1 audit) + چت ۱۱.۰.ج (atomic v2.13 + merge) + بروز آمار کلی به ۶۷ قانون و M1-M87)
-**به‌روز شده در:** چت `TRADING-infra-governance-finalize-and-merge`
-**به‌روز توسط:** Claude طبق قانون #۲۳ + #۲۶ + #۶۰ — CLAUDE_CHECKLIST v1.4 فاز ۳
+**نسخه:** v1.8 (2026-05-22 — چت ۱۲: افزودن بخش TRADING-phase1-part03-mdrs-v2-implementation با S1 D1-D3 + ۴ lesson candidates M88/M93/M94/Golden Rule + ۱۵ Z3.x drift catalog)
+**به‌روز شده در:** چت `TRADING-phase1-part03-mdrs-v2-implementation` (پایان Stage S1)
+**به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ (Triple-Rule honored)
