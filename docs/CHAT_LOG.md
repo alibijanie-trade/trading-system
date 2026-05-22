@@ -1821,6 +1821,114 @@ D2 algorithm: filesystem walk با priority-ordered tier matching (T1→T2→T3�
 
 ---
 
+### مرحله ۷: Stage S2 — Review Infrastructure (D4-D7) ✅ COMPLETED
+
+#### Sub-commit 1 — D4: `docs/REVIEW_PROTOCOL.md` (`4726b38`)
+~۳۱۰ خط، ۱۵KB. ۱۰ section + ۳ subsection:
+- Purpose / Triggers (5 categories) / Anti-patterns (7 categories) / Report Structure (6-section template) / Status States (4.1) / Filing Convention / Workflow (8 steps + iteration loop) / MDRS Connections / 4 Examples / Anti-flooding Safeguards / Lessons Codified
+
+**کاربر refinements:** 5-state Status (Proposed/Approved/Rejected/Deferred/Implemented)، Anti-flooding by Conceptual Cohesion (نه numeric threshold)، Workflow iteration loop (Step 4 ↔ 5).
+
+**Failure pattern:** Commit attempt 1 با `|` در Status separator fail شد (M95 candidate). Retry بدون `|` موفق.
+
+#### Sub-commit 2 — D5: `docs/REVIEW_LOG.md` (`d9747b5`)
+~۹۸ خط، ۵KB. Master index/log table با Row Review #001.
+
+**کاربر design refinements:**
+- Q4 critical catch: Z-ID Permanence (Z3.17 + M96 candidate) — permanent docs نباید Z-refs داشته باشند. Section 4 rewritten بدون "Z3.16" reference.
+- Subject "Notion external" (نه "Notion/Confluence external" duplicate).
+- Trigger compact: `§2.2 + §2.3 + §2.4`.
+
+**Failure pattern:** Commit attempt 1 با em-dash `—` + `Z->M` redirect → quote-tracking lost → empty file `M` در project root created (M97 candidate). `del M` + sanitize + retry موفق.
+
+#### Sub-commit 3 — D6: `docs/reviews/` + Review #001 + LOG atomic (`35a634f`)
+۳ atomic file change:
+- `docs/reviews/README.md` (~۱.۸KB) — directory documentation
+- `docs/reviews/2026-05-22-mdrs-v2-review-infrastructure-bootstrap.md` (~۱۱.۳KB) — first Review Report، ۶ section substantive
+- `docs/REVIEW_LOG.md` Row #001 update (Status: Proposed → Implemented، Resolution full chain)
+
+**کاربر design refinements (trio catches):**
+- Q3: Resolution chain فقط commits در scope این Review (D4+D5+D6، نه S2.4/S2.5)
+- Q4: Commit boundary field حذف از Signatures (git log = source of truth، redundant + dangling)
+- Catch 3: §۴.۲ Commits list scope-bounded به ۳ commit
+
+این ۳ catch مشترکاً **M98 candidate** (Review Scope Closure) را generated کرد.
+
+**Failure pattern:** Commit attempt 1 با commit message ASCII pure (M95+M97 applied) ولی ~3000+ char inline → terminal paste line-break → command split → fail. Switched به `git commit -F message.txt` با temp file در `claude_workspace/` — موفق. این **M99 candidate** establishment shape داد.
+
+#### Sub-commit 4 — D7: `docs/PRE_ADD_CHECKLIST.md` (`c18f132`)
+~۲۸۵ خط، ۱۴.۷KB. ۷ section:
+- Purpose / When to Use / 10 Pre-Trigger Checks / Decision Output (ASCII flowchart) / 3 Examples / Cross-references / 5 Anti-patterns
+
+**کاربر refinements:**
+- Example 2 atomic Triple-Rule warning (M93 enforcement at example level)
+- Anti-pattern ۵ جدید: **Hidden-checklist-completion** ("checks را در ذهن انجام دادم" invisible to partner) — این **M100 candidate** establishment
+
+**Commit success:** `-F` flag standard موفق (sequence ۲: S2.3 + S2.4) — 100% success rate post-M99 adoption.
+
+#### Sub-commit 5 — Stage-end (این commit)
+SESSION_STATUS.md full refactor + CHAT_LOG.md S2 sub-section + `docs/PROJECT_MANIFEST.md` D2 re-run (atomic).
+
+### 🐛 Bugs Encountered در S2 (Evidence-Based for Reproduction)
+
+S2 شامل ۳ long commit message inline attempt بود (S2.1#1، S2.2#1، S2.3#1). **هر سه fail شدند** → ۱۰۰٪ inline failure rate برای long commits.
+
+پس از adoption پاترن `-F` در S2.3#2، ۲ commit پی‌در‌پی (S2.3#2 + S2.4) با `-F` ۱۰۰٪ موفق بودند. این evidence-strong است برای M99 mandatory standard در S3 atomic update.
+
+| # | Stage | Failure | M-candidate | Recovery |
+|---|---|---|---|---|
+| 1 | S2.1 #1 | CMD `\|` pipe operator splits command | M95 | Sanitize separator (`/` instead) + inline retry |
+| 2 | S2.2 #1 | em-dash + `>M` redirect → stray file `M` 0-byte | M97 | `del M` + sanitize metachars + inline retry |
+| 3 | S2.3 #1 | Terminal paste line-break در ~۳۰۰۰+ char command | M99 | Switch به `-F` flag with temp file (100% success post-adoption) |
+
+### Lesson Candidates ثبت‌شده در S2
+
+| ID | عنوان | منشأ |
+|---|---|---|
+| M95 | CMD Pipe Character in Commit Messages | S2.1 attempt 1 |
+| M96 | Z-ID Permanence Anti-pattern | Z3.17 (S2.2 design — user Q4) |
+| M97 | CMD Quote-Tracking Catastrophic Failure | S2.2 attempt 1 (stray file `M` evidence) |
+| M98 | Review Scope Closure | S2.3 design — user trio catches (Q3+Q4+Catch) |
+| M99 | CMD Long-Command Paste-Break + `-F` Flag Standard | S2.3 attempt 1 (100% inline failure evidence) |
+| M100 | Hidden-Checklist Completion | S2.4 design — user Q4 catch |
+
+### Z3.x ثبت‌شده در S2
+
+| Z3.x | Severity | منشأ |
+|---|---|---|
+| Z3.16 | 🟡 medium | S2.2 design — Review Numbering Integrity audit check |
+| Z3.17 | 🟠 high | S2.2 design — Z-ID Permanence anti-pattern (M96 mapped) |
+
+### 🌟 User Partnership Observation در S2
+
+**۳ user catches → ۳ formalized M-lessons:**
+- **M96 (Z-ID Permanence)** از Q4 catch در S2.2 design — کشف کرد Z3.16 reference در permanent doc یک systematic anti-pattern است
+- **M98 (Review Scope Closure)** از trio catches (Q3+Q4+Catch) در S2.3 design — ۳ instances forward-reference در Review #001 design که scope-clarity principle بزرگ‌تری را revealed
+- **M100 (Hidden-Checklist Completion)** از Q4 catch در S2.4 design — کشف کرد mental checking invisible to partner = enforcement gap
+
+**Pattern observed:** Visible iteration در preview-then-approve workflow + user catch-driven refinement = lesson harvest. این evidence-strong برای continuing preview-first approach در S3 و فراتر، خصوصاً برای atomic constitution updates.
+
+### Commits این چت تا پایان S2
+
+| # | Hash | Branch | شرح |
+|---|---|---|---|
+| 1 | `5730173` | main | Z3.11 fix-up SESSION_STATUS |
+| 2 | `3b660a4` | infra/v2.14-source-of-truth | `.gitignore` MDRS patterns |
+| 3 | `e45dda4` | infra/v2.14-source-of-truth | D2 generator |
+| 4 | `832c9f4` | infra/v2.14-source-of-truth | D3 companion test |
+| 5 | `c71edd4` | infra/v2.14-source-of-truth | D1 PROJECT_MANIFEST.md |
+| 6 | `f5c5004` | infra/v2.14-source-of-truth | Stage-end S1 |
+| 7 | `4726b38` | infra/v2.14-source-of-truth | D4 REVIEW_PROTOCOL |
+| 8 | `d9747b5` | infra/v2.14-source-of-truth | D5 REVIEW_LOG |
+| 9 | `35a634f` | infra/v2.14-source-of-truth | D6 reviews/ + Review #001 + LOG atomic |
+| 10 | `c18f132` | infra/v2.14-source-of-truth | D7 PRE_ADD_CHECKLIST |
+| 11 | [this commit] | infra/v2.14-source-of-truth | Stage-end S2 |
+
+### وضعیت ادامه
+پس از این commit، **S2 رسماً COMPLETE**. ادامه با **Stage S3** (D8-D11 + D13: Atomic update Constitution v2.13 → v2.14). پس از S4 یا S5، context budget self-check طبق refinement کاربر.
+
+---
+
 ## آمار کلی پروژه
 
 | دسته | تعداد |
@@ -1832,13 +1940,13 @@ D2 algorithm: filesystem walk با priority-ordered tier matching (T1→T2→T3�
 | **قوانین قفل‌شده** | **۶۷** (#۱-۶۷ با ۲ Reserved: #۵۲, #۵۳) ⭐ افزایش از ۶۶ (#۶۷ Cross-shell mandatory در v2.13) |
 | **درس‌نامه ثبت‌شده** | **M1-M87** (با ۲۸ Reserved) ⭐ افزایش از M86 (M87 Active-Writing Self-Binding Failure) |
 | **فاز پایان‌یافته** | فاز ۰ (۱۰۰٪) + Tier 2 (۱۶/۲۱) + فاز ۱ skeleton + **Modular Constitution v2.13** ⭐ + Layer 1 audit |
-| **فاز در حال انجام** | MDRS v2 implementation در حال جریان — S1 از ۸ stage کامل، D1-D3 از D1-D23 deliverable (طبق Decision #۶۵) |
+| **فاز در حال انجام** | MDRS v2 implementation در حال جریان — S1+S2 از ۸ stage کامل، D1-D7 از D1-D23 deliverable (طبق Decision #۶۵) |
 | **نسخه Constitution** | **v2.13 (Modular)** — atomic amendment پس از v2.12 modular split |
 
 ---
 
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v1.8 (2026-05-22 — چت ۱۲: افزودن بخش TRADING-phase1-part03-mdrs-v2-implementation با S1 D1-D3 + ۴ lesson candidates M88/M93/M94/Golden Rule + ۱۵ Z3.x drift catalog)
-**به‌روز شده در:** چت `TRADING-phase1-part03-mdrs-v2-implementation` (پایان Stage S1)
+**نسخه:** v1.9 (2026-05-22 — چت ۱۲: افزودن S2 sub-section با D4-D7 deliverables + ۶ M-lesson candidates جدید (M95-M100) + ۲ Z3.x جدید (Z3.16, Z3.17) + Bugs Encountered evidence)
+**به‌روز شده در:** چت `TRADING-phase1-part03-mdrs-v2-implementation` (پایان Stage S2)
 **به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ (Triple-Rule honored)
