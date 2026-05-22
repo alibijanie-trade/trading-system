@@ -98,3 +98,10 @@ claude_workspace/zip_temp/*
 !claude_workspace/zip_temp/.gitkeep
 claude_workspace/backups/*
 !claude_workspace/backups/.gitkeep
+
+# MDRS v2 temporary working files (cleanup in S8 or delete)
+# Tracker for in-chat PENDING items + handoff drafts + inventory snapshots
+# These are temp working files — never committed.
+claude_workspace/MDRS_V2_PENDING_DRAFT.md
+claude_workspace/CHAT_HANDOFF_MDRS_V2.md
+claude_workspace/inventory*.txt
