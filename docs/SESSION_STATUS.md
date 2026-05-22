@@ -9,12 +9,14 @@
 ## 📍 وضعیت کلی
 
 - **فاز جاری:** ۱ — **Skeleton آماده** ✅ (CCXTDataSource + gradient interface از چت ۱۰)
-- **Tier جاری:** Infrastructure overhaul (subgoal ۱۱.۰.الف کامل، ب و ج باقی)
+- **Tier جاری:** ✅ Infrastructure overhaul **کامل شد** (subgoal ۱۱.۰.الف + ب + ج هر سه تمام)
 - **Constitution:** **v2.13 (Modular)** — ۷ ماژول در `docs/constitution/` + archive + atomic amendments (v2.13 = Cross-shell mandatory)
-- **Git HEAD پایان چت ۱۱.۰.الف:** `ac1266b` (push شده به GitHub)
+- **Git HEAD `main`:** `65d0159` (merge commit — push شده به GitHub)
+- **Git HEAD `infra/governance-overhaul`:** `7e9a2b9` (۱۲ commits merged به main)
+- **Tag فعلی:** `v0.6.0` (Constitution Modular v2.13 + Layer 1 audit) ⭐
 - **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH) ✅
-- **Branch جاری:** `infra/governance-overhaul` ⏳ (آماده merge به `main` در پایان چت ۱۱.۰.ج)
-- **چت بعدی پیشنهادی:** **چت ۱۱.۰.ب** — `TRADING-infra-governance-precommit-audit-script` 🎯 (Layer 1 audit script)
+- **Branch جاری:** `main` (بعد از merge moved به main)
+- **چت بعدی پیشنهادی:** ⭐ **`TRADING-phase1-part03-mdrs-v2-implementation`** — MDRS v2 implementation + drift cleanup (طبق Decision #۶۵)
 
 ---
 
