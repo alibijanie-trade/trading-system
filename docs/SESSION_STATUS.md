@@ -108,7 +108,7 @@
 ## 📊 آمار پروژه (پس از D24)
 
 - **قوانین قفل‌شده:** **۶۷** — در S3.1 (part07) به #۶۸-#۷۷ گسترش (۱۰ قانون جدید)
-- **درس‌نامه:** **M1-M87** + ۲۸ Reserved — در S3.1 (part07) به M88, M93-M102 گسترش + **HM-series شروع** (۷ HM candidates از D24)
+- **درس‌نامه:** **M1-M102** + ۳۲ Reserved (شامل M89-M92 جدید) + **HM-series** (HM-1 to HM-7) — در S3.1 (part07) ادغام شد
 - **Bug ها / Z3.x Drift Catalog:** **۲۴ آیتم باز برای v2.14** (Z3.1-Z3.24)
 - **Tests:** 25/25 pytest + 30/30 vitest + ۳۳ script tests = **۸۸ pass** (unchanged)
 - **MDRS v2 Deliverables DONE:** **۸/۲۴** (D1-D7 + D24 parallel) — D8-D23 باقی

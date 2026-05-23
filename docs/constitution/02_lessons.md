@@ -44,11 +44,17 @@ Claude گاهی کد، دستور، یا پیشنهادی می‌دهد که د�
 | **Encoding/Unicode** | M9, M13, M14 | ASCII-only در Windows print() + `.gitattributes` به‌جای hook |
 | **MCP/Tool limitations** | M30, M44, M66 | MCP فقط در چت جدید load می‌شود |
 | **Process — handoff** | M23, M56, M57, M58, M59, M63 | فایل handoff + prefix های صریح + source-of-truth واحد |
-| **Documentation drift** | (همه drift های جدید در commit 8 افزوده می‌شوند) | به Reserved M74+ مراجعه کنید |
+| **Documentation drift** | M71-M73, M74-M79 | به ۲.۸ + ۲.۹ مراجعه کنید |
+| **Manifest/Audit hazards** 🆕 v2.14 | M88, M96, M101 | Hidden regeneration + Z-ID permanence + Post-handoff drift |
+| **Atomic governance** 🆕 v2.14 | M93, M98, M99, M100 | Triple-Rule + Scope closure + -F flag + visibility |
+| **Shell encoding hazards** 🆕 v2.14 | M95, M97 | CMD pipe + quote-tracking catastrophe |
+| **Rule design quality** 🆕 v2.14 | M102 | Interface-implementation decoupling |
+| **Process pattern positive** 🆕 v2.14 | M94 | Black auto-reformat re-stage |
+| **Helper consultation** 🆕 v2.14 | HM-1 to HM-7 | به §۲.۹ مراجعه کنید |
 
 ---
 
-## ۲.۳ جدول کامل اشتباهات (M1-M63)
+## ۲.۳ جدول کامل اشتباهات (M1-M63 + M88-M102 — M64-M87 در §۲.۷ خلاصه)
 
 | # | اشتباه | علت ریشه‌ای | راه‌حل آینده | چت |
 |---|---|---|---|---|
@@ -94,6 +100,21 @@ Claude گاهی کد، دستور، یا پیشنهادی می‌دهد که د�
 | **M61** | اعتماد به status موفقیت کافی نیست (write/install/configure که موفق گزارش می‌شود) | فرض = «گزارش موفق ⇒ نتیجه درست». مثال M1 | همیشه read-back / verify مستقل پس از هر اقدام. چرخه کامل safety: **Preview → Approve → Write → Read-back → Verify → Confirm**. مکمل M1 و M60 | ۸ |
 | **M62** | Claude در پیامی قانون #۳۷ را ذکر کرد، ولی در پاسخ بعدی همان چت کاربر باید یادآوری کند که read-back لازم است | قوانینی که خود Claude ذکر می‌کند priority پایین‌تر از یادآوری کاربر می‌گیرند | self-binding: اگر Claude قانونی را ذکر کند، در همان چت ملزم به اجرای آن است | ۸ |
 | **M63** ⭐ | Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude Desktop» انجام نشده، چون در پیام handoff به‌عنوان «اولین گام» ذکر شده بود — درحالی‌که کاربر قبلاً ساخته بود | پیام handoff کارهای آینده + کارهای انجام‌شده + یادآوری‌ها را در یک لیست ترکیب می‌کند، بدون status صریح | هر آیتم در پیام handoff باید با یکی از prefix های صریح همراه باشد: `✅ DONE`، `📋 TODO`، `⚠️ CHECK`، `💡 NOTE` | ۹ |
+| **M88** ⭐⭐⭐ | Hidden Regeneration Hazard — explicit-list anti-pattern در governance docs، drift hazard | hardcoded list به‌جای principle + authoritative source | principle-based با reference به authoritative source (manifest، script). illustration examples allowed، enumeration نه | S2.2 + S2.5 |
+| **M89** | ⚠️ Reserved | — | — | — |
+| **M90** | ⚠️ Reserved | — | — | — |
+| **M91** | ⚠️ Reserved | — | — | — |
+| **M92** | ⚠️ Reserved | — | — | — |
+| **M93** ⭐⭐⭐ | Triple-Rule Atomic Boundary — state-of-record files جدا commit شدند → drift | فرض «بعداً commit می‌کنم» در stage boundary | SESSION_STATUS + CHAT_LOG + PENDING (+ REVIEW_LOG if applicable) atomic در یک commit. Rule #۷۳ enforcement | Phase 3 cleanup |
+| **M94** ✨ | Black Auto-Reformat Re-Stage Pattern (positive) — expected workflow، نه anti-pattern | فرض «auto-format = issue»، در حالی که normal pre-commit cycle است | re-stage پس از auto-format → re-commit. expected per `.pre-commit-config.yaml` design | S1 sub-commits |
+| **M95** ⭐ | CMD Pipe Character in Commit Messages — `\|` در `-m` در CMD = pipe → command parse error | فرض CMD escape مثل bash | ASCII-only commit subject، special chars (`\|`, `&`, `<`, `>`) ممنوع. اگر لازم → -F flag (M99) | S2.1 |
+| **M96** ⭐ | Z-ID Permanence Anti-pattern — Z-IDs در permanent docs reference شدند → dangling پس از v(X+1) merge | Z-IDs lifecycle ابهام | permanent docs به permanent IDs (Rule #N, M-N, Decision #). Z-IDs فقط در PENDING. Rule #۷۴ enforcement | S2.2 |
+| **M97** ⭐⭐⭐ | CMD Quote-Tracking Catastrophic Failure — em-dash + redirect در multi-line CMD = stray file created with garbage name | CMD encoding cp1252 + multi-line quote tracking | ASCII-only commit messages، redirect operations فقط با ASCII content. -F flag از فایل (M99) | S2.2 |
+| **M98** ⭐ | Review Scope Closure (Temporally Closed Reviews) — Review file forward-reference به upcoming sub-stage داشت → scope creep | فرض «Review می‌تواند ongoing scope را cover کند» | هر Review scope-closed، atomic. forward-reference ممنوع within atomic commit. **استثنا (caveat):** T1 governance docs می‌توانند planning intent references داشته باشند — distinct از scope creep. Rule #۷۵ enforcement | S2.3 |
+| **M99** ⭐⭐⭐ | CMD Long-Command Paste-Break + -F Flag Standard — multi-line `-m` در CMD inline = 100% failure | CMD line buffer + quote tracking limits | `git commit -F claude_workspace/commit_msg_{stage}.txt` standard برای commit messages > 2-3 lines. ASCII-only فایل (M95+M97) | S2.3 |
+| **M100** ⭐⭐⭐ | Hidden-Checklist Completion (Implicit Validation Failure) — mental checking → partner cannot catch missed steps | فرض «در ذهن چک کردم = enough» | explicit Yes/No + reasoning per check در chat surface. format: bullet/table. Rule #۷۶ enforcement | S2.4 |
+| **M101** ⭐ | Post-Handoff State Drift — chat-end commit hash در خود commit نمی‌تواند ثبت شود (chicken-and-egg M77 extension) | self-reference impossibility در atomic commit | mutual chain backfill: چت بعدی در boot، hash چت قبل را در CHAT_LOG ثبت کند. precedent chain: part04 → part05 → D24 → part07 (hashes ثبت در CHAT_LOG.md boot sections) | part04→part05 transition |
+| **M102** ⭐ | Rule-Implementation Decoupling (Interface-Implementation separation) — قانون normative text با implementation detail mixed → drift در implementation = rule violation | فرض «detail در rule body بهتر است» | Rules: Normative paragraph + جدا Implementation Notes section. detail در script/config/companion doc. normative stays stable، implementation evolves | S3.1 design phase |
 
 ---
 
@@ -409,7 +430,15 @@ Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude De
 
 **فلسفه:** مثل CVE numbers، gap های شناخته نگه داشته می‌شوند تا اگر در آینده کشف شدند، جای آن‌ها مشخص باشد. این نسبت به re-numbering ایمن‌تر است.
 
-**مجموع Reserved تا پایان v2.11:** ۲۶ مورد (M22, M24, M29, M32-M43, M45-M55).
+**مجموع Reserved تا پایان v2.13:** ۲۸ مورد (M22, M24, M29, M32-M43, M45-M55, M80, M81).
+
+**🆕 v2.14 Reserved اضافه‌شده:**
+
+| ID | وضعیت | علت |
+|---|---|---|
+| **M89-M92** | ⚠️ Reserved (۴ مورد) | CVE-like gap preservation per M79 policy — ID space between critical M88 (Hidden Regeneration) and M93 (Triple-Rule) reserved برای potential discoveries در آینده |
+
+**مجموع Reserved تا پایان v2.14:** ۳۲ مورد.
 
 ---
 
@@ -417,9 +446,9 @@ Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude De
 
 ✅ **Migration کامل از v2.11** — درس‌های M1-M63 (با ۲۶ Reserved explicit) ثبت شدند.
 
-## ۲.۷ درس‌های جدید v2.12 (M64-M86) — اعمال‌شده در commit 8
+## ۲.۷ درس‌های جدید v2.12-v2.14 (M64-M102) — اعمال‌شده
 
-> خلاصه لیست پایین canonical است. توضیحات کامل در chat history چت‌های ۱۰، ۱۱، ۱۱.۰.الف تحلیل شده. M82-M86 (critical) در بخش ۲.۸ با جزئیات بیشتر آمده.
+> خلاصه لیست پایین canonical است. توضیحات کامل critical lessons در §۲.۸. درس‌های HM-series helper-side در §۲.۹ مستقل.
 
 ### درس‌های فنی چت ۱۰ (M64-M70)
 - **M64** JSX runtime در plugin-react vs esbuild
@@ -453,6 +482,25 @@ Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude De
 
 ### درس چت ۱۱.۰.ج (M87)
 - **M87** ⭐⭐⭐ Active-Writing Self-Binding Failure — جزئیات در ۲.۸ (تبدیل از Z2.20 PENDING به Locked، پشتیبان قانون #۶۷)
+
+### درس‌های v2.14 — S3.1 از MDRS v2 (M88, M93-M102)
+
+- **M88** ⭐⭐⭐ Hidden Regeneration Hazard — جزئیات در ۲.۸
+- **M89-M92** → Reserved (CVE-like gap)
+- **M93** ⭐⭐⭐ Triple-Rule Atomic Boundary — جزئیات در ۲.۸
+- **M94** ✨ Black Auto-Reformat Re-Stage Pattern (positive)
+- **M95** ⭐ CMD Pipe Character in Commit Messages — جزئیات در ۲.۸
+- **M96** ⭐ Z-ID Permanence Anti-pattern — جزئیات در ۲.۸
+- **M97** ⭐⭐⭐ CMD Quote-Tracking Catastrophic Failure — جزئیات در ۲.۸
+- **M98** ⭐ Review Scope Closure — جزئیات در ۲.۸
+- **M99** ⭐⭐⭐ CMD Long-Command Paste-Break + -F Flag Standard — جزئیات در ۲.۸
+- **M100** ⭐⭐⭐ Hidden-Checklist Completion — جزئیات در ۲.۸
+- **M101** ⭐ Post-Handoff State Drift (mutual chain backfill) — جزئیات در ۲.۸
+- **M102** ⭐ Rule-Implementation Decoupling — جزئیات در ۲.۸
+
+### درس‌های helper-side v2.14 — HM-series
+
+HM-namespace جداگانه برای helper-side patterns. ↓ به §۲.۹ مراجعه کنید.
 
 ---
 
@@ -566,19 +614,437 @@ git commit -m "عنوان" -m "پاراگراف ۲" -m "پاراگراف ۳"
 
 ---
 
-## 🚧 وضعیت این ماژول
+### M88 ⭐⭐⭐ — Hidden Regeneration Hazard
 
-✅ **Migration کامل از v2.11 + Atomic Update v2.12** — درس‌های M1-M86 ثبت شد.
+**کشف‌شده در:** S2.2 (Tier rules design) + S2.5 (manifest regeneration) | **اهمیت:** 🔴 critical | **Cross-refs:** Z3.8, Rule #۶۸, Golden Rule
 
-✅ **افزوده‌های v2.12 اعمال‌شده:**
-- M64-M70 (فنی چت ۱۰): خلاصه در ۲.۷
-- M71-M73 (process cleanup round 1): خلاصه در ۲.۷
-- M74-M79 (cleanup round 2): خلاصه در ۲.۷
-- M80-M81 (Reserved)
-- M82-M86 (چت ۱۱.۰.الف): خلاصه در ۲.۷ + جزئیات کامل در ۲.۸
+**اشتباه:** Constitution یا governance doc explicit list (T1 file list، rule pattern list) hardcode می‌کند → آینده drift inevitable است (artifact جدید اضافه می‌شود، list نمی‌خواند به‌روز شود → silent inconsistency).
 
-جمع جدید: ۶۴ درس ثبت + ۲۸ Reserved.
+**علت:** فرض «list = simplicity»، در حالی که enumeration = drift hazard. mental model: list برای human readability خوب است، ولی برای machine truth منبع authoritative single point of truth لازم است.
+
+**راه‌حل:** principle-based authoring با illustration examples، نه enumeration. authoritative source explicit: «authoritative source = `scripts/64_generate_manifest.py` TIER_RULES» یا «manifest output». اگر list ذکر می‌شود → with explicit note «illustration only, not authoritative».
+
+**Pattern signature:**
+- ❌ "T1 files include: A, B, C, D, ..." (hardcoded enumeration)
+- ✅ "T1 files: see PROJECT_MANIFEST.md Tier=T1 entries (authoritative source)"
+
+**Self-application evidence:** HELPER_PROTOCOL §۲.۲ Layer A خود این principle را اعمال کرد (manifest-lookup به‌جای hardcode list). Rule #۶۸ خود M88 را codify می‌کند.
 
 ---
 
-**📌 پایان 02_lessons.md (commit 8 — atomic update v2.12 applied)**
+### M93 ⭐⭐⭐ — Triple-Rule Atomic Boundary
+
+**کشف‌شده در:** Z3.11 (Phase 3 cleanup) | **اهمیت:** 🔴 critical | **Cross-refs:** Rule #۷۳, Rule #۲۶
+
+**اشتباه:** state-of-record files (SESSION_STATUS + CHAT_LOG + PENDING) را جدا commit کردم → یکی update شد، دیگران stale ماندند تا چت بعد.
+
+**علت:** فرض «بعداً سینک می‌کنم»، در حالی که atomic boundary = single point of synchronization. partial state = state drift.
+
+**راه‌حل:** در هر stage boundary، state-of-record files atomic در یک commit:
+- `SESSION_STATUS.md` (همیشه)
+- `CHAT_LOG.md` (همیشه)
+- `PENDING_FOR_NEXT_VERSION.md` (همیشه)
+- `REVIEW_LOG.md` (اگر Review status transition)
+- `PROJECT_MANIFEST.md` (اگر stage-final یا mid-stage drift detected per Z3.21 policy)
+
+**Pattern signature:**
+- ❌ commit 1: SESSION_STATUS فقط → commit 2 (چت بعد): CHAT_LOG → drift detected
+- ✅ single commit: همه atomic → consistent snapshot
+
+**Rule #۷۳ این principle را Lock می‌کند.**
+
+---
+
+### M94 ✨ — Black Auto-Reformat Re-Stage Pattern (positive)
+
+**کشف‌شده در:** S1 sub-commits 2, 3 | **اهمیت:** 🟢 positive workflow | **Cross-refs:** قانون #۴۲, #۴۳
+
+**Pattern:** pre-commit black hook auto-formats Python files، فایل modified می‌شود، commit fail می‌دهد. re-stage + re-commit → موفق. این **expected workflow** است، نه anti-pattern.
+
+**نکته:** قبل از v2.14، Claude گاهی این را به‌عنوان "fix" تلقی می‌کرد. در حقیقت تنها روش صحیح pre-commit hook chain با auto-formatting است.
+
+**Workflow standard:**
+```
+git add .
+git commit -m "..."           # black reformat → fail
+git add .                     # re-stage formatted files
+git commit -m "..."           # success
+git push origin <branch>
+```
+
+این non-anti-pattern لازم به ثبت explicit چون historically misclassified.
+
+---
+
+### M95 ⭐ — CMD Pipe Character in Commit Messages
+
+**کشف‌شده در:** S2.1 attempt 1 | **اهمیت:** 🟠 high | **Cross-refs:** M97, M99
+
+**اشتباه:** `git commit -m "feat(docs): X | Y | Z"` در CMD → CMD pipe `|` را به‌عنوان command separator interpret کرد → command parse error.
+
+**علت:** CMD shell special chars (`|`, `&`, `<`, `>`, `^`) در quoted strings نیز literal نیستند مگر با escape `^`.
+
+**راه‌حل:** ASCII-only + simple commit subjects. اگر pipe لازم → `-F` flag (M99).
+
+**Prevention:**
+- subject ASCII-only، special chars اجتناب
+- اگر pipe/& لازم → -F flag
+- در CMD، quote tracking + escape rules ضعیف
+
+---
+
+### M96 ⭐ — Z-ID Permanence Anti-pattern
+
+**کشف‌شده در:** S2.2 design (user catch) | **اهمیت:** 🟠 high | **Cross-refs:** Rule #۷۴, Z3.17
+
+**اشتباه:** Review #۰۰۱ early draft به Z3.x reference داشت — Z-IDs در PENDING transient هستند، در v(X+1) ادغام، evaporate یا با RESOLVED marker می‌مانند. Reference در permanent doc → dangling.
+
+**علت:** Z-IDs lifecycle ambiguous بود.
+
+**راه‌حل:** permanent docs به permanent IDs reference دهند:
+- Rule #N (constitution)
+- M-N / HM-N (lessons)
+- Decision # (DECISIONS_LOG)
+- Bug #N (constitution/TROUBLESHOOTING)
+
+Z-IDs فقط در PENDING + transient workspace docs.
+
+**Rule #۷۴ این boundary را Lock می‌کند.**
+
+**Transitional note:** atomic v(X+1) update window می‌تواند Z→permanent reference را acknowledge کند (e.g., "this Rule resolves Z3.17") — این temporary acceptable است، post-merge Z با RESOLVED marker می‌ماند per Z2.20 precedent.
+
+---
+
+### M97 ⭐⭐⭐ — CMD Quote-Tracking Catastrophic Failure
+
+**کشف‌شده در:** S2.2 attempt 1 (stray file `M` evidence) | **اهمیت:** 🔴 critical | **Cross-refs:** M95, M99
+
+**اشتباه:** `git commit -m "feat: X — done > file"` در CMD multi-line paste → em-dash `—` (non-ASCII utf-8) + redirect `>` → CMD quote tracking broke → فایل با نام `M` (single char از scrambled parse) با garbage content ساخته شد.
+
+**علت:** CMD cp1252 + utf-8 mismatch + multi-line quote tracking + redirect operations همگی fragile.
+
+**راه‌حل:** ASCII-only همه چیز در commit operations. -F flag از فایل (M99). em-dash → hyphen-hyphen `--`.
+
+**Prevention:**
+- ASCII-only enforce strictly
+- -F flag standard for any complex commit
+- redirect operations فقط با ASCII content
+- multi-line commit messages NEVER inline
+
+**Severity:** critical چون silent data corruption ایجاد می‌کند (stray file با garbage)، نه clean error.
+
+---
+
+### M98 ⭐ — Review Scope Closure (Temporally Closed Reviews)
+
+**کشف‌شده در:** S2.3 design (user trio catches) | **اهمیت:** 🟠 high | **Cross-refs:** Rule #۷۵, REVIEW_PROTOCOL §۹.۱
+
+**اشتباه:** Review #۰۰۱ early draft شامل forward-reference به upcoming sub-stage داشت (S2.5+) — این scope creep بود، Review را open-ended می‌کرد.
+
+**علت:** فرض «Review می‌تواند ongoing scope را cover کند».
+
+**راه‌حل:** هر Review scope-closed، atomic. forward-reference ممنوع within atomic commit boundary.
+
+**Caveat (M98 distinct):**
+T1 governance docs (مثل HELPER_PROTOCOL.md) می‌توانند **planning intent references** داشته باشند — این متفاوت از scope creep در atomic commit است.
+- T1 governance doc planning intent (e.g., "implementation در part07") = inherent forward-looking design، acceptable
+- Atomic commit scope creep (e.g., Review file references upcoming sub-stage) = unacceptable
+
+Distinction: doc design vs commit boundary. هر دو scope-closed، ولی در دو scope جداگانه.
+
+**Rule #۷۵ این boundary را Lock می‌کند.**
+
+---
+
+### M99 ⭐⭐⭐ — CMD Long-Command Paste-Break + -F Flag Standard
+
+**کشف‌شده در:** S2.3 attempt 1 (100% inline failure) | **اهمیت:** 🔴 critical | **Cross-refs:** M95, M97
+
+**اشتباه:** multi-line `git commit -m "line1" -m "line2" -m "line3"` در CMD paste → CMD line buffer limit + quote tracking break → فقط line1 commit شد، خطوط بعد به‌عنوان separate commands اجرا.
+
+**علت:** CMD inline commit messages با > 2-3 lines = unreliable.
+
+**راه‌حل (standard):** `-F` flag از فایل:
+```cmd
+git commit -F claude_workspace/commit_msg_{stage}.txt
+```
+
+**Requirements:**
+- فایل ASCII-only (M95+M97)
+- در `claude_workspace/` (T5 workspace، نه T1)
+- naming convention: `commit_msg_{stage}.txt` (e.g., `commit_msg_s3_1.txt`)
+- پس از commit، فایل preserved per Z3.18/Z3.23 policy (consumed but not deleted)
+
+**Rule #۹۹ standard (de facto در v2.14 با Template 12 در S3.2 formalize می‌شود).**
+
+---
+
+### M100 ⭐⭐⭐ — Hidden-Checklist Completion (Implicit Validation Failure)
+
+**کشف‌شده در:** S2.4 design (user catch) | **اهمیت:** 🟠 high | **Cross-refs:** Rule #۷۶, M86
+
+**اشتباه:** «checks را در ذهن انجام دادم، نتیجه را preview نوشتم» — این mental checking برای partner (انسان یا future audit) invisible است.
+
+**علت:** فرض «mental verification = enough».
+
+**راه‌حل:** explicit Yes/No + reasoning per check در chat surface (visible to partner).
+
+**Format options:**
+- bullet list با ✅/❌/⏸ marker
+- table با ستون Result + Note (نمونه‌ها در PRE_ADD_CHECKLIST.md §۵)
+- per-check paragraph
+
+**درس عمیق‌تر:**
+- mental checking = invisible to partner
+- partner نمی‌تواند ۱-۲ check missed را catch کند
+- future audit (D12/D21) impossible
+- visibility = collaborative quality
+
+**Rule #۷۶ این principle را Lock می‌کند.**
+
+---
+
+### M101 ⭐ — Post-Handoff State Drift (mutual chain backfill)
+
+**کشف‌شده در:** part03→part04 transition (Discovery #۸) | **اهمیت:** 🟠 high | **Cross-refs:** M77, M86, Rule #۷۳
+
+**اشتباه:** chat-end commit شامل reference به HEAD خود (chicken-and-egg) — مثال: SESSION_STATUS می‌گوید "Branch HEAD: this commit"، ولی hash تا commit شدن مشخص نیست.
+
+**علت:** atomic commit cannot reference its own hash (M77 genus extension).
+
+**راه‌حل:** mutual chain backfill mechanism:
+- placeholder `<filled at chat-end>` در فایل
+- چت بعدی در boot، hash چت قبل را از `git rev-parse HEAD~N` بازیابی + در CHAT_LOG.md ثبت
+- این یک forward-anticipation explicit در PENDING/SESSION_STATUS است
+
+**Mutual chain evidence (precedent):**
+- part04 chat-end → `<part04-hash>` (backfill در part05 boot)
+- part05 chat-end → `<part05-hash>` (backfill در D24 boot)
+- D24 chat-end → `<D24-hash>` (backfill در part07 boot — این چت)
+- part07 chat-end → `<future>` (backfill در next chat)
+
+**Note:** Actual hashes ثبت در `CHAT_LOG.md` per-chat boot section per mechanism design (M101 self-prevents inline documentation).
+
+**Implementation:** boot section در CHAT_LOG.md هر چت explicit `Parent commit: <hash از git rev-parse>` ثبت می‌کند. این یک systematic backfill chain است.
+
+---
+
+### M102 ⭐ — Rule-Implementation Decoupling (Interface-Implementation separation)
+
+**کشف‌شده در:** S3.1 design phase Q3 user catch (Discovery #۱ part04) | **اهمیت:** 🟠 high | **Cross-refs:** Rule #۷۱, Rule #۷۳
+
+**اشتباه:** Rule normative text با implementation detail mixed → detail change in implementation = rule violation alarm، در حالی که rule intent تغییر نکرده.
+
+**علت:** فرض «detail در rule body بهتر است for clarity»، در حالی که این interface و implementation را couple می‌کند.
+
+**راه‌حل:** structural separation در rule design:
+- **Normative paragraph:** stable intent، principle، policy
+- **Implementation Notes section (separate):** detail، file paths، script references، transitional pinning
+- implementation evolves → Implementation Notes update، normative stays unchanged
+
+**Pattern signature in v2.14 rules:**
+- Rules #۶۸-#۷۷ همه این pattern را follow می‌کنند (Normative + Implementation Notes section explicit)
+- precedent از Rule #۶۶ و #۶۷ (v2.12-v2.13)
+
+**Anti-pattern:**
+- ❌ Rule: "نسخه audit script must equal v2.13 — ACCEPTABLE_VERSIONS = ['v2.12', 'v2.13']"
+- ✅ Rule Normative: "Audit script must accept current version" + Implementation: "ACCEPTABLE_VERSIONS list (transitional)"
+
+**Transitional safety:** Implementation Notes می‌تواند transitional pinning صراحت ذکر کند (e.g., ACCEPTABLE_VERSIONS list during migration window) بدون اینکه normative rule را تغییر دهد.
+
+---
+
+## ۲.۹ Helper Consultation Lessons (HM-series)
+
+### HM-namespace rationale
+
+HM = Helper-Memory / Helper-Meta. این namespace جدا از M-series است:
+- **M-series:** main chat Claude mistakes/insights
+- **HM-series:** helper consultation patterns + helper-side anti-patterns
+
+**Rationale (deliberate distinction):**
+- semantic separation: helper-side ≠ main-side
+- Z3.24 spirit: namespace categorization explicit
+- Reserved IDs در M-series نقض نمی‌شود
+- Cross-refs distinct (`HM-3` vs `M-3` no collision)
+- Future audit می‌تواند هر دو را independently track
+
+**Storage:** HM entries در همین فایل `02_lessons.md` §۲.۹ (این sub-section)، نه فایل جداگانه. منطق: structurally lessons hastand، visual + structural cohesion با M-series.
+
+**Numbering:** sequential از HM-1 (no zero-pad initially). Reserved IDs allowed.
+
+**Reference:** HELPER_PROTOCOL.md §۵ design + Rule #۶۸ (Tier classification) + Z3.24 (namespace categorization).
+
+---
+
+### HM-1 — Helper Consultative Misinterpretation
+
+**کشف‌شده در:** Discovery #10 part05 (`TRADING-phase1-part05-mdrs-v2-s31-redo`) | **اهمیت:** 🟡 medium | **Cross-refs:** HELPER_PROTOCOL §۱.۲, §۱.۴
+
+**Pattern:** main chat فرض کرد «helper findings = approval gate» — یعنی اگر helper تأیید کرد، می‌توان commit کرد بدون user approval explicit.
+
+**Root cause:** helper role ambiguous بود قبل از HELPER_PROTOCOL.md.
+
+**Lesson:** helper consultation = advisory only، نه approval gate. Authority hierarchy (HELPER_PROTOCOL §۱.۴):
+1. User explicit approval (absolute per Rule #۵۱ broader scope)
+2. Constitution
+3. State-of-record
+4. Main chat Claude reasoning
+5. Helper findings (advisory)
+
+helper finding conflict با levels 1-4 → conflict explicit surfaced to user for resolution.
+
+**Prevention:** HELPER_PROTOCOL.md §۱.۲ و §۱.۳ explicit positive و negative definition.
+
+---
+
+### HM-2 — Late-Catch Cascade Pattern
+
+**کشف‌شده در:** Discovery #13 part05 (turn 10، strategic decision trigger) | **اهمیت:** 🔴 critical | **Cross-refs:** HELPER_PROTOCOL §۳.۳, §۳.۴, Review #۰۰۳ (D24 decision record — direct driver)
+
+**Pattern:** draft در چند iteration helper review می‌شود و در هر iteration N catches ظاهر می‌شوند (e.g., 6 catches turn N → 1-3 catches turn N+1 → 1 catch turn N+2). این signal است که process upstream نیاز به تغییر دارد، نه drafting.
+
+**Symptoms:**
+- ۳+ iteration روی یک chunk
+- ۲+ structural concerns (نه precision)
+- self-violation از rules که خود نوشتیم (eat-your-own-dogfood failure)
+- Helper reviews می‌گویند "X% ready" که افزایش می‌یابد ولی fundamental concerns ongoing
+
+**Trigger:** ۳ iteration روی یک substantive chunk با ۱۰+ total catches → stop، evaluate process، not draft.
+
+**Resolution (Bounded Bootstrap pattern):** HELPER_PROTOCOL §۳.۳:
+- Upfront constraint checklist
+- Batch comprehensive draft
+- 1 helper round (max 2)
+- Escalation criteria §۳.۴: > 5 catches OR critical → bootstrap mode escape
+
+**Evidence:** part05 turn 9-10 (full trace)، D24 self-application (proof of process functional).
+
+**این HM-2 خود driver D24 (Helper Infrastructure) deliverable بود.**
+
+---
+
+### HM-3 — Chat Naming Convention Adherence
+
+**کشف‌شده در:** Discovery #5 D24 (`TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure`) | **اهمیت:** 🟠 high | **Cross-refs:** HANDOFF_TEMPLATE.md "NEXT CHAT NAME" section
+
+**Pattern:** project standard pattern `TRADING-phase{N}-part{NN}-{topic-slug}`. D24 initial chat name `TRADING-mdrs-v2-D24-helper-infrastructure` این pattern را نقض کرد (phase/part missing).
+
+**Root cause:** boot files صراحت در next-chat-name pattern نداشتند → Claude initial naming drifted.
+
+**Lesson:**
+- Each chat-end handoff explicit declare next chat name pattern (HANDOFF_TEMPLATE "NEXT CHAT NAME (MANDATORY PATTERN)" section)
+- SESSION_STATUS «next chat» section explicit با pattern reference
+- New-chat Claude boot procedure: naming verification check (alert if drift detected)
+- Boot mandatory file reads include chat-name self-check
+
+**Anti-pattern signatures:**
+- `TRADING-{topic}` (missing phase/part) — historical pattern
+- `TRADING-mdrs-v2-{topic}` (missing phase/part) — D24 initial drift
+
+**Prevention:** HANDOFF_TEMPLATE.md updated در D24 با "NEXT CHAT NAME (MANDATORY PATTERN)" section (precedent).
+
+---
+
+### HM-4 — Modified Round-1.5 Edge Case
+
+**کشف‌شده در:** Discovery #1 D24 | **اهمیت:** 🟠 high | **Cross-refs:** HELPER_PROTOCOL §۳.۴
+
+**Pattern:** Bounded Bootstrap §۳.۴ escalation criteria define می‌کند: > 5 catches OR critical → bootstrap mode (skip round 2). ولی edge case: > 5 catches با critical → single batch fix + skip round 2 = یک hybrid حالت بین "round 2" و "bootstrap mode".
+
+**Lesson:** "Modified Round-1.5" یک valid intermediate state است:
+- main chat Claude apply همه findings (including critical) در single batch
+- skip helper round 2
+- user direct review
+- این فرم compressed از round 2 + bootstrap mode هر دو است
+
+**Recognition criterion:** اگر round 1 findings actionable و scope clear است، Modified Round-1.5 = efficient. اگر round 1 findings systemic confusion را نشان دهند، true bootstrap mode (escape) preferred.
+
+**Documentation:** HELPER_PROTOCOL §۳.۴ "Modified Round-1.5" به‌عنوان valid intermediate state added در post-D24 maintenance (یا v1.1 HELPER_PROTOCOL update).
+
+---
+
+### HM-5 — Self-Referential First-Application chicken-and-egg
+
+**کشف‌شده در:** Discovery #3 D24 (self-application) | **اهمیت:** 🟡 medium | **Cross-refs:** M77, M101
+
+**Pattern:** helper applies 8-Layer Framework که خود subject under review است (HELPER_PROTOCOL.md). این یک chicken-and-egg: framework در فایلی که خود review می‌شود defined شده، ولی review needs framework.
+
+**Genus:** M77 (HEAD Self-Reference) extension + M101 (Post-Handoff State Drift) extension. self-reference impossibility در first-application context.
+
+**Resolution:** retroactive application:
+- helper round 1 applied 8-Layer Framework based on draft text (not committed yet)
+- post-round-1 fix incorporates findings
+- framework در final committed version reflects post-fix state
+- این یک valid bootstrap pattern است، نه paradox
+
+**Lesson:** first-application of any framework = bootstrap exception (precedent Review #۰۰۱ — self-establishing protocol). REVIEW_PROTOCOL §۹.۲ Bootstrap Exception clause same genus.
+
+**Future-prevention:** if frameworks revised، helper applies new version retroactively to revision itself (recursive bootstrap).
+
+---
+
+### HM-6 — Post-Correction Propagation Audit
+
+**کشف‌شده در:** Discovery #6 D24 (sub-cascade از Discovery #5) | **اهمیت:** 🟠 high | **Cross-refs:** HM-3, M74 (Full-Range Audit)
+
+**Pattern:** correction در یک layer (chat name) applied، ولی downstream references با old mental model continued. مثال D24: chat name corrected، ولی handoff filename و K7 references با old numbering ماندند.
+
+**Genus:** Late-Catch Cascade (HM-2) micro-form + Full-Range Decision Audit (M74) genus.
+
+**Lesson:** هر naming correction (یا any structural rename) باید explicit cascade check به downstream artifacts را trigger:
+- handoff filenames
+- cross-references در state-of-record files
+- PENDING references
+- commit message templates در workspace
+
+**Audit procedure:**
+1. correction identified در layer N
+2. `grep -r "old-pattern"` در project (یا Filesystem MCP search_files)
+3. cascade-correct در همه occurrences
+4. verify with read-back per M82
+
+**Prevention:** هر rename یا naming convention change → explicit cascade audit step در stage-end protocol.
+
+---
+
+### HM-7 — D24 Iteration Budget Self-Assessment
+
+**کشف‌شده در:** Discovery #7 D24 (self-criticism) | **اهمیت:** 🟡 medium | **Cross-refs:** HM-2 inverse signal
+
+**Pattern:** D24 itself ~15+ turn over-budget per industry standard برای T1 doc creation. Justifiable چون self-application infrastructure (creating the infrastructure being applied).
+
+**Lesson:** post-deploy، helper consultation efficiency باید measurably بهبود یابد. اگر artifacts post-D24 با مشابه budget D24 produce شدند، evidence که HELPER_PROTOCOL needs refinement.
+
+**Metric proposed:** turns-per-artifact / catches-per-iteration. baseline = part05 (high cost)، target = post-D24 measurably lower.
+
+**Post-part07 evaluation:** S3.1 خود این metric را test می‌کند. اگر S3.1 با < 10 turn (bootstrap mode escape upfront) موفق → HELPER_PROTOCOL effective حتی در bootstrap mode. اگر > 15 turn → refinement needed.
+
+**Self-criticism principle:** infrastructure را با خود infrastructure measure کن — recursive metric.
+
+---
+
+## 🚧 وضعیت این ماژول
+
+✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1)**
+
+**جمع‌بندی درس‌ها:**
+- M-series ثبت: ~۸۲ (M1-M63 + M64-M87 + M88 + M93-M102)
+- M-series Reserved: ۳۲ (M22, M24, M29, M32-M43, M45-M55, M80, M81, M89-M92)
+- HM-series: ۷ (HM-1 to HM-7)
+
+✅ **افزوده‌های v2.14 اعمال‌شده (S3.1 part07):**
+- M88 (Hidden Regeneration Hazard)
+- M89-M92 Reserved (CVE-like gap)
+- M93-M102 (۱۰ critical lesson)
+- §۲.۹ NEW — HM-series sub-section (HM-1 to HM-7)
+- §۲.۲ fast-look table: ۶ category جدید
+- §۲.۷ index: M88+M93-M102 listing + HM-series pointer
+
+🔮 **افزوده‌های بعدی (S3.2-S3.4):**
+- ماژول header v2.12 → v2.14 (S3.3 atomic با ACCEPTABLE_VERSIONS)
+- State-of-record atomic refresh (S3.4 Triple-Rule M93)
+
+---
+
+**📌 پایان 02_lessons.md (S3.1 اتمیک v2.14 applied)**

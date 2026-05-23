@@ -29,7 +29,7 @@
 |---|---|---|
 | **[main.md](./main.md)** | این فایل — index + cross-refs + Vision + Quick-start | ~8KB |
 | **[01_rules.md](./01_rules.md)** | قوانین Locked #۱-N (با شرح کامل، نمونه، استثناها) | ~45KB |
-| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M87) با علت ریشه‌ای و راه‌حل | ~50KB |
+| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M102) با علت ریشه‌ای و راه‌حل | ~50KB |
 | **[03_bugs.md](./03_bugs.md)** | کاتالوگ Bug ها (#1-#54+) با علائم، علت، fix | ~30KB |
 | **[04_principles.md](./04_principles.md)** | ۸ اصل بنیادی + سطح‌بندی 🔒/🎯/💡 + No-Deletion + Atomic Updates | ~12KB |
 | **[05_architecture.md](./05_architecture.md)** | Stack + DB Schema + Backend + Frontend + UI/UX + Security + Roadmap | ~40KB |
@@ -80,6 +80,7 @@
 - **#۶۵** ثبت درس از اشتباهات با نمایش → `01_rules.md#قانون-65`
 - **#۶۶** Push اجباری در پایان هر چت (Locked در v2.12) → `01_rules.md#قانون-66`
 - **#۶۷** Cross-shell EXECUTE blocks اجباری (Locked در v2.13) → `01_rules.md#قانون-67`
+- **#۶۸-#۷۷** 🆕 v2.14 — MDRS v2 framework: Tier classification، Review Trigger، Path Validator، VERSION SSoT، Manifest Self-Awareness، Triple-Rule Atomic Boundary، Z-ID Permanence، Review Scope Closure، Pre-Action Checklist Visibility، Continuous Discovery Logging → `01_rules.md#قانون-68` تا `قانون-77`
 
 ### درس‌های مهم در `02_lessons.md`
 
@@ -90,6 +91,13 @@
 - **M82** Verification Claim Must Be Verified → `02_lessons.md#m82`
 - **M83** Retry First, Restructure Last → `02_lessons.md#m83`
 - **M87** Active-Writing Self-Binding Failure (v2.13) → `02_lessons.md#m87`
+- **M88** 🆕 v2.14 Hidden Regeneration Hazard → `02_lessons.md#m88`
+- **M93** 🆕 v2.14 Triple-Rule Atomic Boundary → `02_lessons.md#m93`
+- **M98** 🆕 v2.14 Review Scope Closure → `02_lessons.md#m98`
+- **M99** 🆕 v2.14 CMD Long-Command + -F Flag Standard → `02_lessons.md#m99`
+- **M100** 🆕 v2.14 Hidden-Checklist Completion → `02_lessons.md#m100`
+- **M102** 🆕 v2.14 Rule-Implementation Decoupling → `02_lessons.md#m102`
+- **HM-1 to HM-7** 🆕 v2.14 Helper Consultation Lessons → `02_lessons.md#§2-9`
 
 ### اصول بنیادی در `04_principles.md`
 
@@ -118,18 +126,34 @@
 - `claude_workspace/` structure
 - Skills اختصاصی پروژه (placeholder)
 
+### Helper Consultation در `docs/HELPER_PROTOCOL.md` 🆕 v2.14
+
+- **§۱** Helper Role Definition + Authority Hierarchy (advisory only، نه approval gate)
+- **§۲** 8-Layer Review Framework (Conceptual, Self-Aware, Boundary, Convention, Decision, MDRS, Drift, Process)
+- **§۳** Bounded Bootstrap Pattern + Escalation Criteria + Modified Round-1.5 edge case
+- **§۴** Helper Output Format (Discoveries Log per Rule #۷۷)
+- **§۵** HM-namespace design
+- **§۶** Helper-User Approval Boundary
+- **§۷** Constraint Checklist pattern (مجری Rule #۷۶)
+- **§۸** Helper-side anti-patterns (HM-1 to HM-7 origin)
+
+**Cross-refs:** Rule #۷۷ (Continuous Discovery Logging)، HM-series در `02_lessons.md` §۲.۹، Review #۰۰۳ (D24 decision record).
+
 ---
 
-## 📊 آمار Constitution v2.13
+## 📊 آمار Constitution v2.13 (تجمعی با S3.1 اعمال‌شده v2.14)
+
+> توجه: فایل frontmatter هنوز v2.13 است (به‌روزرسانی atomic به v2.14 در S3.3 با ACCEPTABLE_VERSIONS extension انجام می‌شود). جدول پایین وضعیت فعلی پس از S3.1 را نشان می‌دهد.
 
 | دسته | تعداد |
 |---|---|
-| قوانین Locked | ۶۷ ثبت‌شده (#۱-۶۷) + ۲ Reserved (#۵۲, #۵۳) |
-| درس‌نامه ردیف | M1-M87 ثبت‌شده + ۲۸ Reserved (M22, M24, M29, M32-M43, M45-M55, M80, M81) |
+| قوانین Locked | ۷۷ ثبت‌شده (#۱-۷۷) + ۲ Reserved (#۵۲, #۵۳) — 🆕 ۱۰ قانون جدید v2.14 (#۶۸-#۷۷) |
+| درس‌نامه M-series | M1-M102 ثبت‌شده (~۸۲ ثبت + ۳۲ Reserved) — 🆕 ۱۱ درس جدید v2.14 (M88+M93-M102) + ۴ Reserved جدید (M89-M92) |
+| درس‌نامه HM-series 🆕 v2.14 | HM-1 to HM-7 در `02_lessons.md` §۲.۹ |
 | Bug ها | ۱۶ ثبت‌شده در `03_bugs.md` + ۳۰+ در `docs/TROUBLESHOOTING.md` |
 | ماژول‌ها | ۷ (شامل main.md) + archive |
-| اندازه کل واقعی | ~۱۷۵KB توزیع‌شده (هر ماژول <۵۰KB، MCP-safe) |
-| بزرگترین ماژول | `02_lessons.md` (~۳۸KB) |
+| اندازه کل واقعی | ~۲۰۰KB توزیع‌شده (پس از S3.1) |
+| بزرگترین ماژول | `02_lessons.md` (~۵۰KB پس از §۲.۹ HM-series) |
 
 ---
 

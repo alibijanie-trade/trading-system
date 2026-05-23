@@ -125,7 +125,7 @@ Claude در تمام مراحل پروژه همزمان در نقش‌های ز�
 
 ---
 
-## ۱.۹ جدول قوانین قفل‌شده (#۱-۶۷)
+## ۱.۹ جدول قوانین قفل‌شده (#۱-۷۷)
 
 > این جدول authoritative است. هر قانون با کلیک روی شماره به شرح کامل پایین‌تر می‌رود. در v2.13، قانون #۶۷ افزوده شد.
 
@@ -198,10 +198,20 @@ Claude در تمام مراحل پروژه همزمان در نقش‌های ز�
 | **۶۵ ⭐ 🆕** | ثبت درس از اشتباهات با نمایش — درس کلی به کاربر نمایش، جزئیات تشخیص پنهان | v2.11 |
 | **۶۶ ⭐⭐⭐ 🆕** | Push اجباری در پایان هر چت (در branch infra/، پس از هر commit) | v2.12 |
 | **۶۷ ⭐⭐⭐ 🆕** | Cross-shell EXECUTE blocks اجباری — PowerShell-only cmdlets ممنوع مگر با label `[SHELL-SPECIFIC: PowerShell]` | v2.13 |
+| **۶۸ ⭐⭐⭐ 🆕** | MDRS v2 Source-of-Truth Hierarchy — Tier 1-5 classification per `PROJECT_MANIFEST.md` TIER_RULES authoritative، role-based نه git-tracking | v2.14 |
+| **۶۹ ⭐ 🆕** | Review Trigger Enforcement — هر artifact match با REVIEW_PROTOCOL §۲ trigger نیاز به Review Report + LOG entry با atomic commit | v2.14 |
+| **۷۰ 🆕** | Path Validator Enforcement — هر path reference در T1/T2 docs valid، silent broken refs ممنوع (D19 automation در S7) | v2.14 |
+| **۷۱ ⭐ 🆕** | VERSION Single Source of Truth — `main.md` frontmatter authoritative، ACCEPTABLE_VERSIONS در audit script transitional only | v2.14 |
+| **۷۲ 🆕** | Manifest Self-Awareness — `PROJECT_MANIFEST.md` self-row + first-run gap detect (Audit Check #8-9 در D12) | v2.14 |
+| **۷۳ ⭐⭐⭐ 🆕** | Atomic Stage-end State Reconciliation — Triple-Rule M93 enforcement: state-of-record files atomic در یک commit | v2.14 |
+| **۷۴ ⭐ 🆕** | Z-ID Permanence Boundary — Z-IDs فقط در PENDING/transient، permanent docs به Rule #/M-N/HM-N/Decision # reference | v2.14 |
+| **۷۵ ⭐ 🆕** | Review Scope Closure Mandate — هر Review scope-closed، بدون forward-reference به upcoming sub-stage (M98 enforcement) | v2.14 |
+| **۷۶ ⭐⭐⭐ 🆕** | Pre-Action Checklist Visibility — decision gates با explicit Yes/No + reasoning visible per check (M100 enforcement) | v2.14 |
+| **۷۷ ⭐⭐⭐ 🆕** | Continuous Discovery Logging at Chat Boundaries — type+severity+description per discovery، Hybrid surfacing، per-chat numbering، escalation path explicit | v2.14 |
 
 ---
 
-## شرح کامل قوانین مهم #۱۴-۶۶
+## شرح کامل قوانین مهم #۱۴-۷۷
 
 > برای صرفه‌جویی در فضا، شرح کامل قوانین #۱-۱۳ که از v2.0 پایه‌ای هستند، در توضیحات بالا (بندهای ۱.۱-۱.۸) آمده است. این بخش به قوانین #۱۴+ که هر کدام نیاز به شرح مفصل‌تر دارند می‌پردازد.
 
@@ -687,22 +697,295 @@ git commit -m "feat(...): description"
 
 ---
 
+### قانون #۶۸ ⭐⭐⭐ — MDRS v2 Source-of-Truth Hierarchy
+
+**نسخه افزوده:** v2.14
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+هر artifact در پروژه باید Tier classification شفاف داشته باشد per MDRS v2 framework. Tier 1-5 hierarchy enforced — T1 (Constitution + State)، T2 (Reference Docs)، T3 (Code)، T4.1/T4.2 (Config/Assets)، T5 (Excluded). تخصیص Tier بر اساس **role در پروژه**، نه git tracking status (Golden Rule — `04_principles.md` در S3.2).
+
+#### استدلال
+
+اگر Tier classification ambiguous یا hardcoded list‌محور باشد، drift inevitable است. principle-based با authoritative source = single point of truth + extensibility برای artifacts آینده.
+
+#### Implementation Notes (M102 decoupling)
+
+TIER_RULES authoritative source: `scripts/64_generate_manifest.py`. `PROJECT_MANIFEST.md` source-of-truth لیست فعلی classified files (output regeneration). **هیچ hardcoded T1-T4 file list در constitution یا governance docs** — این M88 genus prevention است.
+
+#### Cross-refs
+- **Principle:** Golden Rule (در `04_principles.md` در S3.2)
+- **Lesson:** M88 (Hidden Regeneration Hazard) — این قانون M88 را codify می‌کند
+- **Framework:** `docs/PROJECT_MANIFEST.md` + `scripts/64_generate_manifest.py`
+
+---
+
+### قانون #۶۹ ⭐ — Review Trigger Enforcement
+
+**نسخه افزوده:** v2.14
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+هر artifact که trigger در `REVIEW_PROTOCOL.md` §۲.۱-۲.۵ را match کند، نیاز به Review Report در `docs/reviews/YYYY-MM-DD-{slug}.md` + entry در `REVIEW_LOG.md` دارد. این دو در یک atomic commit (M93). PRE_ADD_CHECKLIST.md gate (۱۰ check) قبل از reaching trigger.
+
+#### استدلال
+
+بدون trail مستند، تصمیمات irreversible-by-default (Rule #۲۴) لیودی trail خود را گم می‌کنند. Review = decision-record permanent.
+
+#### Implementation Notes (M102)
+
+- Triggers per REVIEW_PROTOCOL §۲.۱ (constitution change) تا §۲.۵ (cross-cutting decisions)
+- Anti-triggers per §۳ — routine T3 edits، cosmetic، stage-end refresh exempt
+- Workflow per §۶ — 8 marhaleh از Trigger detection تا Status=Implemented
+- Bootstrap exception per §۹.۲ — Review #۰۰۱ خود این protocol را establish کرد
+
+#### Cross-refs
+- **Lesson:** M98 (Review Scope Closure)
+- **Companion:** PRE_ADD_CHECKLIST.md gate (Check 10)
+- **Rule مرتبط:** #۷۵ (Review Scope Closure Mandate)
+
+---
+
+### قانون #۷۰ — Path Validator Enforcement
+
+**نسخه افزوده:** v2.14
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+هر path reference در T1/T2 docs (cross-refs، imports، file mentions) باید valid باشد — یعنی فایل یا directory موجود در filesystem. silent broken refs ممنوع. detection mechanism تا D19 (Path Validator script) manual + review-based، پس از D19 automated.
+
+#### استدلال
+
+drift در path references یکی از top failure modes است (M71 Documentation Drift). bidirectional ref integrity = constitution navigation reliability.
+
+#### Implementation Notes (M102)
+
+- D19 = `scripts/65_doc_path_validator.py` در S7 (post-S6 GitHub setup)
+- پیش از D19: helper review + manual cross-ref check در PRE_ADD_CHECKLIST Check 2
+- Granularity: T1+T2 mandatory، T3 code per language tools (mypy، ESLint)
+
+#### Cross-refs
+- **Lesson:** M71 (Documentation Drift)، M77 (HEAD Self-Reference)
+- **MDRS framework:** D19-D21
+
+---
+
+### قانون #۷۱ ⭐ — VERSION Single Source of Truth
+
+**نسخه افزوده:** v2.14
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+Constitution version در یک authoritative source تعریف می‌شود (`main.md` frontmatter). همه ماژول‌ها (`01_rules.md`, `02_lessons.md`, ...) header version با main match کنند. scripts (audit، manifest، …) از `main.md` reference بگیرند یا ACCEPTABLE_VERSIONS explicit list نگه دارند (transitional only).
+
+#### استدلال
+
+drift در version identifier (مثل Z3.12 hook label، Z3.19 module headers) از مهم‌ترین Documentation Drift genera است. SSoT pattern + transitional list = controlled migration windows.
+
+#### Implementation Notes (M102 — transitional safety)
+
+- `scripts/63_pre_commit_audit.py` ACCEPTABLE_VERSIONS = list of versions accepted during migration window (e.g., `["v2.12", "v2.13"]` در حال حاضر، `["v2.13", "v2.14"]` پس از S3.3 atomic)
+- Module headers update **atomic با** ACCEPTABLE_VERSIONS extension (audit-fail prevention — Z3.19 ordering)
+- Z3.19 fix در S3.3 با این pattern reconcile می‌شود
+
+#### Cross-refs
+- **Lesson:** M71 (Documentation Drift)، M102 (Rule-Implementation Decoupling)
+- **Bug:** Z3.12 (pending S3.3 — pre-commit hook label sync)، Z3.19 (pending S3.3 — module headers sync)
+
+---
+
+### قانون #۷۲ — Manifest Self-Awareness
+
+**نسخه افزوده:** v2.14
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+`PROJECT_MANIFEST.md` خود را به‌عنوان row include می‌کند (self-row با `<self>` placeholder برای hash). manifest regeneration idempotent باشد — repeated runs بدون file change همان output دهند. Audit Check باید first-run gap (no prior file to hash against self) را detect کند.
+
+#### استدلال
+
+manifest خود T1 است؛ بدون self-awareness audit، silent drift در tier rules قابل detect نیست. self-row pattern کلاسیک solution است.
+
+#### Implementation Notes (M102)
+
+- Implementation در `scripts/64_generate_manifest.py` (D2) — currently active
+- Audit Check #8 + #9 در `scripts/63_pre_commit_audit.py` (D12) در S4 implement می‌شود
+- Z3.15 (first-run gap) در D12 implementation address می‌شود
+
+#### Cross-refs
+- **Lesson:** M71 (Documentation Drift)
+- **MDRS framework:** D2 (manifest generator)، D12 (audit extensions)
+
+---
+
+### قانون #۷۳ ⭐⭐⭐ — Atomic Stage-end State Reconciliation
+
+**نسخه افزوده:** v2.14
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+در هر stage boundary، state-of-record files باید atomic در یک commit reconcile شوند per M93 Triple-Rule:
+- `SESSION_STATUS.md` — حتماً
+- `CHAT_LOG.md` — حتماً
+- `PENDING_FOR_NEXT_VERSION.md` — حتماً
+- `REVIEW_LOG.md` — اگر Review status transition
+- `PROJECT_MANIFEST.md` — اگر stage-final یا mid-stage drift detected (Z3.21 policy)
+
+separation به چند commit = Triple-Rule violation.
+
+#### استدلال
+
+Z3.11 (RESOLVED v2.13) precedent: split state-of-record across commits → drift و inconsistency. atomic = single point of synchronization.
+
+#### Implementation Notes (M102)
+
+- Triple-Rule operational pattern در M93 detail (`02_lessons.md` §۲.۸)
+- chat-end mid-stage vs stage-end final policy distinction در Z3.21 (open policy question، resolution در v2.14 design یا S3.4)
+- Audit Check #8 (D12) این را mechanically enforce می‌کند
+
+#### Cross-refs
+- **Lesson:** M93 (Triple-Rule Atomic Boundary)
+- **Bug:** Z3.11 (RESOLVED v2.13)
+- **Pending policy:** Z3.21
+
+---
+
+### قانون #۷۴ ⭐ — Z-ID Permanence Boundary
+
+**نسخه افزوده:** v2.14
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+Z-IDs (drift catalog entries در `PENDING_FOR_NEXT_VERSION.md`) فقط در PENDING + transient workspace docs reference می‌شوند. **هرگز** در permanent docs (constitution rules, lessons, principles, T2 reference docs) به‌عنوان primary reference. permanent docs به permanent IDs reference می‌دهند: Rule #N, M-N, HM-N, Decision #, Bug #N.
+
+#### استدلال
+
+Z-IDs در v(X+1) merge ادغام می‌شوند و evaporate (یا با RESOLVED marker می‌مانند). permanent docs که به Z-IDs reference بدهند، dangling references خواهند داشت. این مرز یک architectural safety است.
+
+#### Implementation Notes (M102)
+
+- استثنا: PENDING خود می‌تواند به Z-ID reference دهد (transient-to-transient)
+- ادغام Z→M/Rule/HM در atomic update v(X+1): permanent docs به new permanent ID reference دهند، نه Z-ID قدیم
+- Audit Check #11 (D12) این boundary را scan می‌کند
+
+#### Cross-refs
+- **Lesson:** M96 (Z-ID Permanence Anti-pattern)
+- **Pending (transitional):** Z3.17 — resolved by این Rule. permanent reference: Rule #۷۴ خود (M102 acknowledgment — transitional Z-ref در atomic v2.14 update window acceptable، post-S3.4 Z3.17 marker RESOLVED می‌خورد per Z2.20 precedent)
+
+---
+
+### قانون #۷۵ ⭐ — Review Scope Closure Mandate
+
+**نسخه افزوده:** v2.14
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+هر Review Report باید scope-closed باشد — بدون forward-reference به upcoming sub-stage یا scope creep within atomic commit boundary. اگر scope صرفاً extend شد (نه coherent با اصل Review)، split به Review #N+1 جدید. Reviews atomic + closed، نه sequential open-ended.
+
+#### استدلال
+
+scope creep در Reviews = silent quality degradation. boundary-respecting Reviews = predictable governance trail.
+
+#### Implementation Notes (M102)
+
+- REVIEW_PROTOCOL §۹.۱ conceptual cohesion criterion: batch تنها اگر یک concept واحد، نه برای efficiency.
+- T1 governance docs (مثل HELPER_PROTOCOL.md) می‌توانند planning intent references داشته باشند per M98 caveat — این متفاوت از scope creep within atomic commit است. distinct: T1 doc design vs atomic commit boundary.
+
+#### Cross-refs
+- **Lesson:** M98 (Review Scope Closure / Temporally Closed Reviews)
+- **Rule مرتبط:** #۶۹ (Review Trigger Enforcement)
+
+---
+
+### قانون #۷۶ ⭐⭐⭐ — Pre-Action Checklist Visibility
+
+**نسخه افزوده:** v2.14
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+PRE_ADD_CHECKLIST.md و سایر decision-gates باید با **explicit Yes/No + reasoning visible per check** در chat surface اجرا شوند. mental checking ممنوع — partner (انسان یا future audit) باید بتواند per-check verification را cross-check کند. format: bullet list یا table per check (نمونه: §۵ Examples در PRE_ADD_CHECKLIST.md).
+
+#### استدلال
+
+M100 evidence: hidden checking → partner cannot catch missed steps. visibility = collaborative quality. این مکمل #۶۵ (نمایش درس از اشتباهات) است.
+
+#### Implementation Notes (M102)
+
+- Format flexibility: bullet list با ✅/❌/⏸، یا table با ستون Result + Note (نمونه‌ها در PRE_ADD_CHECKLIST §۵ Example 1-3)
+- Constraint Checklist (HELPER_PROTOCOL §۷.۲) همان pattern را در drafting major artifacts اعمال می‌کند
+- Audit Check آینده: scan commit message یا linked chat artifacts برای visible checklist execution در T1/T2 commits
+
+#### Cross-refs
+- **Lesson:** M100 (Hidden-Checklist Completion / Implicit Validation Failure)
+- **Rule مرتبط:** #۶۵ (ثبت درس از اشتباهات با نمایش)
+
+---
+
+### قانون #۷۷ ⭐⭐⭐ — Continuous Discovery Logging at Chat Boundaries
+
+**نسخه افزوده:** v2.14
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+Claude در طول هر چت Discoveries Log می‌سازد. هر discovery شامل ۳ field: **type** (tool / process / meta / design / recursion / validation / tradeoff)، **severity** (critical / high / medium / low / cosmetic)، **description** مختصر.
+
+**Surfacing per severity (Hybrid):**
+- **critical/high** → real-time در chat surface (هنگام کشف)
+- **medium** → at sign-off milestones (قبل از atomic commits، boundary decisions)
+- **low/cosmetic** → consolidated در handoff فقط (chat-end)
+
+**Numbering:** per-chat reset (Discovery #1, #2, ... شروع از هر چت). cross-chat references با chat-name + Discovery-N (e.g., "Discovery #5 D24").
+
+**Escalation path:** Discovery → Z-item (drift) / M-candidate (lesson) / Rule-candidate / HM-candidate (helper-side) / یا cosmetic-only (هیچ permanent ID).
+
+#### استدلال
+
+D24 evidence: 7 Discoveries logged، تعدادی escalate شدند (HM-candidates). part05 evidence: 13 Discoveries، Discovery #13 critical strategic shift trigger کرد. continuous logging = visibility into emergent patterns + audit trail.
+
+#### Implementation Notes (M102)
+
+- format detail در HELPER_PROTOCOL §۴.۱۱ (helper output format) — همان pattern برای main chat
+- Sign-off milestone criteria در HELPER_PROTOCOL §۲.۴.۲ — مشابه stage-end protocol visibility (M100)
+- consolidated handoff section template در HANDOFF_TEMPLATE.md (S3.2 یا later می‌تواند explicit section اضافه کند)
+
+#### Cross-refs
+- **Precedent rules:** #۶۶ (Push اجباری — pattern explicit boundary actions)، #۲۵ (Pre-Add checklist visibility — pattern visible execution)، #۴۸ (boot protocol — pattern systematic per-chat action)
+- **HELPER_PROTOCOL:** §۴.۱۱ (output format)، §۲.۴.۲ (sign-off milestone)
+- **Reference Discoveries (initial corpus):**
+  - part04 Discoveries (Z3.18-Z3.20 + M101+M102 + R-NEW این Rule)
+  - part05 Discoveries #1-#13 (PENDING strategic section)
+  - D24 Discoveries #1-#7 (PENDING K4 section)
+
 ---
 
 ## 🚧 وضعیت این ماژول
 
-✅ **Migration کامل از v2.11 + Atomic Update v2.12** — قوانین #۱-۶۶ با شرح authoritative.
+✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1)** — قوانین #۱-۷۷ با شرح authoritative.
 
-✅ **افزوده‌های v2.12 اعمال‌شده:**
-- قانون #۶۶ Locked (Push اجباری) — تبدیل از Proposed در PENDING Z2.9
-- شرح کامل در بخش بالا آمده
+✅ **افزوده‌های v2.13 اعمال‌شده (چت ۱۱.۰.ج):**
+- قانون #۶۷ Locked (Cross-shell EXECUTE blocks اجباری) — تبدیل از PENDING Z2.20
 
-🔮 **افزوده‌های بعدی (در چت ۱۱.۰.ب + چت ۱۱.۰.ج بررسی می‌شوند):**
-- قوانین جدید مشتق از M82-M86 (احتمالاً #۶۷-#۷۰، پس از تلاش عملی) — در chat 11.0.ج
-- اصلاح قانون #۴۸ ترتیب خواندن (آپدیت برای ساختار Modular)
-- Pre-commit audit script (چت ۱۱.۰.ب)
-- Finalize Chat Script + Threshold Rules (چت ۱۱.۰.ج)
+✅ **افزوده‌های v2.14 اعمال‌شده (S3.1 از MDRS v2 — چت part07):**
+- قوانین #۶۸-#۷۷ Locked (۱۰ قانون جدید) — تبدیل از PENDING Rules-candidate
+- پشتیبان framework: M88, M93-M102 (در `02_lessons.md`) + HM-1 to HM-7 (در `02_lessons.md` §۲.۹)
+- HELPER_PROTOCOL.md cross-ref در `main.md` Cross-references section
+
+🔮 **افزوده‌های بعدی (در S3.2-S3.3 part07):**
+- Golden Rule principle در `04_principles.md` (S3.2)
+- Templates 11-12 در `06_meta.md` (S3.2)
+- Module headers v2.12 → v2.14 + ACCEPTABLE_VERSIONS extension (S3.3 atomic، Z3.19 fix)
+- Audit script CURRENT_VERSION update (S3.3)
 
 ---
 
-**📌 پایان 01_rules.md (commit 8 — atomic update v2.12 applied)**
+**📌 پایان 01_rules.md (S3.1 اتمیک v2.14 applied)**
