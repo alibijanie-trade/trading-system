@@ -1981,8 +1981,45 @@ S2 شامل ۳ long commit message inline attempt بود (S2.1#1، S2.2#1، S2.3
 
 ---
 
+## چت `TRADING-phase1-part04-mdrs-v2-completion` — S3.0 + chat-end hand-off
+
+**تاریخ:** 2026-05-22
+**Branch:** `infra/v2.14-source-of-truth`
+**خلاصه:** S3.0 (Review #۰۰۲ Draft + LOG row Approved) تکمیل شد. S3.1 (Rules + Lessons) در میانه اجرا در Lessons table edit به دلیل MCP edit_file timeout (Z3.20 جدید) hand-off shod. Rules edits revert شدند برای atomic preservation.
+
+### دستاوردها
+
+- **S3.0 (commit `15e8e37`):** Review #۰۰۲ Draft ساخته شد در `docs/reviews/2026-05-22-constitution-v214-mdrs-v2-integration.md` (+ LOG row #۰۰۲ Status=Approved). این اولین Review با proper §6 workflow (Draft → Implement → File) است (Review #۰۰۱ retroactive بود).
+- **Designs تولید شدند در chat surface (ولی اعمال نشدند):** Turn 1 ۱۰ Rules full body (#۶۸-#۷۷ با normative + Implementation note + history pattern per M102) + Turn 2 ۱۱ Lessons (M88, M93-M102 پلان) + جدول ها + sections + footer.
+- **3 Z3.x جدید (Z3.18, Z3.19, Z3.20) + 2 M-candidate (M101, M102) + 1 R-NEW Rule #۷۷** به PENDING منتقل شدند.
+
+### Z3.20 Critical Discovery
+
+`Filesystem:edit_file` MCP با پیلود‌های خیلی بزرگ (>~5KB oldText+newText combined, multi-byte Persian) ممکن است 4-minute timeout بدهد. در S3.1 redo چت part05، استراتژی split-edit (یک row یا چند row در هر edit) استفاده شود.
+
+### Commits در این چت
+
+| # | Commit | Branch | Subject |
+|---|---|---|---|
+| 1 | `15e8e37` | infra/v2.14-source-of-truth | S3.0 Review #۰۰۲ Draft + LOG row Approved |
+| 2 | [this commit] | infra/v2.14-source-of-truth | Chat-end hand-off (PENDING transfer + handoff file + SESSION_STATUS update) |
+
+### Plan part05
+
+- **S3.1 redo** با split-edit strategy (per Z3.20)
+- **S3.2** (D10: Principles + Templates)
+- **S3.3** (D11 + D13: Version + Audit + Z3.19 fix)
+- **S3.4** (atomic stage-end + M101 backfill mechanism + Review #۰۰۲ Status=Implemented)
+- **S4-S8** per original MDRS v2 plan
+
+### Discoveries Log (R-NEW Rule #۷۷ candidate پروف demonstration)
+
+Discoveries Log consolidated (27 entries) در handoff file `claude_workspace/incoming_permanent/PHASE1_PART05_MDRS_V2_S31_REDO_HANDOFF.txt` را موجود است. این pattern Rule #۷۷ (فرمالیزه در S3.1 redo) خود را demonstrate کرد.
+
+---
+
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v2.0 (2026-05-22 — چت ۱۲ hand-off: بستن S1+S2 + atomic transfer PENDING + handoff file برای چت ۱۳ `TRADING-phase1-part04-mdrs-v2-completion`)
-**به‌روز شده در:** چت `TRADING-phase1-part03-mdrs-v2-implementation` (پایان Stage S2)
+**نسخه:** v2.1 (2026-05-22 — چت part04 chat-end hand-off: S3.0 done + S3.1+ deferred به part05 به‌خاطر Z3.20)
+**به‌روز شده در:** چت `TRADING-phase1-part04-mdrs-v2-completion` (chat-end)
 **به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ (Triple-Rule honored)

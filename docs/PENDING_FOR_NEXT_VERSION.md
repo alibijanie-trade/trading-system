@@ -620,3 +620,73 @@ Stage S4-S8 طبق plan اصلی MDRS v2 (handoff file جزئیات را دار�
 **تعداد:** 27 آیتم باز برای v2.14 (17 Z3.x + 9 M-lessons + 1 Principle)
 **وضعیت:** آماده atomic update در S3 چت `TRADING-phase1-part04-mdrs-v2-completion`
 **آخرین به‌روزرسانی:** 2026-05-22 (پایان چت `TRADING-phase1-part03-mdrs-v2-implementation` در پایان Stage S2)
+
+---
+
+## 🔴 آیتم‌های جدید — کشف‌شده در چت `TRADING-phase1-part04-mdrs-v2-completion`
+
+**منبع:** Discoveries Log consolidated در پایان چت (per R-NEW پیشنهادی کاربر — Rule #۷۷ candidate). این چت S3.0 را کامل کرد (Review #۰۰۲ Draft + LOG row Approved در commit `15e8e37`)، ولی S3.1 (Rules + Lessons) مدد در چت بعد تکمیل خواهد شد.
+
+### Z3.18: stale workspace handoff file cleanup
+
+**کشف‌شده در:** boot چت part04 (git status) — untracked file `claude_workspace/incoming_permanent/PHASE1_PART02_BINANCE_CLIENT_HANDOFF.txt`
+**Severity:** 🟢 low
+**درجه برخورداری:** این فایل از قبل از Decision #۶۵ (pivot از binance-client به MDRS v2 در part02 deep-audit) باقی مانده و stale است. نام "PHASE1_PART02_BINANCE_CLIENT" دیگر reflect realityaste.
+**Action:** در S8 cleanup hybrid policy (به همراه Z3.13 archive moves) consolidate شود.
+
+### Z3.19: هدر "Constitution v2.12 (Modular)" در ماژول های constitution drift
+
+**کشف‌شده در:** S3.1 design phase (Discovery #۲۱ توسط Claude در reading 01_rules.md)
+**Severity:** 🟡 medium
+**درجه برخورداری:** هدر ماژول های constitution (01_rules.md, 02_lessons.md و غیره) می‌گوید "Constitution v2.12 (Modular)" در حالی که constitution الان v2.13 است (per main.md). این خانواده Z3.12 (yaml label drift) است و توسط Rule #۷۱ (Single Source of Truth for Version Identifier) coverage دارد.
+**Action:** در S3.3 atomic update با audit script (CURRENT_VERSION + ACCEPTABLE_VERSIONS extension to include v2.14) در یک عمل reconcile شود. باید در اولین stage-end commit چت part05 backfill شود یا در S3.3 atomic. **دلیل defer:** ordering dependency — ACCEPTABLE_VERSIONS فعلاً ["v2.12", "v2.13"] است، update header به v2.14 تنهایی audit fail می‌دهد.
+
+### Z3.20: MCP edit_file payload limit — large multi-row table append ممکن است timeout شود
+
+**کشف‌شده در:** Lessons table append در S3.1 (چت part04) — Discovery #۲۷
+**Severity:** 🟠 high (workflow blocking pattern)
+**درجه برخورداری:** `edit_file` MCP با پیلود‌های خیلی بزرگ (>~5KB oldText+newText combined, multi-byte Persian content) ممکن است به 4-minute timeout برسد. Edit 1 (پیلود کوچک ‍~1KB) موفق، Edit 2 (پیلود بزرگ ‍~6KB با 11 row Persian-heavy) timeout شد.
+**Mitigation strategy:**
+- Split large edits به multiple smaller edits (یک row per edit یا چند row)
+- یا fallback به write_file با full content (لی این هم پیلود دارد)
+- M83 (Retry First, Restructure Last) honored: retry probably won't help here چون علت payload-based است
+**Action:** در چت part05 S3.1 redo، استراتژی split-edit استفاده شود. اگر pattern تکرار شد در چت های بعد، M-candidate (شاید M103) formalize شود.
+
+### درس‌های M-candidate جدید (در چت part05 در S3.1 redo فرمالیزه شوند)
+
+| ID | عنوان | Severity | منبع |
+|---|---|---|---|
+| M101 | Post-Handoff State Drift (chicken-and-egg M77 extension) | high | part03->part04 transition (Discovery #۸) |
+| M102 | Rule-Implementation Decoupling (Interface-Implementation separation) | high | S3.1 design phase Q3 user catch (Discovery #۱) |
+
+**پلان برای چت part05:** هر دو لسون در S3.1 همراه M88 + M93-M100 فرمالیزه شوند (M101 کل جمع درس ها به ۱۰ لسون و M102 ۱۱ لسون تبدیل می‌کند).
+
+### Rule جدید #۷۷ پیشنهادی (R-NEW) — در S3.1 redo Locked شود
+
+**نام:** Continuous Discovery Logging at Chat Boundaries
+**توسط کاربر پیشنهاد شد در:** پایان turn 2 چت part04 (پیام اولیه کاربر — "در پایان هر چت Discoveries Log consolidated داشته باشد")
+**متن:** در طول هر چت، Claude باید Discoveries Log نگه دارد (bugs کشف‌شده، ابهامات، patterns جدید، edge cases، tool quirks، communication friction). Discoveries در chat surface در sign-off milestones explicit + در handoff پایان چت consolidated.
+**Plan:** در S3.1 redo به‌عنوان یکی از ۱۰ rule (غالباً last) فرمالیزه شود. این باعث می‌شود Rules چت part05 توسط #۶۸-#۷۷ (10 rule جدید) پوشش داده شوند.
+
+### توضیح S3 صورتپذیرفته در چت part04 و پلان برای part05
+
+**وضعیت S3 در پایان چت part04:**
+- S3.0 (Review #۰۰۲ Draft + LOG row Approved): ✅ تکمیل در commit `15e8e37` (push shod)
+- S3.1 (Rules + Lessons + Reserved + sections + tables + footer atomic): ⛔ incomplete
+  - Rules edits در 01_rules.md اعمال شد ولی توسط `git checkout` revert شد (Z3.20 timeout در Lessons edit پاداری Option A handoff)
+  - 02_lessons.md categories edit در Edit 1 (~6 row) اعمال ولی revert شد برای clean state
+  - Rule content + Lesson content + sections + tables در Turn 1 + Turn 2 previews تولید شدند و در chat history part04 را موجودند (reference در handoff)
+- S3.2-S3.4: ⛔ deferred
+- S4-S8: ⛔ deferred
+
+**Plan برای چت part05 (جدید):**
+1. Boot reading + handoff file readout
+2. M101 backfill mechanism (اولین atomic operation چت part05 باید درج کند که chat-end commit چت part04 = `15e8e37` در CHAT_LOG/SESSION_STATUS)
+3. S3.1 redo با strategy split-edit (per Z3.20)
+4. S3.2 (D10: Principles + Templates)
+5. S3.3 (D11 + D13: Version + Audit + Z3.19 fix)
+6. S3.4 (atomic stage-end — Triple-Rule applied)
+7. S4-S8 per original MDRS v2 plan
+
+**تعداد:** 30 آیتم باز برای v2.14 (17 Z3.x + 3 Z3.x جدید Z3.18-Z3.20 + 9 M-lessons existing + 2 M-lessons جدید M101-M102 + 1 Principle + 1 R-NEW Rule #۷۷)
+**آخرین به‌روزرسانی:** 2026-05-22 (پایان چت `TRADING-phase1-part04-mdrs-v2-completion` در پایان S3.0)

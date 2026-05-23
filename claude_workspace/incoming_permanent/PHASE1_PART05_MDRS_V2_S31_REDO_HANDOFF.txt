@@ -1,0 +1,250 @@
+سلام Claude. این چت ادامه‌ی TRADING-phase1-part04-mdrs-v2-completion است.
+
+پروژه: D:\Projects\trading-system
+
+═══════════════════════════════════════════════════════════
+⚠️ Critical Context Awareness — اولین بخش (M56 + M77 + M100 honored)
+═══════════════════════════════════════════════════════════
+
+تو (Claude در این چت جدید) **هیچ memory از چت قبل نداری**. هر چت AI
+مستقل است. آنچه در دسترس داری:
+1. این متن (boot guidance)
+2. Filesystem MCP برای خواندن همه فایل‌های پروژه
+3. GitHub remote (git log، git show برای history کامل)
+4. این Handoff file که جزئیات S3.1 redo + S3.2-S3.4 + S4-S8 + همه discoveries را دارد
+
+آنچه نداری:
+1. Conversational context چت قبل (Turn 1 + Turn 2 previews برای Rules
+   و Lessons که design شده بودند ولی revert شدند)
+2. Tone و partnership style established
+3. هیچ "memory" از تصمیمات — همه از فایل‌ها reconstruct می‌شود
+
+⚠️ Anti-pattern critical (M56 + M77 + M100):
+- نباید از memory ادعا کنی چیزی را که فایل را نخوانده‌ای
+- نباید "I remember from previous chat..." بنویسی
+- اگر unclear، **بپرس**
+
+═══════════════════════════════════════════════════════════
+گام ۱ — Boot Protocol
+═══════════════════════════════════════════════════════════
+
+این فایل‌ها را به ترتیب بخوان:
+
+1. این Handoff file (الان در حال خواندن)
+2. docs/SESSION_STATUS.md (state-of-record post-S3.0)
+3. docs/PENDING_FOR_NEXT_VERSION.md (تمام ۳۰ آیتم باز شامل ۳ Z3.x جدید
+   Z3.18-Z3.20 + R-NEW Rule #77 + M101-M102 candidates)
+4. docs/CHAT_LOG.md (tail — آخرین section چت part04)
+5. docs/HANDOFF_TEMPLATE.md (template دائمی پروژه)
+6. docs/PROJECT_MANIFEST.md (274 file classified)
+7. docs/REVIEW_PROTOCOL.md + docs/REVIEW_LOG.md (row #002 Status=Approved)
+8. docs/PRE_ADD_CHECKLIST.md
+9. docs/reviews/2026-05-22-constitution-v214-mdrs-v2-integration.md
+   (Review #002 Draft - این چت part05 باید Implementation انجام دهد +
+   Status update به Implemented در S3.4)
+10. docs/constitution/main.md + 01_rules.md + 02_lessons.md
+
+═══════════════════════════════════════════════════════════
+گام ۲ — Git State Verify
+═══════════════════════════════════════════════════════════
+
+🟩 tab «2 scripts»:
+
+cd D:\Projects\trading-system
+git status
+git log --oneline -5
+git rev-parse HEAD
+git rev-parse origin/infra/v2.14-source-of-truth
+
+Expected:
+- Branch: infra/v2.14-source-of-truth
+- HEAD: chat-end commit این چت part04 (paste کاربر در شروع)
+- Previous commit: 15e8e37 (S3.0)
+- Sync با origin
+
+⚠️ M101 (Post-Handoff State Drift) — این chat-end commit در CHAT_LOG
+خود reflect می‌شود ولی هر commit پس از آن (که نباید باشد) درج نمی‌شود.
+
+═══════════════════════════════════════════════════════════
+گام ۳ — 5 سؤال sign-off
+═══════════════════════════════════════════════════════════
+
+پس از boot:
+1. Branch infra/v2.14-source-of-truth HEAD <chat-end commit این چت>?
+2. Constitution v2.13 بدون manual edits بین چت‌ها?
+3. S3.1 redo plan تأیید (با strategy split-edit per Z3.20)?
+4. هیچ context یا constraint جدید بین چت‌ها?
+5. M101 backfill mechanism اعمال در اولین atomic operation تأیید?
+
+═══════════════════════════════════════════════════════════
+گام ۴ — S3.1 REDO Plan (با Z3.20 mitigation)
+═══════════════════════════════════════════════════════════
+
+S3.1 = atomic commit شامل:
+- 10 Rules (#68-#77) در 01_rules.md
+- 11 Lessons (M88, M93-M102) در 02_lessons.md
+- 4 Reserved (M89-M92) در 02_lessons.md section 2.6
+- جدول 2.2 category updates
+- جدول 2.3 rows append
+- Section 2.7 extend (v2.12-v2.14 consolidated)
+- Section 2.9 create (critical v2.14: M93 + M102 detailed)
+- Footer counts update
+
+⚠️ Z3.20 mitigation — استراتژی split-edit:
+- Edit per Rule (10 edits) OR per chunk of 3-5 rules
+- Edit per Lesson group (compact rows: M94-M100 یک گروه؛ M88, M93, M101,
+  M102 هر کدام جدا چون detailed)
+- اگر یک edit بزرگ شد (>5KB)، split فوری بدون retry
+
+⚠️ Discovery #21 (Z3.19) - header v2.12 → v2.14:
+- در S3.3 (نه S3.1 چون audit script ACCEPTABLE_VERSIONS فقط v2.12+v2.13
+  پذیرفته است)
+- در S3.3: همراه audit script CURRENT_VERSION update + ACCEPTABLE_VERSIONS
+  extension به ["v2.12", "v2.13", "v2.14"] + module headers update
+
+═══════════════════════════════════════════════════════════
+Plan 5 sub-commits (S3.1 redo + S3.2-S3.4)
+═══════════════════════════════════════════════════════════
+
+- S3.1: Rules + Lessons + Reserved + sections + tables + footer (atomic)
+- S3.2: Principle + Templates (D10) — Golden Rule + Templates 11-12
+- S3.3: Version + Audit (D11 + D13) — version bump v2.13→v2.14 +
+  ACCEPTABLE_VERSIONS extension + Z3.12 yaml label fix + Z3.19 module
+  headers fix
+- S3.4: Stage-end atomic — SESSION_STATUS + CHAT_LOG + PROJECT_MANIFEST
+  D2 re-run + REVIEW_LOG row #002 update Status=Implemented + PENDING
+  cleanup (resolved items)
+- M101 backfill در اولین stage-end commit (یعنی S3.4)
+
+═══════════════════════════════════════════════════════════
+Discoveries Log Consolidated از چت part04 (27 entries)
+═══════════════════════════════════════════════════════════
+
+این لیست consolidated همه discoveries مهم چت part04 (per R-NEW Rule #77):
+
+#1 (R-NEW قانون جدید): "هر چت در handoff Discoveries Log consolidated
+  داشته باشد" — کاربر گفت + "خودت هم انجام بده". → Rule #77 candidate.
+
+#2 (constitution audit): rule #68 reference در حالی که Locked نیست —
+  resolved در S3.1 redo formalization.
+
+#3: M89-M92 ضمنی Reserved → explicit در S3.1 redo.
+
+#4: 02_lessons.md footer "M1-M86" but content M87 — fix در S3.1 redo.
+
+#5: HEAD drift (e290b36 chat-end vs d03fdf2 template fix-up) — M77
+  paradox example. M101 candidate.
+
+#6: "10 فایل" vs "8 فایل" در main.md Quick-start — design decision در
+  S3.3 main.md update.
+
+#7: PENDING سایز change بین S2.5 stage-end و boot part04 → D2 re-run
+  در S3.4.
+
+#8: post-handoff commits خارج CHAT_LOG/SESSION_STATUS → M101 candidate.
+
+#9: Z3.5 visible (63_backup_project.py + 63_pre_commit_audit.py همان #63).
+
+#10: tools موجود فقط read-only initially → tool_search مجدد در S3.1 redo.
+
+#11 (resolved Z3.18): stale PHASE1_PART02 handoff in workspace. Action:
+  S8 cleanup.
+
+#12 (proto-M-candidate): Sub-Decision Naming Convention (C.2, M.alpha) —
+  pattern observed، watch در S3.2/S3.3 برای recurrence.
+
+#13: read_text_file با head/tail می‌تواند multi-byte UTF-8 (ZWNJ +
+  Persian) را در chunk boundary بشکند → FFFD replacement chars در
+  display. Mitigation: read_multiple_files برای Persian content verify.
+
+#14: Pre-commit Layer 1 audit yaml label still "(v2.12)" — Z3.12
+  confirmed live، resolved در S3.3.
+
+#15: PHASE1_PART02_BINANCE_CLIENT_HANDOFF.txt untracked persists —
+  Z3.18 (resolved در PENDING).
+
+#16: Forward-reference risk hit 4 از 10 rules (#70, #71, #72, #73) —
+  M102 candidate formalization triggered.
+
+#17 (observation): User catches consistently catch class-level patterns
+  (M96, M98, M100, M102). M100 partnership pattern working as designed.
+
+#18 (proto): Pre-emptive handoff threshold pattern (>70% context =
+  handoff) — candidate برای آینده.
+
+#19 (proto): Response-Level Atomic Boundary candidate — هر chat response
+  باید single conceptual purpose داشته باشد.
+
+#20 (M-candidate): Read-Tool Multi-byte Boundary Hazard.
+
+#21 (Z3.19): "Constitution v2.12 (Modular)" header drift در ماژول‌ها
+  vs v2.13 (actual). Resolved در S3.3 atomic.
+
+#22 (minor): "commit 8" terminology old در footer 01_rules.md — per
+  M24 No-Deletion acceptable.
+
+#23 (self-resolved): Table header "#1-67" → "#1-77" در S3.1 (revert شد
+  along با Rules edit).
+
+#24 (verified): Bug #54 subject "Decisions Numbering Gap" — interpretation
+  در Rule #73 cross-ref valid (atomic discipline failure precedent،
+  evidence-strong برای why atomic stage-end ضروری است).
+
+#25 (design pattern): Section 2.7 extend (v2.12-v2.14 consolidated) با
+  subheadings per version + category. Section 2.9 create برای critical
+  v2.14 lessons (consistent با pattern 2.8).
+
+#26 (resolved): جدول 2.2 M98 duplication بین "Documentation drift" +
+  "Review & process discipline" — M98 در second category فقط نگه داشته
+  شد (typo, نه intentional).
+
+#27 (Z3.20): MCP edit_file payload limit — large multi-row table append
+  (>~5KB) ممکن است timeout شود. Mitigation: split-edit strategy در S3.1
+  redo.
+
+═══════════════════════════════════════════════════════════
+سبک کار expected
+═══════════════════════════════════════════════════════════
+
+- Preview-then-approve برای document creation
+- Visible pre-add checklist (M100) — explicit Yes/No per check
+- Triple-Rule (M93) atomic stage-end commits
+- -F flag (M99) برای long commits
+- ASCII-only (M95+M97) در CMD commit messages — no metachars
+- read_multiple_files (Discovery #20) برای verify Persian content
+- split-edit (Z3.20) برای large table appends
+- Discoveries Log inline در milestones + consolidated در handoff (R-NEW)
+
+═══════════════════════════════════════════════════════════
+نکات critical M-lessons (از part03 + part04)
+═══════════════════════════════════════════════════════════
+
+- M93 ⭐⭐⭐: Triple-Rule atomic stage boundaries
+- M96: Z-ID Permanence — no Z-refs در permanent docs
+- M97: ASCII-only در CMD commit messages — no metachars
+- M98: Review scope closure — no forward references
+- M99: -F flag standard
+- M100: Visible pre-add checklist
+- M101 (new): Post-handoff state drift backfill
+- M102 (new) ⭐: Rule-Implementation Decoupling (Interface/Implementation)
+
+═══════════════════════════════════════════════════════════
+S3.0 Done (preserved)
+═══════════════════════════════════════════════════════════
+
+S3.0 موفق:
+- Commit 15e8e37 push شد
+- docs/reviews/2026-05-22-constitution-v214-mdrs-v2-integration.md ساخته شد
+- REVIEW_LOG row #002 Status=Approved با Resolution placeholder
+
+اگر سؤالی داری قبل از شروع، الان بپرس.
+
+═══════════════════════════════════════════════════════════
+آخرین reminder
+═══════════════════════════════════════════════════════════
+
+این handoff خود pattern Rule #77 (Discoveries Log در handoff) را
+demonstrate می‌کند. در چت part05 این pattern تکرار شود.
+
+S3 = بزرگ‌ترین stage MDRS v2. صبور باش، split-edit کن، context
+self-check در milestones.
