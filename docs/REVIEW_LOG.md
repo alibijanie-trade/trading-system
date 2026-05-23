@@ -14,6 +14,7 @@
 |---|---|---|---|---|---|---|
 | 001 | 2026-05-22 | mdrs-v2-review-infrastructure-bootstrap | Bootstrap of MDRS v2 review workflow per Decision #65. Selected internal markdown + REVIEW_LOG over Notion external, GitHub Issues only, or Jira/Linear. | §2.2 + §2.3 + §2.4 | **Implemented** | `4726b38` (D4) → `d9747b5` (D5) → this S2.3 atomic commit (D6) |
 | 002 | 2026-05-22 | constitution-v214-mdrs-v2-integration | Atomic update Constitution v2.13 to v2.14 با MDRS v2 framework formal integration. Selected cohesive 3-sub-commit structure (rules+lessons / principle+templates / version+audit) با R-NEW Rule #77 (Continuous Discovery Logging) و M101 (Post-Handoff State Drift) over single mega-commit, full-split per deliverable, یا sequential M-numbering schemes. | §2.1 + §2.4 | **Approved** | `<pending S3.1-S3.3 implementation, will update to Implemented in S3.4 atomic stage-end>` |
+| 003 | 2026-05-23 | helper-infrastructure-d24 | D24 Helper Infrastructure: HELPER_PROTOCOL.md T1 governance doc covering 5 scopes (persistent context layer, operating protocol, 8-layer review framework, HM-namespace learning continuity design, severity-based triggers + operating modes). Selected Option B (full integrated protocol) over Option A (minimal) و Option C (split per scope). Driver: M-candidate Late-Catch Cascade Pattern (Discovery #13 part05). | §2.2 + §2.4 | **Approved** | `<pending D24.1 implementation, will update to Implemented in D24 chat-end commit>` |
 
 ---
 
