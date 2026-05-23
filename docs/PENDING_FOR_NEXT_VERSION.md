@@ -875,3 +875,137 @@ Stage S4-S8 طبق plan اصلی MDRS v2 (handoff file جزئیات را دار�
 **تعداد سطح-strategic items اضافه شده در این chat-end:** D24 (deliverable) + M-candidate (Late-Catch Cascade) + 13 Discoveries (#1-#13 consolidated).
 
 **آخرین به‌روزرسانی strategic section:** 2026-05-23 (chat-end چت `TRADING-phase1-part05-mdrs-v2-s31-redo`)
+
+---
+
+## 🔴🔴🔴 آیتم‌های D24 chat-end (چت `TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure`)
+
+**منبع:** D24 implementation chat. HELPER_PROTOCOL.md created (commit `bed06b3`), Review #003 Implemented (`daf2020` → `bed06b3` → this chat-end), helper round 1 داد 9 findings (all applied), 7 Discoveries logged.
+
+**Status:** D24 5-scope design + HELPER_PROTOCOL.md T1 governance doc تولید شد. baqi items (HM-series implementation, main.md cross-ref, etc.) به part07 S3.1 redo deferred.
+
+---
+
+### K1: HM-namespace target sub-section
+
+**Category:** D24 Design Deferred for part07
+
+**M-candidate Late-Catch Cascade implementation در part07 S3.1:** target sub-section **"Helper Consultation Lessons (HM-series)"** در `02_lessons.md` §۲.۹ (after current §۲.۸). Design pattern در HELPER_PROTOCOL.md §۵ تعریف شد.
+
+**First HM entries candidates (per part07 implementation):**
+- HM-1: Helper Consultative Misinterpretation (from Discovery #10 part05)
+- HM-2: Late-Catch Cascade Pattern (from Discovery #13 part05)
+- HM-3: Chat Naming Convention Adherence (from Discovery #5 D24)
+- HM-4: Modified Round-1.5 edge case (from Discovery #1 D24)
+- HM-5: Self-Referential First-Application chicken-and-egg (from Discovery #3 D24)
+- HM-6: Post-Correction Propagation Audit (from Discovery #6 D24)
+- HM-7: D24 Iteration Budget Self-Assessment (from Discovery #7 D24)
+
+---
+
+### K2: main.md cross-ref edit
+
+**Category:** D24 Design Deferred for part07
+
+`docs/constitution/main.md` "Cross-references اصلی" section — add entry برای `docs/HELPER_PROTOCOL.md` در part07 S3.1 atomic.
+
+---
+
+### K3: Helper-discovered patterns در D24 round 1
+
+**Category:** D24 Helper-Discovered Patterns
+
+**Helper round 1 results (per HELPER_PROTOCOL §۴ 8-Layer Framework, retroactively codified):**
+- Total: 9 findings (0 critical, 2 high, 6 medium, 1 low)
+- L1.1 [CRITICAL eat-your-own-dogfood]: §۲.۲ Layer A explicit-list (M88 genus) — applied
+- L1.2 [medium]: pattern violation in §۸ — implicitly resolved by L1.1 fix
+- L2.1 [medium]: Rule #51 over-claim "absolute" — applied (scope specified)
+- L2.2 [medium]: CLAUDE_CHECKLIST.md missing cross-ref — applied
+- L4.1 [medium]: §۵.۶ forward-reference disclaimer — applied (M98 caveat)
+- L5.1 [low]: Rule #77 (candidate) tagging — applied
+- L7.1 [medium]: M82 verify §۲.۸/§۲.۹ section refs — applied (verified pre-write)
+- L8.1 [HIGH]: §۲.۴ Project K refresh enforcement — applied (4-sub-section overhaul)
+- L8.2 [medium]: §۲.۵ Persian hardcode — applied (principle-reference)
+- Section 3 (Review #003): clean (1 minor consistency check passed)
+
+**Escalation:** Modified Round-1.5 (L1.1 critical + 8 medium/low → single batch fix + skip round 2 per §۳.۴ intent). Proof of Bounded Bootstrap criteria functional.
+
+---
+
+### K4: Discoveries Log D24 (per-chat reset, anticipated mutual M101)
+
+**Category:** Discoveries Log per-chat
+
+| # | Type | Severity | Description |
+|---|---|---|---|
+| #1 | meta | 🟠 high | §۳.۴ Modified Round-1.5 edge case absent (post-helper-round-1 single-batch fix without helper round 2). HM-candidate part07 |
+| #2 | validation | 💡 cosmetic | Bounded Bootstrap criteria §۳.۴ validated functional — caught L1.1 critical + 8 medium/low. Proof of process |
+| #3 | process | 🟡 medium | Self-application: helper applies 8-Layer Framework defined در subject under review (self-referential chicken-and-egg pattern, genus M77/M101). HM-candidate part07 |
+| #4 | recursion | 🟡 medium | L1.1 خود همان pattern است که D24 was created to prevent. Counter-factual: if L1.1 caught نمی‌شد, D24 با خود-violation deliver می‌شد. Most-important catch چت |
+| #5 | process | 🟠 high | Chat Naming Convention Drift — boot files صراحت در next-chat-name pattern نداشتند → Claude initial naming drifted از `TRADING-phaseX-partY-{topic}`. User manual corrected به `TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure`. HM-candidate part07 |
+| #6 | process | 🟠 high | Naming Correction Lag — corrections در یک layer (chat name) applied, ولی downstream numbering (handoff filename, PENDING references) با old mental model continued. Micro Late-Catch Cascade. HM-candidate part07 |
+| #7 | process | 🟡 medium | D24 iteration budget assessment: ~15+ turn, 2 helper round, 7+ Discovery — over-budget برای T1 doc creation per industry standard. Justifiable چون D24 خود infrastructure را می‌سازد (self-application). HM-candidate part07: post-D24 deploy, helper consultation efficiency باید measurably بهبود یابد |
+
+**Anticipated Discovery #1 D24-chat-end (mutual M101 chain):** D24 chat-end hash needs backfill در part07 (mirroring `91d20d8` backfill در این چت). This forward-anticipation explicit per K4.
+
+---
+
+### K5: Z3.24 Option B interim caveat
+
+**Category:** Z3.24-related interim convention
+
+D24 پیشدستانه Z3.24 Option B ("Category:" field) را اعمال می‌کند. **caveat:** Interim convention adopted (D24): Category: field per Z3.24 Option B (formal decision deferred به v2.14 design). اگر Option C selected, migration لازم. Parallel با ACCEPTABLE_VERSIONS pattern M102 (transitional safety).
+
+---
+
+### K6: Project Knowledge refresh enforcement integration
+
+**Category:** D24 Design — stage-end protocol extension
+
+از HELPER_PROTOCOL §۲.۴.۲: Project K refresh check باید در main chat stage-end protocol integrated شود (visible per M100). Implementation در part07 S3.1 یا later stage. Candidates:
+
+1. (الف) Add as Pre-Add Check 11 در PRE_ADD_CHECKLIST.md
+2. (ب) Add as explicit step در stage-end Triple-Rule (M93 extension)
+3. (ج) Standalone protocol section در HELPER_PROTOCOL §۲.۴
+
+Decision deferred به part07.
+
+---
+
+### K7: Chat Naming Convention Formalization (HM-candidate)
+
+**Category:** D24 Helper-Discovered Patterns
+
+**Discovery source:** D24 turn 12 — user caught initial chat name `TRADING-mdrs-v2-D24-helper-infrastructure` drifted از pattern. Corrected manual به `TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure`.
+
+Discovery #6 (naming correction lag) sub-discovery: post-correction propagation pending قبل از Phase 1 — off-by-one در handoff filename + K7 reference text.
+
+**Pattern (project standard):** `TRADING-phase{N}-part{NN}-{topic-slug}`
+
+- phase{N}: تک-رقم 0-based
+- part{NN}: incremental number
+- topic-slug: kebab-case description
+
+**HM-candidate scope:** Chat Naming Convention Adherence
+- Each chat-end handoff explicit declare next chat name pattern
+- SESSION_STATUS "next chat" section explicit با pattern reference
+- New-chat Claude boot procedure includes naming verification check (alert if drift detected)
+- Boot mandatory file reads include chat-name self-check
+- Post-correction propagation audit (Discovery #6 sub-genus): هر naming correction باید explicit cascade check به downstream artifacts را trigger کند
+
+**Implementation در part07 S3.1 (with constitution v2.14 atomic update):**
+- HM-3 entry در `docs/constitution/02_lessons.md` §۲.۹ HM-series
+- Update HANDOFF_TEMPLATE.md to add "NEXT CHAT NAME (MANDATORY PATTERN)" section (per D24 Action 1 precedent)
+- Optional: Audit Check #12 candidate (pre-add chat-name validation)
+
+---
+
+### Stale handoff files note
+
+`claude_workspace/incoming_permanent/PHASE1_PART05_..._HANDOFF.txt` و `PHASE1_D24_HELPER_INFRA_HANDOFF.txt` به دلیل consumption در چت‌های بعد stale می‌شوند. Cleanup deferred به S8 per Z3.18/Z3.23 policy (existing). NOT removed در این chat-end commit.
+
+---
+
+**تعداد items اضافه شده در D24 chat-end:** K1-K7 (7 deferred items) + 7 Discoveries (#1-#7 consolidated).
+
+**آخرین به‌روزرسانی D24 section:** 2026-05-23 (chat-end چت `TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure`)

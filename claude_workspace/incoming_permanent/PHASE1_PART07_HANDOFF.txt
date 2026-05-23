@@ -1,0 +1,293 @@
+================================================================
+TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra - HANDOFF FROM D24
+================================================================
+
+Source chat: TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure
+Source chat-end date: 2026-05-23
+Source chat-end commit: [filled by user post-push; this commit itself]
+Parent commit: bed06b3 (D24.1 - HELPER_PROTOCOL.md)
+Grandparent commit: daf2020 (D24.0 - Review #003 file + LOG row)
+Great-grandparent commit: 91d20d8 (chat-end part05)
+
+Branch: infra/v2.14-source-of-truth (part07 continues)
+Next chat after part07: depends on S3.1-S3.4 progress (likely part08)
+
+================================================================
+NEXT CHAT NAME (MANDATORY PATTERN - Discovery #5 D24)
+================================================================
+
+CRITICAL: The next chat must be named following project convention:
+
+  TRADING-phase1-part07-{topic-slug}
+
+Pattern: TRADING-phase{N}-part{NN}-{topic}
+  - phase{N}: single-digit 0-based (current = phase1)
+  - part{NN}: incremental number (this handoff is for part07)
+  - {topic-slug}: kebab-case description
+
+Anti-pattern (Discovery #5 D24 - caught by user, naming drift):
+  WRONG: TRADING-{topic} (missing phase/part) - historical pattern
+  WRONG: TRADING-mdrs-v2-{topic} (missing phase/part) - D24 initial drift
+
+If you (next chat Claude) detected this handoff under a chat named
+incorrectly, alert user immediately before any work.
+
+Suggested topic-slug for part07 (S3.1 redo with HELPER_PROTOCOL):
+  TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra
+  (shorter: TRADING-phase1-part07-s31-redo)
+
+================================================================
+CRITICAL CONTEXT AWARENESS
+================================================================
+
+You have NO memory from previous chats. This handoff file is your
+primary context source. Read the entire file before any action.
+
+D24 (Helper Infrastructure) was DELIVERED in source chat:
+- docs/HELPER_PROTOCOL.md (T1, ~32KB) is now active governance doc
+- Review #003 is Implemented
+- 8-Layer Review Framework defined (L1-L8)
+- Bounded Bootstrap pattern available
+- HM-namespace design ready for implementation
+
+================================================================
+WHAT WAS DELIVERED IN D24 CHAT
+================================================================
+
+1. docs/HELPER_PROTOCOL.md (commit bed06b3) - 5-scope coverage:
+   - Persistent Context Layer (Project K + Custom Instructions)
+   - Operating Protocol (Bounded Bootstrap pattern + escalation)
+   - 8-Layer Review Framework (L1-L8, with L8 Forward-looking risk)
+   - HM-namespace design (implementation in part07)
+   - Triggers + Operating Modes (severity-based)
+
+2. docs/reviews/2026-05-23-helper-infrastructure-d24.md (Review #003)
+   - Status: Implemented (chat-end commit chain)
+   - Options A/B/C considered, Option B selected
+
+3. Discoveries (7 total, all HM-candidates for part07):
+   #1 - Modified Round-1.5 edge case (process)
+   #2 - Bounded Bootstrap validated functional
+   #3 - Self-referential first-application chicken-and-egg
+   #4 - L1.1 self-violation counter-factual (most important)
+   #5 - Chat naming convention drift (process)
+   #6 - Naming correction lag (process)
+   #7 - Iteration budget honest assessment
+
+================================================================
+STATE AT THIS HANDOFF
+================================================================
+
+Project: D:\Projects\trading-system
+
+Constitution version: v2.13 (Modular) - unchanged in D24
+                      (v2.14 target in S3.1-S3.3 part07)
+
+Branch HEAD (infra/v2.14-source-of-truth):
+  D24.0:        daf2020 (Review #003 + LOG row)
+  D24.1:        bed06b3 (HELPER_PROTOCOL.md)
+  D24-chat-end: this commit (see git log)
+
+Key counts:
+  Rules: 67 locked + 2 Reserved
+  Lessons: M1-M87 + 28 Reserved (HM-series will start in part07)
+  Z3.x: 24 open (Z3.1-Z3.24)
+  Tests: 88 pass (unchanged)
+  MDRS v2 deliverables done: 8/24 (D1-D7 + D24)
+  Reviews: 3 (#001 Implemented, #002 Approved, #003 Implemented)
+
+================================================================
+BOOT PROTOCOL FOR PART07 CHAT
+================================================================
+
+Step 1 - Filesystem MCP:
+  tool_search "filesystem" + verify list_allowed_directories
+
+Step 2 - Read this handoff file FIRST.
+
+Step 3 - Mandatory boot files (in order):
+  1. docs/SESSION_STATUS.md           (current state, part07 next pointer)
+  2. docs/CHAT_LOG.md                 (tail 300 - D24 + part05 narrative)
+  3. docs/PENDING_FOR_NEXT_VERSION.md (D24 K1-K7 + Discoveries + strategic + earlier)
+  4. docs/HELPER_PROTOCOL.md          (NEW - read in full, ~32KB T1 governance)
+  5. docs/HANDOFF_TEMPLATE.md         (standard chat-end format)
+  6. docs/PROJECT_MANIFEST.md         (note: pre-S2.5 + D24 drift, manifest re-run at S3.4)
+  7. docs/REVIEW_PROTOCOL.md          (governance procedure)
+  8. docs/REVIEW_LOG.md               (Row #003 Implemented)
+  9. docs/PRE_ADD_CHECKLIST.md        (10-check gate)
+  10. docs/constitution/main.md       (v2.13 heading)
+  11. docs/constitution/01_rules.md +
+      docs/constitution/02_lessons.md (existing #1-#67 + M1-M87)
+
+Step 4 - git verify:
+  cd /d D:\Projects\trading-system
+  git status                   (clean expected)
+  git log --oneline -5         (chat-end-D24, bed06b3, daf2020, 91d20d8, 4e851b0)
+  git rev-parse HEAD
+  git rev-parse origin/infra/v2.14-source-of-truth
+
+Step 5 - M101 backfill (mandatory - mutual chain):
+  D24 chat-end commit hash (= what `git rev-parse HEAD` returns at boot)
+  must be recorded explicit in CHAT_LOG part07 boot section.
+  This mirrors part05's backfill of part04 (8a91138) and D24's backfill
+  of part05 (91d20d8).
+
+Step 6 - sign-off questions:
+  Q1: Branch infra/v2.14-source-of-truth HEAD = D24 chat-end commit
+      (paste hash)?
+  Q2: Constitution v2.13 unchanged between D24 and part07 boot?
+  Q3: Project Knowledge setup done per HELPER_PROTOCOL section 2.3?
+      (User confirms HELPER_PROTOCOL.md uploaded to Project K)
+  Q4: Any context/constraint changed between chats?
+  Q5: S3.1 plan approved (Rules + Lessons + HM-series first entries)?
+
+================================================================
+PRIORITY 1 - PROJECT KNOWLEDGE SETUP (BEFORE FIRST HELPER USE)
+================================================================
+
+Per HELPER_PROTOCOL section 2.3, BEFORE part07 uses helper consultation:
+
+1. Confirm Project `trading-system` exists in Claude Desktop / claude.ai
+2. Upload Project Knowledge files (per section 2.2 Layer A, lookup from
+   PROJECT_MANIFEST.md):
+   - docs/constitution/main.md
+   - docs/constitution/01_rules.md
+   - docs/constitution/02_lessons.md
+   - docs/constitution/04_principles.md
+   - docs/REVIEW_PROTOCOL.md
+   - docs/PRE_ADD_CHECKLIST.md
+   - docs/HELPER_PROTOCOL.md  (NEW from D24!)
+   - docs/HANDOFF_TEMPLATE.md
+3. Configure Custom Instructions per HELPER_PROTOCOL section 2.5 template
+4. Bookmark Project for quick access
+
+This is a one-time UI action by user. Filesystem MCP cannot do this.
+
+================================================================
+NEXT STAGE EXECUTION PLAN - PART07
+================================================================
+
+S3.1 (Constitution Atomic Update - Rules + Lessons):
+
+  S3.1 redo plan (per part05 + D24 evidence):
+    - Apply Bounded Bootstrap (HELPER_PROTOCOL section 3.3) for drafting
+    - Rules #68-#77 (10 rules, see PENDING_FOR_NEXT_VERSION.md)
+    - Lessons M88, M93-M102 (11 lessons)
+    - HM-series first 7 entries (HM-1 to HM-7 from PENDING K1)
+    - main.md cross-ref for HELPER_PROTOCOL.md (PENDING K2)
+    - Module headers: v2.12 -> v2.14 (Z3.19 fix coordinated with S3.3)
+
+S3.2 (Principles + Templates):
+  - Golden Rule principle in 04_principles.md
+  - Templates 11-12 in 06_meta.md
+  - Possibly Project K refresh enforcement decision (PENDING K6)
+
+S3.3 (Version + Audit + Z3.19 fix atomic):
+  - v2.13 -> v2.14 in all modules
+  - scripts/63_pre_commit_audit.py CURRENT_VERSION + ACCEPTABLE_VERSIONS
+  - Audit Checks #8-11 (D12)
+
+S3.4 (Atomic stage-end):
+  - SESSION_STATUS + CHAT_LOG + PENDING + REVIEW_LOG (Triple-Rule + Review trans)
+  - PROJECT_MANIFEST.md D2 re-run
+  - Review #002 Status: Approved -> Implemented
+
+S4-S8: Per original MDRS v2 plan (D12-D23 + cleanup).
+
+================================================================
+CRITICAL LESSONS APPLIED IN D24 (DO NOT FORGET)
+================================================================
+
+- M82 verify before claim (read-back after write)
+- M86 commit + push in separate EXECUTE blocks
+- M88 anti-pattern self-violation prevention (L1.1 fix in D24)
+- M93 Triple-Rule atomic boundary
+- M95+M97 ASCII-only commit messages
+- M98 Scope closure (D24.0 vs D24.1 vs chat-end isolated)
+- M99 -F flag for long commits
+- M100 Pre-Add Checklist visibility
+- M101 Post-Handoff State Drift backfill (part05 -> 91d20d8, D24 -> to be backfilled)
+- M-candidate Late-Catch Cascade (Bounded Bootstrap pattern self-applied)
+- 7 HM-candidates from D24 Discoveries (for HM-1 to HM-7 in part07)
+
+================================================================
+CRITICAL OPERATIONAL PATTERNS
+================================================================
+
+1. Pre-Add Checklist (M100 visible) before write_file for governance docs
+2. Phase 1 (Claude MCP) / Phase 2 (User CMD) separation (Discovery #9 part05)
+3. Single-Project architecture (HELPER_PROTOCOL section 2.3) - main + helper chats
+4. Bounded Bootstrap for major artifacts (HELPER_PROTOCOL section 3.3):
+   - Upfront constraint checklist
+   - User review + approval
+   - Batch comprehensive draft
+   - 1 helper round (max 2 rounds)
+   - Escalation criteria (HELPER_PROTOCOL section 3.4):
+     <= 2 catches: proceed
+     3-5 catches: 1 iteration only
+     > 5 OR critical: bootstrap mode (no helper)
+5. M88 genus prevention: principle-based, not enumeration
+6. Refresh check at stage-end (HELPER_PROTOCOL section 2.4) - visible per M100
+
+================================================================
+FILES TO PRESERVE / TO DELETE
+================================================================
+
+PRESERVE (no-deletion per Rule #24):
+- claude_workspace/incoming_permanent/PHASE1_PART02_BINANCE_CLIENT_HANDOFF.txt (stale, Z3.18)
+- claude_workspace/incoming_permanent/PHASE1_PART04_..._HANDOFF.txt (if still present)
+- claude_workspace/incoming_permanent/PHASE1_PART05_..._HANDOFF.txt (consumed by D24)
+- claude_workspace/incoming_permanent/PHASE1_D24_HELPER_INFRA_HANDOFF.txt (consumed by part07)
+- All claude_workspace/commit_msg_*.txt (consumed but preserved)
+- All cleanup deferred to S8 per Z3.18/Z3.23 policy
+
+WILL BE CREATED by part07 chat-end:
+- claude_workspace/incoming_permanent/PHASE1_PART08_HANDOFF.txt (or appropriate name)
+- claude_workspace/commit_msg_*.txt (multiple, per S3.1-S3.4 sub-commits)
+
+================================================================
+USER META-PRINCIPLES (PRESERVED)
+================================================================
+
+From D24 turn 14:
+"کار غیرضروری پیچیده‌تر نشود، از مسیر اصلی دور نشویم"
+(Do not unnecessarily complicate work, do not stray from the main path.)
+
+This constraint applies throughout part07 and beyond. Operationalization:
+- Minimum-necessary state updates at chat-end (no scope expansion)
+- Commit messages per template, no custom expansion
+- Discoveries brief in PENDING, no elaborate re-analysis
+- If helper round catches > 5: escape to bootstrap mode immediately
+
+================================================================
+KEY COMMITS AND REFERENCES
+================================================================
+
+| Commit  | Branch                          | Subject                                                     |
+|---------|---------------------------------|-------------------------------------------------------------|
+| 91d20d8 | infra/v2.14-source-of-truth     | part05 chat-end (S3.1 deferred, D24 strategic decision)     |
+| daf2020 | infra/v2.14-source-of-truth     | D24.0 Review #003 Draft + LOG row Approved                  |
+| bed06b3 | infra/v2.14-source-of-truth     | D24.1 HELPER_PROTOCOL.md T1 governance doc                  |
+| [HEAD]  | infra/v2.14-source-of-truth     | D24 chat-end (state updates + Review #003 Implemented + handoff) |
+
+================================================================
+FINAL STATE CONFIRMATION (post-D24)
+================================================================
+
+D24 is COMPLETE. All 5 scopes designed. HELPER_PROTOCOL.md is active T1
+governance doc. Review #003 Implemented. 7 Discoveries logged as HM-candidates.
+
+part07 starts with:
+- HELPER_PROTOCOL available (read in boot)
+- Project K setup needed (one-time user UI action)
+- Bounded Bootstrap pattern ready for S3.1 drafting
+- HM-series ready for first entries
+
+End of HANDOFF.
+
+================================================================
+Generated: 2026-05-23
+By: Claude in chat TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure
+For: chat TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra
+Constitution version at generation: v2.13 (Modular)
+HELPER_PROTOCOL version at generation: v1.0

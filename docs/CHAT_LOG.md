@@ -2109,8 +2109,102 @@ git checkout docs/constitution/01_rules.md
 
 ---
 
+---
+
+## چت `TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure` — D24 Helper Infrastructure
+
+**تاریخ:** 2026-05-23
+**Branch:** `infra/v2.14-source-of-truth`
+**Parent commit:** `91d20d8` (chat-end part05)
+**خلاصه:** D24 (Helper Infrastructure) deliverable تکمیل شد. `docs/HELPER_PROTOCOL.md` T1 governance doc ساخته شد (~32KB, 5 scope coverage). Bounded Bootstrap pattern self-applied (proof Late-Catch Cascade prevention works). Review #003 Implemented.
+
+### دستاوردها
+
+**۱. Boot موفق (turn 1):**
+- 10 mandatory files خوانده شدند (handoff `PHASE1_D24_HELPER_INFRA_HANDOFF.txt` + 9 فایل boot)
+- MCP transient timeout × 1 (initial Filesystem call) — retry resolved (Discovery #1 سابقه)
+- git verify: HEAD = `91d20d8` ✅, sync ✅, clean working tree ✅
+- 5 sign-off Qs + 4 Q-pre questions پاسخ داده شدند
+
+**۲. Upfront Constraint Checklist (turn 4-5, Bounded Bootstrap step 1-2):**
+- 14 section comprehensive (A-N) تولید شد
+- User review + 7 precision suggestions applied
+- L8 (Forward-looking risk) layer added به framework (P1)
+- Approved as basis برای batch comprehensive draft
+
+**۳. Batch comprehensive draft (turn 6, Bounded Bootstrap step 3):**
+- 3 section structured: Section 1 (constraint checklist context) + Section 2 (HELPER_PROTOCOL.md draft) + Section 3 (Review #003 + LOG row)
+- Self-verification table 15/15 constraint alignment ✅
+
+**۴. Helper Round 1 (turn 7, Bounded Bootstrap step 4):**
+- 8-Layer Framework applied retroactively
+- 9 findings (0 critical, 2 high, 6 medium, 1 low)
+- L1.1 [CRITICAL eat-your-own-dogfood]: §۲.۲ Layer A explicit-list = M88 genus violation — same anti-pattern as part05 Rule #68. **Most-important catch چت.**
+- L8.1 [HIGH]: §۲.۴ Project K refresh — silent failure mode acknowledged
+- Escalation: > 5 catches + critical → trigger Modified Round-1.5 edge case (single batch fix, skip round 2 per §۳.۴ intent)
+
+**۵. Apply 9 findings + Discovery #5 (turn 8-9):**
+- All 9 helper findings applied: L1.1 + L1.2 + L2.1 + L2.2 + L4.1 + L5.1 + L7.1 + L8.1 + L8.2
+- User-caught Discovery #5: chat naming convention drift (initial name `TRADING-mdrs-v2-D24-...` violated `TRADING-phaseX-partY-{topic}` pattern from part04+). Corrected to `TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure`. 5 Actions applied (handoff + SESSION_STATUS + HELPER_PROTOCOL cross-ref + K3 + K7).
+- User-caught Discovery #6: naming correction lag (off-by-one in handoff filename PART06->PART07 + K7/HELPER_PROTOCOL references part06->part07). 6 occurrences cascade-corrected.
+
+**۶. Phase 1 write_file actions (turn 10-12, no Bootstrap escape needed):**
+- Turn 1-3 preview HELPER_PROTOCOL.md (§۱-§۳, §۴-§۶, §۷-§۱۰) approved by user with 2 fixes در Turn 1 review (L5.T1.1 frontmatter format + L8.T1.1 Project architecture single-Project)
+- Direct write_file (Bounded Bootstrap step 6, no further helper round)
+
+**۷. Atomic commits (per M93 + M98):**
+- **D24.0** commit `daf2020`: Review #003 file + LOG row #003 (Status=Approved). 2 files, 149 insertions.
+- **D24.1** commit `bed06b3`: HELPER_PROTOCOL.md (T1 governance doc). 1 file, 629 insertions.
+- **D24-chat-end** commit: state-of-record + handoff + Review #003 transition (Approved → Implemented).
+
+### Mutual M101 (Post-Handoff State Drift backfill mechanism)
+
+**part05 chat-end commit hash** = `91d20d8` (verified در D24 boot via `git log -3`). این backfill در D24 boot reasoning ثبت شد، parallel با part05's backfill of part04 chat-end (`8a91138`). **Anticipated:** D24 chat-end hash will need backfill در part07 boot.
+
+### User constraint applied throughout (turn 14)
+
+User explicit constraint: «کار غیرضروری پیچیده‌تر نشود، از مسیر اصلی دور نشویم» — applied در Turn 3 brevity, commit messages no expansion, state updates minimum-necessary, no scope creep.
+
+### Helper Round 1 Validation (Proof of Process)
+
+Bounded Bootstrap criteria §۳.۴ functional validation:
+- 9 catches > 5 + 1 critical → escalation triggered correctly
+- Modified Round-1.5 edge case discovered (Discovery #1)
+- L1.1 catch counter-factual: if missed, D24 would have deployed with self-violation (eat-your-own-dogfood failure). M88 genus prevention validated.
+
+**این چت اولین demonstration عملی از Bounded Bootstrap pattern است. self-application موفق.**
+
+### Commits در این چت (D24)
+
+| # | Commit | Branch | Subject |
+|---|---|---|---|
+| 1 | `daf2020` | infra/v2.14-source-of-truth | docs(reviews): D24 Review #003 Draft + LOG row Approved |
+| 2 | `bed06b3` | infra/v2.14-source-of-truth | feat(governance): D24 HELPER_PROTOCOL.md T1 governance doc |
+| 3 | [this commit] | infra/v2.14-source-of-truth | docs(chat-end): D24 state updates + Review #003 Implemented + PHASE1_PART07 handoff |
+
+### Plan چت part07
+
+- Boot protocol استاندارد (handoff `PHASE1_PART07_HANDOFF.txt`)
+- S3.1 redo (Rules #68-#77 + Lessons M88 + M93-M102 + HM-series §۲.۹ first entries)
+- HM-1 to HM-7 implementation از K1 candidates (D24 design pattern applied)
+- main.md cross-ref entry برای HELPER_PROTOCOL.md (K2)
+- Project K refresh enforcement integration (K6)
+- S3.2 (Principles + Templates)
+- S3.3 (Version + Audit + Z3.19 fix)
+- S3.4 (atomic stage-end + Review #002 → Implemented)
+
+### Discoveries Log (7 total, per-chat reset, consolidated در PENDING D24 section)
+
+**Most critical:** **Discovery #4 — L1.1 self-violation counter-factual** (🟡 medium with high implication) — most-important catch چت.
+**Most insightful:** **Discovery #5 + #6 — Chat Naming Convention Drift + Correction Lag** (🟠 high) — micro Late-Catch Cascade in real-time.
+**Most validating:** **Discovery #2 + #7 — Bounded Bootstrap functional + iteration budget honest assessment** (process self-criticism).
+
+جدول کامل در `docs/PENDING_FOR_NEXT_VERSION.md` K4 section.
+
+---
+
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v2.2 (2026-05-23 — چت part05 chat-end: S3.0.5 done + S3.1+ deferred to part06 به‌خاطر Late-Catch Cascade → D24 prerequisite)
-**به‌روز شده در:** چت `TRADING-phase1-part05-mdrs-v2-s31-redo` (chat-end)
+**نسخه:** v2.3 (2026-05-23 — چت D24 chat-end: HELPER_PROTOCOL.md delivered + Bounded Bootstrap self-applied + Review #003 Implemented)
+**به‌روز شده در:** چت `TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure` (chat-end)
 **به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ (Triple-Rule honored)
