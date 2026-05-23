@@ -198,7 +198,7 @@ Root: D:\Projects\trading-system
 
 ---
 
-## ۶.۳ Templates پاسخ Claude (سند ۱۷ منبع، ۱۰ Template)
+## ۶.۳ Templates پاسخ Claude (سند ۱۷ منبع، ۱۲ Template)
 
 ### Template ۱ — اولین پاسخ در هر چت
 
@@ -348,6 +348,129 @@ python scripts/{N}b_test_{name}.py
 
 این کار را انجام دهم؟
 ```
+
+---
+
+### Template ۱۱ — Pre-Action Checklist Visibility 🆕 v2.14
+
+> پشتیبان: Rule #۷۶ (Pre-Action Checklist Visibility) + M100 (Hidden-Checklist Completion). انجام check های pre-action با explicit visibility در chat surface.
+
+#### قالب bullet list (ساده)
+
+```markdown
+## 📋 Pre-Action Checklist — [نام task]
+
+**Stage:** S{N}.{M} | **Severity:** [critical/high/medium/low]
+
+- ✅ Check 1: [توضیح] — [reasoning]
+- ✅ Check 2: [توضیح] — [reasoning]
+- ⏸ Check 3: [توضیح] — [reasoning، skip causality]
+- ❌ Check 4: [توضیح] — [reasoning، fail causality + recovery]
+
+**نتیجه:** [proceed / pause for clarification / abort]
+```
+
+#### قالب table (پیچیده‌تر، با Note)
+
+```markdown
+## 📋 Pre-Add Checklist — [task]
+
+| # | Check | Result | Note |
+|---|---|---|---|
+| ۱ | Tier classification valid؟ | ✅ | T1 governance per Rule #۶۸ |
+| ۲ | Path validator؟ | ✅ | همه refs valid (manual pre-D19) |
+| ۳ | Atomic boundary respected؟ | ✅ | M93 Triple-Rule scope clear |
+| ۴ | Z-ID permanence؟ | ✅ | permanent IDs used (Rule #۷۴) |
+| ... | ... | ... | ... |
+
+**Verdict:** PROCEED (همه N check pass) / PAUSE (X check pending) / ABORT (Y check fail)
+```
+
+#### نمونه‌های مرجع
+
+- `docs/PRE_ADD_CHECKLIST.md` §۵ Examples 1-3 (نمونه‌های اجرایی)
+- `docs/HELPER_PROTOCOL.md` §۷ Upfront Constraint Checklist Pattern (تطبیق‌یافته برای helper drafting)
+
+#### کاربرد
+
+- قبل از write به T1 file → mandatory
+- قبل از atomic commit → recommended
+- قبل از boundary decisions (scope change، tier reclass، naming change) → mandatory
+- mental checking ممنوع — partner (انسان یا future audit) باید visible verification را cross-check کند
+
+---
+
+### Template ۱۲ — Git Commit -F Flag Standard 🆕 v2.14
+
+> پشتیبان: M99 (CMD Long-Command Paste-Break) + M95 + M97. standard pattern برای commit messages > 2-3 lines. Cross-refs قوانین #۴۲/#۴۳/#۶۶.
+
+#### Workflow
+
+```cmd
+# 1. ساخت فایل commit message (Claude tools در Phase 1):
+#    claude_workspace/commit_msg_{stage}.txt
+
+# 2. user execute (after Phase 1 complete):
+git add <staged-files>
+git commit -F claude_workspace/commit_msg_{stage}.txt
+git push origin <branch-name>
+```
+
+#### Requirements فایل commit message
+
+🔒 **ASCII-only:** هیچ non-ASCII char (em-dash، Persian text، special quotes). M95+M97 enforced.
+چرا؟ CMD cp1252 + utf-8 mismatch + quote tracking fragility → silent file corruption (M97 evidence).
+
+🔒 **Location:** `claude_workspace/` (T5 workspace، نه T1).
+
+🔒 **Naming:** `commit_msg_{stage_id}.txt`:
+- `commit_msg_s3_1.txt` (sub-stage)
+- `commit_msg_chat_end_part07.txt` (chat-end)
+- `commit_msg_d24_chat_end.txt` (parallel deliverable)
+
+🔒 **Preservation:** پس از commit، فایل **delete نشود** per Z3.18/Z3.23 policy (consumed by -F، نه committed). historical reference برای audit.
+
+#### قالب standard commit message
+
+```
+{type}({scope}): {subject ≤72 chars ASCII}
+
+{paragraph 1: high-level description, ≤80 chars per line ASCII}
+
+Scope ({M98 closure}):
+- {bullet 1}
+- {bullet 2}
+
+Out of scope (defer):
+- {item} ({future stage})
+
+{additional context paragraphs, ASCII only}
+
+Refs: {M-N, Rule #N, HM-N, Decision #N, Z-N}
+```
+
+#### مثال‌های مرجع
+
+- `claude_workspace/commit_msg_s3_1.txt` (S3.1 atomic — اولین نمونه post-D24 standard)
+- `claude_workspace/commit_msg_d24_chat_end.txt` (D24 chat-end)
+- `claude_workspace/commit_msg_s3_0_5.txt` (part05 S3.0.5 cleanup)
+
+#### استثنا (inline -m مجاز)
+
+برای commits کوتاه (≤2 خط، single-purpose mini-commit مثل cosmetic fix):
+
+```cmd
+git commit -m "fix(meta): typo correction"
+```
+
+inline -m flag OK برای این موارد. -F flag برای commits با subject + body + scope/refs.
+
+#### قوانین مرتبط
+
+- **Rule #۴۲:** `--no-verify` با `[skip-hooks: REASON]` (متمم — موارد bypass)
+- **Rule #۴۳:** Hybrid hook mode (critical اجباری، minor warning)
+- **Rule #۶۶:** Push اجباری در پایان هر چت (متمم — هر commit message file که -F شد، push هم هست)
+- **Rule #۷۶:** Pre-Action Checklist Visibility (Template 11) — اعمال قبل از commit
 
 ---
 
@@ -821,15 +944,21 @@ skills/trading-{name}/
 
 ## 🚧 وضعیت این ماژول
 
-✅ **Migration کامل از v2.11** — ۱۲ بخش meta از سند ۱۳، ۱۴، ۱۵، ۱۶، ۱۷، ۱۹، ۲۰، ۲۱، ۲۲، ۲۳، ۲۴، ۲۵ ادغام شد.
+✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.14 (S3.2)** — ۱۲ بخش meta از سند ۱۳-۲۵ + Templates 11+12 جدید.
 
-🔮 **افزوده‌های آینده در commit 8:**
-- اضافه‌کردن قانون #۶۶ Push اجباری به بخش ۶.۶ (در حال حاضر preview)
-- به‌روزرسانی پروتکل شروع چت در بخش ۶.۱ پس از تثبیت ساختار modular در چت‌های آینده
-- اضافه‌کردن M84 (multi-line `-m`), M85 (terminal type awareness), M86 (two-step commit-push) به بخش ۶.۷.troubleshooting
+✅ **افزوده‌های v2.14 اعمال‌شده (S3.2 part07):**
+- Template ۱۱ — Pre-Action Checklist Visibility (پشتیبان Rule #۷۶ + M100)
+- Template ۱۲ — Git Commit -F Flag Standard (پشتیبان M95+M97+M99 + Rule #۴۲/#۴۳/#۶۶/#۷۶ cross-refs)
+- §۶.۳ heading: «۱۰ Template» → «۱۲ Template»
+
+🔮 **افزوده‌های بعدی (S3.3-S3.4):**
+- §۶.۵ Pre-commit hooks: Layer 1 Audit refresh post-S3.3 ACCEPTABLE_VERSIONS update
+- §۶.۷ Filesystem MCP troubleshooting: ادغام M88+M93-M102 lessons (پس از S3.3 در maintenance pass)
+- §۶.۸ Custom Instructions: «نسخه v2.12» → «نسخه v2.14» (S3.3 atomic با module headers)
+- Module header v2.12 → v2.14 (S3.3 atomic با ACCEPTABLE_VERSIONS)
 
 ---
 
-**📌 پایان 06_meta.md (commit 7 — migration completed)**
+**📌 پایان 06_meta.md (S3.2 اتمیک v2.14 applied)**
 
-پس از commit 7، مرحله ۳ Migration کامل می‌شود. commit 8 (آخرین) شامل: archive سند فارسی + Atomic Update v2.12 (اعمال PENDING + قوانین جدید).
+پس از commit 7، مرحله ۳ Migration کامل شد. commit 8 (آخرین) شامل: archive سند فارسی + Atomic Update v2.12 (اعمال PENDING + قوانین جدید). v2.14 S3.1+S3.2 atomic update پس از آن اعمال شد.

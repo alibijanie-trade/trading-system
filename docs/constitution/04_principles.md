@@ -87,7 +87,7 @@
 ### مثال‌های هر سطح
 
 #### 🔒 قفل‌شده (Locked)
-- قوانین #۱-۶۵ (همه در `01_rules.md`)
+- قوانین #۱-۷۷ (همه در `01_rules.md`)
 - مسیرها (`D:\Projects\trading-system\`)
 - ۴-tab Windows Terminal با رنگ‌بندی #۳۱
 
@@ -310,20 +310,71 @@ Claude در هر چت جدید **هیچ خاطره‌ای از چت‌های ق�
 
 5. **Verify-before-act (M61, M82)** — ادعای موفقیت کافی نیست، verify لازم است.
 
-6. **قوانین Locked specific** — همه قوانین #۱-۶۵.
+6. **قوانین Locked specific** — همه قوانین #۱-۷۷.
 
 7. **اصول مشاوره (#۱-۷)** — کاربردی، صادقانه، بدون تعارف.
 
 ---
 
-## 🚧 وضعیت این ماژول
+## ۴.۱۱ Golden Rule — Tier Classification by Role (🆕 v2.14)
 
-✅ **Migration کامل از v2.11** — ۸ اصل + سطح‌بندی + No-Deletion + Atomic Updates + ۷-step process + Metarules preview + ۴ بخش meta.
+> منبع: M88 Hidden Regeneration Hazard + Rule #۶۸ MDRS v2 Source-of-Truth Hierarchy
 
-🔮 **افزوده‌های آینده در commit 8:**
-- بخش ۴.۶ Metarules: ادغام کامل متن M71-M82 (الان فقط preview)
-- بخش ۴.۱۰ سلسله مراتب: اگر تجربه چت‌های ۱۱.۰.ب و ۱۱.۰.ج تعارض جدید کشف کرد، تنظیم شود
+### بیان اصل
+
+🔒 **هر artifact در پروژه باید Tier classification بر اساس role در پروژه داشته باشد — نه git tracking status، نه file extension، نه location alone.**
+
+این اصل، **Golden Rule** نامیده می‌شود چون single point of truth برای Tier-based architecture است.
+
+### Tier hierarchy (per MDRS v2)
+
+| Tier | Role | نمونه (illustration only — authoritative لیست در manifest) |
+|---|---|---|
+| **T1** | Constitution + State-of-record (authoritative governance) | `01_rules.md`, `02_lessons.md`, `SESSION_STATUS.md`, `PENDING_FOR_NEXT_VERSION.md`, `HELPER_PROTOCOL.md` |
+| **T2** | Reference docs (canonical project info) | `TROUBLESHOOTING.md`, `GLOSSARY.md`, `ONBOARDING_GUIDE.md` |
+| **T3** | Code (implementation) | `backend/`, `frontend/`, `scripts/` |
+| **T4.1** | Configuration (runtime tweakable) | `.pre-commit-config.yaml`, `alembic.ini` |
+| **T4.2** | Assets (data files, fixtures) | sample input files, test data |
+| **T5** | Excluded (transient یا generated) | `venv/`, `node_modules/`, بخش عمده `claude_workspace/`, `__pycache__/` |
+
+### چرا Role-Based؟
+
+❌ **anti-pattern (hardcoded list):** "T1 includes: A, B, C, D, ..." → drift در آینده اگر artifact جدید اضافه شود که لیست به‌روز نشود → silent inconsistency.
+
+✅ **principle (role-based):** "T1 = governance artifact که role authoritative source دارد." → extensibility برای artifacts آینده + machine-verifiable.
+
+### Authoritative Source
+
+🔒 `scripts/64_generate_manifest.py` TIER_RULES → `PROJECT_MANIFEST.md` (هیچ hardcoded list در constitution یا governance docs).
+
+illustrations در جدول بالا مجاز هستند با explicit note "illustration only, not authoritative".
+
+### Self-application evidence
+
+- HELPER_PROTOCOL.md (D24 deliverable) همین principle را اعمال کرد: §۲ Layer A با manifest-lookup pattern (نه hardcoded list).
+- Rule #۶۸ این اصل را به‌عنوان قانون Locked codify می‌کند.
+
+### Cross-refs
+
+- **Rule:** #۶۸ MDRS v2 Source-of-Truth Hierarchy
+- **Lesson:** M88 Hidden Regeneration Hazard
+- **Framework:** `docs/PROJECT_MANIFEST.md` + `scripts/64_generate_manifest.py`
+- **سلسله مراتب اولویت (بخش ۴.۱۰):** Golden Rule در سطح اصل طلایی معماری (ردیف ۱) ساکن است — چون "امروز ساده، فردا قابل‌توسعه" را در governance docs اعمال می‌کند.
 
 ---
 
-**📌 پایان 04_principles.md (commit 5 — migration completed)**
+## 🚧 وضعیت این ماژول
+
+✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.14 (S3.2)** — ۸ اصل + سطح‌بندی + No-Deletion + Atomic Updates + ۷-step + Metarules preview + سلسله مراتب + **Golden Rule 🆕**.
+
+✅ **افزوده‌های v2.14 اعمال‌شده (S3.2 part07):**
+- §۴.۱۱ NEW — Golden Rule (Tier classification by role، نه hardcoded list)
+- §۴.۲ + §۴.۱۰ — proactive M-range scan fix: «قوانین #۱-۶۵» → «قوانین #۱-۷۷» (Discovery #1+#3 mitigation)
+
+🔮 **افزوده‌های بعدی (S3.3-S3.4):**
+- §۴.۶ Metarules: integration full M71-M102 (پس از S3.3 در maintenance pass)
+- Module header v2.12 → v2.14 (S3.3 atomic با ACCEPTABLE_VERSIONS)
+
+---
+
+**📌 پایان 04_principles.md (S3.2 اتمیک v2.14 applied)**
