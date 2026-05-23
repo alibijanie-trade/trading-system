@@ -1,0 +1,251 @@
+================================================================
+TRADING-mdrs-v2-D24-helper-infrastructure - HANDOFF FROM part05
+================================================================
+
+Source chat: TRADING-phase1-part05-mdrs-v2-s31-redo
+Source chat-end date: 2026-05-23
+Source chat-end commit: [filled by user post-push; this commit itself]
+Parent commit: 4e851b0 (S3.0.5)
+Grandparent commit: 8a91138 (chat-end part04, M101 backfill point)
+
+Branch: infra/v2.14-source-of-truth (D24 lands here directly)
+Next chat after D24: TRADING-phase1-part06-mdrs-v2-s31-redo-with-helper-infra
+
+================================================================
+CRITICAL CONTEXT AWARENESS
+================================================================
+
+You have NO memory from previous chats. This handoff file is your
+primary context source. Read the entire file before any action.
+
+The user runs an ad-hoc helper bridge with another Claude chat
+(referred to as "helper") for review/consultation. Helper is NOT
+an approval gate; helper is a consultative tool for the user
+(per Rule #51 + Discovery #10 of part05). The user retains sole
+approval authority via explicit chat messages.
+
+================================================================
+WHY D24 EXISTS - THE LATE-CATCH CASCADE PATTERN
+================================================================
+
+Chat part05 evidenced a systemic pattern across 3 iterations on
+S3.1 Chunk 1 (Rules #68 + #69 drafting):
+
+  Round 1: Helper found 6 structural concerns (C1-C6)
+           Including C1 critical: Rule #68 explicit list
+           VIOLATED M88 (Hidden Regeneration Hazard) genus
+           - the very rule we were codifying.
+           This is eat-your-own-dogfood failure.
+
+  Round 2: Helper found 1 sub-issue (T2 example list contained
+           deprecated files - M88 genus second-order)
+
+  Pattern: increasing iteration without convergence on quality;
+  N catches per draft is a signal that PROCESS upstream needs
+  changing, not drafting.
+
+  Decision (user, turn 11): stop S3.1; deliver D24 first;
+  S3.1 redo in part06 with D24 benefit.
+
+This is documented as M-candidate "Late-Catch Cascade Pattern"
+in PENDING strategic section. Number assignment deferred to
+part06 (consistent with Reserved IDs philosophy, avoid collision
+with Discovery #9 helper-side not yet formalized).
+
+================================================================
+WHAT D24 SHOULD DELIVER (5-scope design)
+================================================================
+
+D24 is a parallel MDRS v2 deliverable (alongside D8-D23), not
+serial in stage sequence. It is a STANDALONE chat dedicated to
+helper infrastructure design + implementation.
+
+Scope (high-level, detailed design happens in D24 chat):
+
+1. PERSISTENT CONTEXT LAYER
+   - Project Knowledge + Instructions persistent in helper
+     environment (currently every helper interaction is fresh
+     prompt with copy-pasted state)
+   - Mechanism TBD: Project Knowledge feature? Claude
+     Projects? Custom GPT-style instructions? Out-of-scope
+     decision for D24 chat design.
+
+2. HELPER OPERATING PROTOCOL
+   - File: docs/HELPER_PROTOCOL.md (Tier 1 governance doc)
+   - Defines: when helper consultation triggers, how it integrates
+     with main chat workflow, what helper sees vs doesn't see,
+     iteration limits before escalating to user, etc.
+   - Becomes a T1 document subject to Review Trigger Enforcement
+     (Rule #69 candidate, post-S3.1).
+
+3. COMPREHENSIVE 7-LAYER REVIEW FRAMEWORK
+   - Currently helper review is ad-hoc (user pastes chunk, helper
+     gives feedback). 7-layer formalization:
+     L1: Anti-pattern self-violation check (M88 genus etc)
+     L2: Cross-reference validity
+     L3: Tier classification accuracy
+     L4: Scope closure (M98) verification
+     L5: Audit-readiness (counts, version sync)
+     L6: Drift-detection coverage
+     L7: M75 within-file consistency
+   - Specific criteria per layer documented in D24 chat.
+
+4. CROSS-CHAT LEARNING CONTINUITY
+   - Helper Lessons sub-section in docs/constitution/02_lessons.md
+     (created in S3.1 part06, but designed in D24 chat)
+   - Captures helper-discovered lessons that aren't Claude-side
+     M-lessons (e.g., Discovery #9 helper-side patterns)
+   - Establishes naming + numbering convention
+
+5. TRIGGERS AND OPERATING MODES
+   - When is helper consultation REQUIRED, OPTIONAL, or SKIPPED?
+   - Severity-based (per Rule #77 candidate Hybrid C):
+     critical/high -> required
+     medium -> optional
+     low/cosmetic -> skipped
+   - Mode definitions: "deep review", "targeted check",
+     "fast pass", etc.
+
+================================================================
+STATE AT THIS HANDOFF
+================================================================
+
+Project: D:\Projects\trading-system
+
+Constitution version: v2.13 (Modular) - unchanged in part05
+                      (v2.14 target deferred to S3.3 in part06)
+
+Branch HEAD (infra/v2.14-source-of-truth):
+  Pre-chat-end: 4e851b0 (S3.0.5 - Z3.21-Z3.24 PENDING)
+  Post-chat-end (this commit): see git log
+
+Key M-lessons applied in part05 (in chat reasoning, not yet
+in constitution):
+  M86 (commit/push separate EXECUTE blocks)
+  M88 (Hidden Regeneration Hazard - violated then caught)
+  M93 (Triple-Rule atomic boundary)
+  M95+M97 (ASCII-only commit messages)
+  M98 (Review Scope Closure - applied to S3.0.5 isolation)
+  M99 (-F flag for long commits)
+  M100 (Pre-Add Checklist visibility)
+  M101 candidate (Post-Handoff State Drift - self-applied here)
+  M102 candidate (Rule-Implementation Decoupling)
+
+Discoveries logged in part05 (13 total in PENDING strategic
+section, key ones):
+  #11 high: M88 self-violation in active drafting
+  #12 medium: M88 genus second-order (deprecated examples)
+  #13 critical: Late-Catch Cascade Pattern recognized
+                (D24 strategic decision trigger)
+
+================================================================
+BOOT PROTOCOL FOR D24 CHAT
+================================================================
+
+Step 1 - Filesystem MCP:
+  tool_search "filesystem" + verify list_allowed_directories
+
+Step 2 - Read this handoff file FIRST (you are reading it now
+in pre-chat-prompt; in fresh D24 chat, read again).
+
+Step 3 - Mandatory boot files (in order):
+  1. docs/SESSION_STATUS.md           (current state, D24 next pointer)
+  2. docs/CHAT_LOG.md                 (tail 200 - part05 narrative)
+  3. docs/PENDING_FOR_NEXT_VERSION.md (D24 + Late-Catch Cascade
+                                       + 13 Discoveries strategic
+                                       section at end)
+  4. docs/HANDOFF_TEMPLATE.md         (standard chat-end format)
+  5. docs/PROJECT_MANIFEST.md         (note: pre-S2.5 drift,
+                                       Review #002 + handoffs
+                                       not reflected - expected)
+  6. docs/REVIEW_PROTOCOL.md          (governance procedure)
+  7. docs/REVIEW_LOG.md               (Row #002 status: Approved,
+                                       Implementation in progress
+                                       on infra/v2.14)
+  8. docs/PRE_ADD_CHECKLIST.md        (10-check gate)
+  9. docs/constitution/main.md        (v2.13 heading)
+ 10. docs/constitution/01_rules.md +
+     docs/constitution/02_lessons.md  (existing #1-#67 + M1-M87)
+
+Step 4 - git verify:
+  cd /d D:\Projects\trading-system
+  git status                   (clean expected)
+  git log --oneline -3         (chat-end-part05, 4e851b0, 15e8e37)
+  git rev-parse HEAD
+  git rev-parse origin/infra/v2.14-source-of-truth
+
+Step 5 - sign-off questions (5):
+  Q1: Branch infra/v2.14-source-of-truth HEAD = chat-end commit
+      of part05 (paste hash)?
+  Q2: Constitution v2.13 unchanged between part05 chat-end and
+      D24 boot?
+  Q3: D24 detailed design plan approved (5-scope items above)?
+  Q4: Any context/constraint changed between chats?
+  Q5: Helper consultation strategy for D24 chat itself?
+      (recursive: helper inputs into helper infrastructure
+      design - meta level)
+
+================================================================
+WHAT NOT TO DO IN D24 CHAT
+================================================================
+
+DO NOT:
+- Resume S3.1 Rules drafting (deferred to part06 explicitly)
+- Apply Late-Catch Cascade M-lesson number (deferred to part06)
+- Cleanup stale handoff files (deferred to S8)
+- Modify constitution v2.13 (locked until v2.14 atomic in S3.3)
+- Re-run PROJECT_MANIFEST.md (deferred to S3.4)
+- Touch SESSION_STATUS.md body sections that say "post-part05"
+  unless D24 changes warrant (top + chat-end markers OK to update)
+
+DO:
+- Design D24 deliverables (5 scope items)
+- Create docs/HELPER_PROTOCOL.md (T1, atomic with Review Report
+  per Rule #69 candidate)
+- Possibly create T1 governance doc(s) for helper integration
+- Establish Helper Lessons section design (for S3.1 part06
+  to implement in 02_lessons.md)
+- Use Triple-Rule (M93) at chat-end
+- Use -F flag (M99) for commits
+- Apply Pre-Add Checklist (M100) for new T1 docs
+
+================================================================
+KEY GOTCHAS FROM part05
+================================================================
+
+GOTCHA 1: MCP timeouts transient
+  PENDING (40KB+) read may timeout. Retry usually works.
+  Discovery #1 of part05 documented.
+
+GOTCHA 2: edit_file with empty edits array returned content
+  diff anyway (Discovery #14 of part05). Tool behavior
+  anomaly - read-back via M82 always verify.
+
+GOTCHA 3: Persian content + chunked reads (head/tail) may
+  show U+FFFD replacement char in DISPLAY. File state usually
+  correct - verify via fresh read of distinct range.
+  Discovery #20 of part04 documented.
+
+GOTCHA 4: User runs CMD multi-step EXECUTE blocks sequentially
+  without pausing. Phase 1 (Claude MCP) / Phase 2 (User CMD)
+  pattern strict separation needed. Discovery #9 of part05.
+
+GOTCHA 5: Helper consultation diminishing returns after ~3-4
+  rounds. Set explicit limit; if not converging, signal is
+  process change needed (Late-Catch Cascade Pattern, Discovery
+  #13 of part05).
+
+GOTCHA 6: Self-violation risk during rule drafting. Always
+  cross-check new rule against existing M-lessons FOR
+  COMPLIANCE. M88 (Hidden Regeneration Hazard) and M77
+  (HEAD Self-Reference) most common triggers in T1 doc
+  drafting. Discovery #11 of part05.
+
+================================================================
+END OF HANDOFF FILE
+================================================================
+
+Generated: 2026-05-23
+By: Claude in chat TRADING-phase1-part05-mdrs-v2-s31-redo
+For: chat TRADING-mdrs-v2-D24-helper-infrastructure
+Constitution version at generation: v2.13 (Modular)

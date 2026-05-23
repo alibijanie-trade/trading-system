@@ -785,3 +785,93 @@ Stage S4-S8 طبق plan اصلی MDRS v2 (handoff file جزئیات را دار�
 ⚠️ **Note on aggregate count:** خط count موجود ("30 آیتم باز برای v2.14") arithmetic discrepancy دارد (17+3+9+2+1+1=33، نه 30) + Rule candidates list (#68-#77 = 10) شمارش نشده. این Discovery #8 از boot چت part05 است. کل count بازنویسی + reconciliation در S3.4 PENDING cleanup انجام می‌شود، نه اینجا (S3.0.5 scope closure M98).
 
 **آخرین به‌روزرسانی sub-section:** 2026-05-23 (boot چت `TRADING-phase1-part05-mdrs-v2-s31-redo` در S3.0.5)
+
+---
+
+## 🔴🔴🔴 آیتم‌های استراتژیک — کشف‌شده در چت `TRADING-phase1-part05-mdrs-v2-s31-redo` در پایان (chat-end)
+
+**منبع:** در تلاش S3.1 (Rules + Lessons drafting)، pattern "Late-Catch Cascade" شناسایی شد — ۳ iteration روی Chunk 1 با ۱۰ helper catches (Concerns C1-C6 + Sub-issue + sub-cascade). تصمیم strategic: defer S3.1 تا D24 (Helper Infrastructure) پایه‌ریزی شود.
+
+---
+
+### D24: Helper Infrastructure (MDRS v2 دلیورابل جدید)
+
+**Category:** MDRS v2 deliverable (parallel به D8-D23)
+**Severity:** 🔴 critical (blocker برای S3.1+ efficient execution)
+**Discovered by:** Claude + user post-Chunk 1 چت part05
+**Status:** Designed in helper sandbox post-S3.0.5، implementation در چت جدید `TRADING-mdrs-v2-D24-helper-infrastructure`
+**Position:** parallel deliverable به D8-D23 (نه سریال در stages)
+
+**Scope (high-level):**
+
+1. **Persistent Context Layer** — Project Knowledge + Instructions در helper environment
+2. **Helper Operating Protocol** — `docs/HELPER_PROTOCOL.md` (T1 governance doc)
+3. **Comprehensive Review Framework** — 7-layer review (currently ad-hoc bridge)
+4. **Cross-Chat Learning Continuity** — Helper Lessons sub-section در `02_lessons.md`
+5. **Triggers و Operating Modes صریح** — کی helper نیاز است، کی نه؛ severity-based (per Rule #77 candidate Hybrid C)
+
+**Implementation chat:** `TRADING-mdrs-v2-D24-helper-infrastructure`
+**After D24:** چت `TRADING-phase1-part06-mdrs-v2-s31-redo-with-helper-infra` برای S3.1 redo با benefit از D24 infrastructure
+
+**Evidence base برای D24 necessity:**
+- چت part05 turn 1-2: ۳-۴ helper-round (review % افزایش ۸۵→۹۲→۹۵→۹۷→۹۸٪) با diminishing returns observed
+- چت part05 turn 8-10: Chunk 1 helper review، C1 (M88 self-violation) caught — این pattern سیستمی است، نه isolated catch
+- pattern: substantive content drafting بدون proper helper integration = late-catch cascade
+
+---
+
+### M-candidate: Late-Catch Cascade Pattern
+
+**Category:** M-lesson candidate
+**Severity:** 🔴 critical (process anti-pattern)
+**Number assignment:** در S3.1 redo (part06) decide شود (consistent با Reserved IDs philosophy، avoid collision با Discovery #9 helper-side که هنوز formalize نشده)
+**Discovered by:** Claude + user post-Chunk 1 چت part05 turn 10
+
+**Description:** وقتی draft در چند iteration helper review می‌شود و در هر iteration N catches ظاهر می‌شوند (pattern: 6 catches turn N → 1-3 catches turn N+1 → 1 catch turn N+2)، این signal است که process upstream نیاز به تغییر دارد، نه drafting. ادامه iteration در همان mode = quadratic cost increase بدون fundamental improvement.
+
+**Symptoms:**
+- ۳+ iteration روی یک chunk
+- ۲+ structural concerns (نه precision)
+- self-violation از rules ای که خود نوشتیم (e.g. M88 genus در Rule #68 turn 10 — eat-your-own-dogfood failure)
+- Helper reviews می‌گویند "X% ready" که در هر round افزایش می‌یابد ولی fundamental concerns همچنان appear می‌کنند
+
+**Trigger برای action:** ۳ iteration روی یک substantive chunk با ۱۰+ total catches → stop، evaluate process، not draft
+
+**Action proposed:** D24 (Helper Infrastructure) addresses root cause:
+- Persistent context = helper sees full pattern history، نه fragmented prompts
+- Operating protocol explicit = mode-switching deterministic
+- 7-layer review = systematic، نه ad-hoc
+
+**Evidence:** چت part05 خود (turn 1-10) = full evidence trace
+
+---
+
+### Discoveries Log چت part05 (per Rule #77 candidate continuous logging — final consolidation در chat-end)
+
+| # | Type | Severity | Description | Surfacing |
+|---|---|---|---|---|
+| #1 | tool | 💡 cosmetic | MCP transient timeout × 2 (PENDING read + read_multiple_files batch) — resolved by retry | handoff (logged here) |
+| #2 | discovery | 🟡 medium | helper findings × 3 (manifest drift، SESSION_STATUS inconsistency، CHAT_LOG revert clarity) — accepted، plan S3.4 (deferred to part06) | turn 2 |
+| #3 | process | 🟠 high | M98 self-correction → S3.0.5 sub-commit جدا (نه carry-in-S3.1) | turn 3 |
+| #4 | meta | 🟠 high (escalated) | Namespace gap → Z3.24 added (broader Z+M+Rule+policy+work mix) | turn 4 |
+| #5 | design | 🟠 high | Rule #77 ۶-aspect explicit (trigger + format + numbering=per-chat-reset + surfacing=Hybrid-C + escalation + relationships) | turn 4 |
+| #6 | tradeoff | 🟡 medium | Concern 1+2 judgment decisions (Z3.24-now + combined Rule #77) | turn 5 |
+| #7 | meta | 🟡 medium | Dependency-direction field broader gap (Z-items "Related:" undefined) — partial Z3.24 coverage | turn 6 (handoff) |
+| #8 | drift | 🟡 medium | PENDING aggregate count arithmetic discrepancy (17+3+9+2+1+1=33، listed 30) + Rule candidates list (#68-#77 = 10) un-counted | turn 7 |
+| #9 | process | 🟠 high | EXECUTE-block separation between user-actions and Claude-actions ambiguous (Phase 1 vs Phase 2 mix) — corrected | turn 8 |
+| #10 | process | 🟡 medium | Helper-gate misinterpretation — helper consultative، نه approval gate per Rule #51 | turn 8 |
+| #11 | process | 🟠 high | Anti-pattern self-violation in active drafting (Rule #68 explicit list نقض M88 genus) — caught by helper Concern C1 | turn 9 |
+| #12 | process | 🟡 medium | M88 genus second-order anti-pattern (endorsing deprecated files as positive examples) — caught by helper Sub-issue | turn 9 |
+| #13 | process | 🔴 critical | **Late-Catch Cascade Pattern recognized** — strategic decision: defer S3.1، deliver D24 first | turn 10 (this chat-end) |
+
+---
+
+### Stale handoff file note
+
+`claude_workspace/incoming_permanent/PHASE1_PART05_MDRS_V2_S31_REDO_HANDOFF.txt` becomes stale due to S3.1 deferral. Cleanup deferred to S8 per Z3.18/Z3.23 policy (existing). NOT removed in این chat-end commit.
+
+---
+
+**تعداد سطح-strategic items اضافه شده در این chat-end:** D24 (deliverable) + M-candidate (Late-Catch Cascade) + 13 Discoveries (#1-#13 consolidated).
+
+**آخرین به‌روزرسانی strategic section:** 2026-05-23 (chat-end چت `TRADING-phase1-part05-mdrs-v2-s31-redo`)

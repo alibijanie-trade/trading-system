@@ -2018,8 +2018,99 @@ Discoveries Log consolidated (27 entries) در handoff file `claude_workspace/in
 
 ---
 
+## چت `TRADING-phase1-part05-mdrs-v2-s31-redo` — S3.0.5 + Strategic Deferral
+
+**تاریخ:** 2026-05-23
+**Branch:** `infra/v2.14-source-of-truth`
+**Parent commit:** `8a91138bc9a47a1a0b37a4bcf7ba7a23c74861e2` (chat-end part04 — M101 backfill applied)
+**خلاصه:** Boot موفق، S3.0.5 atomic sub-commit موفق (Z3.21-Z3.24)، سپس در تلاش S3.1 (Rules + Lessons) **Late-Catch Cascade Pattern شناسایی شد**. تصمیم strategic: defer S3.1 تا D24 (Helper Infrastructure) پایه‌ریزی شود.
+
+### M101 Backfill (Post-Handoff State Drift mechanism — self-application)
+
+chat-end commit چت part04 (چالش chicken-and-egg در خود آن commit) = **`8a91138bc9a47a1a0b37a4bcf7ba7a23c74861e2`**. این در جریان boot part05 از `git rev-parse HEAD` discovered شد و اینجا به عنوان بخشی از chat-end commit جاری backfill شد. این self-application اولین از M101 candidate (designed در part04، implementation اینجا) است.
+
+### دستاوردها
+
+**۱. Boot موفق (turn 1-7):**
+- 10 mandatory files خوانده شدند (PHASE1_PART05_..._HANDOFF.txt + 9 فایل boot)
+- MCP transient timeouts × 2 بر PENDING (40KB) + batch read — با retry resolved (Discovery #1)
+- 5 sign-off Qs با explanation کامل پاسخ داده شدند
+- git verify: HEAD = `8a91138` ✅، sync ✅، clean ✅
+
+**۲. Helper consultation iterations (turn 2-7):**
+- 4 review rounds: 85% → 92% → 95% → 97% → 98% (diminishing returns observed)
+- Concerns 1-2 helper findings، 3 precision suggestions هر round
+- **Discovery #2-7:** structural بهبودهای plan (M98 self-correction، Z3.24 escalation، Rule #77 6-aspect، غیره)
+- Outcome: revised plan با S3.0.5 sub-commit جدا (M98 honored)، Z3.21-Z3.24 split (M75 reasoning)، per-chat reset شماره‌گذاری Discovery، combined Rule #77 (precedent #66/#25/#48)
+
+**۳. S3.0.5 sub-commit موفق (turn 8-9):**
+- Hash: **`4e851b0`**
+- Subject: `chore(pending): record Z3.21-Z3.24 from part05 boot for v2.14 (S3.0.5)`
+- Scope: فقط `docs/PENDING_FOR_NEXT_VERSION.md` (Triple-Rule sub-commit isolation — M98 honored)
+- Lines: 1 file changed, 95 insertions(+)
+- Pre-commit: Layer 1 Audit Passed (counts unchanged)، fix-end-of-files Passed
+- Push: `8a91138..4e851b0` — sync confirmed
+- M86 (commit/push separate)، M99 (-F flag)، M95+M97 (ASCII-only) همه honored
+- **واقعه متوسط:** Turn 8 EXECUTE block (Steps 1-6) mixed user-CMD + Claude-MCP actions بود. کاربر متوالی اجرا کرد — commit failed (file not found) — هیچ damage. **Discovery #9 (EXECUTE-block separation)** ثبت شد. Phase 1 / Phase 2 pattern اعمال شد.
+
+**۴. S3.1 attempt و Late-Catch Cascade recognition (turn 9-10):**
+- Chunk 1a preview (Rules #68 + #69) ارائه شد
+- Helper Round 1: 6 concerns (C1-C6) caught — شامل **C1 critical M88 self-violation** (Rule #68 explicit list نقض M88 genus) — eat-your-own-dogfood failure
+- Revised Chunk 1a (turn 10): 1 sub-issue caught (T2 example deprecated files — M88 genus second-order)
+- Pattern observed: ۳ iteration، ۷+ catches در یک chunk، structural concerns ادامه دارند
+- **تصمیم کاربر (turn 11):** stop S3.1، deliver D24 (Helper Infrastructure) first
+- Chunk 1a working tree edit اعمال شد ولی در پیام بعد revert می‌شود در chat-end commit
+
+**۵. Chat-end (turn 12-13):**
+- Strategic deferral decision formalized
+- D24 (Helper Infrastructure) افزوده شد به MDRS v2 deliverables (پارالل با D8-D23)
+- M-candidate **Late-Catch Cascade Pattern** به PENDING (شماره M-ID در part06 decided)
+- 13 Discoveries consolidated در PENDING strategic section
+- 4 فایل updated/created به صورت atomic
+
+### Revert Chunk 1a — mechanic + reasoning
+
+**Mechanic:**
+```cmd
+git checkout docs/constitution/01_rules.md
+```
+این فایل را به HEAD state (`4e851b0`) برمی‌گرداند. Rules #68+#69 designs در chat turn 9-10 history حفظ می‌شوند.
+
+**Atomic preservation reasoning (الگوی M93 + M98):**
+- Chunk 1a Rules #68+#69 بخشی از S3.1 multi-chunk atomic boundary بود (۸ chunk planned). جدا commit کردن = scope violation atomic.
+- Helper Infrastructure (D24) چون prerequisite برای S3.1 redo است، باید Rules drafts در D24 environment بهبود بیابند.
+- chat history (Rules #68+#69 turn 9-10 + revised turn 10) preserved — part06 می‌تواند re-apply کند.
+
+### Stale handoff file note (Z3.18/Z3.23 broader policy)
+
+`claude_workspace/incoming_permanent/PHASE1_PART05_MDRS_V2_S31_REDO_HANDOFF.txt` به دلیل S3.1 deferral stale می‌شود. Cleanup deferred به S8 per Z3.18/Z3.23 policy (existing). **در این chat-end commit removed نمی‌شود** (Rule #24 honored).
+
+### Commits در این چت (part05)
+
+| # | Commit | Branch | Subject |
+|---|---|---|---|
+| 1 | `4e851b0` | infra/v2.14-source-of-truth | chore(pending): record Z3.21-Z3.24 from part05 boot for v2.14 (S3.0.5) |
+| 2 | [this commit] | infra/v2.14-source-of-truth | docs(chat-end): revert S3.1 Chunk 1a + state updates + D24 PENDING + handoff (part05) |
+
+### Plan چت D24
+
+- Boot protocol استاندارد (handoff file `PHASE1_D24_HELPER_INFRA_HANDOFF.txt`)
+- D24 detailed design (۵ scope items: persistent context، HELPER_PROTOCOL.md، 7-layer review، learning continuity، triggers/modes)
+- `docs/HELPER_PROTOCOL.md` ساخت (T1 governance doc)
+- 7-layer Review Framework specified
+- پس از D24 → چت part06 برای S3.1 redo
+
+### Discoveries Log (13 total، consolidated in PENDING strategic section)
+
+**Most critical:** **Discovery #13 — Late-Catch Cascade Pattern** (🔴 critical) — strategic decision trigger.
+**Most insightful:** **Discovery #11 + #12** (🟠 high) — M88 genus self-violation + second-order pattern.
+
+جدول کامل در `docs/PENDING_FOR_NEXT_VERSION.md` Strategic section.
+
+---
+
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v2.1 (2026-05-22 — چت part04 chat-end hand-off: S3.0 done + S3.1+ deferred به part05 به‌خاطر Z3.20)
-**به‌روز شده در:** چت `TRADING-phase1-part04-mdrs-v2-completion` (chat-end)
+**نسخه:** v2.2 (2026-05-23 — چت part05 chat-end: S3.0.5 done + S3.1+ deferred to part06 به‌خاطر Late-Catch Cascade → D24 prerequisite)
+**به‌روز شده در:** چت `TRADING-phase1-part05-mdrs-v2-s31-redo` (chat-end)
 **به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ (Triple-Rule honored)
