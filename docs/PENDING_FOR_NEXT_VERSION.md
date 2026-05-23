@@ -690,3 +690,98 @@ Stage S4-S8 طبق plan اصلی MDRS v2 (handoff file جزئیات را دار�
 
 **تعداد:** 30 آیتم باز برای v2.14 (17 Z3.x + 3 Z3.x جدید Z3.18-Z3.20 + 9 M-lessons existing + 2 M-lessons جدید M101-M102 + 1 Principle + 1 R-NEW Rule #۷۷)
 **آخرین به‌روزرسانی:** 2026-05-22 (پایان چت `TRADING-phase1-part04-mdrs-v2-completion` در پایان S3.0)
+
+---
+
+## 🔴 آیتم‌های جدید — کشف‌شده در چت `TRADING-phase1-part05-mdrs-v2-s31-redo` boot (post-part04 audit)
+
+**منبع:** Helper chat post-part04 audit (Z3.21, Z3.22, Z3.23) + Claude part05 boot reasoning (Z3.24 — Discovery #4 escalated to high در turn 4).
+
+**ثبت در S3.0.5 (atomic sub-commit جدا، نه carry-in-S3.1)** — per Rule #60 spirit (PENDING-EOC in-the-moment extended to Z-drift) + M98 (Review Scope Closure: prevent S3.1 constitution-content scope contamination).
+
+### Z3.21: Manifest re-run policy at chat-end mid-stage
+
+**Category:** open policy question (not state drift). Decision-pending در S3.4 یا v2.14 design.
+**Severity:** 🟡 medium
+**Discovered by:** helper chat post-part04 audit
+
+**Description:** HANDOFF_TEMPLATE explicit state-of-record list (SESSION_STATUS + CHAT_LOG + PENDING) شامل PROJECT_MANIFEST نیست. این conscious architectural decision است (manifest re-run فقط در stage-end per Triple-Rule M93). ولی chat-end mid-stage manifest drift از Review #002 file revealed: S2.5 manifest timestamp `2026-05-22T09:37:59Z` قبل از S3.0 commit `15e8e37` بود، Review #002 file ساخته شده در S3.0 در manifest نیست.
+
+**Options:**
+- A. Keep current (manifest only at stage-end) — accept mid-stage drift as expected
+- B. Extend Triple-Rule (manifest re-run also در chat-end mid-stage)
+- C. New 4th doc category (state-of-record-at-boundary vs at-stage-end)
+
+**Action:** در S3.4 یا v2.14 design decided شود.
+
+---
+
+### Z3.22: Rule #60 text expansion — scope clarification
+
+**Category:** rule text refinement
+**Direction:** Z3.22 -> Rule #60 text update در v2.14 (Z-to-Rule allowed). NOT reverse.
+**Severity:** 🟢 low
+**Discovered by:** helper chat + Claude part05 reasoning
+
+**Description:** Rule #60 text صریح "[PENDING-EOC]" می‌گوید (work items only). ولی فایل `PENDING_FOR_NEXT_VERSION.md` در عمل ۵ نوع item را hold می‌کند: Z-drift در state، M-candidate lessons، Rule candidates، policy questions، work-EOC items. Rule text vs file usage drift دارد.
+
+**Action:** در v2.14، Rule #60 text expand شود تا scope file را accurately reflect کند، یا namespace split implement شود (هماهنگ با Z3.24 broader meta-design).
+
+---
+
+### Z3.23: Workspace handoff files lifecycle policy
+
+**Category:** open policy question
+**Severity:** 🟢 low
+**Discovered by:** helper chat post-part04 audit (broader pattern from Z3.18)
+
+**Description:** `claude_workspace/incoming_permanent/` در طول زمان accumulate می‌کند. در حال حاضر: part02 (stale, Z3.18)، part04 (consumed by part05 boot)، part05 (will be consumed by part06). part06+ خواهند آمد. Z3.18 فقط یک stale file را cover می‌کند، broader lifecycle policy غایب: کدام archive، کدام delete، چه زمان، چه retention?
+
+**Options:**
+- A. Keep-all (no deletion، honors Rule #24 strictly)
+- B. Archive after N chats (نقل مکان به `archive/` subfolder)
+- C. Delete after explicit "no longer needed" approval per file
+- D. Hybrid (consumed handoffs archived، stale ones deleted post-decision)
+
+**Action:** policy design در S8 cleanup یا v2.14.
+
+---
+
+### Z3.24: Namespace categorization gap in PENDING_FOR_NEXT_VERSION.md
+
+**Category:** meta-design / broader namespace issue
+**Severity:** 🟠 high (escalated from medium per M75 within-file consistency reasoning)
+**Discovered by:** Claude part05 turn 3 (Discovery #4، escalated turn 4)
+
+**Note (self-reference):** این Z-item خود نمونه‌ای از mixed namespace است که توصیف می‌کند — یک meta-observation/policy-question که در Z-namespace ثبت شده. این self-reference explicit است (M77 spirit honored).
+
+**Description:** `docs/PENDING_FOR_NEXT_VERSION.md` در حال حاضر ۵ نوع item را mixed hold می‌کند: Z-drift در state، M-candidate lessons، Rule candidates، policy questions، work-EOC items. هیچ namespace separation وجود ندارد.
+
+**Related:** Z3.22 (narrow Rule #60 text expand)، Rule #60 (PENDING-EOC concept)
+
+**Resolution dependency direction:** Z3.24 broader than Z3.22.
+- Z3.22 alone insufficient — حتی اگر Rule #60 text expanded to cover current usage، namespace mixed باقی می‌ماند.
+- Z3.24 needs explicit decision (Option A/B/C below) independent of Z3.22 text scope.
+- Misread risk: "Z3.22 resolved -> Z3.24 auto-resolved" — FALSE.
+
+**Options for v2.14 (or later):**
+- A. Keep mixed (current) — accept categorization ambiguity. Z3.22 resolution expands Rule #60 text to acknowledge mixed scope.
+- B. Add category markers in headers — formalize as required field. Current entry texts (Z3.21-Z3.24) already use "Category:" line. Make mandatory for all future entries.
+- C. Split namespaces — `Z3.x` state drift، `P3.x` policy questions، `W3.x` work-EOC، M-candidate (existing), Rule-candidate (existing). Most invasive but cleanest.
+
+**Action:** decision deferred به v2.14 design phase or later.
+
+**Migration note (if Option C selected):**
+- Z3.21 -> P3.1 (policy question)
+- Z3.23 -> P3.2 (policy question)
+- Z3.24 -> meta (or P3.3)
+- Z3.22 stays as Z (rule text refinement)
+- M-candidates and Rule-candidates already separate namespaces
+
+---
+
+**این sub-section 4 آیتم اضافه می‌کند: Z3.21-Z3.24.**
+
+⚠️ **Note on aggregate count:** خط count موجود ("30 آیتم باز برای v2.14") arithmetic discrepancy دارد (17+3+9+2+1+1=33، نه 30) + Rule candidates list (#68-#77 = 10) شمارش نشده. این Discovery #8 از boot چت part05 است. کل count بازنویسی + reconciliation در S3.4 PENDING cleanup انجام می‌شود، نه اینجا (S3.0.5 scope closure M98).
+
+**آخرین به‌روزرسانی sub-section:** 2026-05-23 (boot چت `TRADING-phase1-part05-mdrs-v2-s31-redo` در S3.0.5)
