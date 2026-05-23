@@ -1009,3 +1009,85 @@ Discovery #6 (naming correction lag) sub-discovery: post-correction propagation 
 **تعداد items اضافه شده در D24 chat-end:** K1-K7 (7 deferred items) + 7 Discoveries (#1-#7 consolidated).
 
 **آخرین به‌روزرسانی D24 section:** 2026-05-23 (chat-end چت `TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure`)
+
+---
+
+## 🔴🔴🔴 آیتم‌های part07 chat-end (چت `TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra`)
+
+**منبع:** S3.1 + S3.2 implementation chat. در part07، S3.1 (Constitution v2.14 atomic update) و S3.2 (Principles Golden Rule + Templates 11-12) تکمیل شدند. S3.3 + S3.4 به part08 deferred (Option B wrap-up per HM-2 prevention).
+
+**Status K1-K7 update (پس از part07):**
+- **K1** (HM-namespace target sub-section): ✅ **Implemented** در S3.1 — §۲.۹ NEW با HM-1 to HM-7 (7 entries first corpus)
+- **K2** (main.md cross-ref edit): ✅ **Implemented** در S3.1 — Helper Consultation NEW subsection در «Cross-references اصلی»
+- **K3** (Helper-discovered patterns D24 round 1): 🔴 باقی — فقط reference در HM-series، full integration در future maintenance
+- **K4** (Discoveries Log D24): 🔴 باقی — D24 Discoveries reference در HM-series، ولی full integration پستار D24 Discovery #1 D24-chat-end mutual M101 backfill (`3bf66bf`) ✅ در part07 boot confirmed
+- **K5** (Z3.24 Option B interim caveat): 🔴 باقی — decision deferred به v2.14 design phase یا later
+- **K6** (Project K refresh enforcement integration): 🔴 باقی — candidates A/B/C decision deferred
+- **K7** (Chat Naming Convention HM-candidate): ✅ **Partially Implemented** در S3.1 — HM-3 entry در §۲.۹. HANDOFF_TEMPLATE.md "NEXT CHAT NAME" section در D24 (precedent)، part08 boot mandatory check
+
+---
+
+### K8 (جدید part07): HELPER_PROTOCOL §۷ refinement + main.md Quick-start update
+
+**Category:** D24 Design Deferred for S3.2-S3.3 — Expanded با part07 Discoveries learning
+
+**Severity:** 🟡 medium
+
+**Discovered by:** Discovery #1 + #3 part07 (multi-table sync hazard + SESSION_STATUS descriptive M-range drift) — user-predicted در turn S3.1 audit fail evaluation
+
+**Description:** دو تعدیل مرتبط برای HELPER_PROTOCOL / Quick-start مورد نیاز است:
+
+**۱. main.md Quick-start (linked به Rule #۴۸):**
+facenati Quick-start section فعلاً HELPER_PROTOCOL.md را در mandatory reading list ندارد. اگر helper consultation در یک stage انتظار می‌رود، boot procedure آن را skip می‌کند. **Timing:** همراه با Rule #۴۸ refresh در S3.2 یا S3.3.
+
+**۲. HELPER_PROTOCOL §۷ Upfront Constraint Checklist Pattern refinement:**
+constraint checklist باید explicit step **«scan کامل T1 docs برای descriptive references به ID ranges (M-range، Rule-range)»** را include کند — نه فقط counts/headings. این user-predicted improvement در part07 S3.2 empirically validated (۰ audit fail vs ۳ audit fail در S3.1).
+
+**Action proposed:** part08 یا future maintenance pass:
+- Add new sub-step §۷.X (یا §۷.۲ extend) در HELPER_PROTOCOL.md
+- mandatory descriptive scan: M-range ، #-range، Template-count ، version label ، ID enumeration همگی
+- Pattern signature: «هر number-range در prose در T1 doc = potential drift target»
+
+**Source:** Discovery #1 (multi-table sync hazard) + Discovery #3 (SESSION_STATUS descriptive M-range drift) + Discovery #4 (proactive scan applied learning).
+
+**Severity rationale:** medium — boot completeness + constraint checklist completeness. helper usable بدون boot mention، ولی Discovery #1+#3 در audit fail show شدند، نه silent break.
+
+---
+
+### Discoveries Log part07 (4 total, per-chat reset, consolidated)
+
+| # | Type | Severity | Description |
+|---|---|---|---|
+| #1 | process | 🟡 medium | آمار table updated در main.md ولی ساختار ماژول‌ها table missed — multiple-table sync hazard (caught by Layer 1 Audit round 1). resolved by surgical fix «ساختار ماژول‌ها» table M1-M87 → M1-M102. → K8 expansion |
+| #2 | validation | 🟠 high | M101 self-referential paradox — درس M101 می‌گوید «hash hardcode نکن» ولی جزئیات M101 در ۴ جا ۶ hardcoded hash داشت (caught by audit check_5). resolved by abstract placeholder + CHAT_LOG.md authoritative source reference + explanatory note (M101 honored its own lesson). audit working as designed |
+| #3 | validation | 🟡 medium | SESSION_STATUS.md descriptive M-range reference drift (M1-M87) پس از 02_lessons.md update به M102. Same genus as #1، confirmation full T1 scan در constraint checklist لازم (caught by Layer 1 Audit round 2). resolved by surgical fix «درس‌نامه» line M1-M87 → M1-M102 + ۳۲ Reserved + HM-series. → K8 expansion |
+| #4 | process | ✨ positive | Proactive full T1 scan در S3.2 prevented audit fail — Discovery #1+#3 learning applied از helper constraint checklist user-predicted improvement. ۰ audit fail در S3.2 vs ۳ audit fail در S3.1. **HELPER_PROTOCOL infrastructure value empirically demonstrated**. HM-7 metric validation: S3.1=۹ turn (reactive)، S3.2=۲ turn (proactive applied learning). |
+
+**Most critical:** **Discovery #2 — M101 self-referential paradox** — درس خود را نقض کرد، audit آن را caught کرد.
+**Most insightful:** **Discovery #4 — Proactive applied learning** — user-predicted improvement empirically validated.
+
+---
+
+### Stale handoff file note (تصمیم cleanup deferred)
+
+`claude_workspace/incoming_permanent/PHASE1_PART07_HANDOFF.txt` پس از part07 boot stale می‌شود. Cleanup deferred به S8 per Z3.18/Z3.23 policy (existing). NOT removed در این chat-end commit.
+
+### Commit message workspace files (Z3.18/Z3.23 policy)
+
+untracked files در `claude_workspace/`:
+- `commit_msg_chat_end_part05.txt`
+- `commit_msg_d24_0.txt`
+- `commit_msg_d24_1.txt`
+- `commit_msg_d24_chat_end.txt`
+- `commit_msg_s3_0_5.txt`
+- `commit_msg_s3_1.txt` (🆕 part07)
+- `commit_msg_s3_2.txt` (🆕 part07)
+- `commit_msg_part07_chat_end.txt` (🆕 part07)
+
+همه preserved per Z3.18/Z3.23 policy (consumed by -F flag، نه committed در git، ولی historical reference حفظ شود). cleanup decision در S8 hybrid policy.
+
+---
+
+**تعداد items اضافه شده در part07 chat-end:** K8 (new) + K1-K2 implemented + K3-K7 status update + 4 Discoveries (#1-#4 consolidated).
+
+**آخرین به‌روزرسانی part07 section:** 2026-05-23 (chat-end چت `TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra`)

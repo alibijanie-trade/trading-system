@@ -1,50 +1,51 @@
-# Session Status — وضعیت پس از پایان چت TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure
+# Session Status — وضعیت پس از پایان چت TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra
 
-> **آخرین به‌روزرسانی:** 2026-05-23 (پایان چت `TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure` — D24 Helper Infrastructure delivered)
+> **آخرین به‌روزرسانی:** 2026-05-23 (پایان چت `TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra` — S3.1 + S3.2 تکمیل شد، S3.3 + S3.4 deferred به part08)
 > **نسخه پروژه:** v0.6.0 (tag همچنان روی main:5730173، v0.7.0 در پایان MDRS v2)
-> **چت جاری:** `TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure` ✅ **CHAT-END (D24 DONE)**
-> **چت بعدی الزامی:** `TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra` 🔄 آماده شروع — S3.1 redo با HELPER_PROTOCOL در دست
-> ⚠️ **Naming convention (Discovery #5 D24):** نام چت **باید** pattern `TRADING-phase{N}-part{NN}-{topic}` را follow کند. drift از این pattern یک HM-candidate در part07 S3.1 خواهد شد.
+> **چت جاری:** `TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra` ✅ **CHAT-END (mid-S3 stage — S3.1 + S3.2 done، S3.3 + S3.4 پارت08)**
+> **چت بعدی الزامی:** `TRADING-phase1-part08-mdrs-v2-s33-s34-completion` 🔄 آماده شروع — S3.3 (module headers v2.12→v2.14 + ACCEPTABLE_VERSIONS + Z3.19 fix) + S3.4 (Triple-Rule atomic stage-end)
+> ⚠️ **Naming convention (Discovery #5 D24 + HM-3 part07):** نام چت **باید** pattern `TRADING-phase{N}-part{NN}-{topic}` را follow کند.
 
 ---
 
-## 📦 وضعیت Hand-off (پایان چت D24) — Deliverable Complete
+## 📦 وضعیت Hand-off (پایان چت part07) — S3.1 + S3.2 Deliverable Complete
 
-این چت **D24 (Helper Infrastructure)** را به‌طور کامل deliver کرد:
+این چت **S3.1 (Constitution v2.14 atomic update)** و **S3.2 (Principles + Templates)** را به‌طور کامل deliver کرد:
 
-1. **`docs/HELPER_PROTOCOL.md`** (T1 governance doc, ~32KB) — covering 5 scopes:
-   - Persistent Context Layer (Project Knowledge + Custom Instructions)
-   - Operating Protocol (invocation + info bridge + Bounded Bootstrap + escalation)
-   - 8-Layer Review Framework (L1-L8 با Forward-looking risk جدید)
-   - Cross-Chat Learning Continuity (HM-namespace design)
-   - Triggers + Operating Modes (severity-based per Rule #77 candidate)
+**S3.1 (`f0adb63`):** ۴ files، ۸۰۶ insertions، ۳۳ deletions
+1. `docs/constitution/01_rules.md` — Rules #۶۸-۷۷ (۱۰ new Locked Rules + Normative/Implementation Notes per M102)
+2. `docs/constitution/02_lessons.md` — M88 + M93-M102 (۱۱ critical) + M89-M92 Reserved + NEW §۲.۹ HM-1 to HM-7
+3. `docs/constitution/main.md` — Cross-refs Helper Consultation subsection + آمار table + ساختار ماژول‌ها table
+4. `docs/SESSION_STATUS.md` — surgical M-range count fix (Discovery #3 mitigation)
 
-2. **Review #003 Implemented** — `docs/reviews/2026-05-23-helper-infrastructure-d24.md` + LOG row #003 (Status: Approved → Implemented با commit chain)
-
-3. **Bounded Bootstrap self-applied** — اولین demonstration عملی pattern. 9 helper findings caught (شامل L1.1 critical = M88 genus self-violation). Process validated functional.
-
-4. **7 Discoveries logged** — همه HM-candidates برای part07 S3.1.
+**S3.2 (`938cd2d`):** ۲ files، ۱۹۵ insertions، ۱۵ deletions
+1. `docs/constitution/04_principles.md` — NEW §۴.۱۱ Golden Rule (Tier classification by role) + proactive M-range fix (§۴.۲ + §۴.۱۰)
+2. `docs/constitution/06_meta.md` — Template 11 (Pre-Action Checklist) + Template 12 (-F Flag Standard) + §۶.۳ heading update
 
 **Atomic transfer این chat-end commit:**
 
-1. `docs/REVIEW_LOG.md` — row #003 Status: Approved → Implemented + Resolution chain (`daf2020` → `bed06b3` → this commit)
-2. `docs/SESSION_STATUS.md` (همین فایل — full refactor)
-3. `docs/CHAT_LOG.md` — D24 section append
-4. `docs/PENDING_FOR_NEXT_VERSION.md` — D24 section append (K1-K7 + 7 Discoveries)
-5. `claude_workspace/incoming_permanent/PHASE1_PART07_HANDOFF.txt` — handoff for part07
+1. `docs/REVIEW_LOG.md` — Review #۰۰۲ Resolution: افزودن commit chain part07 (`f0adb63` روی S3.1، `938cd2d` روی S3.2). Status همچنان Approved (Implemented در S3.4 part08)
+2. `docs/SESSION_STATUS.md` (همین فایل — partial refresh، نه full refactor)
+3. `docs/CHAT_LOG.md` — part07 section append (boot + S3.1 + S3.2 + Discoveries #1-#4 + M101 backfill)
+4. `docs/PENDING_FOR_NEXT_VERSION.md` — part07 section append (Discoveries log + S3.3+S3.4 explicit defer + K8 expansion)
+5. `claude_workspace/incoming_permanent/PHASE1_PART08_HANDOFF.txt` — handoff for part08
+
+**موارد عدم به‌روزرسانی در این commit (per scope decisions):**
+- `docs/PROJECT_MANIFEST.md` — manifest re-run deferred به S3.4 stage-end per Z3.21 mid-stage policy
+- Module headers ماژول constitution (v2.12 placeholder) — S3.3 territory با ACCEPTABLE_VERSIONS extension
 
 ---
 
 ## 📍 وضعیت کلی
 
 - **فاز جاری:** ۱ — Skeleton آماده ✅ + **MDRS v2 Implementation در حال جریان** 🔄
-- **Tier جاری:** ✅ Infrastructure + ✅ Phase 1-4 audit + ✅ S1 + ✅ S2 + ✅ S3.0 + ✅ S3.0.5 + ✅ **D24 (parallel deliverable)** (S3.1-S8 باقی)
-- **Constitution:** **v2.13 (Modular)** — در حال آماده‌سازی برای **v2.14 (MDRS v2)** atomic update در S3.1-S3.3 (part07)
+- **Tier جاری:** ✅ Infrastructure + ✅ Phase 1-4 audit + ✅ S1 + ✅ S2 + ✅ S3.0 + ✅ S3.0.5 + ✅ D24 + ✅ **S3.1 + S3.2 (part07)** (S3.3-S3.4 + S4-S8 باقی)
+- **Constitution:** **v2.13 frontmatter** (محتوا تجمعی با S3.1 + S3.2 v2.14 applied) — frontmatter bump در S3.3 اتمیک با ACCEPTABLE_VERSIONS extension
 - **Git HEAD `main`:** `5730173` (Z3.11 fix-up، push شده)
-- **Git HEAD `infra/v2.14-source-of-truth`:** پس از این chat-end commit ارتقا (قبل: `bed06b3` = D24.1)
+- **Git HEAD `infra/v2.14-source-of-truth`:** پس از این chat-end commit ارتقا (قبل: `938cd2d` = S3.2)
 - **Tag فعلی:** `v0.6.0` — `v0.7.0` در پایان MDRS v2 (S8)
 - **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH) ✅
-- **Branch جاری:** `infra/v2.14-source-of-truth` 🔄 active development (part07 ادامه می‌دهد)
+- **Branch جاری:** `infra/v2.14-source-of-truth` 🔄 active development (part08 ادامه می‌دهد)
 
 ---
 
@@ -70,11 +71,11 @@
 | (part04 chat-end) | `8a91138` | ✅ done | hand-off to part05 |
 | S3.0.5 | `4e851b0` | ✅ done in part05 | Z3.21-Z3.24 PENDING entries |
 | (part05 chat-end) | `91d20d8` | ✅ done | hand-off to D24 |
-| **D24 (parallel)** | `daf2020` → `bed06b3` → [chat-end] | ✅ **DONE in D24** | Helper Infrastructure (HELPER_PROTOCOL.md + Review #003 + 5-scope design) |
-| S3.1 | — | ⛔ **TODO part07** | Rules #68-#77 + Lessons M88+M93-M102 + HM-series first entries — با HELPER_PROTOCOL benefit |
-| S3.2 | — | ⛔ TODO part07+ | Principle (Golden Rule) + Templates 11-12 |
-| S3.3 | — | ⛔ TODO part07+ | v2.13 → v2.14 + Audit script update + Z3.19 fix |
-| S3.4 | — | ⛔ TODO part07+ | atomic stage-end + Review #002 → Implemented + manifest re-run |
+| **D24 (parallel)** | `daf2020` → `bed06b3` → `3bf66bf` | ✅ **DONE in D24** | Helper Infrastructure (HELPER_PROTOCOL.md + Review #003 + 5-scope design) |
+| **S3.1** | `f0adb63` | ✅ **DONE in part07** | Rules #68-#77 + Lessons M88+M93-M102 + HM-1-HM-7 + main cross-ref |
+| **S3.2** | `938cd2d` | ✅ **DONE in part07** | Golden Rule (§۴.۱۱) + Templates 11-12 + proactive M-range fix |
+| S3.3 | — | ⛔ **TODO part08** | Module headers v2.12 → v2.14 + ACCEPTABLE_VERSIONS extension + Audit script CURRENT_VERSION + Z3.19 fix |
+| S3.4 | — | ⛔ **TODO part08** | Triple-Rule atomic stage-end + Review #002 → Implemented + manifest D2 re-run + part08 chat-end handoff
 
 ### Stage D24 — Helper Infrastructure ✅ COMPLETED
 
@@ -105,17 +106,17 @@
 
 ---
 
-## 📊 آمار پروژه (پس از D24)
+## 📊 آمار پروژه (پس از part07 S3.1 + S3.2)
 
-- **قوانین قفل‌شده:** **۶۷** — در S3.1 (part07) به #۶۸-#۷۷ گسترش (۱۰ قانون جدید)
+- **قوانین قفل‌شده:** **۷۷** (#۱-۷۷، 🆕 ۱۰ قانون جدید S3.1) + ۲ Reserved (#۵۲, #۵۳)
 - **درس‌نامه:** **M1-M102** + ۳۲ Reserved (شامل M89-M92 جدید) + **HM-series** (HM-1 to HM-7) — در S3.1 (part07) ادغام شد
-- **Bug ها / Z3.x Drift Catalog:** **۲۴ آیتم باز برای v2.14** (Z3.1-Z3.24)
+- **Bug ها / Z3.x Drift Catalog:** **۲۴ آیتم باز برای v2.14** (Z3.1-Z3.24) — unchanged
 - **Tests:** 25/25 pytest + 30/30 vitest + ۳۳ script tests = **۸۸ pass** (unchanged)
-- **MDRS v2 Deliverables DONE:** **۸/۲۴** (D1-D7 + D24 parallel) — D8-D23 باقی
-- **T1 governance docs:** **+1** (HELPER_PROTOCOL.md جدید) — total T1 affected by D2 re-run در S3.4
-- **Reviews:** **۳** (Review #001 Implemented, #002 Approved, #003 Implemented)
-- **PROJECT_MANIFEST.md:** **۲۷۴ files** (آخرین D2 re-run در S2.5 — D24 mid-stage drift expected per Z3.21، manifest re-run در S3.4)
-- **Git commits این چت (D24):** **۳** — D24.0 (`daf2020`) + D24.1 (`bed06b3`) + chat-end (پس از این commit)
+- **MDRS v2 Deliverables DONE:** **۸/۲۴** (D1-D7 + D24 parallel) + S3.1 + S3.2 sub-commits — D8-D23 باقی
+- **T1 governance docs:** **+1** (HELPER_PROTOCOL.md از D24) — unchanged
+- **Reviews:** **۳** (Review #001 Implemented, #002 Approved تا S3.4, #003 Implemented)
+- **PROJECT_MANIFEST.md:** ۲۷۴ files (آخرین D2 re-run در S2.5 — mid-stage drift per Z3.21، manifest re-run در S3.4 part08)
+- **Git commits این چت (part07):** **۳** — S3.1 (`f0adb63`) + S3.2 (`938cd2d`) + chat-end (پس از این commit)
 
 ---
 
@@ -133,78 +134,94 @@
 
 ---
 
-## 📁 فایل‌های Touched در چت D24
+## 📁 فایل‌های Touched در چت part07
+
+### Updated (در ۳ commit این چت)
+| فایل | Tier | Commit | شرح |
+|---|---|---|---|
+| `docs/constitution/01_rules.md` | T1 | S3.1 `f0adb63` | Rules #۶۸-۷۷ (۱۰ new Locked) + status section |
+| `docs/constitution/02_lessons.md` | T1 | S3.1 `f0adb63` | M88 + M93-M102 + M89-M92 Reserved + NEW §۲.۹ HM-1 to HM-7 |
+| `docs/constitution/main.md` | T1 | S3.1 `f0adb63` | Cross-refs Helper section + آمار table + ساختار ماژول‌ها |
+| `docs/SESSION_STATUS.md` | T1 | S3.1 `f0adb63` (surgical) + chat-end (refresh) | M-range count fix + chat-end refresh |
+| `docs/constitution/04_principles.md` | T1 | S3.2 `938cd2d` | NEW §۴.۱۱ Golden Rule + proactive M-range fix §۴.۲/§۴.۱۰ |
+| `docs/constitution/06_meta.md` | T1 | S3.2 `938cd2d` | Templates 11+12 + §۶.۳ heading |
+| `docs/REVIEW_LOG.md` | T1 | chat-end | Review #002 Resolution: commit chain part07 |
+| `docs/CHAT_LOG.md` | T1 | chat-end | part07 section append + M101 backfill |
+| `docs/PENDING_FOR_NEXT_VERSION.md` | T1 | chat-end | part07 Discoveries log + S3.3+S3.4 explicit defer + K8 expansion |
 
 ### Created
 | فایل | Tier | Commit | شرح |
 |---|---|---|---|
-| `docs/HELPER_PROTOCOL.md` | T1 | D24.1 `bed06b3` | T1 governance doc (~32KB, 5 scope coverage) |
-| `docs/reviews/2026-05-23-helper-infrastructure-d24.md` | T1-bound | D24.0 `daf2020` | Review #003 file |
-| `claude_workspace/commit_msg_d24_0.txt` | T5 workspace | consumed D24.0 | Commit message file |
-| `claude_workspace/commit_msg_d24_1.txt` | T5 workspace | consumed D24.1 | Commit message file |
-| `claude_workspace/commit_msg_d24_chat_end.txt` | T5 workspace | consumed chat-end | Commit message file |
-| `claude_workspace/incoming_permanent/PHASE1_PART07_HANDOFF.txt` | T1-bound governance | chat-end | Handoff for part07 |
-
-### Updated
-- `docs/REVIEW_LOG.md` — row #003 added (D24.0)، Status transitioned to Implemented (chat-end)
-- `docs/SESSION_STATUS.md` (همین فایل — full refactor، chat-end)
-- `docs/CHAT_LOG.md` — D24 section append (chat-end)
-- `docs/PENDING_FOR_NEXT_VERSION.md` — D24 section append با K1-K7 (chat-end)
+| `claude_workspace/commit_msg_s3_1.txt` | T5 workspace | consumed S3.1 | Commit message file (-F flag M99) |
+| `claude_workspace/commit_msg_s3_2.txt` | T5 workspace | consumed S3.2 | Commit message file |
+| `claude_workspace/commit_msg_part07_chat_end.txt` | T5 workspace | consumed chat-end | Commit message file |
+| `claude_workspace/incoming_permanent/PHASE1_PART08_HANDOFF.txt` | T1-bound governance | chat-end | Handoff for part08 |
 
 ---
 
-## 🚧 PENDING برای v2.14 (پس از D24 chat-end)
+## 🚧 PENDING برای v2.14 (پس از part07 S3.1 + S3.2)
 
 - **۲۴ Z3.x آیتم باز** (Z3.1-Z3.24)
-- **M88, M93-M102** — ۱۱ M-candidate ها برای S3.1 redo (part07)
-- **4 Reserved M89-M92** (CVE-like gap preservation)
-- **M-candidate: Late-Catch Cascade** + 7 HM-candidates (D24 Discoveries)
-- **Golden Rule principle** — `04_principles.md` در S3.2
-- **D8-D23** — ۱۶ deliverable باقی (D24 done!)
-- **K1-K7 D24 deferred items** — implementation در part07
+- **K1-K7 D24 deferred items** — K1 (HM-namespace) ✅ implemented در S3.1، K2 (main.md cross-ref) ✅ implemented در S3.1، K3-K7 باقی برای part08 یا later
+- **K8 (جدید part07):** main.md Quick-start برای HELPER_PROTOCOL.md inclusion + HELPER_PROTOCOL §۷ refinement (full T1 descriptive scan per Discovery #1+#3 mitigation)
+- **Discoveries #1-#4 part07** (per Rule #۷۷ logging) — جزئیات در PENDING part07 section
+- **D8-D23** — ۱۶ deliverable باقی
+- **S3.3 + S3.4** — explicit در part08 (یک چت)
 
 ---
 
-## 🚀 اولین گام‌های ادامه — چت part07
+## 🚀 اولین گام‌های ادامه — چت part08
 
-⚠️ **چت بعدی الزامی:** `TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra`
+⚠️ **چت بعدی الزامی:** `TRADING-phase1-part08-mdrs-v2-s33-s34-completion`
 
 **اولویت‌ها:**
 
-۱. Boot protocol استاندارد (handoff file `PHASE1_PART07_HANDOFF.txt` در `claude_workspace/incoming_permanent/`)
-۲. **Project K setup با HELPER_PROTOCOL §۲.۳** — Project `trading-system` با upload HELPER_PROTOCOL.md به Project Knowledge (واقعی helper readiness)
-۳. M101 backfill: D24 chat-end hash در CHAT_LOG part07 boot section ثبت
-۴. S3.1 redo با HELPER_PROTOCOL در دست:
-   - Rules #68-#77 (10 rules)
-   - Lessons M88 + M93-M102 (11 lessons)
-   - HM-series §۲.۹ first 7 entries (HM-1 to HM-7 از K1)
-۵. main.md cross-ref entry برای HELPER_PROTOCOL.md (K2)
-۶. K6 Project K refresh enforcement integration decision
-۷. S3.2 (Principles + Templates) — اگر context budget اجازه دهد
-۸. S3.3-S3.4 — likely در چت‌های بعد
+۱. Boot protocol استاندارد (handoff `PHASE1_PART08_HANDOFF.txt` در `claude_workspace/incoming_permanent/`)
+۲. **M101 backfill:** part07 chat-end hash در CHAT_LOG part08 boot section ثبت (mirror precedent: part04→`8a91138`, part05→`91d20d8`, D24→`3bf66bf`, part07→`<future>`)
+۳. **S3.3 (atomic update Z3.19 fix):**
+   - `docs/constitution/main.md` frontmatter v2.13 → v2.14
+   - Module headers همه ۶ ماژول (01-06): v2.12 → v2.14
+   - `scripts/63_pre_commit_audit.py`: CURRENT_VERSION جدید + ACCEPTABLE_VERSIONS extend به `["v2.13", "v2.14"]`
+   - اعتبار‌سنجی audit script post-update
+   - سایر v2.12 references (06_meta.md Custom Instructions "نسخه v2.12")
+۴. **S3.4 (Triple-Rule atomic stage-end full):**
+   - state-of-record atomic refresh (SESSION_STATUS + CHAT_LOG + PENDING + REVIEW_LOG)
+   - Review #002 Status: Approved → Implemented + Resolution chain complete
+   - PROJECT_MANIFEST.md D2 re-run (post-stage-end)
+   - K8 ثبت در PENDING + K3-K7 status update
+   - claude_workspace/commit_msg_*.txt cleanup decision per Z3.18/Z3.23
+   - `PHASE1_PART09_HANDOFF.txt` (اگر S4+ به پارت09 deferred)
+۵. **پس از S3.4** — S4 (D12 Audit Checks #8-11) اگر budget باقی
 
-**Performance expectation per Discovery #7 D24:**
-post-D24 deploy، helper consultation efficiency باید measurably بهبود یابد. اگر artifacts part07 با مشابه budget D24 produce شدند، evidence که HELPER_PROTOCOL needs refinement. این یک HM-candidate برای post-part07 evaluation.
+**Estimated:** ~۸-۱۲ user turns برای S3.3 + S3.4 complete (HM-7 metric monitoring).
 
----
+**HM-7 metric در part07 (datapoint):**
+- S3.1: ~۹ user turns (با ۳ audit fail iteration round)
+- S3.2: ~۲ user turns (proactive scan applied learning — ۱ audit pass)
+- part08 target: similar S3.2 baseline (proactive constraint checklist refinement applied)
 
-## 🔑 درس‌های کلیدی این چت (D24)
-
-1. **Boot موفق** — 10 mandatory files خوانده شدند، 5 sign-off Qs + 4 Q-pre پاسخ داده شد
-2. **Bounded Bootstrap self-applied** — 14-section upfront constraint checklist + batch comprehensive draft + 1 helper round + escalation criteria
-3. **Helper Round 1 caught L1.1 critical** — M88 genus self-violation در §۲.۲ Layer A explicit list (همان anti-pattern part05). counter-factual: D24 با self-violation deploy می‌شد
-4. **Discovery #5 chat naming convention drift** — user-caught، 5 Actions applied، K7 added to PENDING
-5. **Discovery #6 naming correction lag** — micro Late-Catch Cascade observed، 6 occurrences cascade-corrected
-6. **8-Layer Framework expanded به 8** با L8 Forward-looking risk (P1 از constraint checklist review)
-7. **Single-Project architecture (L8.T1.1 helper fix)** — main + helper chats در یک Project با naming convention جداگانه
-8. **Refresh enforcement protocol (L8.1 helper fix)** — 4-sub-section overhaul از §۲.۴ HELPER_PROTOCOL، anti-silent-failure
-9. **HM-namespace deliberate separation** — helper-side ≠ main-side، Reserved IDs preserved
-10. **M101 mutual chain confirmed** — part05 hash `91d20d8` backfilled، D24 hash to be backfilled در part07
-11. **User constraint applied** — «کار غیرضروری پیچیده‌تر نشود» — turn 3 brevity + state updates minimum-necessary
-12. **Discovery #7 honest iteration budget** — D24 ~15+ turn over-budget per industry standard، justifiable چون self-application infrastructure
+**Performance expectation per Discovery #4 part07:**
+proactive full T1 descriptive scan (M-range/Rule-range) در constraint checklist S3.3 mandatory است. این user-predicted improvement در part07 S3.2 validated.
 
 ---
 
-**ساخته توسط:** Claude در پایان چت D24 (deliverable complete)
-**نسخه این فایل:** D24 chat-end
-**به‌روز توسط:** ادامه در چت part07
+## 🔑 درس‌های کلیدی این چت (part07 S3.1 + S3.2)
+
+1. **Boot موفق** — 13 mandatory files خوانده شدند، bootstrap-mode escape (per Bounded Bootstrap §۳.۴) upfront applied توسط user
+2. **Upfront Constraint Checklist 14-section** — batch comprehensive draft pattern اعمال شد
+3. **S3.1 audit-driven iteration** — Layer 1 Audit ۳ بار fail داد (lesson count drift، hardcoded git hashes، SESSION_STATUS M-range)، همه surgical fix شدند. **audit caught real issues** — D24 infrastructure functional
+4. **S3.1 M101 self-application** — hardcoded git hashes (`91d20d8`, `8a91138`, `3bf66bf`) به placeholder `<part04-hash>` etc تبدیل شدند. درس M101 خود را honor کرد
+5. **Discovery #1+#3 (multiple-table sync hazard)** — user-predicted improvement در S3.2 applied: proactive full T1 descriptive scan در constraint checklist. **۰ audit fail در S3.2** vs ۳ در S3.1
+6. **HM-7 metric validation** — part07 budget S3.1=۹ turn (reactive)، S3.2=۲ turn (proactive applied learning). HELPER_PROTOCOL infrastructure value empirically demonstrated
+7. **Triple-Rule defer pattern** — state-of-record در sub-commits (S3.1، S3.2) update نشد، فقط در chat-end atomic جمع‌بندی شد. precedent S2.3→S2.4→S2.5 atomic stage-end mirrored
+8. **M98 scope closure** — هر sub-commit (S3.1, S3.2) دقیقاً scope-closed، بدون forward-reference به sub-commit بعد
+9. **HM-2 Late-Catch Cascade prevention** — conditional escape signals (5+ turn، >2 audit fail، context limit) به‌صورت explicit monitor. clean breakpoint در S3.2 boundary ترجیح داده شد
+10. **Option B wrap-up** — honest budget assessment: S3.3 + S3.4 single chat = ~10-15 turn over-budget. part08 fresh context preferred
+11. **D24 chat-end hash M101 backfill** — `3bf66bf` ثبت در part07 (mutual chain mechanism functional)
+12. **`-F` flag standard (M99)** — ۳ commit در part07 همه با `commit_msg_*.txt` ASCII-only
+
+---
+
+**ساخته توسط:** Claude در پایان چت part07 (mid-S3 stage — S3.1 + S3.2 delivered)
+**نسخه این فایل:** part07 chat-end
+**به‌روز توسط:** ادامه در چت part08

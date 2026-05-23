@@ -1,0 +1,327 @@
+# PHASE1 PART08 — S3.3 + S3.4 Completion HANDOFF
+
+> Chat Source: TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra
+> Date: 2026-05-23 (mid-S3 stage chat-end, S3.1 + S3.2 done)
+> Branch: infra/v2.14-source-of-truth
+> Final commit: <part07-chat-end-hash> (backfill در part08 boot per M101)
+> Next Chat Title: TRADING-phase1-part08-mdrs-v2-s33-s34-completion
+
+---
+
+## CRITICAL CONTEXT AWARENESS (READ FIRST)
+
+You (the Claude reading this in part08) have NO MEMORY of the previous chat. Each chat is an independent AI instance. What you have available:
+
+1. THIS handoff file (boot guidance)
+2. Filesystem MCP for reading all project files
+3. GitHub remote (git log, git show for full history)
+4. State-of-record files: docs/SESSION_STATUS.md, docs/CHAT_LOG.md, docs/PENDING_FOR_NEXT_VERSION.md, docs/REVIEW_LOG.md
+5. T1 governance: docs/HELPER_PROTOCOL.md (D24 deliverable, ~32KB)
+
+What you DO NOT have:
+
+1. Conversational context from part07 (audit fail iterations, surgical fixes, design discussions)
+2. Tone and partnership style established in previous chats
+3. Any memory of past decisions — all must be reconstructed from files
+
+CRITICAL Anti-patterns (M56 + M77 + M100):
+- DO NOT claim from memory anything you have not read in a file
+- DO NOT write "I remember from the previous chat..." — this is a false claim
+- If something is unclear, ASK — do not assume
+
+The user expects partnership-style work with:
+- Preview-then-approve for substantive document creation
+- Visible pre-action checklist execution (M100 + Template 11): explicit Yes/No + reasoning per check in chat surface
+- Triple-Rule honored (M93): SESSION_STATUS + CHAT_LOG + PENDING + REVIEW_LOG atomic at stage boundaries
+- -F flag for long commits (M99 + Template 12): git commit -F claude_workspace/commit_msg_{stage}.txt
+- ASCII-only commit messages (M95 + M97): no metacharacters
+- Read-back verify after every write (Rule #37, M82)
+- Bounded Bootstrap pattern (HELPER_PROTOCOL section 3.3): upfront constraint checklist + batch comprehensive draft + escalation criteria
+- User catches drive lesson discovery — visibility in preview enables this
+- Full T1 descriptive scan in constraint checklist (K8 expansion + part07 Discovery #4 validated)
+
+Before proceeding to any task in this chat, you MUST:
+1. Read all files listed in "FILES TO READ ON BOOT" section below
+2. Run git state verification commands (git status, git log --oneline -10)
+3. Backfill M101 chain (part07 chat-end hash via git log)
+4. Ask the user the sign-off questions in the "BOOT QUESTIONS" section
+5. Wait for user approval before starting work
+
+If at any point you are tempted to act from memory rather than from files, STOP. Read the file. Quote the file. Then act.
+
+---
+
+## FILES TO READ ON BOOT (in order)
+
+1. docs/SESSION_STATUS.md (current state — part07 chat-end version)
+2. docs/PENDING_FOR_NEXT_VERSION.md (tail section: part07 part)
+3. THIS file (the handoff file you are reading)
+4. docs/PROJECT_MANIFEST.md (manifest state — last D2 re-run at S2.5, manifest re-run pending S3.4)
+5. docs/CHAT_LOG.md tail (latest chat section — part07)
+6. docs/REVIEW_LOG.md (Review 002 Status Approved pending Implementation in S3.4)
+7. docs/HELPER_PROTOCOL.md (T1 governance — Bounded Bootstrap pattern + 8-Layer Framework)
+8. The 9 mandatory constitution files per Rule #48 Boot Protocol:
+   - docs/constitution/main.md
+   - docs/constitution/04_principles.md
+   - docs/constitution/01_rules.md
+   - docs/constitution/02_lessons.md
+   - docs/constitution/06_meta.md (for Templates 11+12 reference)
+   - docs/PRE_ADD_CHECKLIST.md
+   - docs/REVIEW_PROTOCOL.md
+   - docs/HANDOFF_TEMPLATE.md
+   - docs/PROJECT_MANIFEST.md (already in step 4)
+
+---
+
+## BOOT QUESTIONS
+
+Ask the user explicitly before starting work:
+
+1. Confirm branch infra/v2.14-source-of-truth current HEAD (part07 chat-end hash)?
+2. Confirm Constitution frontmatter still v2.13 (no manual edits between chats)?
+3. Confirm execution plan: S3.3 (module headers + audit script + Z3.19 fix) then S3.4 (Triple-Rule atomic stage-end)?
+4. Any new context or constraint discovered between chats?
+5. Backfill M101: part07 chat-end hash recorded in CHAT_LOG part08 boot section?
+
+---
+
+## EXECUTIVE SUMMARY
+
+part07 delivered S3.1 (Constitution v2.14 atomic update: Rules #68-77 + Lessons M88+M93-M102 + HM-1 to HM-7 + main cross-ref) and S3.2 (Principles Golden Rule + Templates 11-12 + proactive M-range fix).
+
+S3.1 commit f0adb63, S3.2 commit 938cd2d, part07 chat-end commit <future>.
+
+S3.3 + S3.4 deferred to part08 per Option B wrap-up (HM-2 Late-Catch Cascade prevention, conditional escape signals fired).
+
+HM-7 metric validation: S3.1=9 turns reactive, S3.2=2 turns proactive applied. HELPER_PROTOCOL infrastructure value empirically demonstrated.
+
+part08 scope: S3.3 module headers v2.12 to v2.14 + ACCEPTABLE_VERSIONS extension + audit script CURRENT_VERSION + Z3.19 fix. Then S3.4 Triple-Rule atomic stage-end + Review 002 to Implemented + manifest D2 re-run + part09 handoff if needed.
+
+---
+
+## CURRENT STATE (as of end of part07)
+
+Branch state:
+- Branch: infra/v2.14-source-of-truth
+- Local HEAD: <part07-chat-end-hash>
+- Remote HEAD: <part07-chat-end-hash> (synced after part07 chat-end push)
+- Parent commit: 938cd2d (S3.2)
+
+Version state:
+- Constitution frontmatter: v2.13 (bump to v2.14 pending S3.3)
+- Module headers (01-06): v2.12 placeholder (atomic update with ACCEPTABLE_VERSIONS pending S3.3)
+- main.md content cumulative: S3.1 + S3.2 v2.14 additions applied
+- Audit script ACCEPTABLE_VERSIONS: ["v2.12", "v2.13"] (extend to ["v2.13", "v2.14"] pending S3.3)
+
+Progress markers:
+- MDRS v2: 8/24 deliverables done (D1-D7 + D24 parallel) + S3.1 + S3.2 sub-commits
+- Stage S3: S3.0 + S3.0.5 + D24 + S3.1 + S3.2 done; S3.3 + S3.4 pending part08
+
+Key counts:
+- Rules Locked: 77 (#1-77) + 2 Reserved (#52, #53)
+- Lessons: M1-M102 + 32 Reserved + HM-1 to HM-7
+- Reviews: 3 (#001 Implemented, #002 Approved, #003 Implemented)
+- PENDING: 24 Z3.x + K1-K8 + part07 Discoveries
+
+Manifest state:
+- PROJECT_MANIFEST.md last D2 re-run at S2.5 (~274 files)
+- Mid-stage drift per Z3.21 (expected, manifest re-run in S3.4)
+
+---
+
+## NEW ITEMS (Already in PENDING_FOR_NEXT_VERSION.md)
+
+See docs/PENDING_FOR_NEXT_VERSION.md tail section "part07 chat-end" for:
+
+- K1-K7 status update (K1, K2 Implemented; K7 Partially Implemented; K3-K6 still pending)
+- K8 (NEW): main.md Quick-start update for HELPER_PROTOCOL.md inclusion + HELPER_PROTOCOL section 7 refinement for full T1 descriptive scan
+- Discoveries Log part07 (#1-#4): multi-table sync hazard, M101 self-referential paradox, SESSION_STATUS M-range drift, proactive scan applied (positive)
+
+---
+
+## NEXT STAGE — DETAILED EXECUTION PLAN
+
+### S3.3 — Module Headers + Audit + Z3.19 Fix (single atomic commit)
+
+Scope (M98 closure):
+1. docs/constitution/main.md frontmatter: v2.13 to v2.14 + version history table entry
+2. docs/constitution/01_rules.md header: v2.12 to v2.14
+3. docs/constitution/02_lessons.md header: v2.12 to v2.14
+4. docs/constitution/03_bugs.md header: v2.12 to v2.14
+5. docs/constitution/04_principles.md header: v2.12 to v2.14
+6. docs/constitution/05_architecture.md header: v2.12 to v2.14
+7. docs/constitution/06_meta.md header: v2.12 to v2.14
+8. scripts/63_pre_commit_audit.py:
+   - CURRENT_VERSION = "v2.14"
+   - ACCEPTABLE_VERSIONS = ["v2.13", "v2.14"] (transitional pinning per M102)
+9. docs/constitution/06_meta.md section 6.8 Custom Instructions: "نسخه v2.12" to "نسخه v2.14"
+10. Other v2.12 references audit (descriptive prose, table cells)
+
+Critical: atomic single commit (M98 + M93). If split, audit will fail.
+
+Audit verification post-update: run pre-commit hooks on staged files, expect 7/7 PASS.
+
+Discovery #4 application: full T1 descriptive scan for v2.12 references in 04_principles.md, 06_meta.md, main.md, archive notes.
+
+### S3.4 — Triple-Rule Atomic Stage-End (single atomic commit)
+
+Scope (M98 closure):
+1. docs/SESSION_STATUS.md full refactor (part08 chat-end version + Stage S3 COMPLETED marker)
+2. docs/CHAT_LOG.md part08 section append (boot + S3.3 + S3.4 + Discoveries + M101 backfill)
+3. docs/PENDING_FOR_NEXT_VERSION.md cleanup: Z3.19 marked RESOLVED, K8 carry-forward to part09, part07 + part08 sections consolidated
+4. docs/REVIEW_LOG.md Review #002 Status: Approved to Implemented + Resolution chain complete (commit chain: f0adb63 + 938cd2d + S3.3-hash + this S3.4-hash)
+5. docs/PROJECT_MANIFEST.md D2 re-run (post-stage-end) — run scripts/64_generate_manifest.py
+6. claude_workspace/incoming_permanent/PHASE1_PART09_HANDOFF.txt if S4+ deferred to part09
+7. claude_workspace/incoming_permanent/PHASE1_PART07_HANDOFF.txt cleanup decision per Z3.18/Z3.23 hybrid policy (likely keep, defer to S8)
+
+Atomic commit (M93 Triple-Rule) + push (Rule #66).
+
+If S4 doable in same chat (post-S3.4):
+- D12 Audit Checks #8-11 implementation (scripts/63_pre_commit_audit.py)
+- S4 sub-commit before chat-end
+
+If S4 not doable: defer to part09 chat.
+
+---
+
+## SUBSEQUENT STAGES — OVERVIEW
+
+After S3 complete (post-S3.4):
+- S4: D12 — Audit Checks #8-11
+- S5: D14 — Second Review Report
+- S6: D15-D18 — GitHub Issue Templates + ISSUE_WORKFLOW
+- S7: D19-D23 — Path validator + VERSION SSoT + Audit #12-#13
+- S8: Drift cleanup (Z3.1-Z3.24 hybrid, including stale handoffs) + merge to main + tag v0.7.0
+
+---
+
+## CRITICAL LESSONS APPLIED IN PART07 (DO NOT FORGET)
+
+- M82 read-back per edit (verified after each edit_file call via diff inspection)
+- Z3.20 mitigation: split per file + split large edits into chunks (~11+ edit_file calls in S3.1)
+- M86 commit/push separate EXECUTE blocks (Phase 2 plan)
+- M93 Triple-Rule: state-of-record refresh deferred to chat-end (atomic in chat-end commit)
+- M95 + M97 ASCII commit messages
+- M99 -F flag from claude_workspace/commit_msg_{stage}.txt
+- M100 visible Pre-Add execution (Template 11 + 14-section Upfront Constraint Checklist)
+- M101 mutual chain backfill (D24 chat-end 3bf66bf backfilled in part07; part07 chat-end will be backfilled in part08)
+- M102 Rule normative/implementation decoupling (all Rules #68-77 follow this pattern)
+- M98 scope closure: each sub-commit (S3.1, S3.2) scope-closed without forward-reference
+
+Part07 specific lessons (Discoveries #1-#4):
+- Discovery #1 + #3: multi-table sync hazard, full T1 descriptive scan needed (K8)
+- Discovery #2: M101 self-referential paradox — lesson violating itself, audit caught
+- Discovery #4: proactive applied learning empirically validated (0 audit fail S3.2 vs 3 audit fail S3.1)
+
+User constraint:
+- Lean reminder applied throughout: minimum necessary, no scope expansion
+- HM-2 Late-Catch Cascade prevention: clean breakpoint at S3.2 boundary preferred over emergency wrap-up
+
+---
+
+## CRITICAL OPERATIONAL PATTERNS
+
+Commit pattern:
+- Phase 1 (Claude MCP): write_file all targeted files with read-back verify per M82
+- Phase 1 (Claude tools): create_file claude_workspace/commit_msg_{stage}.txt (ASCII-only per M95+M97, Template 12 standard)
+- Phase 2 (User CMD): git add + git commit -F + git push (separate blocks per M86)
+- If audit fail: stop + paste error + evaluate (no silent fix)
+
+Pre-Action Checklist visibility (Template 11):
+- bullet list or table format
+- explicit Yes/No + reasoning per check
+- in chat surface (not mental checking)
+- mandatory before T1 file write or atomic commit
+
+Review pattern (REVIEW_PROTOCOL.md):
+- Trigger detection per section 2
+- Review file + LOG row atomic commit
+- Status transitions: Proposed -> Approved -> Implemented (via S3.4 in this case)
+
+Bounded Bootstrap pattern (HELPER_PROTOCOL section 3.3):
+- Upfront constraint checklist (14-section in S3.1 precedent)
+- Batch comprehensive draft
+- 1 helper round (max 2)
+- Escalation criteria section 3.4: >5 catches OR critical -> bootstrap mode escape (part07 used escape upfront per user)
+
+Atomic stage-end pattern (M93 Triple-Rule):
+- state-of-record files atomic in single commit at stage boundary
+- mid-stage drift acceptable per Z3.21
+- manifest re-run at stage-end (not mid-stage)
+
+Full T1 descriptive scan (Discovery #4 part07 + K8):
+- scan T1 docs for descriptive references to ID ranges (M-range, Rule-range, Template-count, version label)
+- not just counts/headings — also prose, table cells, list items
+- preempt audit fail before write
+
+---
+
+## FILES TO PRESERVE / TO DELETE
+
+Preserve (part07 chat-end commit):
+- All docs/constitution/* (S3.1 + S3.2 content)
+- claude_workspace/incoming_permanent/PHASE1_PART07_HANDOFF.txt (stale but kept per Z3.18/Z3.23)
+- claude_workspace/incoming_permanent/PHASE1_PART08_HANDOFF.txt (this file, NEW)
+- claude_workspace/commit_msg_*.txt (all preserved per Z3.18/Z3.23)
+
+To delete (part08 chat-end if S4+ deferred): N/A (no deletion in part07; per Rule #24 No-Deletion)
+
+---
+
+## KEY COMMITS AND REFERENCE
+
+Commit chain (cumulative since v2.14 branch creation):
+- 4e851b0 — S3.0.5 (part05): Z3.21-Z3.24 PENDING entries
+- 91d20d8 — part05 chat-end (S3.1 deferred to D24)
+- daf2020 — D24.0 (part06): Review #003 Draft + LOG row Approved
+- bed06b3 — D24.1 (part06): HELPER_PROTOCOL.md T1 governance
+- 3bf66bf — D24 chat-end (part06): state updates + Review #003 Implemented + PHASE1_PART07 handoff
+- f0adb63 — S3.1 (part07): Rules #68-77 + Lessons M88+M93-M102 + HM-1 to HM-7 + main cross-ref
+- 938cd2d — S3.2 (part07): Golden Rule + Templates 11-12 + proactive M-range fix
+- <future> — part07 chat-end (this commit): state updates + Review #002 commit chain + PHASE1_PART08 handoff
+
+Transcript pointers:
+- part04 chat-end: 8a91138 (mutual chain reference)
+- part05 chat-end: 91d20d8 (mutual chain reference)
+- D24 chat-end: 3bf66bf (mutual chain reference)
+- part07 chat-end: <future> (to be backfilled in part08 boot)
+
+---
+
+## USER META-PRINCIPLES (PRESERVED)
+
+Direct quotes from user that transcend individual chats:
+
+"کار غیرضروری پیچیده‌تر نشود، از مسیر اصلی دور نشویم" — applied throughout part07 in lean reminders, brevity in commit messages, state updates minimum-necessary.
+
+"در توضیحاتی که میدی از فارسی بیشتر استفاده کن" — applied in part07 chat-end (final turn).
+
+"audit caught real issues — pre-commit hook کار کرد درست. این proof که D24 infrastructure functional است." — validation of HELPER_PROTOCOL value.
+
+Conditional escape signals (user-articulated):
+- 5+ turn روی یک scope → escape به user direct
+- audit fail > 2 بار → wrap-up signal، defer به part08
+- context bar approaching limit → emergency wrap-up
+
+Discovery #4 user-predicted improvement: "constraint checklist (HELPER_PROTOCOL §۷) باید explicit scan کامل T1 docs برای descriptive references به ID ranges (نه فقط counts/headings) include کند." — empirically validated in part07 S3.2.
+
+---
+
+## FINAL STATE-OF-RECORD CONFIRMATION
+
+part07 chat-end accomplished:
+- S3.1 + S3.2 atomic commits pushed (f0adb63 + 938cd2d)
+- State-of-record atomic refresh in chat-end commit (SESSION_STATUS + CHAT_LOG + PENDING + REVIEW_LOG)
+- PHASE1_PART08_HANDOFF.txt created (this file)
+- M101 backfill chain: D24 chat-end 3bf66bf recorded in part07 boot section of CHAT_LOG
+- Forward-anticipation: part07 chat-end hash to be backfilled in part08 boot section
+
+Branch state ready for part08:
+- Local HEAD = remote HEAD = part07 chat-end hash
+- Working tree clean
+- 8 untracked claude_workspace/commit_msg_*.txt files preserved per Z3.18/Z3.23
+- 2 untracked claude_workspace/incoming_permanent/*HANDOFF.txt files (part02 stale, part07 stale-after-boot, part08 NEW pending commit)
+
+Ready signal: part08 boot can proceed with full file readings + git verify + sign-off questions.
+
+End of HANDOFF.

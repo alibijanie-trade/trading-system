@@ -2203,8 +2203,117 @@ Bounded Bootstrap criteria §۳.۴ functional validation:
 
 ---
 
+---
+
+## چت `TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra` — S3.1 + S3.2 Implementation
+
+**تاریخ:** 2026-05-23
+**Branch:** `infra/v2.14-source-of-truth`
+**Parent commit:** `3bf66bf` (D24 chat-end — M101 backfill confirmed)
+**خلاصه:** S3.1 (Constitution v2.14 atomic update: Rules + Lessons + HM-series) و S3.2 (Principles Golden Rule + Templates 11-12) تکمیل شدند. ۳ atomic commit (شامل chat-end). HELPER_PROTOCOL infrastructure value empirically validated. S3.3 + S3.4 به part08 deferred (clean breakpoint per HM-2 prevention).
+
+### Boot (M101 backfill)
+
+**پدر commit confirmed:** `3bf66bf` (D24 chat-end) — این backfill mechanism mutual chain (precedent: part04 chat-end → `8a91138` backfill در part05 boot؛ part05 chat-end → `91d20d8` backfill در D24 boot؛ D24 chat-end → `3bf66bf` backfill در part07 boot — این چت).
+
+**Bootstrap-mode escape upfront:** user در ابتدای چت Bounded Bootstrap §۳.۴ bootstrap-mode را explicit اعمال کرد (no helper round، main + user direct) — self-applied D24 infrastructure pattern.
+
+**Upfront Constraint Checklist 14-section (A-N):** comprehensive scope + decisions + risks + mitigations + escape signals برای S3.1.
+
+### S3.1 — Constitution v2.14 Atomic Update (commit `f0adb63`)
+
+**دستاوردها:**
+
+**۱. Batch comprehensive draft 3 T1 files:** preview-then-execute pattern
+- `01_rules.md` Rules #۶۸-۷۷ (۱۰ new Locked) با Normative + Implementation Notes per M102 decoupling
+- `02_lessons.md` M88 + M93-M102 (۱۱ critical) + M89-M92 Reserved (CVE-like gap) + NEW §۲.۹ HM-series (HM-1 to HM-7)
+- `main.md` Cross-refs Helper Consultation NEW subsection + آمار table + ساختار ماژول‌ها table
+
+**۲. Phase 1 write_file actions (۱۱+ edit_file calls split per Z3.20):** هر edit با read-back per M82. cleanup double `---` artifacts اعمال شد.
+
+**۳. Layer 1 Audit ۳ round fail → surgical fix:**
+- **Round 1 fail:** check_2 (main.md says M1-M87 but 02_lessons.md goes to M102) + check_5 (6 hardcoded git hashes in M101 detail — self-referential paradox)
+- **Round 1 fix:** main.md table M1-M87 → M1-M102 + 02_lessons.md M101 hashes → `<part04-hash>` placeholders + explanatory note (M101 honored its own lesson)
+- **Round 2 fail:** check_2 still drift (SESSION_STATUS says M1-M87)
+- **Round 2 fix:** SESSION_STATUS «درس‌نامه» line surgical update (M1-M87 → M1-M102 + ۳۲ Reserved + HM-series)
+- **Round 3 pass:** all 7/7 ✅
+
+**۴. M101 self-application elegant:** hardcoded git hashes (`91d20d8`, `8a91138`, `3bf66bf`) در detail section به abstract placeholder `<part04-hash>` تبدیل شدند. درس M101 گفت "hash hardcode نکن" و detail خود این را honor کرد. CHAT_LOG.md جدید authoritative source.
+
+**Commit `f0adb63`:** ۴ files، ۸۰۶ insertions، ۳۳ deletions
+
+### S3.2 — Principles Golden Rule + Templates 11-12 (commit `938cd2d`)
+
+**دستاوردها:**
+
+**۱. Constraint Checklist user-predicted improvement applied:** explicit full T1 descriptive scan برای M-range/Rule-range references در 04_principles.md + 06_meta.md — ۲ drift instance proactive detected:
+- §۴.۲ «قوانین #۱-۶۵» → «قوانین #۱-۷۷» (preempt audit fail)
+- §۴.۱۰ در سلسله مراتب اولویت: same fix
+
+**۲. NEW §۴.۱۱ Golden Rule:** Tier classification by role (نه hardcoded list). Codifies M88 + Rule #۶۸. Tier hierarchy table (illustration only) + role-based rationale + authoritative source (manifest) + self-application evidence + cross-refs.
+
+**۳. Template 11 (Pre-Action Checklist Visibility):** bullet/table formats + reference examples (PRE_ADD_CHECKLIST + HELPER_PROTOCOL §۷) + کاربرد boundaries. پشتیبان Rule #۷۶ + M100.
+
+**۴. Template 12 (Git Commit -F Flag Standard):** workflow + ASCII-only requirements + naming convention + قالب standard + مثال‌های مرجع + inline -m استثنا. پشتیبان M95+M97+M99 + Rule #۴۲/#۴۳/#۶۶.
+
+**۵. §۶.۳ heading «۱۰ Template» → «۱۲ Template».**
+
+**۶. Layer 1 Audit:** 7/7 PASS در **first try** (no retry needed). Validation عملی برای Discovery #1+#3 mitigation — proactive scan جلوگیری کرد از audit fail.
+
+**Commit `938cd2d`:** ۲ files، ۱۹۵ insertions، ۱۵ deletions
+
+### HM-7 Validation Datapoint
+
+**Iteration budget part07:**
+- S3.1: ~۹ user turns (reactive iteration با ۳ audit round)
+- S3.2: ~۲ user turns (proactive applied learning با ۱ audit pass)
+- **HELPER_PROTOCOL value empirically demonstrated** — constraint checklist refinement (full T1 scan) eliminated drift before audit
+- baseline part05 = high cost (Late-Catch Cascade)، S3.2 = measurably lower
+
+### تصمیم Option B Wrap-up (HM-2 prevention)
+
+**Conditional escape signals fired:**
+- S3.3 complexity higher (T3 code touch + module headers atomic + audit verify)
+- S3.3 + S3.4 single chat estimate ~۱۰-۱۵ turn — exceeds remaining budget
+- HM-2 Late-Catch Cascade pattern prevention: clean breakpoint > emergency wrap-up
+- Precedent: part04→part05، part05→D24 mid-stage transitions
+
+**Decision:** wrap up در S3.2 boundary، part08 برای S3.3 + S3.4 در fresh context.
+
+### Commits در این چت (part07)
+
+| # | Commit | Branch | Subject |
+|---|---|---|---|
+| 1 | `f0adb63` | infra/v2.14-source-of-truth | feat(constitution): S3.1 v2.14 Rules #68-77 + Lessons M88+M93-M102 + HM-1-HM-7 + main cross-ref |
+| 2 | `938cd2d` | infra/v2.14-source-of-truth | feat(constitution): S3.2 v2.14 Golden Rule + Templates 11-12 + proactive M-range fix |
+| 3 | [this commit] | infra/v2.14-source-of-truth | docs(chat-end): part07 state updates + Review #002 commit chain + PHASE1_PART08 handoff |
+
+### Plan چت part08
+
+- Boot protocol استاندارد (handoff `PHASE1_PART08_HANDOFF.txt`)
+- M101 backfill: part07 chat-end hash در CHAT_LOG part08 boot section
+- **S3.3:** module headers v2.12 → v2.14 + ACCEPTABLE_VERSIONS extension + audit script CURRENT_VERSION + Z3.19 fix
+- **S3.4:** Triple-Rule atomic stage-end + Review #002 → Implemented + manifest D2 re-run + part09 handoff
+- پس از S3.4: S4 (D12 Audit Checks) اگر budget باقی
+
+### Discoveries Log (4 total, per-chat reset, consolidated در PENDING part07 section)
+
+| # | Type | Severity | Description |
+|---|---|---|---|
+| #1 | process | 🟡 medium | آمار table updated در main.md ولی ساختار ماژول‌ها table missed — multiple-table sync hazard (caught by Layer 1 Audit round 1) |
+| #2 | validation | 🟠 high | M101 self-referential paradox — درس «هش hardcode نکن» در جزئیات خود ۶ hardcoded hash داشت (caught by check_5). resolved by placeholder + CHAT_LOG.md reference |
+| #3 | validation | 🟡 medium | SESSION_STATUS.md descriptive M-range reference drift (M1-M87) پس از 02_lessons.md update به M102. Same genus as #1، confirmation full T1 scan در constraint checklist لازم (caught by Layer 1 Audit round 2) |
+| #4 | process | ✨ positive | Proactive full T1 scan در S3.2 prevented audit fail — Discovery #1+#3 learning applied. ۰ audit fail vs ۳ audit fail در S3.1. **HELPER_PROTOCOL infrastructure value empirically demonstrated** |
+
+**Most critical:** **Discovery #2 — M101 self-referential paradox** — audit caught the lesson violating itself.
+**Most insightful:** **Discovery #4 — Proactive applied learning** — user-predicted improvement validated empirically.
+
+جدول کامل + K8 expansion details در `docs/PENDING_FOR_NEXT_VERSION.md` part07 section.
+
+---
+
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v2.3 (2026-05-23 — چت D24 chat-end: HELPER_PROTOCOL.md delivered + Bounded Bootstrap self-applied + Review #003 Implemented)
-**به‌روز شده در:** چت `TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure` (chat-end)
-**به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ (Triple-Rule honored)
+**نسخه:** v2.4 (2026-05-23 — چت part07 chat-end: S3.1 + S3.2 delivered + Discoveries #1-#4 + M101 backfill `3bf66bf`)
+**به‌روز شده در:** چت `TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra` (chat-end)
+**به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ + #۷۳ (Triple-Rule honored)
