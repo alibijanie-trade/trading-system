@@ -537,7 +537,7 @@ Decisions #۱۶-۱۹ و #۴۹ در دسته‌بندی موضوعی DECISIONS_LO
 | Z3.9 | high | Batch 8 | CHANGELOG.md 2 versions behind |
 | Z3.10 | critical | Batch 8 | claude_workspace/snapshots/* outdated (Project Settings hazard) |
 | Z3.11 RESOLVED | high | Phase 3 | Triple-Rule violation, fixed in 5730173, lesson formalization in M93 |
-| Z3.12 | low | Phase 3 | Pre-commit hook label drift (v2.12 to v2.13 in yaml) |
+| Z3.12 RESOLVED v2.14 | low | Phase 3 | Pre-commit hook label drift — RESOLVED in S3.3 part08 (`35ea822`)، .pre-commit-config.yaml hook name → v2.14 |
 | Z3.13 | high | S1 D2 | 6 Pre-Modular legacy sand-documents misplaced (~1MB) |
 | Z3.14 | medium | S1 D2 | v2.11 sand-document duplication |
 | Z3.15 | medium | S1 D2 | Self-reference first-run gap (D2 manifest) |
@@ -635,6 +635,8 @@ Stage S4-S8 طبق plan اصلی MDRS v2 (handoff file جزئیات را دار�
 **Action:** در S8 cleanup hybrid policy (به همراه Z3.13 archive moves) consolidate شود.
 
 ### Z3.19: هدر "Constitution v2.12 (Modular)" در ماژول های constitution drift
+
+**✅ RESOLVED in S3.3 part08** (commit `35ea822`) — همه ۶ ماژول header + main.md frontmatter به v2.14 update + audit script ACCEPTABLE_VERSIONS extended atomically.
 
 **کشف‌شده در:** S3.1 design phase (Discovery #۲۱ توسط Claude در reading 01_rules.md)
 **Severity:** 🟡 medium
@@ -1091,3 +1093,94 @@ untracked files در `claude_workspace/`:
 **تعداد items اضافه شده در part07 chat-end:** K8 (new) + K1-K2 implemented + K3-K7 status update + 4 Discoveries (#1-#4 consolidated).
 
 **آخرین به‌روزرسانی part07 section:** 2026-05-23 (chat-end چت `TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra`)
+
+---
+
+## 🔴🔴🔴 آیتم‌های part08 chat-end (چت `TRADING-phase1-part08-mdrs-v2-s33-s34-completion`)
+
+**منبع:** S3.3 + S3.4 implementation chat. در part08، S3.3 (Module Headers + Audit + Z3.19/Z3.12 RESOLVED — commit `35ea822`) و S3.4 (Triple-Rule atomic stage-end + Review #۰۰۲ Implemented + Manifest D2 re-run + handoff part09) تکمیل شدند. S4 (D12 Audit Checks #۸-۱۱) defer به part09 per conservative budget policy. **Stage S3 رسماً COMPLETE.**
+
+**Status K1-K8 update (post-part08):**
+- **K1, K2:** ✅ Implemented در part07 — unchanged
+- **K3-K7:** 🔴 باقی — defer به part09 یا future maintenance
+- **K8** (HELPER_PROTOCOL §۷ refinement + main.md Quick-start): 🔴 باقی — defer به part09
+
+---
+
+### K9 (NEW part08): HM-candidate — Tool Discovery First
+
+**Category:** D24 Helper-Discovered Pattern
+**Severity:** 🟠 medium-high
+**Discovered by:** Discovery #1 boot چت part08
+
+**Pattern:** Claude initial response در fresh chat با visible tool list مشاهده می‌کند ولی deferred tools (Filesystem MCP، Memory، Computer use) معمولاً نمی‌بیند تا `tool_search` صدا بزند. در part08 boot، Claude اولاً ادعا کرد "filesystem access ندارم"، که factual incorrect بود — نیاز به `tool_search` بود.
+
+**Lesson candidate (HM-8):** قبل از declaring capability gap، Claude باید `tool_search` با keywords مرتبط (e.g., `filesystem`، `git`، `browser`) صدا بزند. system prompt صراحت می‌گوید: "Treat tool_search as free and call it before assuming a capability is unavailable."
+
+**Prevention:** اضافه کردن explicit step به boot protocol (Rule #۴۸ یا HELPER_PROTOCOL §۲): "before declaring capability unavailable، call tool_search."
+
+**Genus:** capability assumption failure. parent از HM-1 (Helper Consultative Misinterpretation) genus — both involve premature conclusion before checking.
+
+---
+
+### K10 (NEW part08): HM-candidate — MCP Liveness Mid-Conversation
+
+**Category:** External dependency reliability + Helper-Operating Protocol
+**Severity:** 🟠 medium-high (escalated از 🟡 medium پس از observation #۲)
+**Discovered by:** Discovery #2 boot چت part08 + recurrence در S3.4 Phase 1
+
+**Pattern (refined per 2 empirical observations):** MCP server liveness across single chat not guaranteed. server که N turn پیش موفقیت‌آمیز جواب داد، می‌تواند بدون warning hang کند.
+
+**Observations:**
+- **Obs 1 (boot turn part08):** اولین `read_file` پس از successful `list_directory` × ۲ به timeout 4-minute رسید. user restart resolved.
+- **Obs 2 (S3.4 Phase 1):** اولین `edit_file` در S3.4 (REVIEW_LOG.md) پس از successful S3.3 batch از ۸ × edit_file calls در turn قبل، به timeout رسید. user restart resolved + retry موفق بود.
+
+**Refined pattern:** MCP server hang ممکن است پس از idle period، specific operation sequences، یا بدون deterministic cause اتفاق بیفتد. حتی mid-batch می‌تواند hang کند.
+
+**Lesson candidate (HM-9):** boot protocol و mid-chat operation protocol باید:
+- sanity-ping pattern (lightweight `list_allowed_directories` or `list_directory`) قبل از batch operations سنگین
+- recovery procedure explicit: user restart → sanity-ping → verify state via read → retry from exact point
+- failed call باید state روی disk verify شود قبل از retry (timeout response را نمی‌دهد که server-side عمل کرده یا نه)
+
+**Prevention:** HELPER_PROTOCOL §۲.۴ یا boot procedure: explicit sanity-ping pattern + recovery procedure documented.
+
+**Genus:** external dependency reliability. parent از HM-3 (Chat Naming Convention) genus — both involve environment-assumption failure.
+
+---
+
+### Discoveries Log part08 (8 total, per-chat reset, consolidated)
+
+| # | Type | Severity | Description |
+|---|---|---|---|
+| #1 | meta | 🟠 high | Tool-discovery-first violation در boot turn — capability claim بدون tool_search. → K9 HM-candidate (HM-8) |
+| #2 | tool | 🟠 medium-high | MCP filesystem server hang mid-conversation × ۲ (boot + S3.4 Phase 1) — restart × ۲ resolved. → K10 HM-candidate (HM-9) |
+| #3 | drift | 💡 cosmetic | HANDOFF_TEMPLATE.md §۷ "Rule #68.2 Boot Protocol" typo (should be #۴۸). defer maintenance pass. |
+| #4 | timing | 💡 cosmetic | PHASE1_PART08_HANDOFF.txt گفت "§۶.۸ Custom Instructions" ولی location actual §۶.۴. defer. |
+| #5 | drift | 💡 cosmetic | Module sub-headers descriptive prose (`#۱-۶۵ تا v2.11`، `M1-M63 از v2.11`) — describes historical migration source. defer. |
+| #6 | communication | 💡 cosmetic | User constraint added: "helper ambiguities in copy-able box". adopted from turn 14. Plus "USER DECISIONS NEEDED" box pattern (turn before Phase 1). |
+| #7 | validation | ✨ positive | **HM-7 metric empirically validated** — S3.3 part08 = ۱ commit، ۰ audit fail (proactive scan applied). Post-D24 efficiency demonstrated empirically. |
+| #8 | communication | 💡 cosmetic | CMD silent-on-success confusion (user thought `cd`/`git add` didn't run) — explained. lesson: note silent commands in future EXECUTE blocks. |
+
+**Most critical:** Discovery #۷ — HM-7 metric positive validation. infrastructure value demonstrated empirically (۳ datapoints: S3.1 = ۳ audit fail, S3.2 = ۰, S3.3 = ۰).
+**Most insightful:** Discovery #۱ + #۲ — HM-8 + HM-9 candidates (capability assumption + external dependency reliability).
+
+---
+
+### Stale handoff files note (Z3.18/Z3.23 broader policy)
+
+`claude_workspace/incoming_permanent/PHASE1_PART07_HANDOFF.txt` و `PHASE1_PART08_HANDOFF.txt` پس از part08 boot stale می‌شوند. Cleanup deferred به S8 per Z3.18/Z3.23 policy (existing). NOT removed در این chat-end commit.
+
+### Commit message workspace files (Z3.18/Z3.23 policy)
+
+untracked files در `claude_workspace/`:
+- `commit_msg_chat_end_part05.txt`، `commit_msg_d24_*.txt`، `commit_msg_part07_chat_end.txt`، `commit_msg_s3_0_5.txt`، `commit_msg_s3_1.txt`، `commit_msg_s3_2.txt`
+- `commit_msg_s3_3.txt` (🆕 part08)
+- `commit_msg_s3_4_chat_end.txt` (🆕 part08)
+
+همه preserved per Z3.18/Z3.23 policy (consumed by -F flag، نه committed در git، historical reference). cleanup decision در S8 hybrid policy.
+
+---
+
+**تعداد items اضافه شده در part08 chat-end:** K9 + K10 (NEW HM-candidates) + Z3.19 RESOLVED + Z3.12 RESOLVED + 8 Discoveries (#1-#8 consolidated) + K1-K8 status update.
+
+**آخرین به‌روزرسانی part08 section:** 2026-05-24 (chat-end چت `TRADING-phase1-part08-mdrs-v2-s33-s34-completion`)

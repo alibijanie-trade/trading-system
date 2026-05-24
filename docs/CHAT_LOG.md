@@ -2312,8 +2312,92 @@ Bounded Bootstrap criteria §۳.۴ functional validation:
 
 ---
 
+## چت `TRADING-phase1-part08-mdrs-v2-s33-s34-completion` — S3.3 + S3.4 Completion
+
+**تاریخ:** 2026-05-24
+**Branch:** `infra/v2.14-source-of-truth`
+**Parent commit:** `05d7388` (part07 chat-end — M101 backfill confirmed)
+**خلاصه:** S3.3 (Module headers v2.12→v2.14 + ACCEPTABLE_VERSIONS extension + audit script CURRENT_VERSION + Z3.19+Z3.12 RESOLVED — commit `35ea822`) و S3.4 (Triple-Rule atomic stage-end + Review #۰۰۲ Implemented + Manifest D2 re-run + PHASE1_PART09 handoff) تکمیل شدند. S4 (D12 Audit Checks #۸-۱۱) defer به part09 per conservative budget policy. **Stage S3 رسماً COMPLETE.**
+
+### Boot (M101 backfill)
+
+**پدر commit confirmed:** `05d7388` (part07 chat-end) — M101 backfill mechanism mutual chain (precedent: part04→`8a91138`، part05→`91d20d8`، D24→`3bf66bf`، part07→`05d7388` این چت). git verify در boot turn نشان داد HEAD = `05d7388d87a1a23be79170835b5bb5d9246cf7a4`، branch sync ✅، clean working tree ✅.
+
+**Bootstrap-mode escape upfront:** user در ابتدای چت explicit Bootstrap-mode (no helper round) را اعمال کرد، per HELPER_PROTOCOL §۳.۴ — precedent S3.2 + S3.3 (proactive applied learning).
+
+**Upfront Constraint Checklist 14-section S3.3:** comprehensive scope + decisions + risks + mitigations. proactive T1 + T3 scan per Discovery #4 part07 lesson. helper-verified ۲ Concerns (Z3.12 + ۳ hardcoded labels + RESERVED_LESSON_IDS) — all applied.
+
+### S3.3 — Module Headers + Audit + Z3.19/Z3.12 Fix (commit `35ea822`)
+
+**دستاوردها:**
+
+**۱. Atomic 9-file edit batch (M93 honored):**
+- `main.md` (۶ edits): H1 + version frontmatter + ADD تاریخ v2.14 + ADD چت مسئول v2.14 + stats heading update (remove stale note) + M-series count refresh (~۸۲→۷۰ precise) + version history NEW row
+- ۶ × module headers (01-06): v2.12 → v2.14
+- `02_lessons.md` status M-series count refresh
+- `06_meta.md` §۶.۴ Custom Instructions: نسخه v2.12 → v2.14 (۲ refs)
+- `scripts/63_pre_commit_audit.py` (۶ edits): CURRENT_VERSION + ACCEPTABLE_VERSIONS + RESERVED_LESSON_IDS extension + docstring + argparse + print + constants comment
+- `.pre-commit-config.yaml`: hook name v2.12 → v2.14
+
+**۲. Phase 1 writes موفق با Filesystem:edit_file:**
+- ۸ × edit_file calls (per Z3.20 mitigation: split into smaller batches)
+- هر edit با diff verification per M82
+- MCP server responsive throughout S3.3 batch (no timeout incident)
+
+**۳. Layer 1 Audit 7/7 PASS در first try:**
+- HM-7 metric: proactive scan worked. ۰ audit fail.
+- precedent: S3.1 part07 = ۳ audit fail (reactive), S3.2 part07 = ۰ audit fail (proactive), **S3.3 part08 = ۰ audit fail (proactive + helper-validated)**
+- **Self-validation positive:** hook label خود `(v2.14)` می‌گوید — audit script که این hook را اجرا کرد، CURRENT_VERSION=v2.14 داشت — module files که خودش بررسی می‌کرد همه header v2.14 داشتند. atomic ordering dependency M102 transitional safety pattern validated empirically.
+
+**Commit `35ea822`:** ۹ files changed, ۲۴ insertions(+), ۲۲ deletions(-)
+
+### S3.4 — Triple-Rule Atomic Stage-end + Stage S3 Completion (این commit)
+
+**دستاوردها:**
+
+- **state-of-record atomic refresh:** SESSION_STATUS (full refactor + Stage S3 COMPLETED marker) + CHAT_LOG part08 section append + PENDING (Z3.19+Z3.12 RESOLVED + K-section part08 NEW + K9+K10 HM-candidates + 8 Discoveries) + REVIEW_LOG (#۰۰۲ Approved → Implemented + Resolution chain)
+- **PROJECT_MANIFEST.md D2 re-run:** post-Claude-writes فعالیت user — `scripts/64_generate_manifest.py` (post-stage-end per Z3.21)
+- **PHASE1_PART09_HANDOFF.txt:** handoff for part09 (S4 D12 Audit Checks #۸-۱۱ + D14 + K3-K8 background)
+- **M101 backfill:** part07 chat-end hash `05d7388` در این chat-end boot section ثبت شد (mutual chain link)
+
+### Mid-S3.4 incident — MCP server hang (HM-9 evidence #۲)
+
+در S3.4 Phase 1 turn اول، اولین `edit_file` (REVIEW_LOG.md) پس از successful S3.3 batch به 4-minute timeout رسید. user restart resolved + retry موفق بود. این دومین evidence برای K10 (HM-9 candidate) است — severity از 🟡 medium به 🟠 medium-high escalated.
+
+### User constraint applied throughout
+
+- «کار غیرضروری پیچیده‌تر نشود، از مسیر اصلی دور نشویم» — applied throughout
+- «minimum-necessary، نه scope expansion» — S3.3 + S3.4 scope-closed strictly
+- helper ambiguities در copy-able box (constraint از turn 14 part08) + USER DECISIONS NEEDED box (constraint از turn before Phase 1)
+- CMD silent-on-success behavioral awareness (lesson Discovery #۸)
+
+### Commits در این چت (part08)
+
+| # | Commit | Branch | Subject |
+|---|---|---|---|
+| 1 | `35ea822` | infra/v2.14-source-of-truth | feat(constitution): S3.3 v2.14 module headers + audit version sync + Z3.19 fix |
+| 2 | [this commit] | infra/v2.14-source-of-truth | docs(chat-end): S3.4 part08 state updates + Review #002 Implemented + Manifest D2 + PHASE1_PART09 handoff |
+
+### Plan چت part09
+
+- Boot protocol استاندارد (handoff `PHASE1_PART09_HANDOFF.txt`)
+- M101 backfill: part08 chat-end hash در CHAT_LOG part09 boot section
+- **S4** (D12 Audit Checks #۸-۱۱) — first priority
+- **S5** (D14 — Second Review Report) — second priority
+- K3-K8 remaining items per part07 status
+- HM-8 + HM-9 formalization در S5 یا later (در ترکیب با S3.4 evidence)
+
+### Discoveries Log part08 (8 total, per-chat reset, consolidated در PENDING K-section part08)
+
+جدول کامل + K9 + K10 + Z3.19+Z3.12 RESOLVED details در `docs/PENDING_FOR_NEXT_VERSION.md` part08 section.
+
+**Most critical:** Discovery #۷ — HM-7 metric empirical validation (post-D24 efficiency).
+**Most insightful:** Discovery #۱ + #۲ — HM-8 + HM-9 candidates (capability assumption + external dependency reliability).
+
+---
+
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v2.4 (2026-05-23 — چت part07 chat-end: S3.1 + S3.2 delivered + Discoveries #1-#4 + M101 backfill `3bf66bf`)
-**به‌روز شده در:** چت `TRADING-phase1-part07-mdrs-v2-s31-redo-with-helper-infra` (chat-end)
+**نسخه:** v2.5 (2026-05-24 — چت part08 chat-end: S3.3 + S3.4 delivered + Stage S3 COMPLETE + Discoveries #1-#8 part08 + M101 backfill `05d7388`)
+**به‌روز شده در:** چت `TRADING-phase1-part08-mdrs-v2-s33-s34-completion` (chat-end)
 **به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ + #۷۳ (Triple-Rule honored)
