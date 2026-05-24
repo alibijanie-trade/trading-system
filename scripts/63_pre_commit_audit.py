@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Pre-commit Audit Script (Layer 1) - Constitution v2.13
+Pre-commit Audit Script (Layer 1) - Constitution v2.14
 
 Purpose: Documentation consistency check before each commit.
 
@@ -72,15 +72,16 @@ RESERVED_LESSON_IDS.update(range(32, 44))  # M32-M43
 RESERVED_LESSON_IDS.update(range(45, 56))  # M45-M55
 RESERVED_LESSON_IDS.add(80)
 RESERVED_LESSON_IDS.add(81)
+RESERVED_LESSON_IDS.update(range(89, 93))  # M89-M92 v2.14
 
 # Reserved rule IDs
 RESERVED_RULE_IDS = {52, 53}
 
 # Current active version of Constitution + acceptable versions in module headers.
-# Module headers may reference structural version (v2.12 Modular split) or current (v2.13).
+# Module headers may reference previous (v2.13) or current (v2.14).
 # Both are valid - check_6 accepts any version in ACCEPTABLE_VERSIONS.
-CURRENT_VERSION = "v2.13"
-ACCEPTABLE_VERSIONS = ["v2.12", "v2.13"]
+CURRENT_VERSION = "v2.14"
+ACCEPTABLE_VERSIONS = ["v2.13", "v2.14"]
 
 # Git hash pattern: 7-40 hex chars
 GIT_HASH_PATTERN = re.compile(r"\b[a-f0-9]{7,40}\b")
@@ -620,7 +621,7 @@ ALL_CHECKS: List[Callable[[], CheckResult]] = [
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Pre-commit Audit (Layer 1) for Constitution v2.13",
+        description="Pre-commit Audit (Layer 1) for Constitution v2.14",
     )
     parser.add_argument(
         "--verbose", action="store_true", help="Show details for passing checks too"
@@ -641,7 +642,7 @@ def main():
     else:
         checks_to_run = ALL_CHECKS
 
-    print("Pre-commit Audit (Layer 1) - Constitution v2.13")
+    print("Pre-commit Audit (Layer 1) - Constitution v2.14")
     print("=" * 60)
     print(f"Repo root: {REPO_ROOT}")
     print(f"Running {len(checks_to_run)} check(s)...")

@@ -1,6 +1,6 @@
 # ماژول ۰۲ — درس‌نامه اشتباهات Claude
 
-> بخشی از **Constitution v2.12 (Modular)** — [بازگشت به main](./main.md)
+> بخشی از **Constitution v2.14 (Modular)** — [بازگشت به main](./main.md)
 >
 > **محتوا:** درس‌نامه اشتباهات Claude (M1-M63 از v2.11) با علت ریشه‌ای، راه‌حل، cross-refs.
 > **منبع:** سند جامع v2.11 → سند ۱۸ (درس‌نامه اشتباهات Claude — AI Mistakes Log)
@@ -1029,7 +1029,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 ✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1)**
 
 **جمع‌بندی درس‌ها:**
-- M-series ثبت: ~۸۲ (M1-M63 + M64-M87 + M88 + M93-M102)
+- M-series ثبت: ۷۰ (M1-M63 + M64-M87 + M88 + M93-M102)
 - M-series Reserved: ۳۲ (M22, M24, M29, M32-M43, M45-M55, M80, M81, M89-M92)
 - HM-series: ۷ (HM-1 to HM-7)
 

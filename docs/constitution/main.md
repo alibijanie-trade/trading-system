@@ -1,12 +1,14 @@
-# Constitution سامانه هوشمند ترید — v2.13 (Modular)
+# Constitution سامانه هوشمند ترید — v2.14 (Modular)
 
 > **Intelligent Trading System — Modular Constitution**
 > در بازارهای مالی | ارز دیجیتال و فارکس
 >
-> **نسخه:** 2.13 (atomic amendment از v2.12 modular split)
+> **نسخه:** 2.14 (atomic amendment از v2.13 — MDRS v2 integration)
 > **تاریخ شروع split:** اردیبهشت ۱۴۰۵ (May 2026)
 > **تاریخ v2.13:** خرداد ۱۴۰۵ (May 2026)
+> **تاریخ v2.14:** خرداد ۱۴۰۵ (May 2026)
 > **چت مسئول:** ۱۱.۰.ج (`TRADING-infra-governance-finalize-and-merge`)
+> **چت مسئول v2.14:** part04-part08 (`TRADING-phase1-part04..part08-mdrs-v2-*`)
 > **Branch:** `infra/governance-overhaul`
 > **Created in commit:** `<git log -1 --format=%h پس از commit 1 پر شود>`
 
@@ -141,14 +143,12 @@
 
 ---
 
-## 📊 آمار Constitution v2.13 (تجمعی با S3.1 اعمال‌شده v2.14)
-
-> توجه: فایل frontmatter هنوز v2.13 است (به‌روزرسانی atomic به v2.14 در S3.3 با ACCEPTABLE_VERSIONS extension انجام می‌شود). جدول پایین وضعیت فعلی پس از S3.1 را نشان می‌دهد.
+## 📊 آمار Constitution v2.14
 
 | دسته | تعداد |
 |---|---|
 | قوانین Locked | ۷۷ ثبت‌شده (#۱-۷۷) + ۲ Reserved (#۵۲, #۵۳) — 🆕 ۱۰ قانون جدید v2.14 (#۶۸-#۷۷) |
-| درس‌نامه M-series | M1-M102 ثبت‌شده (~۸۲ ثبت + ۳۲ Reserved) — 🆕 ۱۱ درس جدید v2.14 (M88+M93-M102) + ۴ Reserved جدید (M89-M92) |
+| درس‌نامه M-series | M1-M102 (۷۰ ثبت + ۳۲ Reserved) — 🆕 ۱۱ درس جدید v2.14 (M88+M93-M102) + ۴ Reserved جدید (M89-M92) |
 | درس‌نامه HM-series 🆕 v2.14 | HM-1 to HM-7 در `02_lessons.md` §۲.۹ |
 | Bug ها | ۱۶ ثبت‌شده در `03_bugs.md` + ۳۰+ در `docs/TROUBLESHOOTING.md` |
 | ماژول‌ها | ۷ (شامل main.md) + archive |
@@ -176,6 +176,7 @@
 
 | نسخه | تاریخ | چت(ها) | تغییرات اصلی |
 |---|---|---|---|
+| v2.14 | May 2026 | part04-part08 | MDRS v2 + Helper Infrastructure — Rules #۶۸-۷۷، Lessons M88+M93-M102، HM-1 to HM-7، Golden Rule، Templates 11-12، HELPER_PROTOCOL.md، Reviews #۰۰۲+#۰۰۳ |
 | v2.13 | May 2026 | ۱۱.۰.ج | **Cross-shell mandatory** — قانون #۶۷ + M87 (Active-Writing Self-Binding Failure) + Pre-EXECUTE verification template |
 | v2.12 | May 2026 | ۱۱.۰.الف+ب+ج | **Modular split** — تقسیم به ۶ ماژول + atomic update با ادغام PENDING |
 | v2.11 | May 2026 | ۸+۹ | UX hardening — قوانین #۶۲-۶۵ |

@@ -1,6 +1,6 @@
 # ماژول ۰۶ — Meta (Session/Templates/Tooling)
 
-> بخشی از **Constitution v2.12 (Modular)** — [بازگشت به main](./main.md)
+> بخشی از **Constitution v2.14 (Modular)** — [بازگشت به main](./main.md)
 >
 > **محتوا:** Session/Context + Chat Handoff + Templates پاسخ + Claude MAX + Pre-commit + GitHub + Filesystem MCP + Claude Desktop + claude_workspace + Skills
 > **منبع v2.11:** سند ۱۳ + ۱۴ + ۱۵ + ۱۶ + ۱۷ + ۱۹ + ۲۰ + ۲۱ + ۲۲ + ۲۳ + ۲۴ + ۲۵ (۱۲ سند)
@@ -518,7 +518,7 @@ Stack: FastAPI + SQLAlchemy + React + Vite، Windows 11.
 زبان ارتباط: فارسی، اصطلاحات فنی انگلیسی.
 من دانش برنامه‌نویسی ندارم — هر کار مرحله‌به‌مرحله.
 
-قوانین قفل‌شده مهم (نسخه v2.12):
+قوانین قفل‌شده مهم (نسخه v2.14):
 - #۲۷: پایان چت فقط با تأیید صریح
 - #۳۰: اصلاحات کوچک = اسکریپت Python idempotent (یا MCP edit_file)
 - #۳۱: بالای هر کادر کد: 🟦/🟩/🟧/🟥 + شماره tab
@@ -530,7 +530,7 @@ Stack: FastAPI + SQLAlchemy + React + Vite، Windows 11.
 - #۶۳: Convention 🟢 ▶️ EXECUTE
 - #۶۶: Push اجباری در پایان چت (Locked در v2.12)
 
-مرجع کامل: docs/constitution/main.md (Modular v2.12)
+مرجع کامل: docs/constitution/main.md (Modular v2.14)
 ```
 
 ### پروتکل توصیه Real-Time

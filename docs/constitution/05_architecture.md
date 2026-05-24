@@ -1,6 +1,6 @@
 # ماژول ۰۵ — معماری پروژه
 
-> بخشی از **Constitution v2.12 (Modular)** — [بازگشت به main](./main.md)
+> بخشی از **Constitution v2.14 (Modular)** — [بازگشت به main](./main.md)
 >
 > **محتوا:** محیط + Stack + پوشه‌بندی + DB Schema + Backend API + Frontend + UI/UX + Security + کدنویسی + تست + Roadmap
 > **منبع v2.11:** سند ۲ (محیط) + سند ۳ (Stack) + سند ۴ (پوشه‌بندی) + سند ۵ (DB) + سند ۶ (Backend API) + سند ۷ (Frontend) + سند ۸ (UI/UX) + سند ۹ (امنیت) + سند ۱۰ (کدنویسی) + سند ۱۱ (تست) + سند ۱۲ (Roadmap)
