@@ -35,6 +35,8 @@
    cumulative 8 events — Rule promotion candidate)
 7. File-Based Decision Tracking Registry for helper sessions
    (process — automation per HM-META-K)
+8. L1 (Persian Language Preference) — universal rule
+   formalization در part10
 
 ## Resume mechanism for part10 boot
 
@@ -52,3 +54,15 @@ Listed in batch preview turn 25 main chat (review session log)
 ## HM-9 escalation
 Cumulative: 8 total (part08: 2 + part09: 6)
 Rule promotion candidate confirmed for part10
+
+## Full Session TODO Reference
+
+The complete helper session TODO (38 observations, 19
+user catches, 5 Mechanisms, 9 Criteria, 2 Workflow rules,
+L1 Persian Language Rule) is preserved at:
+
+claude_workspace/HELPER_SESSION_TODO_part09_final.md
+
+⚠️ Critical for part10 boot: helper بعدی این فایل را
+read می‌کند، NOT paste از helper sandbox قبلی. این
+حلقه recursive drift (F3/F9) را می‌شکند.
