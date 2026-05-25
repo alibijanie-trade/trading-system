@@ -55,6 +55,84 @@ Listed in batch preview turn 25 main chat (review session log)
 Cumulative: 8 total (part08: 2 + part09: 6)
 Rule promotion candidate confirmed for part10
 
+## Comprehensive Pending Items Enumeration (for part10)
+
+⚠️ این enumeration برای جلوگیری از F41 (closure summary
+over-compression). آیتم‌های زیر همگی در
+HELPER_SESSION_TODO_part09_final.md detail دارند. این
+section فقط reference list است.
+
+### Triple-Rule atomic chat-end (6 فایل deferred)
+- SESSION_STATUS.md (8 surgical edits)
+- CHAT_LOG.md (part09 section + 12 Discoveries)
+- PENDING_FOR_NEXT_VERSION.md (Z3.x markers + K-section +
+  P10-CANDIDATEs)
+- REVIEW_LOG.md (Row #002 M101 backfill to 3fd2405)
+- PROJECT_MANIFEST.md (D2 re-run)
+- PHASE1_PART10_HANDOFF.txt (NEW)
+
+### 8 P10-CANDIDATEs (explicit user decisions)
+1. Helper-Sandbox Synthesis Drift M-candidate
+2. Bootstrap Paradox of Cross-Chat Infrastructure M-candidate
+3. Cross-Side Decision Sync Failure M-candidate
+4. live_inbox setup formalization (with residual decision per F40)
+5. W3 Chat-End File Sync Verification → Rule candidate
+6. HM-9 Tool-Level Reliability → Rule promotion (8 events cum.)
+7. File-Based Decision Tracking Registry for helper sessions
+8. L1 Persian Language Preference universal rule formalization
+
+### Rules formalization (به HELPER_PROTOCOL v1.1 یا 01_rules.md)
+- HM-META-H (Visual Box-Text Separation) — C2
+- HM-META-I (Four-Part Question Structure) — C3
+- HM-META-J (Proactive Advisory Mandate) — C4
+- HM-META-K (Automation-First Principle) — C5
+- Helper-to-Helper Synthesis Prohibition — C6
+- W3 (Chat-End File Sync Verification) — universal binding
+- L1 (Persian Language Preference) — universal binding
+- L2 (Anti-Circular Mechanisms A-E) — universal binding
+
+### Workflow rules formalization
+- W1 (Incremental Append Pattern)
+- W2 (Separate Code Blocks paste-ready vs TODO)
+- W3 (Chat-End File Sync — also above)
+
+### Cross-chat communication setup (deferred from part09)
+- live_inbox/ directory completion (با F40 decision)
+- CROSS_CHAT_COMMS_PROTOCOL.md drafting — D6
+- HELPER_PROTOCOL.md v1.1 cross-ref update — D7
+- Rule #48 boot protocol extension — D8
+- Template هر message با enforced sections — D9
+- Script archiving older messages automation — D5.1
+
+### E-section proposals (13 deferred items)
+- E1 HM-8 numbered formalization
+- E2 HM-9 numbered formalization (link به P10-CANDIDATE-6)
+- E3 7 helper mistakes part09 → §8 anti-patterns
+- E4 P{N}.x vs D{N}.x namespace formalization
+- E5 Self-Check Triggers spec
+- E6 Helper-Sandbox Synthesis Drift M-candidate (link به P10-CAND-1)
+- E7 Documentation Schism deep-dive
+- E8 Framework Extraction Phase α/β/γ/δ labels
+- E9 10 risks enumeration با R09.x naming
+- E10 D09.8-D09.17 detailed enumeration
+- E11 Repository Architecture restructure
+- E12 P10-CANDIDATE-5: W3 formalization (link به P10-CAND-5)
+- E14 P10-CANDIDATE-7: File-Based Decision Tracking (link به P10-CAND-7)
+
+### Observations review (F1-F41)
+هر کدام نیاز به part10 review برای:
+- M-promotion (formal lesson در constitution)
+- HM-N numbering (helper-side)
+- Rule promotion (یا constitution principle)
+- یا cosmetic-only (هیچ permanent ID)
+
+### Discoveries #1-#12 part09 (logging per Rule #77)
+در part10 CHAT_LOG ثبت شوند
+
+### Constitution promotion candidates
+- Anti-Circular Mechanism A-E → constitution principle یا Rule
+- Criteria Registry C1-C9 → constitution principle
+
 ## Full Session TODO Reference
 
 The complete helper session TODO (38 observations, 19

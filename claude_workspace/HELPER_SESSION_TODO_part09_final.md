@@ -550,6 +550,35 @@ F39. [NEW] Helper Boot Source Discipline
      هیچ paste از chat helper قبلی به helper جدید. این
      حلقه recursive drift را می‌شکند.
 
+F40. [NEW] Partial live_inbox Directory Residual
+     در closure session (turn ۶۰)، 3 sub-directory
+     live_inbox/ روی disk موجود است (from_main_to_helper,
+     from_helper_to_main, archive) — احتمالاً از turn‌های
+     earlier helper session باقی مانده‌اند. ولی فایل‌های
+     README.md و conversation_log.md ایجاد نشدند.
+
+     Non-critical. در part10 گزینه‌ها:
+     (الف) cleanup کامل — حذف directories و start fresh
+     (ب) head-start برای P10-CANDIDATE-4 (live_inbox
+          formalization) — اضافه کردن README + log به
+          ساختار موجود
+
+     تصمیم در part10 با ذهن fresh.
+
+F41. [NEW] Closure Summary Over-Compression Risk
+     در turn ۶۰، helper یک closure list ۷ آیتمی به user
+     داد به‌عنوان "در part10 منتظر است". این high-level
+     summary بود، نه enumeration. ۱۲۳ آیتم TODO در
+     فایل پایدار are، ولی user حق دارد بپرسد آیا همه
+     شامل می‌شوند.
+
+     Lesson: closure summaries باید explicit بگویند
+     "high-level summary, full enumeration در [filename]"
+     تا confusion ایجاد نکند.
+
+     Mitigation: deferred note با explicit enumeration
+     expanded شد (this commit).
+
 ## G. SESSION META — به‌روزرسانی این TODO
 ────────────────────────────────────────────────────────────
 
