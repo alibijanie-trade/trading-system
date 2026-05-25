@@ -6,12 +6,16 @@ Per Rule #22: every {N}_*.py must have {N}b_test_*.py companion.
 
 Tests:
     test_1_script_imports          - audit script imports without error
-    test_2_all_check_functions     - all 7 check functions exist and callable
+    test_2_all_check_functions     - all 11 check functions exist and callable
     test_3_run_on_real_project     - audit run on real project state (info only)
     test_4_persian_digit_translation - to_ascii_digits() works
     test_5_constants_valid         - all path constants resolve
-    test_6_reserved_lesson_ids     - RESERVED_LESSON_IDS set is correct (28 IDs)
+    test_6_reserved_lesson_ids     - RESERVED_LESSON_IDS set is correct (32 IDs)
     test_7_help_output             - --help works (CLI sanity)
+    test_8_check_8_runs            - check_8 (uncommitted state files) runs
+    test_9_check_9_runs            - check_9 (manifest self-row) runs
+    test_10_check_10_runs          - check_10 (Review numbering) runs
+    test_11_check_11_runs          - check_11 (Z-ID permanence) runs
 
 Exit codes:
     0 - all tests passed
@@ -62,7 +66,7 @@ def test_1_script_imports():
 
 
 def test_2_all_check_functions():
-    """All 7 check functions are exported and callable."""
+    """All 11 check functions are exported and callable."""
     expected_names = [
         "check_1_rule_counts",
         "check_2_lesson_counts",
@@ -71,6 +75,10 @@ def test_2_all_check_functions():
         "check_5_head_hardcode",
         "check_6_version_consistency",
         "check_7_pending_count",
+        "check_8_uncommitted_state_files",
+        "check_9_manifest_self_row",
+        "check_10_review_numbering",
+        "check_11_z_id_permanence",
     ]
     try:
         module = load_audit_module()
@@ -88,14 +96,14 @@ def test_2_all_check_functions():
     if missing:
         return False, f"problems: {missing}"
 
-    # Also verify ALL_CHECKS list contains exactly 7 items
+    # Also verify ALL_CHECKS list contains exactly 11 items
     all_checks = getattr(module, "ALL_CHECKS", None)
     if all_checks is None:
         return False, "ALL_CHECKS list not exported"
-    if len(all_checks) != 7:
-        return False, f"ALL_CHECKS has {len(all_checks)} items, expected 7"
+    if len(all_checks) != 11:
+        return False, f"ALL_CHECKS has {len(all_checks)} items, expected 11"
 
-    return True, "all 7 check functions present and callable"
+    return True, "all 11 check functions present and callable"
 
 
 def test_3_run_on_real_project():
@@ -204,7 +212,7 @@ def test_5_constants_valid():
 
 
 def test_6_reserved_lesson_ids():
-    """RESERVED_LESSON_IDS contains the expected 28 IDs."""
+    """RESERVED_LESSON_IDS contains the expected 32 IDs (post-S3.3 + M89-M92 v2.14)."""
     try:
         module = load_audit_module()
     except Exception as e:
@@ -215,18 +223,19 @@ def test_6_reserved_lesson_ids():
         return False, "RESERVED_LESSON_IDS not exported"
 
     expected = {22, 24, 29, 80, 81}
-    expected.update(range(32, 44))  # M32-M43 = 12
-    expected.update(range(45, 56))  # M45-M55 = 11
+    expected.update(range(32, 44))  # M32-M43 = 12 IDs
+    expected.update(range(45, 56))  # M45-M55 = 11 IDs
+    expected.update(range(89, 93))  # M89-M92 = 4 IDs (v2.14 S3.3)
 
     if reserved != expected:
         diff_missing = expected - reserved
         diff_extra = reserved - expected
         return False, f"mismatch - missing: {sorted(diff_missing)}, extra: {sorted(diff_extra)}"
 
-    if len(reserved) != 28:
-        return False, f"expected 28 IDs, got {len(reserved)}"
+    if len(reserved) != 32:
+        return False, f"expected 32 IDs, got {len(reserved)}"
 
-    return True, "RESERVED_LESSON_IDS contains all 28 expected IDs"
+    return True, "RESERVED_LESSON_IDS contains all 32 expected IDs"
 
 
 def test_7_help_output():
@@ -254,6 +263,56 @@ def test_7_help_output():
 
 
 # =============================================================================
+# Helper for check-specific tests (DRY pattern)
+# =============================================================================
+
+
+def _run_specific_check(check_num: int) -> tuple:
+    """Helper: run audit script with --check N and verify no crash."""
+    try:
+        result = subprocess.run(
+            [sys.executable, str(AUDIT_SCRIPT), "--check", str(check_num)],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=30,
+            cwd=str(REPO_ROOT),
+        )
+    except subprocess.TimeoutExpired:
+        return False, f"check_{check_num} timed out (>30s)"
+    except Exception as e:
+        return False, f"subprocess failed: {e}"
+
+    if result.returncode not in (0, 1):
+        return False, (
+            f"check_{check_num} exited {result.returncode}: " f"{(result.stderr or '')[:200]}"
+        )
+
+    return True, f"check_{check_num} ran cleanly (exit={result.returncode})"
+
+
+def test_8_check_8_runs():
+    """check_8 (uncommitted state files, M93) runs without crash."""
+    return _run_specific_check(8)
+
+
+def test_9_check_9_runs():
+    """check_9 (manifest self-row, Z3.15) runs without crash."""
+    return _run_specific_check(9)
+
+
+def test_10_check_10_runs():
+    """check_10 (Review numbering, Z3.16) runs without crash."""
+    return _run_specific_check(10)
+
+
+def test_11_check_11_runs():
+    """check_11 (Z-ID permanence, Rule #74) runs without crash."""
+    return _run_specific_check(11)
+
+
+# =============================================================================
 # Main
 # =============================================================================
 
@@ -265,6 +324,10 @@ ALL_TESTS = [
     ("test_5_constants_valid", test_5_constants_valid),
     ("test_6_reserved_lesson_ids", test_6_reserved_lesson_ids),
     ("test_7_help_output", test_7_help_output),
+    ("test_8_check_8_runs", test_8_check_8_runs),
+    ("test_9_check_9_runs", test_9_check_9_runs),
+    ("test_10_check_10_runs", test_10_check_10_runs),
+    ("test_11_check_11_runs", test_11_check_11_runs),
 ]
 
 

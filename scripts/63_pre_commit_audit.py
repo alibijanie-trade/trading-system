@@ -12,6 +12,12 @@ Coverage of M-rules (lessons):
     M75 - Within-File Consistency           -> checks 1, 2, 6
     M77 - HEAD Never Hardcode               -> check_5
     M79 - Reserved IDs Explicit             -> check_4
+    M93 - Triple-Rule Atomic Boundary       -> check_8       (NEW v2.14)
+    M96 / Rule #74 - Z-ID Permanence        -> check_11      (NEW v2.14)
+
+Z3-derived audits (without single M-lesson origin):
+    Z3.15 - Manifest Self-Reference         -> check_9       (NEW v2.14)
+    Z3.16 - Review Numbering Integrity      -> check_10      (NEW v2.14)
 
 Usage:
     python scripts/63_pre_commit_audit.py
@@ -25,6 +31,7 @@ Exit codes:
 
 import argparse
 import re
+import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -124,6 +131,38 @@ FILES_WHERE_HASHES_OK = {
     "CHANGELOG.md",
     "SESSION_STATUS.md",  # documents Git HEAD references
 }
+
+# State-of-record files (M93 Triple-Rule atomic boundary, Rule #73).
+# Used by check_8 to detect non-atomic commits.
+STATE_OF_RECORD_FILES = {
+    "SESSION_STATUS.md",
+    "CHAT_LOG.md",
+    "PENDING_FOR_NEXT_VERSION.md",
+    "REVIEW_LOG.md",
+    "PROJECT_MANIFEST.md",
+}
+
+# Manifest path for self-row check (Z3.15)
+PROJECT_MANIFEST_MD = DOCS / "PROJECT_MANIFEST.md"
+
+# Review log path for sequential numbering check (Z3.16)
+REVIEW_LOG_MD = DOCS / "REVIEW_LOG.md"
+
+# Locked permanent docs where Z-ID references are NOT permitted (Rule #74, M96).
+# Excluded by design:
+#   - 02_lessons.md: M-lesson explanations cite Z origins legitimately
+#   - 03_bugs.md: bug origins
+#   - 06_meta.md: procedural references
+#   - state-of-record files: PENDING is Z-namespace authority
+PERMANENT_DOCS_NO_Z_IDS = [
+    MAIN_MD,
+    RULES_MD,
+    PRINCIPLES_MD,
+    ARCH_MD,
+]
+
+# Specific Z-ID pattern (Z2.N or Z3.N format, not the generic word "Z-ID")
+Z_ID_PATTERN = re.compile(r"\bZ[23]\.\d+\b")
 
 
 # =============================================================================
@@ -605,6 +644,260 @@ def check_7_pending_count() -> CheckResult:
 
 
 # =============================================================================
+# CHECK 8: Uncommitted state files (M93 Triple-Rule, Rule #73)
+# =============================================================================
+
+
+def check_8_uncommitted_state_files() -> CheckResult:
+    """
+    Detect state-of-record files modified but not staged when other state
+    files ARE staged (M93 atomic violation risk, Rule #73).
+
+    Enforcement logic:
+      - If NO state files are staged: PASS (routine code commit, M93 N/A)
+      - If state files ARE staged AND others are modified-not-staged: FAIL
+      - If state files staged AND no others modified: PASS (atomic clean)
+
+    This avoids blocking routine T3 code commits with unrelated state-file
+    edits sitting in working tree.
+    """
+    name = "check_8_uncommitted_state_files"
+    details: List[str] = []
+
+    try:
+        unstaged_result = subprocess.run(
+            ["git", "diff", "--name-only"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=10,
+            cwd=str(REPO_ROOT),
+        )
+        staged_result = subprocess.run(
+            ["git", "diff", "--cached", "--name-only"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=10,
+            cwd=str(REPO_ROOT),
+        )
+    except subprocess.TimeoutExpired:
+        return CheckResult(name, True, "git command timeout (skip)", details)
+    except FileNotFoundError:
+        return CheckResult(name, True, "git not available (skip)", details)
+    except Exception as e:
+        return CheckResult(name, True, f"git command error (skip): {e}", details)
+
+    if unstaged_result.returncode != 0 or staged_result.returncode != 0:
+        return CheckResult(name, True, "not in git repo (skip)", details)
+
+    unstaged_names = {Path(p).name for p in unstaged_result.stdout.splitlines() if p.strip()}
+    staged_names = {Path(p).name for p in staged_result.stdout.splitlines() if p.strip()}
+
+    staged_state = staged_names & STATE_OF_RECORD_FILES
+    unstaged_state = unstaged_names & STATE_OF_RECORD_FILES
+
+    details.append(f"Staged state files: {sorted(staged_state) if staged_state else '(none)'}")
+    details.append(
+        f"Unstaged state files: {sorted(unstaged_state) if unstaged_state else '(none)'}"
+    )
+
+    # Enforce atomic boundary only when user is committing state files
+    if not staged_state:
+        return CheckResult(
+            name,
+            True,
+            "no state files staged (M93 not applicable to this commit)",
+            details,
+        )
+
+    if unstaged_state:
+        return CheckResult(
+            name,
+            False,
+            "M93 Triple-Rule atomic violation risk",
+            details
+            + [f"Unstaged state file: {f}" for f in sorted(unstaged_state)]
+            + ["Stage all modified state files together (Rule #73, M93)"],
+        )
+
+    return CheckResult(
+        name,
+        True,
+        f"M93 atomic boundary clean ({len(staged_state)} state file(s) staged together)",
+        details,
+    )
+
+
+# =============================================================================
+# CHECK 9: Manifest self-row + first-run gap (Z3.15)
+# =============================================================================
+
+
+def check_9_manifest_self_row() -> CheckResult:
+    """
+    Verify PROJECT_MANIFEST.md contains its own row in T1 table with
+    <self> placeholder in SHA256 column (Z3.15 first-run gap mitigation).
+
+    Self-reference is structurally necessary: a hash cannot encode itself
+    (chicken-and-egg). Project convention: use `<self>` placeholder.
+    """
+    name = "check_9_manifest_self_row"
+    details: List[str] = []
+
+    if not PROJECT_MANIFEST_MD.exists():
+        return CheckResult(name, False, "PROJECT_MANIFEST.md not found", details)
+
+    text = PROJECT_MANIFEST_MD.read_text(encoding="utf-8")
+
+    # Pattern matches row containing both the path AND the <self> placeholder.
+    # DOTALL allows match across cells; non-greedy to scope to single row.
+    self_row_pattern = re.compile(
+        r"`docs/PROJECT_MANIFEST\.md`.*?`<self>`",
+        re.IGNORECASE | re.DOTALL,
+    )
+
+    if self_row_pattern.search(text):
+        details.append("self-row found with <self> placeholder")
+        return CheckResult(
+            name,
+            True,
+            "manifest self-row present (Z3.15 mitigated)",
+            details,
+        )
+
+    # Diagnostic fallback
+    if "docs/PROJECT_MANIFEST.md" in text:
+        return CheckResult(
+            name,
+            False,
+            "manifest path present but <self> placeholder missing",
+            details + ["expected '<self>' in SHA256 column of self-row"],
+        )
+
+    return CheckResult(
+        name,
+        False,
+        "manifest self-row missing entirely (Z3.15 first-run gap)",
+        details,
+    )
+
+
+# =============================================================================
+# CHECK 10: Review numbering integrity (Z3.16)
+# =============================================================================
+
+
+def check_10_review_numbering() -> CheckResult:
+    """
+    Verify REVIEW_LOG.md IDs are sequential with no gaps and no duplicates
+    (Z3.16). Per REVIEW_LOG section 1: "ID motevali ast (no gaps allowed)".
+    """
+    name = "check_10_review_numbering"
+    details: List[str] = []
+
+    if not REVIEW_LOG_MD.exists():
+        return CheckResult(name, True, "REVIEW_LOG.md not found (skip)", details)
+
+    text = REVIEW_LOG_MD.read_text(encoding="utf-8")
+
+    # Match table rows starting with "| NNN |" (zero-padded 3-digit IDs)
+    id_pattern = re.compile(r"^\|\s*(\d{3})\s*\|", re.MULTILINE)
+    found_ids = [int(m.group(1)) for m in id_pattern.finditer(text)]
+
+    if not found_ids:
+        return CheckResult(name, True, "no Review IDs found (skip)", details)
+
+    found_sorted = sorted(found_ids)
+    first_id = found_sorted[0]
+    last_id = found_sorted[-1]
+    details.append(f"REVIEW_LOG.md: {len(found_ids)} review(s), IDs {first_id:03d}-{last_id:03d}")
+
+    # Check duplicates
+    if len(set(found_ids)) != len(found_ids):
+        seen = set()
+        dupes = sorted({i for i in found_ids if (i in seen) or seen.add(i)})
+        return CheckResult(
+            name,
+            False,
+            "Review ID duplicates detected",
+            details + [f"Duplicate IDs: {dupes}"],
+        )
+
+    # Check sequential
+    expected = list(range(first_id, last_id + 1))
+    if found_sorted != expected:
+        missing = sorted(set(expected) - set(found_sorted))
+        return CheckResult(
+            name,
+            False,
+            "Review ID sequence gap detected (Z3.16)",
+            details + [f"Missing IDs: {[f'{i:03d}' for i in missing]}"],
+        )
+
+    return CheckResult(
+        name,
+        True,
+        f"Review IDs sequential ({len(found_ids)} entries, no gaps)",
+        details,
+    )
+
+
+# =============================================================================
+# CHECK 11: Z-ID Permanence (Rule #74, M96)
+# =============================================================================
+
+
+def check_11_z_id_permanence() -> CheckResult:
+    """
+    Verify Locked permanent constitution docs do not reference temporary
+    Z-IDs (Rule #74 Z-ID Permanence Boundary, M96).
+
+    Scope: main.md + 01_rules.md + 04_principles.md + 05_architecture.md
+    Excluded:
+      - 02_lessons.md (M-lesson explanations legitimately cite Z origins)
+      - 03_bugs.md (bug origins)
+      - 06_meta.md (procedural references)
+      - State-of-record files (PENDING is Z-namespace authority)
+    """
+    name = "check_11_z_id_permanence"
+    details: List[str] = []
+
+    violations: List[str] = []
+
+    for fpath in PERMANENT_DOCS_NO_Z_IDS:
+        if not fpath.exists():
+            continue
+        text = fpath.read_text(encoding="utf-8")
+        for m in Z_ID_PATTERN.finditer(text):
+            zid = m.group(0)
+            start = max(0, m.start() - 30)
+            end = min(len(text), m.end() + 30)
+            ctx = text[start:end].replace("\n", " ").strip()
+            violations.append(f"{fpath.name}: '{zid}' at char {m.start()} - ctx: ...{ctx[:80]}...")
+
+    details.append(f"Scanned {len(PERMANENT_DOCS_NO_Z_IDS)} Locked permanent doc(s)")
+    details.append("Excluded scope: 02_lessons.md, 03_bugs.md, 06_meta.md, state-of-record")
+
+    if violations:
+        return CheckResult(
+            name,
+            False,
+            f"{len(violations)} Z-ID reference(s) in Locked permanent docs (Rule #74)",
+            details + violations[:10],
+        )
+
+    return CheckResult(
+        name,
+        True,
+        f"no Z-IDs in {len(PERMANENT_DOCS_NO_Z_IDS)} Locked permanent docs",
+        details,
+    )
+
+
+# =============================================================================
 # Main runner
 # =============================================================================
 
@@ -616,6 +909,10 @@ ALL_CHECKS: List[Callable[[], CheckResult]] = [
     check_5_head_hardcode,
     check_6_version_consistency,
     check_7_pending_count,
+    check_8_uncommitted_state_files,
+    check_9_manifest_self_row,
+    check_10_review_numbering,
+    check_11_z_id_permanence,
 ]
 
 
@@ -630,7 +927,7 @@ def main():
         "--check",
         type=int,
         default=0,
-        help="Run only check N (1-7); default 0 = run all",
+        help="Run only check N (1-11); default 0 = run all",
     )
     args = parser.parse_args()
 

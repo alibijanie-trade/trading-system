@@ -589,7 +589,7 @@ python scripts/19_test_excel_reader.py
 
 ### قانون #۶۶ ⭐⭐⭐ — Push اجباری در پایان هر چت
 
-**نسخه افزوده:** v2.12 (تبدیل از Proposed در PENDING Z2.9 به Locked)
+**نسخه افزوده:** v2.12 (تبدیل از Proposed به Locked)
 **سطح:** 🔒 Locked
 **کشف‌شده در:** چت ۱۰ با Bug #۵۴ (Decisions Numbering Gap)
 
@@ -653,7 +653,7 @@ git commit -m "feat(...): description"
 
 ### قانون #۶۷ ⭐⭐⭐ — Cross-shell EXECUTE blocks اجباری
 
-**نسخه افزوده:** v2.13 (تبدیل از PENDING Z2.20 / M87 candidate به Locked)
+**نسخه افزوده:** v2.13 (تبدیل از M87 candidate به Locked)
 **سطح:** 🔒 Locked
 **کشف‌شده در:** چت ۱۱.۰.الف با enforcement test M85 (نوشتن قانون و نقض فوری)
 
@@ -784,17 +784,17 @@ Constitution version در یک authoritative source تعریف می‌شود (`m
 
 #### استدلال
 
-drift در version identifier (مثل Z3.12 hook label، Z3.19 module headers) از مهم‌ترین Documentation Drift genera است. SSoT pattern + transitional list = controlled migration windows.
+drift در version identifier (نمونه‌های genus: pre-commit hook label sync، module header sync — جزئیات origins در `02_lessons.md` M71/M102) از مهم‌ترین Documentation Drift genera است. SSoT pattern + transitional list = controlled migration windows.
 
 #### Implementation Notes (M102 — transitional safety)
 
 - `scripts/63_pre_commit_audit.py` ACCEPTABLE_VERSIONS = list of versions accepted during migration window (e.g., `["v2.12", "v2.13"]` در حال حاضر، `["v2.13", "v2.14"]` پس از S3.3 atomic)
-- Module headers update **atomic با** ACCEPTABLE_VERSIONS extension (audit-fail prevention — Z3.19 ordering)
-- Z3.19 fix در S3.3 با این pattern reconcile می‌شود
+- Module headers update **atomic با** ACCEPTABLE_VERSIONS extension (audit-fail prevention — ordering dependency)
+- module header sync در S3.3 با این pattern reconcile شد
 
 #### Cross-refs
 - **Lesson:** M71 (Documentation Drift)، M102 (Rule-Implementation Decoupling)
-- **Bug:** Z3.12 (pending S3.3 — pre-commit hook label sync)، Z3.19 (pending S3.3 — module headers sync)
+- **Bug origins (transitional، refer به PENDING):** pre-commit hook label sync، module header sync — هر دو RESOLVED در S3.3
 
 ---
 
@@ -815,7 +815,7 @@ manifest خود T1 است؛ بدون self-awareness audit، silent drift در ti
 
 - Implementation در `scripts/64_generate_manifest.py` (D2) — currently active
 - Audit Check #8 + #9 در `scripts/63_pre_commit_audit.py` (D12) در S4 implement می‌شود
-- Z3.15 (first-run gap) در D12 implementation address می‌شود
+- first-run gap pattern (origin در PENDING) در D12 implementation address می‌شود
 
 #### Cross-refs
 - **Lesson:** M71 (Documentation Drift)
@@ -835,24 +835,24 @@ manifest خود T1 است؛ بدون self-awareness audit، silent drift در ti
 - `CHAT_LOG.md` — حتماً
 - `PENDING_FOR_NEXT_VERSION.md` — حتماً
 - `REVIEW_LOG.md` — اگر Review status transition
-- `PROJECT_MANIFEST.md` — اگر stage-final یا mid-stage drift detected (Z3.21 policy)
+- `PROJECT_MANIFEST.md` — اگر stage-final یا mid-stage drift detected (per pending policy decision در PENDING)
 
 separation به چند commit = Triple-Rule violation.
 
 #### استدلال
 
-Z3.11 (RESOLVED v2.13) precedent: split state-of-record across commits → drift و inconsistency. atomic = single point of synchronization.
+Triple-Rule violation precedent (origin RESOLVED v2.13، detail در `02_lessons.md` M93): split state-of-record across commits → drift و inconsistency. atomic = single point of synchronization.
 
 #### Implementation Notes (M102)
 
 - Triple-Rule operational pattern در M93 detail (`02_lessons.md` §۲.۸)
-- chat-end mid-stage vs stage-end final policy distinction در Z3.21 (open policy question، resolution در v2.14 design یا S3.4)
+- chat-end mid-stage vs stage-end final policy distinction در PENDING (open policy question، resolution در v2.14 design یا later)
 - Audit Check #8 (D12) این را mechanically enforce می‌کند
 
 #### Cross-refs
 - **Lesson:** M93 (Triple-Rule Atomic Boundary)
-- **Bug:** Z3.11 (RESOLVED v2.13)
-- **Pending policy:** Z3.21
+- **Bug origin (RESOLVED v2.13, refer به `02_lessons.md` M93):** Triple-Rule violation precedent
+- **Pending policy:** open policy question on chat-end mid-stage manifest refresh (refer به PENDING)
 
 ---
 
@@ -877,7 +877,7 @@ Z-IDs در v(X+1) merge ادغام می‌شوند و evaporate (یا با RESOL
 
 #### Cross-refs
 - **Lesson:** M96 (Z-ID Permanence Anti-pattern)
-- **Pending (transitional):** Z3.17 — resolved by این Rule. permanent reference: Rule #۷۴ خود (M102 acknowledgment — transitional Z-ref در atomic v2.14 update window acceptable، post-S3.4 Z3.17 marker RESOLVED می‌خورد per Z2.20 precedent)
+- **Origin (transitional):** anti-pattern catalog entry در PENDING — resolved by این Rule. permanent reference: Rule #۷۴ خود (M102 acknowledgment — origin chain detail در `02_lessons.md` M96)
 
 ---
 
@@ -962,7 +962,7 @@ D24 evidence: 7 Discoveries logged، تعدادی escalate شدند (HM-candidat
 - **Precedent rules:** #۶۶ (Push اجباری — pattern explicit boundary actions)، #۲۵ (Pre-Add checklist visibility — pattern visible execution)، #۴۸ (boot protocol — pattern systematic per-chat action)
 - **HELPER_PROTOCOL:** §۴.۱۱ (output format)، §۲.۴.۲ (sign-off milestone)
 - **Reference Discoveries (initial corpus):**
-  - part04 Discoveries (Z3.18-Z3.20 + M101+M102 + R-NEW این Rule)
+  - part04 Discoveries (workspace handoff cleanup، module header drift، MCP edit_file payload limit + M101+M102 + R-NEW این Rule — origins در PENDING)
   - part05 Discoveries #1-#13 (PENDING strategic section)
   - D24 Discoveries #1-#7 (PENDING K4 section)
 
@@ -973,7 +973,7 @@ D24 evidence: 7 Discoveries logged، تعدادی escalate شدند (HM-candidat
 ✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1)** — قوانین #۱-۷۷ با شرح authoritative.
 
 ✅ **افزوده‌های v2.13 اعمال‌شده (چت ۱۱.۰.ج):**
-- قانون #۶۷ Locked (Cross-shell EXECUTE blocks اجباری) — تبدیل از PENDING Z2.20
+- قانون #۶۷ Locked (Cross-shell EXECUTE blocks اجباری) — تبدیل از M87 candidate
 
 ✅ **افزوده‌های v2.14 اعمال‌شده (S3.1 از MDRS v2 — چت part07):**
 - قوانین #۶۸-#۷۷ Locked (۱۰ قانون جدید) — تبدیل از PENDING Rules-candidate
@@ -983,7 +983,7 @@ D24 evidence: 7 Discoveries logged، تعدادی escalate شدند (HM-candidat
 🔮 **افزوده‌های بعدی (در S3.2-S3.3 part07):**
 - Golden Rule principle در `04_principles.md` (S3.2)
 - Templates 11-12 در `06_meta.md` (S3.2)
-- Module headers v2.12 → v2.14 + ACCEPTABLE_VERSIONS extension (S3.3 atomic، Z3.19 fix)
+- Module headers v2.12 → v2.14 + ACCEPTABLE_VERSIONS extension (S3.3 atomic، module header sync resolved)
 - Audit script CURRENT_VERSION update (S3.3)
 
 ---
