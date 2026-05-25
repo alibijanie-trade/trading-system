@@ -1,0 +1,54 @@
+# PART09 CHAT-END DEFERRED — Resume in part10
+
+🚨 P10-BOOT-PRIORITY-1: این note قبل از regular handoff خوانده شود
+
+**Date:** 2026-05-25
+**Source chat:** TRADING-phase1-part09-mdrs-v2-s4-audit-checks
+**Branch:** infra/v2.14-source-of-truth
+**Reason:** HM-2 escape per HELPER_PROTOCOL.md §۳.۴
+            (HM-9 cumulative = 6 events part09)
+
+## State at deferral
+
+✅ S4 commit `234ba2f` pushed (D12 Audit Checks #8-11)
+✅ Z3.15, Z3.16, Z3.17, Z3.25 RESOLVED in S4 commit
+✅ All 11/11 checks pass
+✅ S4 deliverable complete
+
+⏸️ Triple-Rule atomic chat-end housekeeping DEFERRED:
+   - SESSION_STATUS.md (8 surgical edits planned)
+   - CHAT_LOG.md (part09 section append planned)
+   - PENDING_FOR_NEXT_VERSION.md (Z3.x RESOLVED markers
+     + K-section part09 + P10-CANDIDATEs 1-7)
+   - REVIEW_LOG.md (Row #002 M101 backfill to `3fd2405`)
+   - PROJECT_MANIFEST.md (D2 re-run)
+   - PHASE1_PART10_HANDOFF.txt (NEW file)
+
+## P10-CANDIDATEs (carry-forward)
+
+1. Helper-Sandbox Synthesis Drift (meta)
+2. Bootstrap Paradox of Cross-Chat Infrastructure (meta)
+3. Cross-Side Decision Sync Failure (process)
+4. live_inbox setup formalization (design)
+5. W3 Chat-End File Sync Verification formalization (process)
+6. HM-9 Tool-Level Reliability Pattern (tool/process,
+   cumulative 8 events — Rule promotion candidate)
+7. File-Based Decision Tracking Registry for helper sessions
+   (process — automation per HM-META-K)
+
+## Resume mechanism for part10 boot
+
+1. Read this note FIRST (before regular handoff)
+2. Read regular boot files (per Rule #48)
+3. Resume Triple-Rule atomic chat-end part09:
+   - Execute all 6 file updates above
+   - Apply W3 verification (LEVEL 1 + LEVEL 2)
+   - Commit atomic + push
+4. Then proceed to regular part10 boot (Infrastructure Sprint)
+
+## Discoveries part09 (12 — to be logged in part10 CHAT_LOG)
+Listed in batch preview turn 25 main chat (review session log)
+
+## HM-9 escalation
+Cumulative: 8 total (part08: 2 + part09: 6)
+Rule promotion candidate confirmed for part10
