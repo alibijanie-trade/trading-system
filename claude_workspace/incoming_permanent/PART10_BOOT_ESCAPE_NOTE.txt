@@ -1,0 +1,65 @@
+# PART10 BOOT ESCAPE NOTE
+
+🚨 P10-NEXT-PRIORITY-1: قبل از regular boot، این note خوانده شود
+
+**Date:** 2026-05-26
+**Source chat:** TRADING-phase1-part10 (attempt #2)
+**Reason:** HM-2 escape per HELPER_PROTOCOL.md §3.4
+            HM-9 #10 cumulative — edit_file atomic timeout
+            روی PART09_CHAT_END_DEFERRED_NOTE.txt
+
+## State at escape
+
+✅ S4 commit 234ba2f safe در remote
+✅ HEAD: 90db89f (هیچ تغییر این session)
+✅ PART09_CHAT_END_DEFERRED_NOTE.txt سالم (5894 bytes)
+✅ HELPER_SESSION_TODO_part09_final.md سالم (47797 bytes)
+✅ atomic timeout — هیچ partial write آلودگی
+
+❌ PERSIST TASKS A-G از helper paste-ready turn ۶۹
+   هنوز اجرا نشده
+
+## Critical content awaiting persist
+
+content در helper chat session part09 (turn ۶۹+) حفظ است:
+- F42-F53 observations
+- W4-W5 workflow rules
+- B1-B4 boot discipline rules
+- L1-L2 universal rules (already)
+- Mechanism A-E (already)
+- Criteria C1-C9 (already)
+- P10-CANDIDATEs 9-14
+- CHAT_BOOT_TRIGGER_TEMPLATE.md (full template، 5 sections)
+
+## HM-9 escalation status
+
+Cumulative: 10 events (part08: 2 + part09: 6 + part10: 2)
+- HM-9 #9: part10 boot attempt #1 (last week)
+- HM-9 #10: part10 boot attempt #2 (today)
+
+Recommendation: Rule promotion to constitution در part10.
+Heavy-write smoke test باید به Mechanism D اضافه شود (F49).
+
+## Recovery for next chat
+
+(الف) Windows restart + MCP fresh + main chat جدید
+(ب) Manual editor execution (VS Code/notepad) با paste
+    از helper chat content
+(پ) Wait برای MCP server issue resolve
+
+## Boot discipline for next chat
+
+⚠️ همه قواعد part09 helper session apply می‌شوند:
+- B1-B4 (Boot Discipline)
+- W1-W5 (Workflow Rules)
+- L1-L2 (Universal Language + Anti-Circular)
+- F1-F53 (Observations)
+- Mechanism A-E (Self-check هر turn)
+- Criteria C1-C9
+
+reference:
+- claude_workspace/HELPER_SESSION_TODO_part09_final.md
+- claude_workspace/incoming_permanent/PART09_CHAT_END_DEFERRED_NOTE.txt
+- (آینده) claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md
+
+این فایل‌ها source-of-truth هستند.
