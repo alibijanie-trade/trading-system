@@ -1,0 +1,61 @@
+# HANDOFF — ادامهٔ part16 (codify v2.16 انجام شد) → part17
+
+> فایل permanent (Rule #۶۲). چت part17 باید آن را در boot بخواند.
+> ساخته‌شده: chat-end part16 (2026-05-30). Commit codify part16 (شناخته‌شده): `8c9c6a7`. Commit chat-end part16: <chat-end part16 hash — در part17 boot از git backfill شود (M101)>.
+> ⭐ منبع تجمعی: `claude_workspace/PHASE_LEDGER.md` — اول آن را بخوان.
+> 🏷️ NEXT CHAT NAME (MANDATORY — HM-3): `TRADING-phase1-part17-phase3-deprecate-and-project-knowledge`
+>   (شمارهٔ ۱۷ مکانیکی مشتق شد per #۸۶: بالاترین handoff موجود PART16 +۱؛ topic-slug توصیفی/قابل‌تغییر.)
+
+---
+
+## ⭐ اصل حاکم (اول بخوان)
+جامعیت > یک‌چت. ناقص‌خواندن ممنوع (Rule #۸۰). budget کم آمد → escape + state امن، نه ادامهٔ ناقص.
+
+## 0) Context + boot اجباری
+- trading-system، Windows، root `D:\Projects\trading-system`، Filesystem MCP. Branch `infra/v2.14-source-of-truth`. کاربر ali. فارسی + انگلیسی فنی.
+- boot: `claude_workspace\CHAT_BOOT_TRIGGER_TEMPLATE.md` را follow کن. هیچ task قبل از STEP 2/3.
+- اول `PHASE_LEDGER.md` را بخوان (part01→part16).
+- Constitution اکنون **v2.16** (۸۶ قانون #۱-۸۶، درس M1-M104، ۸ Review #۰۰۱-۰۰۸، Decision Max ۶۸).
+- مکانیزم‌های هر turn: Self-Check بالا · Honesty Audit (#۸۳) پایین · Scope Contract (#۷۸) · تأیید قبل از write (#۵۱) · commit `-F` ASCII (M99) · read-back (M82) · تک‌خوانی فایل غول (HM-9/M66) · check_12 دوحلقه مکانیکی · **#۸۶ تازه: اعداد مکانیکی از منبع زنده، نه حافظه**.
+
+## 1) M101 backfill اول part17 (دونقطه‌ای + اختیاری)
+hash chat-end part16 (از `git -C D:\Projects\trading-system rev-parse --short HEAD` پس از push part16 chat-end) → دو جای placeholder:
+  1. `PHASE_LEDGER.md` ردیف `part16` ستون آخر: `<backfill در part17 boot، M101>` → hash واقعی.
+  2. `PHASE_LEDGER.md` بخش «HEAD و hashها»: خط `<chat-end part16>` → hash واقعی.
+  3. (اختیاری) اگر CHAT_LOG بخش boot part17 ساخته شد، parent=این hash ثبت شود.
+نکته: commit codify `8c9c6a7` از قبل ثبت‌شده (شناخته‌شده در زمان ساخت)، backfill لازم ندارد — فقط chat-end.
+
+## 2) 🟠 اولویت اصلی part17 — باقیماندهٔ Phase 3 (codify v2.16 بسته شد)
+codify v2.16 (M104 + #۸۶) در part16 کامل + push (`8c9c6a7`) + audit ۱۲/۱۲ + companion ۱۴/۱۴. آیتم‌های باز Phase 3 (Objective 2 در PHASE_LEDGER/SESSION_STATUS):
+- **deprecate رسمی legacy docs**: `سند_جامع_v2_6..v2_11`، PROJECT_GOVERNANCE، CLAUDE_CHECKLIST، PROJECT_CONTEXT، ARCHITECTURE (پیشنهاد: header DEPRECATED + اشاره به modular، نه حذف — Rule #۲۴).
+- **بازسازی `PROJECT_KNOWLEDGE.md` همگام v2.16 (Rule #۵۵)** — سپس به کاربر بگو نسخهٔ جدید را در Project Knowledge جایگزین کند (فایل فعلی Project نسخهٔ v2.9-era/chat7 است؛ boot آسیب نمی‌بیند چون از docs/ زنده می‌خوانیم، ولی #۵۵ ایجاب می‌کند به‌روز شود).
+- catch-up README/CHANGELOG/TASK_BACKLOG + workspace Tier protection + DECISIONS_LOG drift backfill.
+- main.md stale: branch `infra/governance-overhaul` (واقعی: `infra/v2.14-source-of-truth`) + placeholder `Created in commit`.
+- boot-template legacy ref #۲۱: ارجاع به `سند_جامع_v2_11` → اصلاح به modular.
+- PERSIST TASKS A-G معلق part09/10 (verify جذب).
+- backfill resolution REVIEW_LOG #۰۰۱ و #۰۰۳ با hash واقعی (git log).
+- cosmetic: کامنت `# ... exactly 11 items` در test_2 (اگر هنوز هست) → ۱۲؛ بررسی هر cosmetic count دیگر.
+- تصمیمات Settings — موکول، بدون تغییر بدون تأیید.
+هر کدام = Triple-Rule M93/#۷۳ + Review trigger #۶۹ اگر constitution را لمس کرد + audit واقعی قبل از commit.
+
+## 3) Phase 4 (part17+)
+اسکن ۱۰۰٪ ۲۸۲ فایل classified با #۷۸ + #۷۹ + #۸۴. حجیم → چند چت.
+
+## 4) شرط escape (دستور کاربر، فعال)
+HM-9 یا overflow → escape، باقی به چت بعد، push نزن، state امن گزارش. ⚠️ #۸۶: اگر escape شد، در escape-note صریح ثبت کن frontier جلو نرفت و شمارهٔ handoff بعدی را مکانیکی مشتق کن (نه literal).
+
+## 5) جملهٔ شروع پیشنهادی part17
+«part17 — boot استاندارد (اول PHASE_LEDGER)، سپس M101 backfill دونقطه‌ای (hash chat-end part16 → ردیف ledger part16 + HEAD). بعد اولویت = باقیماندهٔ Phase 3: deprecate legacy docs + بازسازی PROJECT_KNOWLEDGE.md (#۵۵، سپس اطلاع به کاربر برای جایگزینی در Project) + catch-up README/CHANGELOG. اصل: جامعیت > یک‌چت.»
+
+---
+
+## 🔁 قانون تداوم دوحلقه‌ای (canonical — check_12 مکانیکی)
+۱) حلقهٔ ۱ (Ledger): ردیف + ۳ Objective + HEAD + DEADLINE (append-only #۲۴). ۲) حلقهٔ ۲ (Handoff): `PHASE1_PART{N+1}_HANDOFF.txt` با **اشتقاق مکانیکی شماره (#۸۶ Locked)**. ۳) هر دو در یک commit (M82) + push (#۶۶) + paste. check_12: H==L+1.
+
+## 🔢 وضعیت frontier در لحظهٔ ساخت این handoff
+- Ledger L = part16 (ردیف part16 در همین chat-end افزوده شد).
+- این handoff = PHASE1_PART17 → H = 17 → H==L+1 (17=16+1) ✅ سبز.
+- اشتقاق #۸۶ (Locked): بالاترین handoff موجود = PART16 (۱۶) → +۱ = ۱۷ · و L_new = ۱۶ → H = L_new + ۱ = ۱۷. هر دو روش توافق دارند (این‌بار بدون divergence range-row).
+
+---
+پایان HANDOFF part17.
