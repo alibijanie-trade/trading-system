@@ -216,6 +216,7 @@ Claude در تمام مراحل پروژه همزمان در نقش‌های ز�
 | **۸۳ ⭐⭐⭐ 🆕** | Honesty Audit Trigger (HAT) — closing block 🔍 Honesty Audit در هر گزارش پیشرفت | v2.15 |
 | **۸۴ ⭐⭐⭐ 🆕** | Anti-Pattern-Matching Mandate (APMM) — بدون extrapolation از sample؛ هر مورد مستقل verify | v2.15 |
 | **۸۵ ⭐⭐⭐ 🆕** | Self-Activation Lock (Meta) — قواعد #۷۸-۸۴ خودکار فعال، نه با یادآوری کاربر | v2.15 |
+| **۸۶ ⭐⭐⭐ 🆕** | Escape-Aware Sequence Derivation — شمارندهٔ دنباله‌ای (handoff/ledger/continuity) از frontier مشتق شود + cross-check با invariant فعال (check_12)؛ escape ≠ chat-end | v2.16 |
 
 ---
 
@@ -1192,9 +1193,34 @@ Claude نمی‌تواند بر اساس ۳-۵ مشاهده الگو استنب�
 
 ---
 
+## شرح کامل قانون Mechanical-Claim Verification (#۸۶)
+
+### قانون #۸۶ ⭐⭐⭐ — Escape-Aware Sequence Derivation
+
+**نسخه افزوده:** v2.16
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+در هر artifact تداوم (escape/handoff/continuity/ledger row) هیچ شمارندهٔ دنباله‌ای literal از حافظه/الگو نوشته نشود؛ باید (الف) از frontier موجود مشتق شود («بالاترین + ۱») و (ب) پیش از قطعی‌شدن با invariant مکانیکی فعال (check_12، H==L+1) سازگار باشد. اگر چت escape شد، صریح ثبت شود frontier جلو نرفته.
+
+#### Implementation Notes (M102)
+
+قالب escape/handoff به‌جای عدد ثابت بنویسد «handoff بعدی = بالاترین PHASE1_PART{N}_HANDOFF موجود + ۱»؛ قبل از commitِ دارای گیت پیوستگی، audit واقعی اجرا شود؛ تمایز escape (frontier ثابت) ↔ chat-end (frontier +۱) صریح باشد.
+
+#### Genesis
+
+part14 escape-note off-by-one (PART16 به‌جای مکانیکیِ PART15).
+
+#### Cross-refs
+
+- عملیاتی‌کنندهٔ #۸۴ (APMM) · پشتوانهٔ M104 · check_12 · #۷۹ (QHP)
+
+---
+
 ## 🚧 وضعیت این ماژول
 
-✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1) + Trust Rules v2.15 (#۷۸-۸۵)** — قوانین #۱-۸۵ با شرح authoritative.
+✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1) + Trust Rules v2.15 (#۷۸-۸۵)** — قوانین #۱-۸۶ با شرح authoritative.
 
 ✅ **افزوده‌های v2.13 اعمال‌شده (چت ۱۱.۰.ج):**
 - قانون #۶۷ Locked (Cross-shell EXECUTE blocks اجباری) — تبدیل از M87 candidate

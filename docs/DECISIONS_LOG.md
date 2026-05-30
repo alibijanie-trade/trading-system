@@ -4,7 +4,7 @@
 
 > **محل قرارگیری:** `docs/DECISIONS_LOG.md`  
 > **به‌روز توسط:** Claude در پایان چت اگر تصمیم جدید گرفته شد (CLAUDE_CHECKLIST فاز ۳ مرحله ۴)  
-> **نسخه:** v1.4 (2026-05-30)
+> **نسخه:** v1.5 (2026-05-30)
 
 ---
 
@@ -63,7 +63,7 @@
 | **Auth & Security** | #11, #12, #13 |
 | **Frontend Architecture** | #20-#29 |
 | **Theme & UI Design** | #30-#48 |
-| **Process & Governance** | #50-#57, #67 |
+| **Process & Governance** | #50-#57, #67, #68 |
 | **Quality Hardening (Tier 2)** | #55, #56, #57 |
 | **Pre-commit & Git** | #58, #59, #60 |
 | **CCXT & Architecture (Phase 1)** | #61, #62, #63, #64 |
@@ -828,18 +828,52 @@ Binance API rate limits دارد. آیا custom token bucket بسازیم؟
 
 ---
 
+### Decision #68 — Mechanical-Claim Verification (M104 + Rule #۸۶) adoption
+
+**ثبت‌شده در:** چت part16 (`TRADING-phase1-part16-phase3-codify-v216-and-resume`)
+**تاریخ:** 2026-05-30
+**Status:** ✅ Accepted
+**دسته:** Process & Governance
+
+#### Context
+در part14 (هنگام ساخت escape-note)، شمارهٔ handoff به‌صورت literal «PART16» hard-code شد (از الگو، نه اشتقاق مکانیکی). چون part14 escape بود، مقدار درستِ مکانیکی PART15 بود → تعارض با check_12 (H==L+1) در part15 کشف شد. نیاز به قاعدهٔ ساختاری برای اشتقاق اعداد مکانیکی از منبع زنده.
+
+#### Options Considered
+1. **Option A — درس M104 + قانون #۸۶ (atomic batch، v2.16)** ✅ — هم درس هم enforcement رفتاری
+2. **Option B — فقط M104 بدون قانون** — M87 spirit: درس بدون positive constraint کافی نیست
+3. **Option C — defer به v2.17** — P-candidate part15 معلق می‌ماند، drift بیشتر
+
+#### Decision
+✅ **Option A** — M104 در 02_lessons.md + قانون #۸۶ در 01_rules.md + v2.16 bump.
+
+#### Rationale
+- positive constraint > negative reminder (#۴۶/#۶۷ precedent)
+- #۸۶ مکمل #۸۴ (APMM) + تثبیت check_12 به‌عنوان invariant مرجع
+- M104 هم‌خانوادهٔ M82 در سطح اعداد مکانیکی
+
+#### Consequences
+- 👍 اشتقاق مکانیکی اعداد دنباله‌ای، تمایز escape↔chat-end صریح
+- 👎 سربار خواندن منبع زنده پیش از نوشتن هر شناسه (پذیرفته‌شده)
+
+#### Reference
+- `01_rules.md` بخش «شرح کامل قانون Mechanical-Claim Verification (#۸۶)»
+- `02_lessons.md` M104 (§۲.۸)
+- Review #۰۰۸ (`docs/reviews/2026-05-30-escape-aware-sequence-derivation.md`)
+
+---
+
 ## آمار
 
 | Status | تعداد |
 |---|---|
-| ✅ Accepted (Recorded) | ۶۲ |
+| ✅ Accepted (Recorded) | ۶۳ |
 | ⬜ Reserved (غیر-ثبت‌شده) | ۵ (#۱۶-۱۹، #۴۹) |
 | ⚠️ Superseded | ۰ |
 | ❌ Rejected | ۰ |
 | ⏳ Pending | ۰ |
 
-**Max Decision ID:** ۶۷  
-**Total Recorded:** ۶۲  
+**Max Decision ID:** ۶۸  
+**Total Recorded:** ۶۳  
 **Reserved Slots:** ۵ (در دسته‌بندی موضوعی بالا مستند شد)
 
 **تصمیم برای Reserved IDs (پایان چت ۱۰ round 2):**  
@@ -849,6 +883,6 @@ Binance API rate limits دارد. آیا custom token bucket بسازیم؟
 
 ## 📌 پایان DECISIONS_LOG
 
-**نسخه:** v1.4 (2026-05-30 — part13/Phase 3 F-A: bump نسخه برای بازتاب Decision #۶۷ (Trust Rules #۷۸-۸۵، Review #۰۰۵) + sync نسخهٔ header از v1.0 به v1.4)  
-**تصمیمات ثبت‌شده:** ۶۲ (Max ID ۶۷ — ۵ اسلات Reserved)  
+**نسخه:** v1.5 (2026-05-30 — part16/Phase 3: Decision #۶۸ (Mechanical-Claim Verification، M104 + Rule #۸۶، Review #۰۰۸))  
+**تصمیمات ثبت‌شده:** ۶۳ (Max ID ۶۸ — ۵ اسلات Reserved)  
 **Status کلی:** همه Accepted

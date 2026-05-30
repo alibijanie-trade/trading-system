@@ -1278,9 +1278,9 @@ reference در PART10_BOOT_ESCAPE_NOTE (content در helper chat part09 turn ۶�
 
 **منبع:** part15 = ادامهٔ part14 (PENDING reconcile + manifest D2 + commit اتمیک + chat-end). تعارض escape-note ↔ check_12 کشف و حل شد (گزینهٔ C: ردیف بازه‌ای part14-15، handoff PART16).
 
-### P-candidate (part15) — M104 + Rule #۸۶: Escape-Aware Sequence Derivation
+### P-candidate (part15) — M104 + Rule #۸۶: Escape-Aware Sequence Derivation ✅ CODIFIED v2.16
 
-**وضعیت:** CANDIDATE — codify کامل **موکول به part16** (v2.16). دلیل سبک‌نگه‌داشتن این چت: افزودن قانون+درس = تغییر constitution و کل زنجیره (01_rules + 02_lessons + main + Review #۰۰۸ + DECISIONS_LOG + audit CURRENT_VERSION + .pre-commit label + count درس ۷۱→۷۲) سنگین است.
+**وضعیت:** ✅ **CODIFIED v2.16** (در part16 — M104 §۲.۸ + قانون #۸۶ + main bump v2.16 + Review #۰۰۸ + Decision #۶۸ + audit CURRENT_VERSION→v2.16 + .pre-commit label + count درس ۷۱→۷۲). [تاریخچهٔ candidate + متن verbatim پایین per #۲۴ No-Deletion حفظ شد.] دلیل اولیهٔ سبک‌نگه‌داشتن part15: افزودن قانون+درس = تغییر constitution و کل زنجیره (01_rules + 02_lessons + main + Review #۰۰۸ + DECISIONS_LOG + audit CURRENT_VERSION + .pre-commit label + count درس ۷۱→۷۲) سنگین است.
 
 **علت ریشه‌ای (اشتباه part14 که در part15 گرفته شد):** part14 escape-note شمارهٔ handoff را «PART16» hard-code کرد (از روی الگو/نام انسانی، نه اشتقاق مکانیکی)؛ چون part14 **escape** بود frontier جلو نرفت و مقدار درستِ مکانیکی **PART15** بود — تعارض با check_12 (H==L+1). نقض #۸۴ (APMM، extrapolation از الگو) + cross-check نکردن تعامل escape↔check_12.
 

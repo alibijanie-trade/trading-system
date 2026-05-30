@@ -31,7 +31,7 @@
 | part11 | codify ۸ Trust Rule **#۷۸–۸۵** + درس **M103** → Constitution **v2.15**. audit 11/11 PASS. **PART11 handoff ساخته نشد** (مستقیم PART12) | codify=`59c075a` · handoff part12=`bb964cf` |
 | part12 | boot کامل + verify ۴/۴ فایل غول فاز ۲ (۷ یافته، همه Phase 3) + backfill `59c075a` در REVIEW_LOG #۰۰۵ و review#005 §۴/§۶ + **Phase 2 CLOSED** + پایه‌گذاری این Ledger + قانون تداوم دوحلقه‌ای | chat-end part12 = `5173e6f` |
 | part13 | boot کامل + M101 backfill part12=`5173e6f` (Ledger/CHAT_LOG) · **#۰ check_12_continuity ساخته شد** (file-based، invariant H==L+1، chicken-and-egg-safe) + test_12/13 · **F-A** DECISIONS_LOG→v1.4 · **F-B** check_1 سخت‌سازی (Latin→Persian anchor؛ true-PASS ۸۵/۸۵/۸۵) + test_14 · **F-C** backfill #۰۰۲=`3fd2405`/#۰۰۴=`234ba2f` · Review #۰۰۶/#۰۰۷. audit ۱۲/۱۲ + tests ۱۴/۱۴ PASS | chat-end part13 = `3eae91e` |
-| part14-15 | full-refresh اتمیک + reconcile: M101 backfill part13 (`3eae91e`) + بازنویسی SESSION_STATUS (part08→part13) + CHAT_LOG part09-13 + PENDING reconcile part09-13 + آشتی count + Z3.15/16/17/25 RESOLVED-mark + manifest D2 (Total=282، T1=28) + بستن Triple-Rule معوق part09 + P-candidate M104/#۸۶ (escape↔check_12 off-by-one). part14=full-refresh، part15=reconcile+manifest+commit+chat-end | chat-end part14-15 = `<backfill در part16 boot>` |
+| part14-15 | full-refresh اتمیک + reconcile: M101 backfill part13 (`3eae91e`) + بازنویسی SESSION_STATUS (part08→part13) + CHAT_LOG part09-13 + PENDING reconcile part09-13 + آشتی count + Z3.15/16/17/25 RESOLVED-mark + manifest D2 (Total=282، T1=28) + بستن Triple-Rule معوق part09 + P-candidate M104/#۸۶ (escape↔check_12 off-by-one). part14=full-refresh، part15=reconcile+manifest+commit+chat-end | chat-end part14-15 = `c30dbe5` |
 
 > 🔎 **شکاف زنجیره (یک‌خطی، per دستور کاربر — نه بازسازی کامل):** part10 = escape (هیچ handoff) · part11 = codify (هیچ handoff، مستقیم به PART12). تاریخچهٔ ۱۱→۱۲ از همین Ledger خوانده می‌شود.
 
@@ -63,7 +63,7 @@
 - `bb964cf` = PHASE1_PART12_HANDOFF (part11 chat-end، push شده)
 - **`5173e6f`** = chat-end part12 (backfill #۰۰۵ + این Ledger + PART13 handoff + commit_msg) — M101 backfill ثبت‌شده در boot part13 (per user git)
 - **`3eae91e`** = chat-end part13 (check_12 + F-A/B/C + Review #۰۰۶/#۰۰۷ + این به‌روزرسانی Ledger + PART14 handoff)
-- **`<atomic part14-15>`** = chat-end part14-15 (full-refresh + reconcile + manifest D2=282 + این ردیف + PART16 handoff + P-candidate M104/#۸۶) — backfill در part16 boot (M101)
+- **`c30dbe5`** = chat-end part14-15 (full-refresh + reconcile + manifest D2=282 + این ردیف + PART16 handoff + P-candidate M104/#۸۶) — backfill در part16 boot (M101)
 - مرجع تاریخی: `234ba2f` (S4 part09) · `3fd2405` (S3.4 chat-end part08) · `35ea822` (S3.3 part08) · `5730173` (tag v0.6.0 main)
 
 ---

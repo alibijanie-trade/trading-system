@@ -2,7 +2,7 @@
 
 > **آخرین به‌روزرسانی:** 2026-05-30 (boot/full-refresh چت `TRADING-phase1-part14-phase3-fullrefresh`)
 > **نسخه پروژه:** v0.6.0 (tag روی main: `5730173`؛ v0.7.0 در پایان MDRS v2)
-> **Constitution:** **v2.15** (Trust Rules #۷۸-۸۵ + درس M103؛ codified در part11)
+> **Constitution:** **v2.16** (Trust Rules #۷۸-۸۵ + M103؛ + Rule #۸۶/M104 codified در part16)
 > **چت جاری:** `TRADING-phase1-part14-phase3-fullrefresh` 🔄 (full-refresh + ادامهٔ Phase 3)
 > **مرجع تجمعی:** `claude_workspace/PHASE_LEDGER.md` (قصهٔ part01→13؛ در boot اول خوانده شود)
 > ⚠️ **Naming (HM-3):** نام چت باید `TRADING-phase{N}-part{NN}-{topic}` باشد.
@@ -36,9 +36,9 @@
 🔮 **TODO** (part14+) با #۷۸ + #۷۹ + #۸۴.
 
 ## 📊 آمار پروژه (پس از part13)
-- **قوانین قفل‌شده:** **۸۵** (#۱-۸۵) + ۲ Reserved (#۵۲، #۵۳).
-- **درس‌نامه:** **M1-M103** (۷۱ ثبت + ۳۲ Reserved شامل M89-M92) + **HM-1..HM-7**.
-- **Reviews:** **۷** (#۰۰۱-۰۰۷، همه Implemented).
+- **قوانین قفل‌شده:** **۸۶** (#۱-۸۶) + ۲ Reserved (#۵۲، #۵۳).
+- **درس‌نامه:** **M1-M104** (۷۲ ثبت + ۳۲ Reserved شامل M89-M92) + **HM-1..HM-7**.
+- **Reviews:** **۸** (#۰۰۱-۰۰۸، همه Implemented).
 - **Audit:** **۱۲/۱۲ check** + **۱۴/۱۴ companion test** PASS (part13).
 - **Tests دیگر:** pytest **۲۵/۲۵** + vitest **۳۰/۳۰** (بدون تغییر).
 - **MDRS v2 deliverables:** **۱۴/۲۴** (D1-D13 + D24 + D12). باقی: D14-D23 (۱۰).

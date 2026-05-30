@@ -54,7 +54,7 @@ Claude گاهی کد، دستور، یا پیشنهادی می‌دهد که د�
 
 ---
 
-## ۲.۳ جدول کامل اشتباهات (M1-M63 + M88-M102 — M64-M87 در §۲.۷ خلاصه)
+## ۲.۳ جدول کامل اشتباهات (M1-M63 + M88-M104 — M64-M87 در §۲.۷ خلاصه)
 
 | # | اشتباه | علت ریشه‌ای | راه‌حل آینده | چت |
 |---|---|---|---|---|
@@ -116,6 +116,7 @@ Claude گاهی کد، دستور، یا پیشنهادی می‌دهد که د�
 | **M101** ⭐ | Post-Handoff State Drift — chat-end commit hash در خود commit نمی‌تواند ثبت شود (chicken-and-egg M77 extension) | self-reference impossibility در atomic commit | mutual chain backfill: چت بعدی در boot، hash چت قبل را در CHAT_LOG ثبت کند. precedent chain: part04 → part05 → D24 → part07 (hashes ثبت در CHAT_LOG.md boot sections) | part04→part05 transition |
 | **M102** ⭐ | Rule-Implementation Decoupling (Interface-Implementation separation) — قانون normative text با implementation detail mixed → drift در implementation = rule violation | فرض «detail در rule body بهتر است» | Rules: Normative paragraph + جدا Implementation Notes section. detail در script/config/companion doc. normative stays stable، implementation evolves | S3.1 design phase |
 | **M103** ⭐⭐⭐ | Audit Over-Promise Pattern — ادعای «deep-scan تقریباً کامل» با ~۳۵٪ coverage واقعی + self-imposed scope narrowing + optimistic reporting (screenshot coverage = project coverage) | اعتماد به pattern-matching + خوش‌بینی در گزارش به‌جای اعداد دقیق | ۸ Trust Rule #۷۸-۸۵ (scope contract + quantitative honesty + no self-narrowing + refuse/defer + pre-task checkpoint + honesty audit + anti-pattern-matching + self-activation lock) | part10 |
+| **M104** ⭐⭐⭐ | Mechanical-Claim Verification before Persisting — عدد/شناسهٔ مکانیکی (handoff/hash/ledger/قانون/Review/نسخه) باید از منبع زنده استخراج شود نه حافظه/الگو/استنتاج دنباله‌ای | اعتماد به استنتاج دنباله‌ای به‌جای استخراج از frontier واقعی + بدون cross-check با invariant فعال | قانون #۸۶ + corollary escape (frontier پس از escape جلو نمی‌رود) | part14 |
 
 ---
 
@@ -503,6 +504,10 @@ Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude De
 
 - **M103** ⭐⭐⭐ Audit Over-Promise Pattern (part10 origin) — جزئیات در ۲.۸. پشتیبان ۸ قانون Trust #۷۸-۸۵.
 
+### درس v2.16 — Mechanical-Claim Verification
+
+- **M104** ⭐⭐⭐ Mechanical-Claim Verification before Persisting (part14 origin) — جزئیات در ۲.۸. پشتیبان قانون #۸۶.
+
 ### درس‌های helper-side v2.14 — HM-series
 
 HM-namespace جداگانه برای helper-side patterns. ↓ به §۲.۹ مراجعه کنید.
@@ -880,6 +885,20 @@ git commit -F claude_workspace/commit_msg_{stage}.txt
 
 ---
 
+### M104 ⭐⭐⭐ — Mechanical-Claim Verification before Persisting
+
+**کشف‌شده در:** part14 escape-note off-by-one (PART16 به‌جای مکانیکیِ PART15) | **اهمیت:** 🔴 critical | **Cross-refs:** #۸۴ (نمونهٔ خاص)، #۸۶ (مکمل)، check_12، M101، M82
+
+**Lesson (Normative):** هر عدد/شناسهٔ مکانیکی در artifact پایدار (شمارهٔ handoff، hash، ردیف ledger، شمارهٔ قانون/درس/Review، نسخه) باید پیش از نوشتن از منبع زنده (اسکریپت/فایل/git) استخراج شود، نه از حافظه/الگو/استنتاج دنباله‌ای. اگر قابل‌استخراج نیست → فرمول/اشتقاق («بالاترین موجود + ۱») یا placeholder + TODO، نه hard-code.
+
+**Corollary (Escape):** پس از escape، شمارنده‌های frontier جلو نمی‌روند؛ هر عدد دنباله‌ای مشکوک است و باید با frontier واقعی + invariant فعال (check_12: H==L+1) cross-check شود.
+
+**Genesis:** part14 escape-note off-by-one (PART16 به‌جای مکانیکیِ PART15).
+
+**درس عمیق‌تر:** هم‌خانوادهٔ M82 (Verification Claim Must Be Verified) اما در سطح **اعداد مکانیکی** — «درست به نظر رسیدن» الگوی دنباله کافی نیست؛ منبع زنده authoritative است. قانون #۸۶ این را به سطح Locked می‌برد.
+
+---
+
 ## ۲.۹ Helper Consultation Lessons (HM-series)
 
 ### HM-namespace rationale
@@ -1055,7 +1074,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 ✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1)**
 
 **جمع‌بندی درس‌ها:**
-- M-series ثبت: ۷۱ (M1-M63 + M64-M87 + M88 + M93-M103)
+- M-series ثبت: ۷۲ (M1-M63 + M64-M87 + M88 + M93-M104)
 - M-series Reserved: ۳۲ (M22, M24, M29, M32-M43, M45-M55, M80, M81, M89-M92)
 - HM-series: ۷ (HM-1 to HM-7)
 

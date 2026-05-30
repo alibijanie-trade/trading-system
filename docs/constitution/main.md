@@ -1,13 +1,14 @@
-# Constitution سامانه هوشمند ترید — v2.15 (Modular)
+# Constitution سامانه هوشمند ترید — v2.16 (Modular)
 
 > **Intelligent Trading System — Modular Constitution**
 > در بازارهای مالی | ارز دیجیتال و فارکس
 >
-> **نسخه:** 2.15 (atomic amendment از v2.14 — Trust & Anti-Sycophancy Rules #۷۸-۸۵)
+> **نسخه:** 2.16 (atomic amendment از v2.15 — Mechanical-Claim Verification: M104 + Rule #۸۶)
 > **تاریخ شروع split:** اردیبهشت ۱۴۰۵ (May 2026)
 > **تاریخ v2.13:** خرداد ۱۴۰۵ (May 2026)
 > **تاریخ v2.14:** خرداد ۱۴۰۵ (May 2026)
 > **تاریخ v2.15:** خرداد ۱۴۰۵ (May 2026)
+> **تاریخ v2.16:** خرداد ۱۴۰۵ (May 2026)
 > **چت مسئول:** ۱۱.۰.ج (`TRADING-infra-governance-finalize-and-merge`)
 > **چت مسئول v2.14:** part04-part08 (`TRADING-phase1-part04..part08-mdrs-v2-*`)
 > **Branch:** `infra/governance-overhaul`
@@ -32,7 +33,7 @@
 |---|---|---|
 | **[main.md](./main.md)** | این فایل — index + cross-refs + Vision + Quick-start | ~8KB |
 | **[01_rules.md](./01_rules.md)** | قوانین Locked #۱-N (با شرح کامل، نمونه، استثناها) | ~45KB |
-| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M103) با علت ریشه‌ای و راه‌حل | ~50KB |
+| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M104) با علت ریشه‌ای و راه‌حل | ~50KB |
 | **[03_bugs.md](./03_bugs.md)** | کاتالوگ Bug ها (#1-#54+) با علائم، علت، fix | ~30KB |
 | **[04_principles.md](./04_principles.md)** | ۸ اصل بنیادی + سطح‌بندی 🔒/🎯/💡 + No-Deletion + Atomic Updates | ~12KB |
 | **[05_architecture.md](./05_architecture.md)** | Stack + DB Schema + Backend + Frontend + UI/UX + Security + Roadmap | ~40KB |
@@ -85,6 +86,7 @@
 - **#۶۷** Cross-shell EXECUTE blocks اجباری (Locked در v2.13) → `01_rules.md#قانون-67`
 - **#۶۸-#۷۷** 🆕 v2.14 — MDRS v2 framework: Tier classification، Review Trigger، Path Validator، VERSION SSoT، Manifest Self-Awareness، Triple-Rule Atomic Boundary، Z-ID Permanence، Review Scope Closure، Pre-Action Checklist Visibility، Continuous Discovery Logging → `01_rules.md#قانون-68` تا `قانون-77`
 - **#۷۸-#۸۵** 🆕 v2.15 — Trust & Anti-Sycophancy Rules: SCM، QHP، NSISN، RDEM، MPTC، HAT، APMM، Self-Activation Lock → `01_rules.md` بخش «شرح کامل قوانین Trust & Anti-Sycophancy»
+- **#۸۶** 🆕 v2.16 — Escape-Aware Sequence Derivation → `01_rules.md` بخش «شرح کامل قانون Mechanical-Claim Verification»
 
 ### درس‌های مهم در `02_lessons.md`
 
@@ -103,6 +105,7 @@
 - **M102** 🆕 v2.14 Rule-Implementation Decoupling → `02_lessons.md#m102`
 - **HM-1 to HM-7** 🆕 v2.14 Helper Consultation Lessons → `02_lessons.md#§2-9`
 - **M103** 🆕 v2.15 Audit Over-Promise Pattern → `02_lessons.md` §۲.۸
+- **M104** 🆕 v2.16 Mechanical-Claim Verification before Persisting → `02_lessons.md` §۲.۸
 
 ### اصول بنیادی در `04_principles.md`
 
@@ -146,12 +149,12 @@
 
 ---
 
-## 📊 آمار Constitution v2.15
+## 📊 آمار Constitution v2.16
 
 | دسته | تعداد |
 |---|---|
-| قوانین Locked | ۸۵ ثبت‌شده (#۱-۸۵) + ۲ Reserved (#۵۲, #۵۳) — 🆕 ۸ قانون Trust v2.15 (#۷۸-۸۵) + ۱۰ قانون v2.14 (#۶۸-#۷۷) |
-| درس‌نامه M-series | M1-M103 (۷۱ ثبت + ۳۲ Reserved) — 🆕 M103 v2.15 (Audit Over-Promise) + ۱۱ درس v2.14 (M88+M93-M102) + ۴ Reserved جدید (M89-M92) |
+| قوانین Locked | ۸۶ ثبت‌شده (#۱-۸۶) + ۲ Reserved (#۵۲, #۵۳) — 🆕 ۱ قانون v2.16 (#۸۶) + ۸ قانون Trust v2.15 (#۷۸-۸۵) + ۱۰ قانون v2.14 (#۶۸-#۷۷) |
+| درس‌نامه M-series | M1-M104 (۷۲ ثبت + ۳۲ Reserved) — 🆕 M104 v2.16 (Mechanical-Claim Verification) + M103 v2.15 (Audit Over-Promise) + ۱۱ درس v2.14 (M88+M93-M102) + ۴ Reserved جدید (M89-M92) |
 | درس‌نامه HM-series 🆕 v2.14 | HM-1 to HM-7 در `02_lessons.md` §۲.۹ |
 | Bug ها | ۱۶ ثبت‌شده در `03_bugs.md` + ۳۰+ در `docs/TROUBLESHOOTING.md` |
 | ماژول‌ها | ۷ (شامل main.md) + archive |
@@ -179,6 +182,7 @@
 
 | نسخه | تاریخ | چت(ها) | تغییرات اصلی |
 |---|---|---|---|
+| v2.16 | May 2026 | part16 | **Mechanical-Claim Verification** — قانون #۸۶ (Escape-Aware Sequence Derivation) + درس M104 + Review #۰۰۸ |
 | v2.15 | May 2026 | part11 | **Trust & Anti-Sycophancy Rules** — قوانین #۷۸-۸۵ (SCM/QHP/NSISN/RDEM/MPTC/HAT/APMM/Self-Activation Lock) + M103 (Audit Over-Promise، part10 origin) + Review #۰۰۵ |
 | v2.14 | May 2026 | part04-part08 | MDRS v2 + Helper Infrastructure — Rules #۶۸-۷۷، Lessons M88+M93-M102، HM-1 to HM-7، Golden Rule، Templates 11-12، HELPER_PROTOCOL.md، Reviews #۰۰۲+#۰۰۳ |
 | v2.13 | May 2026 | ۱۱.۰.ج | **Cross-shell mandatory** — قانون #۶۷ + M87 (Active-Writing Self-Binding Failure) + Pre-EXECUTE verification template |
