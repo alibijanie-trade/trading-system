@@ -1,12 +1,13 @@
-# Constitution سامانه هوشمند ترید — v2.14 (Modular)
+# Constitution سامانه هوشمند ترید — v2.15 (Modular)
 
 > **Intelligent Trading System — Modular Constitution**
 > در بازارهای مالی | ارز دیجیتال و فارکس
 >
-> **نسخه:** 2.14 (atomic amendment از v2.13 — MDRS v2 integration)
+> **نسخه:** 2.15 (atomic amendment از v2.14 — Trust & Anti-Sycophancy Rules #۷۸-۸۵)
 > **تاریخ شروع split:** اردیبهشت ۱۴۰۵ (May 2026)
 > **تاریخ v2.13:** خرداد ۱۴۰۵ (May 2026)
 > **تاریخ v2.14:** خرداد ۱۴۰۵ (May 2026)
+> **تاریخ v2.15:** خرداد ۱۴۰۵ (May 2026)
 > **چت مسئول:** ۱۱.۰.ج (`TRADING-infra-governance-finalize-and-merge`)
 > **چت مسئول v2.14:** part04-part08 (`TRADING-phase1-part04..part08-mdrs-v2-*`)
 > **Branch:** `infra/governance-overhaul`
@@ -31,7 +32,7 @@
 |---|---|---|
 | **[main.md](./main.md)** | این فایل — index + cross-refs + Vision + Quick-start | ~8KB |
 | **[01_rules.md](./01_rules.md)** | قوانین Locked #۱-N (با شرح کامل، نمونه، استثناها) | ~45KB |
-| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M102) با علت ریشه‌ای و راه‌حل | ~50KB |
+| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M103) با علت ریشه‌ای و راه‌حل | ~50KB |
 | **[03_bugs.md](./03_bugs.md)** | کاتالوگ Bug ها (#1-#54+) با علائم، علت، fix | ~30KB |
 | **[04_principles.md](./04_principles.md)** | ۸ اصل بنیادی + سطح‌بندی 🔒/🎯/💡 + No-Deletion + Atomic Updates | ~12KB |
 | **[05_architecture.md](./05_architecture.md)** | Stack + DB Schema + Backend + Frontend + UI/UX + Security + Roadmap | ~40KB |
@@ -83,6 +84,7 @@
 - **#۶۶** Push اجباری در پایان هر چت (Locked در v2.12) → `01_rules.md#قانون-66`
 - **#۶۷** Cross-shell EXECUTE blocks اجباری (Locked در v2.13) → `01_rules.md#قانون-67`
 - **#۶۸-#۷۷** 🆕 v2.14 — MDRS v2 framework: Tier classification، Review Trigger، Path Validator، VERSION SSoT، Manifest Self-Awareness، Triple-Rule Atomic Boundary، Z-ID Permanence، Review Scope Closure، Pre-Action Checklist Visibility، Continuous Discovery Logging → `01_rules.md#قانون-68` تا `قانون-77`
+- **#۷۸-#۸۵** 🆕 v2.15 — Trust & Anti-Sycophancy Rules: SCM، QHP، NSISN، RDEM، MPTC، HAT، APMM، Self-Activation Lock → `01_rules.md` بخش «شرح کامل قوانین Trust & Anti-Sycophancy»
 
 ### درس‌های مهم در `02_lessons.md`
 
@@ -100,6 +102,7 @@
 - **M100** 🆕 v2.14 Hidden-Checklist Completion → `02_lessons.md#m100`
 - **M102** 🆕 v2.14 Rule-Implementation Decoupling → `02_lessons.md#m102`
 - **HM-1 to HM-7** 🆕 v2.14 Helper Consultation Lessons → `02_lessons.md#§2-9`
+- **M103** 🆕 v2.15 Audit Over-Promise Pattern → `02_lessons.md` §۲.۸
 
 ### اصول بنیادی در `04_principles.md`
 
@@ -143,12 +146,12 @@
 
 ---
 
-## 📊 آمار Constitution v2.14
+## 📊 آمار Constitution v2.15
 
 | دسته | تعداد |
 |---|---|
-| قوانین Locked | ۷۷ ثبت‌شده (#۱-۷۷) + ۲ Reserved (#۵۲, #۵۳) — 🆕 ۱۰ قانون جدید v2.14 (#۶۸-#۷۷) |
-| درس‌نامه M-series | M1-M102 (۷۰ ثبت + ۳۲ Reserved) — 🆕 ۱۱ درس جدید v2.14 (M88+M93-M102) + ۴ Reserved جدید (M89-M92) |
+| قوانین Locked | ۸۵ ثبت‌شده (#۱-۸۵) + ۲ Reserved (#۵۲, #۵۳) — 🆕 ۸ قانون Trust v2.15 (#۷۸-۸۵) + ۱۰ قانون v2.14 (#۶۸-#۷۷) |
+| درس‌نامه M-series | M1-M103 (۷۱ ثبت + ۳۲ Reserved) — 🆕 M103 v2.15 (Audit Over-Promise) + ۱۱ درس v2.14 (M88+M93-M102) + ۴ Reserved جدید (M89-M92) |
 | درس‌نامه HM-series 🆕 v2.14 | HM-1 to HM-7 در `02_lessons.md` §۲.۹ |
 | Bug ها | ۱۶ ثبت‌شده در `03_bugs.md` + ۳۰+ در `docs/TROUBLESHOOTING.md` |
 | ماژول‌ها | ۷ (شامل main.md) + archive |
@@ -176,6 +179,7 @@
 
 | نسخه | تاریخ | چت(ها) | تغییرات اصلی |
 |---|---|---|---|
+| v2.15 | May 2026 | part11 | **Trust & Anti-Sycophancy Rules** — قوانین #۷۸-۸۵ (SCM/QHP/NSISN/RDEM/MPTC/HAT/APMM/Self-Activation Lock) + M103 (Audit Over-Promise، part10 origin) + Review #۰۰۵ |
 | v2.14 | May 2026 | part04-part08 | MDRS v2 + Helper Infrastructure — Rules #۶۸-۷۷، Lessons M88+M93-M102، HM-1 to HM-7، Golden Rule، Templates 11-12، HELPER_PROTOCOL.md، Reviews #۰۰۲+#۰۰۳ |
 | v2.13 | May 2026 | ۱۱.۰.ج | **Cross-shell mandatory** — قانون #۶۷ + M87 (Active-Writing Self-Binding Failure) + Pre-EXECUTE verification template |
 | v2.12 | May 2026 | ۱۱.۰.الف+ب+ج | **Modular split** — تقسیم به ۶ ماژول + atomic update با ادغام PENDING |

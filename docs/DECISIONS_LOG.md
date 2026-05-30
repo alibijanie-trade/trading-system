@@ -63,7 +63,7 @@
 | **Auth & Security** | #11, #12, #13 |
 | **Frontend Architecture** | #20-#29 |
 | **Theme & UI Design** | #30-#48 |
-| **Process & Governance** | #50-#57 |
+| **Process & Governance** | #50-#57, #67 |
 | **Quality Hardening (Tier 2)** | #55, #56, #57 |
 | **Pre-commit & Git** | #58, #59, #60 |
 | **CCXT & Architecture (Phase 1)** | #61, #62, #63, #64 |
@@ -794,18 +794,52 @@ Binance API rate limits دارد. آیا custom token bucket بسازیم؟
 
 ---
 
+### Decision #67 — Trust & Anti-Sycophancy Rules (#۷۸-۸۵) adoption
+
+**ثبت‌شده در:** چت part11 (`TRADING-phase1-part11-trust-rules-and-remediation`)
+**تاریخ:** 2026-05-30
+**Status:** ✅ Accepted
+**دسته:** Process & Governance
+
+#### Context
+در part10 audit session، الگوی «audit over-promise + self-imposed scope narrowing + optimistic reporting» کشف شد (Claude ادعای «deep-scan تقریباً کامل» با ~۳۵٪ coverage واقعی داد). نیاز به قواعد ساختاری anti-sycophancy.
+
+#### Options Considered
+1. **Option A — ۸ قانون Locked جدید (#۷۸-۸۵) + M103** ✅ — ساختاری، self-enforcing per #۸۵
+2. **Option B — یک درس (M103) بدون قانون** — ضعیف‌تر؛ M87 نشان داد «درس بدون positive constraint» کافی نیست
+3. **Option C — Custom Instructions only** — خارج از constitution، traceable نیست
+
+#### Decision
+✅ **Option A** — ۸ Trust Rule (#۷۸-۸۵) در 01_rules.md + M103 در 02_lessons.md + v2.15 bump.
+
+#### Rationale
+- positive constraint > negative reminder (الگوی موفق #۴۶/#۶۷)
+- Self-Activation Lock (#۸۵) خودکارسازی per-turn را تضمین می‌کند (per F36)
+- Genesis traceable به part10
+
+#### Consequences
+- 👍 honesty/anti-sycophancy ساختاری، self-enforcing
+- 👎 سربار per-turn self-check (پذیرفته‌شده)
+
+#### Reference
+- `01_rules.md` بخش «شرح کامل قوانین Trust & Anti-Sycophancy (#۷۸-۸۵)»
+- `02_lessons.md` M103
+- Review #۰۰۵ (`docs/reviews/2026-05-30-trust-rules-codification.md`)
+
+---
+
 ## آمار
 
 | Status | تعداد |
 |---|---|
-| ✅ Accepted (Recorded) | ۶۱ |
+| ✅ Accepted (Recorded) | ۶۲ |
 | ⬜ Reserved (غیر-ثبت‌شده) | ۵ (#۱۶-۱۹، #۴۹) |
 | ⚠️ Superseded | ۰ |
 | ❌ Rejected | ۰ |
 | ⏳ Pending | ۰ |
 
-**Max Decision ID:** ۶۶  
-**Total Recorded:** ۶۱  
+**Max Decision ID:** ۶۷  
+**Total Recorded:** ۶۲  
 **Reserved Slots:** ۵ (در دسته‌بندی موضوعی بالا مستند شد)
 
 **تصمیم برای Reserved IDs (پایان چت ۱۰ round 2):**  
@@ -816,5 +850,5 @@ Binance API rate limits دارد. آیا custom token bucket بسازیم؟
 ## 📌 پایان DECISIONS_LOG
 
 **نسخه:** v1.3 (2026-05-20 — پایان چت ۱۰ round 2: اصلاح تمایز Max ID vs Recorded + مستندسازی Reserved IDs بر اساس M79)  
-**تصمیمات ثبت‌شده:** ۶۱ (Max ID ۶۶ — ۵ اسلات Reserved)  
+**تصمیمات ثبت‌شده:** ۶۲ (Max ID ۶۷ — ۵ اسلات Reserved)  
 **Status کلی:** همه Accepted

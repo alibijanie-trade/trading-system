@@ -98,8 +98,8 @@
 
 ## 📊 آمار پروژه (پس از part08 S3.3 + S3.4 — Stage S3 COMPLETE)
 
-- **قوانین قفل‌شده:** **۷۷** (#۱-۷۷) + ۲ Reserved (#۵۲, #۵۳) — unchanged from part07
-- **درس‌نامه:** **M1-M102** (۷۰ ثبت + ۳۲ Reserved شامل M89-M92) + **HM-series** (HM-1 to HM-7) — count precise در S3.3
+- **قوانین قفل‌شده:** **۸۵** (#۱-۸۵) + ۲ Reserved (#۵۲, #۵۳) — 🆕 ۸ Trust Rules v2.15 (#۷۸-۸۵، part11)
+- **درس‌نامه:** **M1-M103** (۷۱ ثبت + ۳۲ Reserved شامل M89-M92) + **HM-series** (HM-1 to HM-7) — 🆕 M103 v2.15 (part11)
 - **Bug ها / Z3.x Drift Catalog:** **۲۲ آیتم باز برای v2.14** (Z3.1-Z3.24، ۲ RESOLVED: Z3.12 + Z3.19 در S3.3)
 - **Tests:** 25/25 pytest + 30/30 vitest + ۳۳ script tests = **۸۸ pass** (unchanged)
 - **MDRS v2 Deliverables DONE:** **۱۳/۲۴** — D1-D7 (Stages S1+S2) + D24 (parallel) + D8 + D9 (S3.1) + D10 (S3.2) + D11 + D13 (S3.3). D12 + D14-D23 باقی (۱۱ deliverable)

@@ -61,7 +61,7 @@ repos:
         pass_filenames: false
 
       - id: layer1-audit
-        name: Layer 1 — Documentation Consistency Audit (v2.14)
+        name: Layer 1 — Documentation Consistency Audit (v2.15)
         entry: python scripts/63_pre_commit_audit.py
         language: system
         pass_filenames: false

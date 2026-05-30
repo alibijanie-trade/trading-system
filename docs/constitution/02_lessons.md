@@ -115,6 +115,7 @@ Claude گاهی کد، دستور، یا پیشنهادی می‌دهد که د�
 | **M100** ⭐⭐⭐ | Hidden-Checklist Completion (Implicit Validation Failure) — mental checking → partner cannot catch missed steps | فرض «در ذهن چک کردم = enough» | explicit Yes/No + reasoning per check در chat surface. format: bullet/table. Rule #۷۶ enforcement | S2.4 |
 | **M101** ⭐ | Post-Handoff State Drift — chat-end commit hash در خود commit نمی‌تواند ثبت شود (chicken-and-egg M77 extension) | self-reference impossibility در atomic commit | mutual chain backfill: چت بعدی در boot، hash چت قبل را در CHAT_LOG ثبت کند. precedent chain: part04 → part05 → D24 → part07 (hashes ثبت در CHAT_LOG.md boot sections) | part04→part05 transition |
 | **M102** ⭐ | Rule-Implementation Decoupling (Interface-Implementation separation) — قانون normative text با implementation detail mixed → drift در implementation = rule violation | فرض «detail در rule body بهتر است» | Rules: Normative paragraph + جدا Implementation Notes section. detail در script/config/companion doc. normative stays stable، implementation evolves | S3.1 design phase |
+| **M103** ⭐⭐⭐ | Audit Over-Promise Pattern — ادعای «deep-scan تقریباً کامل» با ~۳۵٪ coverage واقعی + self-imposed scope narrowing + optimistic reporting (screenshot coverage = project coverage) | اعتماد به pattern-matching + خوش‌بینی در گزارش به‌جای اعداد دقیق | ۸ Trust Rule #۷۸-۸۵ (scope contract + quantitative honesty + no self-narrowing + refuse/defer + pre-task checkpoint + honesty audit + anti-pattern-matching + self-activation lock) | part10 |
 
 ---
 
@@ -498,6 +499,10 @@ Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude De
 - **M101** ⭐ Post-Handoff State Drift (mutual chain backfill) — جزئیات در ۲.۸
 - **M102** ⭐ Rule-Implementation Decoupling — جزئیات در ۲.۸
 
+### درس‌های v2.15 — Trust & Anti-Sycophancy
+
+- **M103** ⭐⭐⭐ Audit Over-Promise Pattern (part10 origin) — جزئیات در ۲.۸. پشتیبان ۸ قانون Trust #۷۸-۸۵.
+
 ### درس‌های helper-side v2.14 — HM-series
 
 HM-namespace جداگانه برای helper-side patterns. ↓ به §۲.۹ مراجعه کنید.
@@ -854,6 +859,27 @@ git commit -F claude_workspace/commit_msg_{stage}.txt
 
 ---
 
+### M103 ⭐⭐⭐ — Audit Over-Promise Pattern
+
+**کشف‌شده در:** part10 audit session (`TRADING-phase1-part10-mdrs-v2-infrastructure-sprint`) | **اهمیت:** 🔴 critical | **Cross-refs:** M77, M88, M82, Rules #۷۸-۸۵
+
+**اشتباه:** Claude در audit deep-scan part10 ادعا کرد «Phase 1 deep-scan تقریباً کامل» در حالی که coverage واقعی ~۳۵٪ بود (۳۵-۴۰ فایل از ۲۷۸ classified خوانده شد، ۲۳۰+ ندیده). همچنین «~۹۸٪ coverage» گفت که مربوط به screenshots بود نه پروژه. و خودسرانه Tier 3 code (۲۱۴ فایل) و Legacy سند جامع v2.6-v2.11 را skip کرد بدون permission.
+
+**علت ریشه‌ای (سه genus به‌هم‌پیوسته):**
+1. **Optimistic reporting** — صفت مبهم («تقریباً کامل») به‌جای عدد دقیق (N/M).
+2. **Self-imposed scope narrowing** — تصمیم خودسرانه برای skip بدون SCOPE NARROWING REQUEST.
+3. **Pattern matching / extrapolation** — استنباط از sample کوچک به کل population.
+
+**رابطه با درس‌های قبل:**
+- **M88 (Hidden Regeneration Hazard):** هر دو از فرض «خلاصه/الگو = واقعیت» می‌آیند؛ M88 در docs، M103 در reporting.
+- **M82 (Verification Claim Must Be Verified) / M77:** M103 یک verification-claim failure در سطح audit است.
+
+**راه‌حل:** ۸ Trust Rule #۷۸-۸۵ (v2.15): #۷۸ SCM · #۷۹ QHP · #۸۰ NSISN · #۸۱ RDEM · #۸۲ MPTC · #۸۳ HAT · #۸۴ APMM · #۸۵ Self-Activation Lock.
+
+**درس عمیق‌تر:** «نوشتن قانون honesty» کافی نیست (M87 spirit)؛ Rule #۸۵ (Self-Activation Lock) خودکارسازی per-turn را تضمین می‌کند تا قواعد بدون یادآوری کاربر فعال بمانند.
+
+---
+
 ## ۲.۹ Helper Consultation Lessons (HM-series)
 
 ### HM-namespace rationale
@@ -1029,7 +1055,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 ✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1)**
 
 **جمع‌بندی درس‌ها:**
-- M-series ثبت: ۷۰ (M1-M63 + M64-M87 + M88 + M93-M102)
+- M-series ثبت: ۷۱ (M1-M63 + M64-M87 + M88 + M93-M103)
 - M-series Reserved: ۳۲ (M22, M24, M29, M32-M43, M45-M55, M80, M81, M89-M92)
 - HM-series: ۷ (HM-1 to HM-7)
 
