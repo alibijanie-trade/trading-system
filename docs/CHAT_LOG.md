@@ -2396,6 +2396,104 @@ Bounded Bootstrap criteria §۳.۴ functional validation:
 
 ---
 
+## چت `TRADING-phase1-part09-mdrs-v2-s4-audit-checks` — S4 (D12 Audit Checks #۸-۱۱)
+
+**تاریخ:** 2026-05-25
+**Branch:** `infra/v2.14-source-of-truth`
+**Parent commit (chat-end part08):** `3fd2405`
+
+### دستاوردها
+- ✅ **S4 (D12):** افزودن Audit Checks #۸-۱۱ به `scripts/63_pre_commit_audit.py` — check_8 (M93 Triple-Rule via git diff)، check_9 (manifest self-row، Z3.15)، check_10 (Review numbering integrity، Z3.16)، check_11 (Z-ID Permanence، Rule #۷۴/M96) + companion tests (Rule #۲۲) + test_6 Z3.25 fix.
+- ✅ **Z3.15 + Z3.16 + Z3.17 + Z3.25 RESOLVED** در همین commit.
+- ✅ audit **11/11 PASS**.
+- ✅ Review #۰۰۴ (d12-audit-checks-extension) — Implemented.
+
+### Commits
+- `234ba2f` — S4 atomic (D12 Audit Checks #۸-۱۱) — push شد.
+
+### ⚠️ chat-end Triple-Rule DEFERRED
+housekeeping اتمیک پایان چت (SESSION_STATUS/CHAT_LOG/PENDING/REVIEW_LOG/MANIFEST + PART10 handoff) به‌دلیل HM-2 escape (HM-9 تجمعی ۶ رویداد در part09) **معوق** شد → `PART09_CHAT_END_DEFERRED_NOTE.txt`. این معوق در **part14 full-refresh** بسته می‌شود.
+
+### Discoveries / معلق
+- ۱۲ Discovery + ۸ P10-candidate + PERSIST TASKS A-G (در deferred note ثبت).
+
+---
+
+## چت `TRADING-phase1-part10-mdrs-v2-infrastructure-sprint` — Infrastructure Sprint + M103 Genesis
+
+**تاریخ:** 2026-05-26
+**Branch:** `infra/v2.14-source-of-truth`
+**HEAD:** `90db89f` (بدون تغییر در این session)
+
+### دستاوردها / رویدادها
+- 🔍 **M103 Genesis** — کشف الگوی «Audit Over-Promise» (ادعای deep-scan تقریباً کامل با ~۳۵٪ coverage واقعی + self-imposed scope narrowing + optimistic reporting). منشأ ۸ قانون Trust #۷۸-۸۵.
+- ⚠️ boot **دوبار escape** (HM-9 #۹ و #۱۰ — edit_file atomic timeout روی deferred note).
+- ❌ **PART10 handoff ساخته نشد** (شکست زنجیرهٔ تک‌حلقه — مدرک ضرورت Ledger دوحلقه‌ای).
+- ❌ PERSIST TASKS A-G اجرا نشد (معوق).
+
+### Commits
+- هیچ commit جدید (HEAD `90db89f` بدون تغییر این session).
+
+---
+
+## چت `TRADING-phase1-part11-trust-rules-and-remediation` — Phase 2 Codify (Trust Rules → Constitution v2.15)
+
+**تاریخ:** 2026-05-30
+**Branch:** `infra/v2.14-source-of-truth`
+
+### دستاوردها
+- ✅ **codify ۸ قانون Trust #۷۸-۸۵** (SCM/QHP/NSISN/RDEM/MPTC/HAT/APMM/Self-Activation Lock) + درس **M103** → Constitution **v2.15** (فرمت M102: Normative + Implementation Notes + Genesis part10).
+- ✅ ۹ فایل scope (audit script + .pre-commit-config + 01_rules + 02_lessons + main + DECISIONS_LOG #۶۷ + Review #۰۰۵ file + REVIEW_LOG row + SESSION_STATUS surgical).
+- ✅ audit **11/11 PASS**. Review #۰۰۵ (trust-rules-codification) — Implemented.
+- ✅ SESSION_STATUS فقط **surgical** (۷۷→۸۵، M1-M102→M1-M103)؛ full refresh عمداً به Phase 3 موکول (تصمیم B1).
+- ❌ **PART11 handoff ساخته نشد** (مستقیم PART12 handoff — شکست دوم زنجیره).
+
+### Commits
+- `59c075a` — Phase 2 codify (audit 11/11) — push شد.
+- `bb964cf` — chat-end: PART12 handoff + قانون تداوم + آرشیو commit-msg part11.
+
+---
+
+## چت `TRADING-phase1-part12-trust-rules-verify-and-phase3` — Phase 2 CLOSE + پایه‌گذاری PHASE_LEDGER
+
+**تاریخ:** 2026-05-30
+**Branch:** `infra/v2.14-source-of-truth`
+**Parent commit (chat-end part11):** `bb964cf`
+
+### دستاوردها
+- ✅ boot کامل + **verify ۴/۴ فایل غول فاز ۲** (DECISIONS_LOG + audit script + 01_rules + 02_lessons) — ۷ یافته، همه Phase 3.
+- ✅ **M101 backfill `59c075a`** در REVIEW_LOG #۰۰۵ + review#005 §۴/§۶.
+- ✅ **Phase 2 رسماً CLOSED** (صحت #۷۸-۸۵/M103/#۶۷ تأیید، آسیب جانبی ۰).
+- ✅ **پایه‌گذاری `PHASE_LEDGER.md`** (source-of-truth تجمعی append-only) + **قانون تداوم دوحلقه‌ای** (ارتقا از تک‌حلقه؛ مدرک: شکست handoff part10/11).
+
+### Commits
+- `5173e6f` — chat-end part12 (backfill #۰۰۵ + PHASE_LEDGER + PART13 handoff + commit_msg) — push شد.
+
+---
+
+## چت `TRADING-phase1-part13-phase3-remediation` — Phase 3 Batch (check_12 + F-A/F-B/F-C)
+
+**تاریخ:** 2026-05-30
+**Branch:** `infra/v2.14-source-of-truth`
+**Parent commit (chat-end part12):** `5173e6f`
+
+### دستاوردها
+- ✅ boot کامل + **M101 backfill part12=`5173e6f`** (Ledger + CHAT_LOG).
+- ✅ **#۰ check_12_continuity** در `scripts/63_pre_commit_audit.py` — file-based، invariant H==L+1، chicken-and-egg-safe (سبز mid-chat، قرمز فقط اگر چت بسته‌شده ردیف ledger یا handoff بعدی را skip کند) + test_12/test_13. **دوحلقه از این پس مکانیکی enforce می‌شود.**
+- ✅ **F-A:** DECISIONS_LOG header+footer → v1.4 (بازتاب #۶۷).
+- ✅ **F-B:** سخت‌سازی check_1 (regex لاتین شکستهٔ «sabt»/«qoflshode» → anchor واقعی: Latin «Locked» + ریشهٔ فارسی «قفل»؛ true-PASS ۸۵/۸۵/۸۵) + test_14 (regression guard).
+- ✅ **F-C:** M101 backfill REVIEW_LOG #۰۰۲=`3fd2405` و #۰۰۴=`234ba2f`.
+- ✅ Review #۰۰۶ (continuity-audit-check) + #۰۰۷ (check1-persian-hardening) — Implemented.
+- ✅ audit **12/12** + tests **14/14** PASS.
+
+### Commits
+- `3eae91e` — chat-end part13 (check_12 + F-A/B/C + Review #۰۰۶/#۰۰۷ + Ledger part13 + PART14 handoff) — push شد.
+
+### معوق به part14
+full-refresh اتمیک وضعیت‌نامه (همین چت) + بقیهٔ Phase 3.
+
+---
+
 ## 🔖 boot چت part13 — M101 backfill (TRADING-phase1-part13-phase3-remediation)
 
 **تاریخ:** 2026-05-30
@@ -2405,8 +2503,17 @@ Bounded Bootstrap criteria §۳.۴ functional validation:
 
 ---
 
+## 🔖 boot چت part14 — M101 backfill (TRADING-phase1-part14-phase3-fullrefresh)
+
+**تاریخ:** 2026-05-30
+**Parent commit (chat-end part13):** `3eae91e` (Phase 3 batch: check_12 + F-A/F-B/F-C + chat-end — منبع: git کاربر در boot part14، `git rev-parse --short HEAD` تأییدشده)
+
+✅ **full-refresh (part14):** بخش‌های کامل part09→part13 در همین چت (part14) به CHAT_LOG افزوده شدند (Phase 3، Triple-Rule M93/#۷۳، atomic). این ردیف M101 parent-hash (chat-end part13 = `3eae91e`) را در boot part14 ثبت می‌کند (scope-closed، M98).
+
+---
+
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v2.5 (2026-05-24 — چت part08 chat-end: S3.3 + S3.4 delivered + Stage S3 COMPLETE + Discoveries #1-#8 part08 + M101 backfill `05d7388`)
-**به‌روز شده در:** چت `TRADING-phase1-part08-mdrs-v2-s33-s34-completion` (chat-end)
+**نسخه:** v2.6 (2026-05-30 — part14 full-refresh: بخش‌های part09→part13 افزوده شد + boot part14 marker (parent `3eae91e`)؛ بخش‌های تا part08 دست‌نخورده)
+**به‌روز شده در:** چت `TRADING-phase1-part14-phase3-fullrefresh` (full-refresh اتمیک Phase 3)
 **به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ + #۷۳ (Triple-Rule honored)

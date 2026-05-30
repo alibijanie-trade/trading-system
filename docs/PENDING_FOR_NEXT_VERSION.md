@@ -1184,3 +1184,122 @@ untracked files در `claude_workspace/`:
 **تعداد items اضافه شده در part08 chat-end:** K9 + K10 (NEW HM-candidates) + Z3.19 RESOLVED + Z3.12 RESOLVED + 8 Discoveries (#1-#8 consolidated) + K1-K8 status update.
 
 **آخرین به‌روزرسانی part08 section:** 2026-05-24 (chat-end چت `TRADING-phase1-part08-mdrs-v2-s33-s34-completion`)
+
+---
+
+## 🔴🔴🔴 آیتم‌های part09 chat-end (چت `TRADING-phase1-part09-mdrs-v2-s4-audit-checks`)
+
+**منبع:** part09 → S4 (D12 Audit Checks #۸-۱۱) commit `234ba2f` (push شده، 11/11 pass). chat-end Triple-Rule **defer** شد (HM-2 escape، HM-9 cumulative ۶ event part09). جزئیات کامل deferred در `incoming_permanent/PART09_CHAT_END_DEFERRED_NOTE.txt` + `claude_workspace/HELPER_SESSION_TODO_part09_final.md` (۳۸ observation، ۱۹ user catch، Mechanism A-E، Criteria C1-C9، W1-W3، L1-L2) — این بخش reference list است (per M59/F41 anti-over-compression).
+
+### Z3.x RESOLVED در S4 part09 (`234ba2f`)
+- **Z3.15** (S1 D2 self-reference first-run gap) → ✅ RESOLVED in S4 part09 (`234ba2f`).
+- **Z3.16** (Review numbering integrity audit) → ✅ RESOLVED in S4 part09 (`234ba2f`).
+- **Z3.17** (Z-ID Permanence anti-pattern / M96) → ✅ RESOLVED in S4 part09 (`234ba2f`).
+- **Z3.25** → ✅ RESOLVED in S4 part09 (`234ba2f`) per deferred note. ⚠️ یادداشت صداقت (#۸۴): Z3.25 به‌صورت ردیف مستقل در جدول Z3.x این فایل **تعریف نشده** (جدول تا Z3.17، و Z3.18-24 در بخش‌های متنی‌اند). اینجا per منبع deferred note ثبت می‌شود؛ شمارهٔ Z3.25 در جدول جعل نمی‌شود.
+
+### ۸ P10-candidate (carry-forward، اکثراً معلق)
+1. Helper-Sandbox Synthesis Drift (M-candidate، meta).
+2. Bootstrap Paradox of Cross-Chat Infrastructure (M-candidate، meta).
+3. Cross-Side Decision Sync Failure (M-candidate، process).
+4. live_inbox setup formalization (design، با residual decision F40).
+5. W3 Chat-End File Sync Verification → Rule candidate.
+6. HM-9 Tool-Level Reliability → Rule-promotion candidate (cumulative؛ به part10 ادامه).
+7. File-Based Decision Tracking Registry for helper sessions (process، automation per HM-META-K).
+8. L1 Persian Language Preference → universal rule formalization.
+
+### PERSIST TASKS A-G (معلق part09/10)
+وضعیت: 📋 معلق — verify جذب در part11 (THEN-IF-BUDGET این چت). شامل HM-META-H/I/J/K + W4-W5 + B1-B4 boot discipline + Mechanism A-E + Criteria C1-C9 + CHAT_BOOT_TRIGGER_TEMPLATE (که در part09 turn ۷۹ ساخته شد). منبع paste-ready: helper chat part09 turn ۶۹+ (per PART10_BOOT_ESCAPE_NOTE).
+
+### Discoveries part09 (۱۲ — reference)
+Discovery #1-#12 part09 در batch preview turn ۲۵ main chat. logging در part10 CHAT_LOG (انجام نشد چون handoff part10 ساخته نشد — رجوع به بخش part10 زیر).
+
+**آخرین به‌روزرسانی part09 section:** 2026-05-30 (full-refresh اتمیک part14، reconcile معوق).
+
+---
+
+## 🔴🔴🔴 آیتم‌های part10 (چت `TRADING-phase1-part10-mdrs-v2-infrastructure-sprint`)
+
+**منبع:** PART10_BOOT_ESCAPE_NOTE.txt + ردیف part10 در PHASE_LEDGER. part10 = Infrastructure Sprint + audit session. HEAD بدون تغییر `90db89f`. **PART10 handoff ساخته نشد** (زنجیرهٔ تک‌حلقه یک‌بار شکست — مدرک پایه‌گذاری PHASE_LEDGER دوحلقه).
+
+### M103 genesis (مهم‌ترین)
+**M103 — Audit Over-Promise Pattern** در همین part10 audit session کشف شد: ادعای «deep-scan تقریباً کامل» با ~۳۵٪ coverage واقعی (۳۵-۴۰ از ۲۷۸ classified)، «~۹۸٪ coverage» که مربوط به screenshots بود نه پروژه، و skip خودسرانهٔ Tier 3 (۲۱۴ فایل) + Legacy سند جامع بدون permission. → پشتیبان ۸ Trust Rule #۷۸-۸۵ (codify در part11).
+
+### HM-9 escalation
+Cumulative ۱۰ event (part08: 2 + part09: 6 + part10: 2). HM-9 #۹ (boot attempt #1) + #۱۰ (boot attempt #2، edit_file atomic timeout روی PART09_CHAT_END_DEFERRED_NOTE). Rule-promotion candidate تأیید شد. Heavy-write smoke test → Mechanism D (F49).
+
+### P10-CANDIDATEs 9-14
+reference در PART10_BOOT_ESCAPE_NOTE (content در helper chat part09 turn ۶۹+: F42-F53، W4-W5، B1-B4، CHAT_BOOT_TRIGGER_TEMPLATE full). همگی معلق/جذب‌شده در مسیر part11.
+
+**آخرین به‌روزرسانی part10 section:** 2026-05-30 (full-refresh اتمیک part14).
+
+---
+
+## 🔴🔴🔴 آیتم‌های part11 (چت codify Trust Rules → v2.15)
+
+**منبع:** ردیف part11 در PHASE_LEDGER. codify ۸ Trust Rule **#۷۸-۸۵** + درس **M103** → Constitution **v2.15** (commit `59c075a`، audit 11/11 PASS). **PART11 handoff ساخته نشد** (مستقیم PART12، `bb964cf`).
+
+- ✅ Trust Rules #۷۸-۸۵ از candidate → **Locked v2.15** (SCM/QHP/NSISN/RDEM/MPTC/HAT/APMM/Self-Activation Lock).
+- ✅ M103 از candidate → **Locked v2.15** (§۲.۸ 02_lessons).
+
+**آخرین به‌روزرسانی part11 section:** 2026-05-30 (full-refresh اتمیک part14).
+
+---
+
+## 🔴🔴🔴 آیتم‌های part12 chat-end (`5173e6f`)
+
+**منبع:** ردیف part12 در PHASE_LEDGER. **Phase 2 CLOSED** (verify ۴/۴ فایل غول، backfill #۰۰۵=`59c075a` در REVIEW_LOG و review#005 §۴/§۶) + پایه‌گذاری `PHASE_LEDGER.md` + قانون تداوم دوحلقه‌ای (جایگزین تک‌حلقه). chat-end part12 = `5173e6f` + PART13 handoff.
+
+**آخرین به‌روزرسانی part12 section:** 2026-05-30 (full-refresh اتمیک part14).
+
+---
+
+## 🔴🔴🔴 آیتم‌های part13 chat-end (`3eae91e`)
+
+**منبع:** ردیف part13 در PHASE_LEDGER. **#۰ check_12_continuity** (file-based، invariant H==L+1، chicken-and-egg-safe؛ test_12/13) + **F-A** DECISIONS_LOG→v1.4 + **F-B** check_1 hardening (Latin→Persian/structural anchor، true-PASS ۸۵/۸۵/۸۵؛ test_14) + **F-C** backfill #۰۰۲=`3fd2405`/#۰۰۴=`234ba2f` + Review #۰۰۶/#۰۰۷ + M101 backfill part12. audit ۱۲/۱۲ + tests ۱۴/۱۴ PASS. chat-end part13 = `3eae91e`.
+
+**آخرین به‌روزرسانی part13 section:** 2026-05-30 (full-refresh اتمیک part14).
+
+---
+
+## 🧮 آشتی Count مجموع (Discovery #۸ part05 — reconciled در part14)
+
+خطوط stale «۳۰ آیتم باز برای v2.14» در بخش‌های part03/part04 یک arithmetic discrepancy داشتند. محاسبهٔ درست:
+
+- Z3.x: ۱۷ + ۳ (Z3.18-20) = ۲۰ · M-lessons: ۹ + ۲ (M101-M102) = ۱۱ · Principle (Golden Rule): 1 · Rule candidates (#۶۸-۷۷): **۱۰ (در شمارش قدیمی نادیده)** · R-NEW (#۷۷): جزو همان ۱۰ · Z3.21-24: ۴.
+- مجموع منبع: `17+3+9+2+1+1=33` (نه «۳۰») + ۱۰ Rule candidates + ۴ policy/meta = اختلاف ناشی از نشمردن Rule-candidates و sub-sectionهای بعدی.
+
+**وضعیت فعلی (پایان part13/ورودی part14):** این شمارش‌ها **منقضی‌اند** — همهٔ آیتم‌های v2.14 (Rules #۶۸-۷۷ + M88/M93-M102 + Golden Rule + Templates 11-12) در part04-08 **ادغام/Locked** شدند، و آیتم‌های v2.15 (Trust #۷۸-۸۵ + M103) در part11 **Locked** شدند. خطوط «تعداد» قدیمی صرفاً تاریخی‌اند (#۲۴ No-Deletion — حفظ، نه حذف). شمارش معتبر فعلی در `SESSION_STATUS.md` (۸۵ قانون، M1-M103، ۷ Review) و `PHASE_LEDGER.md` است.
+
+**آخرین به‌روزرسانی count-reconciliation:** 2026-05-30 (full-refresh اتمیک part14).
+
+---
+
+## 🔴🔴🔴 آیتم‌های part15 (چت `TRADING-phase1-part15-phase3-fullrefresh-resume`)
+
+**منبع:** part15 = ادامهٔ part14 (PENDING reconcile + manifest D2 + commit اتمیک + chat-end). تعارض escape-note ↔ check_12 کشف و حل شد (گزینهٔ C: ردیف بازه‌ای part14-15، handoff PART16).
+
+### P-candidate (part15) — M104 + Rule #۸۶: Escape-Aware Sequence Derivation
+
+**وضعیت:** CANDIDATE — codify کامل **موکول به part16** (v2.16). دلیل سبک‌نگه‌داشتن این چت: افزودن قانون+درس = تغییر constitution و کل زنجیره (01_rules + 02_lessons + main + Review #۰۰۸ + DECISIONS_LOG + audit CURRENT_VERSION + .pre-commit label + count درس ۷۱→۷۲) سنگین است.
+
+**علت ریشه‌ای (اشتباه part14 که در part15 گرفته شد):** part14 escape-note شمارهٔ handoff را «PART16» hard-code کرد (از روی الگو/نام انسانی، نه اشتقاق مکانیکی)؛ چون part14 **escape** بود frontier جلو نرفت و مقدار درستِ مکانیکی **PART15** بود — تعارض با check_12 (H==L+1). نقض #۸۴ (APMM، extrapolation از الگو) + cross-check نکردن تعامل escape↔check_12.
+
+**کار لازم در v2.16 (codify در part16):** درس **M104** + قانون **#۸۶** (متن verbatim پایین) + main.md (bump v2.16، آمار، version history) + Review **#۰۰۸** + DECISIONS_LOG + audit `CURRENT_VERSION`→v2.16 + `.pre-commit-config` label + count درس ۷۱→۷۲.
+
+#### متن verbatim برای codify (part16) — عیناً در PART16_HANDOFF نیز هست
+
+**[M104]**
+> ### M104 — Mechanical-Claim Verification before Persisting
+> Lesson (Normative): هر عدد/شناسهٔ مکانیکی در artifact پایدار (شمارهٔ handoff، hash، ردیف ledger، شمارهٔ قانون/درس/Review، نسخه) باید پیش از نوشتن از منبع زنده (اسکریپت/فایل/git) استخراج شود، نه از حافظه/الگو/استنتاج دنباله‌ای. اگر قابل‌استخراج نیست → فرمول/اشتقاق («بالاترین موجود + ۱») یا placeholder + TODO، نه hard-code.
+> Corollary (Escape): پس از escape، شمارنده‌های frontier جلو نمی‌روند؛ هر عدد دنباله‌ای مشکوک است و باید با frontier واقعی + invariant فعال (check_12: H==L+1) cross-check شود.
+> Genesis: part14 escape-note off-by-one (PART16 به‌جای مکانیکیِ PART15).
+> Cross-refs: نمونهٔ خاص #۸۴ · مکمل #۸۶ · check_12 · M101 · M82.
+
+**[#۸۶]**
+> ### #۸۶ — Escape-Aware Sequence Derivation
+> Normative: در هر artifact تداوم (escape/handoff/continuity/ledger row) هیچ شمارندهٔ دنباله‌ای literal از حافظه/الگو نوشته نشود؛ باید (الف) از frontier موجود مشتق شود («بالاترین + ۱») و (ب) پیش از قطعی‌شدن با invariant مکانیکی فعال (check_12، H==L+1) سازگار باشد. اگر چت escape شد، صریح ثبت شود frontier جلو نرفته.
+> Implementation: قالب escape/handoff به‌جای عدد ثابت بنویسد «handoff بعدی = بالاترین PHASE1_PART{N}_HANDOFF موجود + ۱»؛ قبل از commitِ دارای گیت پیوستگی، audit واقعی اجرا شود؛ تمایز escape (frontier ثابت) ↔ chat-end (frontier +۱) صریح باشد.
+> Genesis: part14 escape-note off-by-one.
+> Cross-refs: عملیاتی‌کنندهٔ #۸۴ · پشتوانهٔ M104 · check_12 · #۷۹.
+
+**آخرین به‌روزرسانی part15 section:** 2026-05-30 (chat-end چت part15، P-candidate ثبت‌شده در commit اتمیک part14-15).
