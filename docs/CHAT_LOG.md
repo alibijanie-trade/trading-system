@@ -2396,6 +2396,15 @@ Bounded Bootstrap criteria §۳.۴ functional validation:
 
 ---
 
+## 🔖 boot چت part13 — M101 backfill (TRADING-phase1-part13-phase3-remediation)
+
+**تاریخ:** 2026-05-30
+**Parent commit (chat-end part12):** `5173e6f` (Rule #۷۳ + M101 mutual-chain backfill — منبع: git کاربر در boot part13)
+
+⚠️ **drift شناخته‌شده (Phase 3):** این CHAT_LOG هنوز در part08 متوقف است. بخش‌های کامل part09+part10+part11+part12+part13 در **full refresh وضعیت‌نامه** (Phase 3، Triple-Rule M93/#۷۳) atomic افزوده می‌شوند. این ردیف فقط M101 parent-hash را در لحظهٔ boot ثبت می‌کند (scope-closed، M98).
+
+---
+
 ## 📌 پایان CHAT_LOG
 
 **نسخه:** v2.5 (2026-05-24 — چت part08 chat-end: S3.3 + S3.4 delivered + Stage S3 COMPLETE + Discoveries #1-#8 part08 + M101 backfill `05d7388`)

@@ -1,0 +1,64 @@
+# HANDOFF — ادامهٔ part13 → part14 (Phase 3 full-refresh + Phase 4)
+
+> فایل permanent (Rule #۶۲). چت part14 باید آن را در boot بخواند.
+> ساخته‌شده: پایان part13 (2026-05-30). Commit مرجع part13: <chat-end part13 hash — در part14 boot از git backfill شود (M101)>.
+> ⭐ منبع تجمعی: `claude_workspace/PHASE_LEDGER.md` — اول آن را بخوان.
+> 🏷️ **NEXT CHAT NAME (MANDATORY — HM-3):** `TRADING-phase1-part14-phase3-fullrefresh`
+
+---
+
+## ⭐ اصل حاکم (اول بخوان)
+جامعیت > یک‌چت. ناقص‌خواندن ممنوع (Rule #۸۰). هر جا budget کم آمد → «چت جدید باز کن» + state امن، نه ادامهٔ ناقص.
+
+## 0) Context + boot اجباری
+- trading-system، Windows، root `D:\Projects\trading-system`، Filesystem MCP. Branch `infra/v2.14-source-of-truth`. کاربر ali. فارسی + انگلیسی فنی.
+- boot: `claude_workspace\CHAT_BOOT_TRIGGER_TEMPLATE.md` را follow کن. هیچ task قبل از STEP 2/3.
+- **اول `PHASE_LEDGER.md` را بخوان** (part01→part13).
+- **M101 backfill اول part14 (سه‌گانه):**
+  1. hash chat-end part13 از git → `PHASE_LEDGER.md` (ردیف part13 + HEAD «<backfill part14...>») + CHAT_LOG.
+  2. همان hash → resolution ردیف REVIEW_LOG **#۰۰۶** و **#۰۰۷**.
+- مکانیزم‌های هر turn: Self-Check بالا · Honesty Audit (#۸۳) پایین · Scope Contract (#۷۸) · تأیید قبل از write (#۵۱) · commit `-F` ASCII (M99) · read-back (M82) · تک‌خوانی فایل غول (HM-9/M66). **check_12 الان فعال است (دوحلقه مکانیکی enforce می‌شود).**
+
+## 1) سه Objective
+1. **Phase 2:** ✅ CLOSED (part12).
+2. **Phase 3:** ⏳ IN PROGRESS — part13 یک batch بست (#۰ + F-A/B/C، همه runtime-verified). باقیمانده = full-refresh سنگین + پاک‌سازی legacy (بخش ۲).
+3. **Phase 4:** 🔮 اسکن ۱۰۰٪ ۲۷۸ فایل (بخش ۳).
+
+## 2) Phase 3 — باقیماندهٔ part14
+
+### 🟠 اولویت اصلی — full-refresh وضعیت‌نامه (atomic، Triple-Rule M93/#۷۳)
+- **SESSION_STATUS.md:** بازنویسی part08-era → part13 (v2.15، ۸۵ قانون، M1-M103، Phase 2 CLOSED، batch part13، check_12 فعال).
+- **CHAT_LOG.md:** افزودن بخش‌های part09/10/11/12/13.
+- **PENDING_FOR_NEXT_VERSION.md:** به‌روزرسانی.
+- **PROJECT_MANIFEST.md:** D2 re-run.
+- **Triple-Rule معلق part09** در همین batch بسته شود.
+- ⚠️ حساس و بزرگ — شتاب نزن؛ budget کم آمد → escape به part15.
+
+### بقیه (پس از full-refresh)
+- deprecate رسمی legacy docs (`سند_جامع_v2_6..v2_11`، PROJECT_GOVERNANCE، CLAUDE_CHECKLIST، PROJECT_CONTEXT، ARCHITECTURE).
+- بازسازی `PROJECT_KNOWLEDGE.md` همگام v2.15 (Rule #۵۵).
+- catch-up README/CHANGELOG/TASK_BACKLOG + workspace Tier protection + DECISIONS_LOG drift backfill.
+- main.md stale: branch `infra/governance-overhaul` + placeholder `Created in commit`.
+- boot-template legacy ref **#۲۱**: ارجاع به `سند_جامع_v2_11` → اصلاح به modular.
+- PERSIST TASKS A-G معلق part09/10 (verify جذب در part11).
+- backfill resolution REVIEW_LOG **#۰۰۱** و **#۰۰۳** با hash واقعی (git log).
+- cosmetic: کامنت `# ... exactly 11 items` در test_2 → ۱۲.
+- تصمیمات Settings — موکول، بدون تغییر بدون تأیید.
+
+## 3) Phase 4 (part14+)
+اسکن ۱۰۰٪ ۲۷۸ فایل classified با #۷۸ + #۷۹ + #۸۴. حجیم → چند چت.
+
+## 4) شرط escape (دستور کاربر، فعال)
+HM-9 یا overflow → escape، باقی به چت بعد، **push نزن**، state امن را گزارش کن.
+**state امن فعلی:** chat-end part13 commit (check_12 + F-A/B/C + Review #۰۰۶/#۰۰۷ + Ledger part13 + این handoff) در chat-end part13 commit+push می‌شود؛ hash پس از push.
+
+## 5) جملهٔ شروع پیشنهادی part14
+«part14 — boot استاندارد (اول PHASE_LEDGER.md)، سپس M101 backfill سه‌گانه (hash chat-end part13 → ردیف ledger part13 + HEAD + CHAT_LOG + resolution #۰۰۶/#۰۰۷). بعد Phase 3: **اولویت = full-refresh اتمیک وضعیت‌نامه** (SESSION_STATUS + CHAT_LOG part09-13 + PENDING + MANIFEST D2 + Triple-Rule معلق part09)، سپس deprecate legacy + PROJECT_KNOWLEDGE + بقیه. اصل: جامعیت > یک‌چت؛ شتاب نزن.»
+
+---
+
+## 🔁 قانون تداوم دوحلقه‌ای (canonical — الان مکانیکی توسط check_12 enforce می‌شود)
+۱) حلقهٔ ۱ (Ledger): ردیف + ۳ Objective + HEAD + DEADLINE (append-only #۲۴). ۲) حلقهٔ ۲ (Handoff): `PHASE1_PART{N+1}_HANDOFF.txt`. ۳) هر دو در یک commit (M82) + push (#۶۶) + paste. **check_12: H==L+1 وگرنه قرمز.**
+
+---
+**پایان HANDOFF part14.**

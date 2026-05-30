@@ -1,0 +1,15 @@
+chore(part13): Phase 3 batch - continuity check_12 + F-A/F-B/F-C + chat-end
+
+Item #0 (DEADLINE met): add check_12_continuity to 63_pre_commit_audit.py
+  - file-based two-loop continuity guard (Rule #62 + M23 + M101)
+  - invariant H == L + 1 (ledger latest part-row vs latest PHASE1_PART{N}_HANDOFF)
+  - chicken-and-egg-safe: stays green mid-chat; test_12 + test_13; Review #006
+F-A: DECISIONS_LOG.md header+footer bumped to v1.4 (reflect Decision #67)
+F-B: harden check_1_rule_counts - replace broken Latin transliteration regexes
+  with real anchors (Latin Locked for main.md, Persian root for SESSION_STATUS);
+  true-PASS 85/85/85; test_14; Review #007
+F-C: M101 backfill REVIEW_LOG #002 = 3fd2405, #004 = 234ba2f
+M101 backfill at boot: part12 chat-end = 5173e6f (ledger + CHAT_LOG)
+Two-loop continuity: PHASE_LEDGER part13 row + PHASE1_PART14_HANDOFF.txt
+Runtime verified: audit 12/12 PASS, tests 14/14 PASS
+Review #006/#007 + ledger part13 hash backfilled in part14 boot per M101

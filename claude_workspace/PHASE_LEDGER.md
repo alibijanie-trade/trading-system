@@ -17,7 +17,7 @@
 
 **چرا دوحلقه:** زنجیرهٔ تک‌حلقه شکننده است — اگر یک چت forward نکند، بعدی‌ها کور می‌شوند. **مدرک:** `PART10` و `PART11` handoff اصلاً ساخته نشدند (زنجیره یک‌بار شکست). این Ledger تجمعی شکست را جبران می‌کند: چت N+k با خواندن همین یک فایل کل قصه را می‌بیند.
 
-**Enforcement مکانیکی (در راه):** `check_12_continuity` در `scripts/63_pre_commit_audit.py` — **DUE part13** (پایین، بخش DEADLINE). تا قبل از آن، این قانون فقط دستورالعمل است و به پایبندی هر چت متکی.
+**Enforcement مکانیکی:** ✅ `check_12_continuity` در `scripts/63_pre_commit_audit.py` — **پیاده‌سازی شد در part13** (file-based، invariant H==L+1؛ Review #۰۰۶؛ audit ۱۲/۱۲ runtime-verified). از این پس قانون دوحلقه مکانیکی enforce می‌شود، نه صرفاً دستورالعمل.
 
 ---
 
@@ -29,7 +29,8 @@
 | part09 | S4 (D12 Audit Checks #۸–۱۱) + Z3.15/16/17/25 RESOLVED. chat-end Triple-Rule **defer** شد (HM-2 escape) | `234ba2f` |
 | part10 | Infrastructure Sprint + audit session؛ کشف الگوی over-promise (**M103 genesis**). boot دوبار escape (HM-9 #9/#10). **PART10 handoff ساخته نشد** | HEAD `90db89f` (بدون تغییر) |
 | part11 | codify ۸ Trust Rule **#۷۸–۸۵** + درس **M103** → Constitution **v2.15**. audit 11/11 PASS. **PART11 handoff ساخته نشد** (مستقیم PART12) | codify=`59c075a` · handoff part12=`bb964cf` |
-| part12 | boot کامل + verify ۴/۴ فایل غول فاز ۲ (۷ یافته، همه Phase 3) + backfill `59c075a` در REVIEW_LOG #۰۰۵ و review#005 §۴/§۶ + **Phase 2 CLOSED** + پایه‌گذاری این Ledger + قانون تداوم دوحلقه‌ای | (chat-end commit part12) |
+| part12 | boot کامل + verify ۴/۴ فایل غول فاز ۲ (۷ یافته، همه Phase 3) + backfill `59c075a` در REVIEW_LOG #۰۰۵ و review#005 §۴/§۶ + **Phase 2 CLOSED** + پایه‌گذاری این Ledger + قانون تداوم دوحلقه‌ای | chat-end part12 = `5173e6f` |
+| part13 | boot کامل + M101 backfill part12=`5173e6f` (Ledger/CHAT_LOG) · **#۰ check_12_continuity ساخته شد** (file-based، invariant H==L+1، chicken-and-egg-safe) + test_12/13 · **F-A** DECISIONS_LOG→v1.4 · **F-B** check_1 سخت‌سازی (Latin→Persian anchor؛ true-PASS ۸۵/۸۵/۸۵) + test_14 · **F-C** backfill #۰۰۲=`3fd2405`/#۰۰۴=`234ba2f` · Review #۰۰۶/#۰۰۷. audit ۱۲/۱۲ + tests ۱۴/۱۴ PASS | chat-end part13 = `<backfill part14 boot per M101>` |
 
 > 🔎 **شکاف زنجیره (یک‌خطی، per دستور کاربر — نه بازسازی کامل):** part10 = escape (هیچ handoff) · part11 = codify (هیچ handoff، مستقیم به PART12). تاریخچهٔ ۱۱→۱۲ از همین Ledger خوانده می‌شود.
 
@@ -41,14 +42,14 @@
 ✅ **CLOSED در part12.** codify `59c075a` (audit 11/11) + verify ۴/۴ فایل غول کامل + backfill #۰۰۵ (`59c075a`) اعمال و read-back شد. صحت محتوای #۷۸–۸۵/M103/#۶۷ تأیید شد، آسیب جانبی ۰.
 
 ### Objective 2 — Phase 3 (Remediation + full refresh)
-⏳ TODO — اجرا از part13.
-- 🔴 **#۰ check_12_continuity — DUE part13** (الزام سخت؛ تعویق فقط با تأیید صریح کاربر؛ در آن صورت انتقال پررنگ به part14)
-- F-A: نسخهٔ DECISIONS_LOG stale (header v1.0 / footer v1.3، #۶۷ منعکس نشده)
-- F-B: ضعف audit `check_1` (تکیه به برچسب لاتین «sabt/qoflshode» → false-PASS برای drift شمارش قوانین) — audit-hardening
-- F-C: backfill M101 معلق برای REVIEW_LOG #۰۰۲ و #۰۰۴ (`234ba2f`)
-- شکاف handoff part10/11 (ثبت‌شده، نه بازسازی) · PERSIST TASKS A-G معلق · stale SESSION_STATUS («v2.14»)/main.md (branch + placeholder) · boot-template legacy ref #۲۱
-- full refresh وضعیت‌نامه (SESSION_STATUS/CHAT_LOG part10+11/PENDING/MANIFEST D2) + Triple-Rule معلق part09 + deprecate legacy docs + بازسازی PROJECT_KNOWLEDGE.md (Rule #۵۵) + catch-up README/CHANGELOG/TASK_BACKLOG + workspace Tier protection + DECISIONS_LOG drift backfill + تصمیمات Settings (موکول)
-- ارتقای تداوم دوحلقه‌ای: ✅ پایه‌گذاری شد در part12 (این Ledger)
+⏳ IN PROGRESS — part13 یک batch بست؛ full-refresh سنگین → part14.
+- ✅ **#۰ check_12_continuity — DONE part13** (file-based، H==L+1، chicken-and-egg-safe؛ test_12/13؛ Review #۰۰۶؛ audit ۱۲/۱۲ runtime-verified)
+- ✅ **F-A** DECISIONS_LOG header+footer → v1.4 (2026-05-30، بازتاب #۶۷)
+- ✅ **F-B** check_1 سخت‌سازی (Latin→Persian/structural anchor؛ true-PASS ۸۵/۸۵/۸۵؛ test_14؛ Review #۰۰۷)
+- ✅ **F-C** backfill M101: #۰۰۲=`3fd2405` (S3.4 part08) · #۰۰۴=`234ba2f` (S4)
+- ⏳ معلق part14 (full-refresh سنگین): SESSION_STATUS (part08→part13) + CHAT_LOG (part09/10/11/12/13) + PENDING + PROJECT_MANIFEST D2 + Triple-Rule معلق part09 — atomic (M93/#۷۳)
+- ⏳ معلق: deprecate legacy docs · بازسازی PROJECT_KNOWLEDGE.md (#۵۵) · catch-up README/CHANGELOG/TASK_BACKLOG · workspace Tier · DECISIONS_LOG drift backfill · main.md stale (branch + `Created in commit`) · boot-template legacy ref #۲۱ · PERSIST TASKS A-G verify · backfill #۰۰۱/#۰۰۳ resolution · cosmetic comment «11» در test_2 · تصمیمات Settings (موکول)
+- ارتقای تداوم دوحلقه‌ای: ✅ پایه part12 + ✅ enforcement مکانیکی (check_12) part13
 
 ### Objective 3 — Phase 4 (اسکن ۱۰۰٪ ۲۷۸ فایل classified)
 🔮 TODO — part13+. با Scope Contract (Rule #۷۸) + گزارش N/M (Rule #۷۹) + بدون pattern-matching (Rule #۸۴).
@@ -59,13 +60,15 @@
 - Branch فعال: `infra/v2.14-source-of-truth`
 - `59c075a` = Phase 2 codify (part11، push شده)
 - `bb964cf` = PHASE1_PART12_HANDOFF (part11 chat-end، push شده)
-- **(chat-end part12)** = backfill #۰۰۵ + این Ledger + PART13 handoff + commit_msg — HEAD پس از commit این چت به‌روز شود (و در part13 boot به‌صورت M101 backfill اینجا ثبت گردد)
-- مرجع تاریخی: `234ba2f` (S4 part09) · `35ea822` (S3.3 part08) · `5730173` (tag v0.6.0 main)
+- **`5173e6f`** = chat-end part12 (backfill #۰۰۵ + این Ledger + PART13 handoff + commit_msg) — M101 backfill ثبت‌شده در boot part13 (per user git)
+- **`<backfill part14 boot per M101>`** = chat-end part13 (check_12 + F-A/B/C + Review #۰۰۶/#۰۰۷ + این به‌روزرسانی Ledger + PART14 handoff)
+- مرجع تاریخی: `234ba2f` (S4 part09) · `3fd2405` (S3.4 chat-end part08) · `35ea822` (S3.3 part08) · `5730173` (tag v0.6.0 main)
 
 ---
 
 ## 🔴 DEADLINEهای فعال
-- **🔴 check_12_continuity — DUE part13.** هیچ چتی نباید بدون append به این Ledger + ساخت HANDOFF بسته شود؛ این check آن را مکانیکی enforce می‌کند. تعویق ممنوع مگر با تأیید صریح کاربر → آنگاه انتقال پررنگ به part14.
+- ✅ **check_12_continuity — DONE part13** (DEADLINE رعایت شد؛ Review #۰۰۶؛ audit ۱۲/۱۲ runtime-verified). از این پس دوحلقه مکانیکی enforce می‌شود.
+- 🟠 **full-refresh وضعیت‌نامه — DUE part14** (SESSION_STATUS/CHAT_LOG/PENDING/MANIFEST atomic؛ حساس، نباید شتاب‌زده شود).
 
 ---
 **📌 پایان PHASE_LEDGER.md — append-only؛ هر چت در chat-end حلقهٔ ۱ را اینجا می‌زند.**

@@ -19,6 +19,9 @@ Z3-derived audits (without single M-lesson origin):
     Z3.15 - Manifest Self-Reference         -> check_9       (NEW v2.14)
     Z3.16 - Review Numbering Integrity      -> check_10      (NEW v2.14)
 
+Continuity chain (two-loop, Rule #62 + M23 + M101):
+    Ledger <-> Handoff frontier integrity   -> check_12      (NEW part13)
+
 Usage:
     python scripts/63_pre_commit_audit.py
     python scripts/63_pre_commit_audit.py --verbose
@@ -164,6 +167,23 @@ PERMANENT_DOCS_NO_Z_IDS = [
 # Specific Z-ID pattern (Z2.N or Z3.N format, not the generic word "Z-ID")
 Z_ID_PATTERN = re.compile(r"\bZ[23]\.\d+\b")
 
+# Continuity chain files (check_12) - two-loop rule (Rule #62 + M23 + M101).
+CLAUDE_WORKSPACE = REPO_ROOT / "claude_workspace"
+PHASE_LEDGER_MD = CLAUDE_WORKSPACE / "PHASE_LEDGER.md"
+INCOMING_PERMANENT = CLAUDE_WORKSPACE / "incoming_permanent"
+
+# Canonical handoff filename: PHASE1_PART{N}_HANDOFF.txt (no topic suffix).
+# Suffixed legacy names (e.g. ..._MDRS_V2_..._HANDOFF.txt) are intentionally
+# NOT matched - the two-loop rule mandates the canonical name.
+HANDOFF_PATTERN = re.compile(r"^PHASE1_PART(\d+)_HANDOFF\.txt$")
+
+# Ledger summary-table row: lines starting with "| partNN" or "| partNN-MM"
+# (range). Scoped to table rows so prose mentions ("DUE part13") are NOT matched.
+LEDGER_PART_ROW_PATTERN = re.compile(
+    r"^\|\s*part0*(\d+)(?:\s*[-\u2013\u2014]\s*0*(\d+))?",
+    re.MULTILINE,
+)
+
 
 # =============================================================================
 # Helpers
@@ -205,8 +225,8 @@ def check_1_rule_counts() -> CheckResult:
     """
     Verify Locked rule count is consistent across:
       - 01_rules.md: count table rows in section 1.9
-      - main.md: number after "qowanin Locked" stat
-      - SESSION_STATUS.md: number after "qowanin qoflshode"
+      - main.md: number after the Latin "Locked" label in the stats table
+      - SESSION_STATUS.md: bold number after the Persian label root "قفل"
 
     All three must match.
     """
@@ -245,23 +265,24 @@ def check_1_rule_counts() -> CheckResult:
     max_rule_id = max(rule_ids)
     details.append(f"01_rules.md: {count_in_rules} rules in table (max ID: {max_rule_id})")
 
-    # Find count in main.md stats
+    # Find count in main.md stats table.
+    # Row (after to_ascii_digits): "| قوانین Locked | 85 ثبت‌شده ...".
+    # Anchor on the Latin word "Locked" + table pipe + count. The previous
+    # "sabt" transliteration never matched real Persian text, so main_count
+    # stayed None and check_1 silently false-PASSed (F-B).
     main_text = to_ascii_digits(safe_read(MAIN_MD))
-    main_match = re.search(r"qowanin\s+Locked|Locked\s*\|\s*(\d+)", main_text, re.IGNORECASE)
-    # Above is non-Persian; use a more robust pattern
-    main_match = re.search(r"\|\s*(\d+)\s+sabt", main_text)  # "N sabt-shode"
+    main_match = re.search(r"Locked\s*\|\s*(\d+)", main_text)
     main_count = None
     if main_match:
         main_count = int(main_match.group(1))
         details.append(f"main.md stats: {main_count}")
 
-    # Find count in SESSION_STATUS.md
+    # Find count in SESSION_STATUS.md.
+    # Line (after to_ascii_digits): "- **قوانین قفل‌شده:** **85** ...".
+    # Anchor on the Persian label root "قفل" (clean, no ZWNJ inside) then the
+    # first bold number. Latin "qoflshode" never matched real Persian (F-B).
     session_text = to_ascii_digits(safe_read(SESSION_STATUS_MD))
-    # Pattern: "qowanin qoflshode:** **N**" - in ASCII after translation: number between **
-    session_match = re.search(r"qoflshode[^*]*\*\*(\d+)\*\*", session_text)
-    if not session_match:
-        # Try simpler pattern for the bold number after the label
-        session_match = re.search(r"Locked[^*\n]*\*\*(\d+)\*\*", session_text)
+    session_match = re.search(r"قفل[^\n]*?\*\*(\d+)\*\*", session_text)
     session_count = None
     if session_match:
         session_count = int(session_match.group(1))
@@ -898,6 +919,131 @@ def check_11_z_id_permanence() -> CheckResult:
 
 
 # =============================================================================
+# CHECK 12: Two-loop continuity (Ledger <-> Handoff chain) - Rule #62, M23, M101
+# =============================================================================
+
+
+def check_12_continuity() -> CheckResult:
+    """
+    Enforce the two-loop continuity rule (Rule #62 + M23 + M101): no chat may
+    close without (loop 1) appending its row to PHASE_LEDGER.md AND (loop 2)
+    creating the next PHASE1_PART{N+1}_HANDOFF.txt.
+
+    File-based logic (no git dependency, by design - option 1-A):
+      L = highest chat number with a row in the PHASE_LEDGER summary table
+      H = highest N among PHASE1_PART{N}_HANDOFF.txt files
+          (handoff INTO chat N, created at the chat-end of chat N-1)
+
+    Invariant (PASS): H == L + 1
+      - Holds at rest AND mid-chat. While chat H is in progress, its OWN ledger
+        row (part H) and its next handoff (PART H+1) are produced only at ITS
+        chat-end, so L stays H-1 during the chat. This is the chicken-and-egg
+        fix: the check is GREEN while chat H runs (e.g. now: L=12, H=13).
+      - At chat-end of chat H, both advance together (L->H, H->H+1),
+        preserving H == L + 1.
+
+    FAIL diagnostics:
+      H == L      -> next handoff missing (loop 2 / Rule #62 failed):
+                     chat L closed without creating PHASE1_PART{L+1}_HANDOFF.
+      H >= L + 2  -> ledger row(s) missing (loop 1 failed, M23/M101):
+                     chat {H-1} closed without appending its ledger row.
+      H <  L      -> inconsistent (ledger ahead of the handoff frontier).
+
+    Note: handoff-number gaps BELOW the frontier (e.g. missing PART10/PART11)
+    are intentionally tolerated - the ledger documents historical breaks. The
+    check guards only the frontier (the latest chat boundary).
+    """
+    name = "check_12_continuity"
+    details: List[str] = []
+
+    # --- L: latest part-row in the ledger summary table ---
+    ledger_text = to_ascii_digits(safe_read(PHASE_LEDGER_MD))
+    if not ledger_text:
+        return CheckResult(name, False, "PHASE_LEDGER.md not found or empty", details)
+
+    ledger_parts = set()
+    for m in LEDGER_PART_ROW_PATTERN.finditer(ledger_text):
+        ledger_parts.add(int(m.group(1)))
+        if m.group(2):
+            ledger_parts.add(int(m.group(2)))
+
+    if not ledger_parts:
+        return CheckResult(name, False, "no part rows found in PHASE_LEDGER summary table", details)
+
+    ledger_max = max(ledger_parts)
+    details.append(f"PHASE_LEDGER.md: latest chat row = part{ledger_max}")
+
+    # --- H: latest canonical PHASE1_PART{N}_HANDOFF.txt ---
+    if not INCOMING_PERMANENT.exists():
+        return CheckResult(name, False, f"handoff dir not found: {INCOMING_PERMANENT}", details)
+
+    handoff_nums = []
+    for child in INCOMING_PERMANENT.iterdir():
+        hm = HANDOFF_PATTERN.match(child.name)
+        if hm:
+            handoff_nums.append(int(hm.group(1)))
+
+    if not handoff_nums:
+        return CheckResult(
+            name, False, "no canonical PHASE1_PART{N}_HANDOFF.txt files found", details
+        )
+
+    handoff_max = max(handoff_nums)
+    details.append(f"incoming_permanent: latest handoff = PHASE1_PART{handoff_max}_HANDOFF.txt")
+    details.append(
+        f"frontier: ledger=part{ledger_max}, handoff={handoff_max} "
+        f"(expect handoff == ledger + 1)"
+    )
+
+    # --- Invariant: H == L + 1 ---
+    if handoff_max == ledger_max + 1:
+        return CheckResult(
+            name,
+            True,
+            f"continuity chain intact (ledger part{ledger_max} <-> handoff PART{handoff_max})",
+            details,
+        )
+
+    if handoff_max == ledger_max:
+        return CheckResult(
+            name,
+            False,
+            "next handoff missing (loop 2 / Rule #62 violation)",
+            details
+            + [
+                f"chat part{ledger_max} appears closed but "
+                f"PHASE1_PART{ledger_max + 1}_HANDOFF.txt is absent",
+                "two-loop continuity: append ledger row + create next handoff at chat-end.",
+            ],
+        )
+
+    if handoff_max >= ledger_max + 2:
+        return CheckResult(
+            name,
+            False,
+            "ledger row(s) missing (loop 1 violation, M23/M101)",
+            details
+            + [
+                f"handoff PHASE1_PART{handoff_max} exists (chat {handoff_max} booted) "
+                f"but PHASE_LEDGER latest row is part{ledger_max}",
+                f"append rows up to part{handoff_max - 1} to the PHASE_LEDGER summary table.",
+            ],
+        )
+
+    # handoff_max < ledger_max
+    return CheckResult(
+        name,
+        False,
+        "continuity inconsistent (ledger ahead of handoff frontier)",
+        details
+        + [
+            f"ledger latest part{ledger_max} > handoff frontier {handoff_max}; "
+            "investigate manual edit."
+        ],
+    )
+
+
+# =============================================================================
 # Main runner
 # =============================================================================
 
@@ -913,6 +1059,7 @@ ALL_CHECKS: List[Callable[[], CheckResult]] = [
     check_9_manifest_self_row,
     check_10_review_numbering,
     check_11_z_id_permanence,
+    check_12_continuity,
 ]
 
 
@@ -927,7 +1074,7 @@ def main():
         "--check",
         type=int,
         default=0,
-        help="Run only check N (1-11); default 0 = run all",
+        help="Run only check N (1-12); default 0 = run all",
     )
     args = parser.parse_args()
 

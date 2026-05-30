@@ -4,7 +4,7 @@
 
 > **محل قرارگیری:** `docs/DECISIONS_LOG.md`  
 > **به‌روز توسط:** Claude در پایان چت اگر تصمیم جدید گرفته شد (CLAUDE_CHECKLIST فاز ۳ مرحله ۴)  
-> **نسخه:** v1.0 (2026-05-17)
+> **نسخه:** v1.4 (2026-05-30)
 
 ---
 
@@ -849,6 +849,6 @@ Binance API rate limits دارد. آیا custom token bucket بسازیم؟
 
 ## 📌 پایان DECISIONS_LOG
 
-**نسخه:** v1.3 (2026-05-20 — پایان چت ۱۰ round 2: اصلاح تمایز Max ID vs Recorded + مستندسازی Reserved IDs بر اساس M79)  
+**نسخه:** v1.4 (2026-05-30 — part13/Phase 3 F-A: bump نسخه برای بازتاب Decision #۶۷ (Trust Rules #۷۸-۸۵، Review #۰۰۵) + sync نسخهٔ header از v1.0 به v1.4)  
 **تصمیمات ثبت‌شده:** ۶۲ (Max ID ۶۷ — ۵ اسلات Reserved)  
 **Status کلی:** همه Accepted

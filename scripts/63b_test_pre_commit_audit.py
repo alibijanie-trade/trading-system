@@ -6,7 +6,7 @@ Per Rule #22: every {N}_*.py must have {N}b_test_*.py companion.
 
 Tests:
     test_1_script_imports          - audit script imports without error
-    test_2_all_check_functions     - all 11 check functions exist and callable
+    test_2_all_check_functions     - all 12 check functions exist and callable
     test_3_run_on_real_project     - audit run on real project state (info only)
     test_4_persian_digit_translation - to_ascii_digits() works
     test_5_constants_valid         - all path constants resolve
@@ -16,6 +16,9 @@ Tests:
     test_9_check_9_runs            - check_9 (manifest self-row) runs
     test_10_check_10_runs          - check_10 (Review numbering) runs
     test_11_check_11_runs          - check_11 (Z-ID permanence) runs
+    test_12_check_12_runs          - check_12 (continuity chain) runs
+    test_13_check_12_logic         - check_12 returns PASS on current healthy chain
+    test_14_check_1_logic          - check_1 passes AND extracts main+session counts (F-B guard)
 
 Exit codes:
     0 - all tests passed
@@ -66,7 +69,7 @@ def test_1_script_imports():
 
 
 def test_2_all_check_functions():
-    """All 11 check functions are exported and callable."""
+    """All 12 check functions are exported and callable."""
     expected_names = [
         "check_1_rule_counts",
         "check_2_lesson_counts",
@@ -79,6 +82,7 @@ def test_2_all_check_functions():
         "check_9_manifest_self_row",
         "check_10_review_numbering",
         "check_11_z_id_permanence",
+        "check_12_continuity",
     ]
     try:
         module = load_audit_module()
@@ -100,10 +104,10 @@ def test_2_all_check_functions():
     all_checks = getattr(module, "ALL_CHECKS", None)
     if all_checks is None:
         return False, "ALL_CHECKS list not exported"
-    if len(all_checks) != 11:
-        return False, f"ALL_CHECKS has {len(all_checks)} items, expected 11"
+    if len(all_checks) != 12:
+        return False, f"ALL_CHECKS has {len(all_checks)} items, expected 12"
 
-    return True, "all 11 check functions present and callable"
+    return True, "all 12 check functions present and callable"
 
 
 def test_3_run_on_real_project():
@@ -312,6 +316,69 @@ def test_11_check_11_runs():
     return _run_specific_check(11)
 
 
+def test_12_check_12_runs():
+    """check_12 (continuity chain, Rule #62/M23/M101) runs without crash."""
+    return _run_specific_check(12)
+
+
+def test_13_check_12_logic():
+    """
+    check_12_continuity() returns PASS on the current (healthy) chain.
+    The two-loop invariant (handoff == ledger + 1) holds for any healthy
+    state, so this is a stable regression guard, not a state-brittle test.
+    """
+    try:
+        module = load_audit_module()
+    except Exception as e:
+        return False, f"cannot load module: {e}"
+
+    fn = getattr(module, "check_12_continuity", None)
+    if fn is None:
+        return False, "check_12_continuity not exported"
+
+    try:
+        result = fn()
+    except Exception as e:
+        return False, f"check_12_continuity raised: {e}"
+
+    if not getattr(result, "passed", False):
+        return False, f"check_12 not green on current chain: {getattr(result, 'message', '?')}"
+
+    return True, f"check_12 green on current chain ({result.message})"
+
+
+def test_14_check_1_logic():
+    """
+    check_1 (rule counts) passes AND actually extracts the main.md + SESSION_STATUS
+    counts (proven via details), not just count_in_rules. Guards against the F-B
+    regression where transliteration mismatch left both counts None -> false-PASS.
+    """
+    try:
+        module = load_audit_module()
+    except Exception as e:
+        return False, f"cannot load module: {e}"
+
+    fn = getattr(module, "check_1_rule_counts", None)
+    if fn is None:
+        return False, "check_1_rule_counts not exported"
+
+    try:
+        result = fn()
+    except Exception as e:
+        return False, f"check_1_rule_counts raised: {e}"
+
+    if not getattr(result, "passed", False):
+        return False, f"check_1 not green: {getattr(result, 'message', '?')}"
+
+    joined = " | ".join(result.details)
+    if "main.md stats:" not in joined:
+        return False, "check_1 did not extract main.md count (F-B regression?)"
+    if "SESSION_STATUS.md:" not in joined:
+        return False, "check_1 did not extract SESSION_STATUS count (F-B regression?)"
+
+    return True, f"check_1 green + both counts extracted ({result.message})"
+
+
 # =============================================================================
 # Main
 # =============================================================================
@@ -328,6 +395,9 @@ ALL_TESTS = [
     ("test_9_check_9_runs", test_9_check_9_runs),
     ("test_10_check_10_runs", test_10_check_10_runs),
     ("test_11_check_11_runs", test_11_check_11_runs),
+    ("test_12_check_12_runs", test_12_check_12_runs),
+    ("test_13_check_12_logic", test_13_check_12_logic),
+    ("test_14_check_1_logic", test_14_check_1_logic),
 ]
 
 

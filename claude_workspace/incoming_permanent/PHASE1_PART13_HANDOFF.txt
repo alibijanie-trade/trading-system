@@ -3,6 +3,7 @@
 > فایل permanent (Rule #۶۲). چت part13 باید آن را در boot بخواند.
 > ساخته‌شده: پایان part12 (2026-05-30). Commit مرجع part12: <chat-end part12 hash — در part13 boot از git backfill شود (M101)>.
 > ⭐ منبع تجمعی: `claude_workspace/PHASE_LEDGER.md` — کل قصهٔ پروژه از یک فایل. اول آن را بخوان.
+> 🏷️ **NEXT CHAT NAME (MANDATORY — HM-3 / naming convention):** `TRADING-phase1-part13-phase3-remediation`
 
 ---
 
