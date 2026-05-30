@@ -29,7 +29,7 @@
 2. `docs/constitution/01_rules.md` (همه قواعد #1-#77)
 3. `docs/constitution/02_lessons.md` (همه M-lessons + HM-lessons)
 4. `docs/constitution/06_meta.md` (meta principles)
-5. `docs/سند_جامع_v2_11.md` (سند جامع پروژه)
+5. `docs/constitution/04_principles.md` + `docs/constitution/05_architecture.md` (modular — جایگزین سند جامع legacy منسوخ)
 6. `docs/HELPER_PROTOCOL.md` (helper consultation protocol)
 7. `docs/SESSION_STATUS.md` (state-of-record فعلی)
 8. `docs/PENDING_FOR_NEXT_VERSION.md` (Z-drift + lessons pending)

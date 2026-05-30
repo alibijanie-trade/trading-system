@@ -1,0 +1,64 @@
+# HANDOFF — ادامهٔ part17 (Phase 3 B4/B1/B2/B3 انجام شد) → part18
+
+> فایل permanent (Rule #۶۲). چت part18 باید آن را در boot بخواند.
+> ساخته‌شده: chat-end part17 (2026-05-30). Commit chat-end part17: <chat-end part17 hash — در part18 boot از git backfill شود (M101)>.
+> ⭐ منبع تجمعی: `claude_workspace/PHASE_LEDGER.md` — اول آن را بخوان.
+> 🏷️ NEXT CHAT NAME (MANDATORY — HM-3): `TRADING-phase1-part18-phase3-b5-drift-backfill`
+>   (شمارهٔ ۱۸ مکانیکی مشتق شد per #۸۶: بالاترین handoff موجود PART17 +۱؛ L=۱۷ → H=۱۸؛ check_12 H==L+1 ✅؛ topic-slug توصیفی/قابل‌تغییر.)
+
+---
+
+## ⭐ اصل حاکم (اول بخوان)
+جامعیت > یک‌چت. ناقص‌خواندن ممنوع (Rule #۸۰). budget کم آمد → escape + state امن، نه ادامهٔ ناقص.
+
+## 0) Context + boot اجباری
+- trading-system، Windows، root `D:\Projects\trading-system`، Filesystem MCP. Branch `infra/v2.14-source-of-truth`. کاربر ali. فارسی + انگلیسی فنی.
+- boot: `claude_workspace\CHAT_BOOT_TRIGGER_TEMPLATE.md` را follow کن. هیچ task قبل از STEP 2/3.
+- اول `PHASE_LEDGER.md` را بخوان (part01→part17).
+- Constitution **v2.16** (۸۶ قانون #۱-۸۶، درس M1-M104 + HM-1..7، **۹ Review** #۰۰۱-۰۰۹، Decision Max ۶۸).
+- مکانیزم‌های هر turn: Self-Check بالا (Mechanism A-E + Trust #۷۸-۸۴ + **Advisory/Format #۶۱/#۵۹/#۳۱/#۲۹** — افزودهٔ part17 per P17-candidate) · Honesty Audit (#۸۳) پایین · Scope Contract (#۷۸) · تأیید قبل از write (#۵۱) · commit `-F` ASCII (M99) · read-back (M82) · تک‌خوانی فایل غول (HM-9/M66 — read کل‌فایل گاهی timeout؛ از `head`/`tail` استفاده کن) · check_12 دوحلقه · #۸۶ اعداد از منبع زنده.
+- ⚠️ **HM-9 part17:** read کل‌فایلِ بزرگ با MCP یک‌بار تایم‌اوت کرد؛ راه‌حل: `read_text_file` با `head=N` (سبک) + `edit_file` (write سالم بود). `findstr`/`git log` از کاربر برای داده‌های مکانیکی.
+
+## 1) M101 backfill اول part18 (چندنقطه‌ای)
+hash chat-end part17 (از `git -C D:\Projects\trading-system rev-parse --short HEAD` پس از push part17) → این placeholderها:
+  1. `PHASE_LEDGER.md` ردیف `part17` ستون آخر: `<backfill در PART18 boot، M101>` → hash.
+  2. `PHASE_LEDGER.md` بخش «HEAD و hashها»: خط `<chat-end part17>` → hash.
+  3. `SESSION_STATUS.md` خط Git HEAD (`81a3562` + «backfill در PART18 boot») → hash واقعی part17.
+  4. `REVIEW_LOG.md` row #۰۰۹ resolution `<pending part17 chat-end>` → hash + Status **Approved→Implemented**.
+  5. `docs/reviews/2026-05-30-deprecate-legacy-docs.md` خط Commit boundary `<pending part17 chat-end>` → hash.
+  6. (اختیاری) اگر CHAT_LOG بخش boot part18 ساخته شد، parent=این hash.
+
+## 2) 🟠 اولویت اصلی part18 — باقیماندهٔ Phase 3 (عمدتاً B5 + موکول‌ها)
+- **B5 backfill/drift:**
+  - `DECISIONS_LOG.md` drift backfill (تصمیمات جامانده part04-10).
+  - resolution backfill `REVIEW_LOG.md`: #۰۰۱ («this S2.3 atomic commit») + #۰۰۳ («this D24-chat-end atomic commit») + #۰۰۸ («M101 backfill در boot بعد» = `8c9c6a7`) با hash واقعی (از `git log`). #۰۰۹ در گام ۱ بسته می‌شود.
+  - PERSIST TASKS A-G معلق part09/10 — verify جذب.
+  - workspace Tier protection.
+  - `Created in commit` placeholder در `01_rules.md` (commit 2)، `02_lessons.md` (commit 3)، `06_meta.md` (commit 7) — با `git -C ... log --diff-filter=A --oneline -- docs/constitution/{file}` (مثل part17 برای main.md = `5285fb6`).
+- **catch-up موکول‌شده از part17 B3:**
+  - CHANGELOG entry رسمی `[0.6.0]` (تگ `5730173`) با تاریخ git (`git log -1 --format=%ci 5730173` یا `git tag`).
+  - `TASK_BACKLOG.md` reconcile کامل Tierها (الان فقط bridge note دارد).
+- **تصمیمات Settings** (Brightdata/Chrome/training/Skills/tokens) — موکول، بدون تغییر بدون تأیید کاربر.
+هر کدام = Triple-Rule M93/#۷۳ + Review trigger #۶۹ اگر constitution را لمس کرد + audit واقعی قبل از commit + read-back M82.
+
+## 3) Phase 4 (Objective 3، part18+)
+اسکن ۱۰۰٪ ۲۸۲ فایل classified با Scope Contract (#۷۸) + N/M (#۷۹) + بدون pattern-matching (#۸۴). حجیم → چند چت.
+
+## 4) شرط escape (دستور کاربر، فعال)
+HM-9 یا overflow → escape، باقی به چت بعد، push نزن، state امن گزارش. ⚠️ #۸۶: اگر escape شد، در escape-note صریح ثبت کن frontier جلو نرفت و شمارهٔ handoff بعدی را مکانیکی مشتق کن (نه literal).
+
+## 5) جملهٔ شروع پیشنهادی part18
+«part18 — boot استاندارد (اول PHASE_LEDGER)، سپس M101 backfill چندنقطه‌ای (hash chat-end part17 → ردیف ledger part17 + HEAD + SESSION_STATUS + REVIEW_LOG #۰۰۹ + Review file). بعد اولویت = B5 (DECISIONS_LOG drift + resolution backfill #۰۰۱/#۰۰۳/#۰۰۸ + PERSIST verify + Created-in-commit ماژول‌ها) + catch-up موکول (CHANGELOG [0.6.0]، TASK_BACKLOG Tier reconcile). اصل: جامعیت > یک‌چت.»
+
+---
+
+## 🔁 قانون تداوم دوحلقه‌ای (canonical — check_12 مکانیکی)
+۱) حلقهٔ ۱ (Ledger): ردیف + ۳ Objective + HEAD + DEADLINE (append-only #۲۴). ۲) حلقهٔ ۲ (Handoff): `PHASE1_PART{N+1}_HANDOFF.txt` با اشتقاق مکانیکی شماره (#۸۶ Locked). ۳) هر دو در یک commit (M82) + push (#۶۶) + paste. check_12: H==L+1.
+
+## 🔢 وضعیت frontier در لحظهٔ ساخت این handoff
+- Ledger L = part17 (ردیف part17 در همین chat-end افزوده شد).
+- این handoff = PHASE1_PART18 → H = 18 → H==L+1 (18=17+1) ✅ سبز.
+- اشتقاق #۸۶: بالاترین handoff موجود = PART17 (۱۷) → +۱ = ۱۸ · و L_new = ۱۷ → H = ۱۸. هر دو روش توافق دارند.
+
+---
+پایان HANDOFF part18.

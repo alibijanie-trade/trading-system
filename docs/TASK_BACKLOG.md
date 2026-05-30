@@ -5,6 +5,8 @@
 > **محل قرارگیری:** `docs/TASK_BACKLOG.md`  
 > **به‌روز توسط:** Claude در پایان هر چت (فاز ۳ مرحله ۳ چک‌لیست)  
 > **نسخه این Backlog:** v1.5 (2026-05-19 — چت ۸: ادغام Tier 2 + ۸ task جدید زیرساخت Claude Desktop)
+>
+> ⚠️ **بریج part17 (2026-05-30):** این Backlog از چت ۸ به‌طور کامل reconcile نشده (Tierها stale). مرجع زندهٔ وضعیت/اولویت: `docs/SESSION_STATUS.md` (سه Objective) + `claude_workspace/PHASE_LEDGER.md`. reconcile کامل Tierها → PART18 (بدون fabricate).
 
 ---
 

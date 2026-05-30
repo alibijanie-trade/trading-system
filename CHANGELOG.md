@@ -8,9 +8,21 @@
 
 ## [Unreleased]
 
+### Changed — Governance overhaul (هدف: v0.7.0)
+- Constitution به ساختار **modular** مهاجرت کرد (v2.12) و تا **v2.16** ارتقا یافت (main + ۶ ماژول).
+- **MDRS v2** (Manifest-Driven Source-of-Truth): قواعد #۶۸-۷۷، REVIEW_PROTOCOL، PROJECT_MANIFEST، audit checks (۱۲ check).
+- **Trust & Anti-Sycophancy Rules** #۷۸-۸۵ (v2.15) + **#۸۶** Escape-Aware Sequence Derivation (v2.16).
+- درس‌نامه تا **M104** + **HM-1..HM-7**؛ **۹ Review** (#۰۰۱-۰۰۹).
+- قانون تداوم دوحلقه‌ای + `claude_workspace/PHASE_LEDGER.md` + `check_12_continuity` (invariant H==L+1).
+
+### Deprecated
+- اسناد جامع v2.6-v2.11 و PROJECT_GOVERNANCE/CLAUDE_CHECKLIST/PROJECT_CONTEXT/ARCHITECTURE → banner `[DEPRECATED]` (Review #۰۰۹، حفظ طبق #۲۴).
+
 ### Planned
-- ادامه Tier 2: T2.05 (Git workflow audit), T2.06 (Pre-commit hooks), T2.07-T2.09
-- یا فاز ۱: CCXT + WebSocket
+- Phase 3 باقیمانده (drift backfill) + Phase 4 (اسکن ۱۰۰٪ ۲۸۲ فایل classified).
+- فاز ۱: CCXT + WebSocket data layer.
+
+> 📌 جزئیات granular per-chat در `claude_workspace/PHASE_LEDGER.md` + `docs/CHAT_LOG.md`. entry رسمی **[0.6.0]** (تگ `5730173`) در catch-up بعدی با تاریخ git افزوده می‌شود (موکول part17/B5→PART18 — بدون fabricate از حافظه).
 
 ---
 

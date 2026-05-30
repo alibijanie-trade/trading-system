@@ -1,3 +1,5 @@
+> ⚠️ **[DEPRECATED — part17 · Constitution v2.16]** این سند legacy است و دیگر source-of-truth نیست. مرجع فعال: `docs/constitution/` (main.md + ماژول‌ها). طبق Rule #۲۴ (No-Deletion) صرفاً برای تاریخچه حفظ شده. مرجع تصمیم: Review #۰۰۹.
+
 # 🏛️ PROJECT_GOVERNANCE — سند راهبردی پروژه
 
 > **هدف یک‌خطی:** تضمین تداوم، کیفیت و حرفه‌ای‌گری در سراسر چرخه حیات پروژه — مستقل از اینکه کدام Claude یا برنامه‌نویس روی پروژه کار می‌کند.

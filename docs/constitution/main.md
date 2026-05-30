@@ -11,8 +11,8 @@
 > **تاریخ v2.16:** خرداد ۱۴۰۵ (May 2026)
 > **چت مسئول:** ۱۱.۰.ج (`TRADING-infra-governance-finalize-and-merge`)
 > **چت مسئول v2.14:** part04-part08 (`TRADING-phase1-part04..part08-mdrs-v2-*`)
-> **Branch:** `infra/governance-overhaul`
-> **Created in commit:** `<git log -1 --format=%h پس از commit 1 پر شود>`
+> **Branch:** `infra/v2.14-source-of-truth`
+> **Created in commit:** `<git log --diff-filter=A --oneline -- docs/constitution/main.md>` (scaffold modular constitution v2.12، commit 1/8؛ هش از git مشتق شود — نه hardcode در ماژول، per #۸۶/check_5)
 
 ---
 
@@ -174,7 +174,7 @@
 - [x] Migrate سند ۱۳-۱۷+۱۹-۲۵ → `06_meta.md` (commit 7) ✅
 - [x] Archive سند قدیمی + Atomic Update v2.12 (commit 8) ✅
 
-**Branch:** `infra/governance-overhaul` (آماده merge به `main` در پایان چت ۱۱.۰.ج)
+**Branch:** `infra/governance-overhaul` (آماده merge به `main` در پایان چت ۱۱.۰.ج) — ⚠️ توجه (drift اصلاح‌شده part17): merge به main انجام نشد؛ کار حاکمیتی روی `infra/v2.14-source-of-truth` ادامه یافت.
 
 ---
 

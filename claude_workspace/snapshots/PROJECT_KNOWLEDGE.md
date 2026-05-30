@@ -1,132 +1,123 @@
 # PROJECT KNOWLEDGE — trading-system
 
-> **هدف این فایل:** خلاصه‌ای فشرده برای Project Knowledge در Claude Desktop.
-> **سند کامل:** `docs/سند_جامع_v2_9.md` (با Filesystem MCP خوانده می‌شود)
-> **آخرین به‌روزرسانی:** پایان چت ۷ (2026-05-18)
+> **هدف این فایل:** خلاصهٔ فشرده برای Project Knowledge در Claude Desktop.
+> **مرجع کامل (زنده، با Filesystem MCP):** `docs/constitution/` (modular — `main.md` + `01_rules.md` … `06_meta.md`)
+> **آخرین به‌روزرسانی:** part17 (2026-05-30) — همگام Constitution **v2.16**
+> ⚠️ اسناد جامع v2.6–v2.11 و PROJECT_GOVERNANCE/CLAUDE_CHECKLIST/PROJECT_CONTEXT/ARCHITECTURE **منسوخ (DEPRECATED)** شدند؛ مرجع فعال modular است.
 
 ---
 
-## 🎯 درباره پروژه
+## 🎯 دربارهٔ پروژه
 
-- **نام:** trading-system (سامانه هوشمند ترید)
+- **نام:** trading-system (سامانهٔ هوشمند ترید — کریپتو + فارکس)
 - **مسیر local:** `D:\Projects\trading-system`
-- **OS:** Windows 11
+- **OS:** Windows 11 · **Shell:** CMD/PowerShell + venv
 - **زبان ارتباط:** فارسی + اصطلاحات فنی انگلیسی
 - **Filesystem MCP:** ✅ فعال (دسترسی به `D:\Projects\trading-system`)
+- **GitHub:** `alibijanie-trade/trading-system` (Private، SSH)
+- **Branch فعال:** `infra/v2.14-source-of-truth`
 
 ## 🛠️ Stack تکنیکال
 
 | لایه | تکنولوژی |
 |---|---|
-| Backend | FastAPI 0.111.0 + SQLAlchemy 2.0.30 + aiosqlite 0.20 |
-| Frontend | React 19.2 + Vite 8.0 + Vitest 3.x |
-| Auth | JWT + bcrypt 4.1 |
+| Backend | FastAPI 0.111 + SQLAlchemy 2.0 + aiosqlite 0.20 + ccxt 4.3.98 + websockets 12.0 |
+| Frontend | React 19.2 + Vite 8.0 + Vitest 3.x + Zustand 4.5 |
+| Auth | JWT + bcrypt 4.1 + Fernet |
 | Database | SQLite (`backend/trading.db`) |
-| Tests | pytest 8.2.2 + pytest-asyncio + pytest-cov 5.0 |
-| Hooks | pre-commit 3.7.1 + black 24.4 + isort 5.13 (Hybrid mode) |
+| Tests | pytest 8.2 + pytest-asyncio + pytest-cov |
+| Hooks | pre-commit 3.7 + black 24.4 + isort (Hybrid mode) |
 | Python | 3.11 |
 
-## 📊 وضعیت جاری (پایان چت ۷)
+## 📊 وضعیت جاری (part17)
 
-- **فاز ۰:** ۱۰۰٪ ✅
-- **Tier 2 Quality Hardening:** ۹/۹ DONE ✅
-- **Git HEAD:** `1d8bddb`
-- **قوانین قفل‌شده:** ۵۵ (M1-M55 پس از v2.10، در حال حاضر ۴۸ تا v2.9)
-- **درس‌نامه اشتباهات Claude:** ۳۳ مورد (M1-M33) -- مرجع: `docs/سند_جامع_v2_9.md` بخش ۱۸
-- **Tests:** ۳۰/۳۰ vitest + ۲۵/۲۵ pytest + همه pre-commit hooks pass
+- **فاز:** Phase 1 Skeleton ✅ + MDRS v2 + **Phase 3 remediation در جریان** 🔄
+- **Constitution:** **v2.16** (modular)
+- **Git HEAD:** `81a3562` (chat-end part16) · **Tag:** `v0.6.0` (`5730173` روی main)
+- **قوانین قفل‌شده:** **۸۶** (#۱-۸۶) + ۲ Reserved (#۵۲، #۵۳)
+- **درس‌نامه:** **M1-M104** (۷۲ ثبت + ۳۲ Reserved) + **HM-1..HM-7**
+- **Reviews:** **۹** (#۰۰۱-۰۰۹؛ #۰۰۹ Approved/در انتظار commit part17)
+- **Tests:** pytest **۲۵/۲۵** + vitest **۳۰/۳۰** · audit **۱۲/۱۲** + companion **۱۴/۱۴** PASS
 
-## 🔒 قوانین پایه (مهم‌ترین‌ها)
+## 🎯 سه Objective
 
-### رفتاری
+1. **Phase 2 (Trust Rules → v2.15):** ✅ CLOSED (part12)
+2. **Phase 3 (Remediation + full-refresh):** ⏳ IN PROGRESS (part13→part17: check_12، full-refresh، codify v2.16، deprecate legacy، بازسازی این فایل، …)
+3. **Phase 4 (اسکن ۱۰۰٪ ۲۸۲ فایل classified):** 🔮 TODO
 
-- **#۲۷:** پایان چت فقط با تأیید صریح کاربر
-- **#۳۰:** اصلاحات کوچک = اسکریپت Python idempotent
-- **#۳۱:** بالای هر کادر کد دستوری: 🟦/🟩/🟧/🟥 + شماره tab
-- **#۳۴:** zip ها در root پروژه دانلود می‌شوند (نه Downloads)
-- **#۳۸:** اسکریپت‌های `.py` تنها → `scripts/`، zip → root
-- **#۴۶:** ASCII-only در `print()` اسکریپت‌های Windows + `sys.stdout.reconfigure(encoding="utf-8")`
-- **#۴۷:** قبل از هر کار جدید، بخش ۱۸ سند جامع (درس‌نامه) خوانده شود
+## 🔒 مهم‌ترین قوانین (مرجع کامل: `01_rules.md`)
 
-### Tier 2 (Quality)
+### رفتاری / فرمت
+- **#۲۴:** No-Deletion — منسوخ با banner `[DEPRECATED]`، هرگز حذف
+- **#۲۷:** پایان چت فقط با تأیید صریح کاربر (هرگز خودکار)
+- **#۲۹:** فایل با Artifact/code block، نه paste متن
+- **#۳۱/#۶۳:** نام + رنگ tab بالای هر کادر کد (🟦۱backend / 🟩۲scripts / 🟧۳frontend / 🟥BACKUP) + تیتر `🟢 ▶️ EXECUTE`
+- **#۴۶:** ASCII-only در `print()` ویندوز + `sys.stdout.reconfigure(encoding="utf-8")`
+- **#۵۹:** اعلام مسیر دانلود برای هر فایل
+- **#۶۱:** پیشنهاد گزینهٔ مطلوب خودِ Claude در چندگزینه‌ای
+- **#۶۵:** ثبت درس از اشتباهات با نمایش به کاربر
 
-- **#۳۷:** read-back verify بعد از write
-- **#۳۶:** verify signature قبل از تست‌نویسی
-- **#۴۰:** verify argparse syntax قبل از پیشنهاد
-- **#۴۱:** `.get()` به‌جای `[]` در `or` assertion
-- **#۴۲:** `--no-verify` با `[skip-hooks: REASON]`
+### Workflow / حاکمیت
+- **#۴۸:** پروتکل اجباری شروع چت (boot)
+- **#۵۱:** تأیید صریح قبل از write/delete با MCP
+- **#۵۵:** به‌روزرسانی Project Knowledge — Claude نسخهٔ جدید را تولید می‌کند تا کاربر در Project جایگزین کند
+- **#۶۰:** PENDING-EOC در لحظه ثبت
+- **#۶۲:** فایل handoff دائمی پایان چت
+- **#۶۶:** push اجباری در پایان هر چت
+- **#۶۷:** Cross-shell EXECUTE blocks اجباری
+- **#۶۸-۷۷ (v2.14 MDRS v2):** Tier hierarchy، Review trigger، Path validator، VERSION SSoT، Manifest self-awareness، Triple-Rule atomic (#۷۳)، Z-ID permanence، Scope closure، Pre-Action checklist، Continuous discovery logging
 
-### Filesystem MCP (#۴۹-۵۱)
+### Trust & Anti-Sycophancy (#۷۸-۸۵، v2.15) + #۸۶ (v2.16)
+- **#۷۸ SCM:** Scope Contract اجباری برای trigger words («کامل/همه/جامع/…»)
+- **#۷۹ QHP:** اعداد N/M، بدون واژگان مبهم
+- **#۸۰ NSISN:** بدون self-narrowing خودسرانه
+- **#۸۱ RDEM:** تفکیک صریح 🚫 REFUSE (capability) از ⚠️ DEFER (judgment)
+- **#۸۲ MPTC:** Pre-Task Checkpoint پیش از task با ۳+ tool/file
+- **#۸۳ HAT:** بلوک `🔍 Honesty Audit` پایین هر گزارش پیشرفت
+- **#۸۴ APMM:** بدون extrapolation از sample؛ هر مورد مستقل verify
+- **#۸۵ Self-Activation Lock:** قواعد #۷۸-۸۴ خودکار، نه با یادآوری کاربر
+- **#۸۶ Escape-Aware Sequence Derivation:** شناسه‌های دنباله‌ای (handoff/ledger/hash/شماره) از منبع زنده مشتق شوند، نه حافظه؛ escape ≠ chat-end
 
-- **#۴۹:** read-only tools → Always allow؛ write/delete/copy → Needs approval
-- **#۵۰:** Filesystem MCP پس از نصب در چت‌های **جدید** load می‌شود، نه چت‌های جاری
-- **#۵۱:** قبل از هر write/delete با MCP، تأیید کاربر گرفته شود
+## 🔁 قانون تداوم دوحلقه‌ای (canonical)
 
-### Project Knowledge (#۵۵ -- در v2.10)
+هر chat-end: **حلقهٔ ۱** ردیف در `claude_workspace/PHASE_LEDGER.md` (append-only، #۲۴) → **حلقهٔ ۲** فایل `PHASE1_PART{N+1}_HANDOFF.txt` (شمارهٔ مکانیکی #۸۶) → هر دو در **یک commit** + push. Enforcement مکانیکی: `check_12_continuity` (invariant **H==L+1**).
 
-- **#۵۵:** اگر فایل Project Knowledge به‌روز شد، Claude باید نسخه جدید را تولید کند تا کاربر در Project آپلود کند
+## 📋 پروتکل اجباری شروع چت (#۴۸)
 
-## 📋 ابزارهای Claude در دسترس
+Claude **باید** اول `claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md` را follow کند (STEP 0→4). فایل‌های mandatory read (به ترتیب):
+1. `docs/constitution/main.md` (index v2.16)
+2. `docs/constitution/01_rules.md` (#۱-۸۶)
+3. `docs/constitution/02_lessons.md` (M1-M104 + HM)
+4. `docs/constitution/06_meta.md`
+5. `docs/constitution/04_principles.md` + `05_architecture.md`
+6. `docs/HELPER_PROTOCOL.md`
+7. `docs/SESSION_STATUS.md`
+8. `docs/PENDING_FOR_NEXT_VERSION.md`
+9-12. فایل‌های handoff/escape-note/deferred-note مرتبط در `claude_workspace/incoming_permanent/`
 
-### Filesystem MCP (۱۱ ابزار)
+و **اول از همه** `claude_workspace/PHASE_LEDGER.md` (قصهٔ تجمعی part01→جاری). سپس STEP 2 acknowledgment + STEP 3 منتظر تأیید کاربر؛ هیچ task قبل از تأیید.
 
-- read_text_file, read_multiple_files, list_directory, search_files
-- write_file, edit_file, create_directory, move_file (نیاز به approval)
+## 🤖 Model Selection (خلاصه)
 
-### Built-in
+Atomic end-of-chat / Indicators / Strategies / Debugging پیچیده / Code review → **Opus**؛ Documentation روتین / Repository / UI → **Sonnet**. قانون عملی: ≥۳ مورد پیچیدگی → Opus.
 
-- Web search, web fetch
-- Artifacts (✅), Inline visualizations (✅), Cloud code execution (✅)
-- Memory: Search and reference chats + Generate memory from chat history
+## 🧰 ابزارهای Claude
 
-## 🤖 Model Selection Guide (سند ۱۹.۲)
-
-| موقعیت | Model |
-|---|---|
-| Atomic End-of-Chat | **Opus 4.7** + Adaptive |
-| Documentation روتین | Sonnet 4.6 |
-| Repository Layer (فاز ۱) | Sonnet 4.6 |
-| Indicators (فاز ۲) | **Opus 4.7** |
-| Trading Strategies (فاز ۳) | **Opus 4.7** |
-| UI Components (فاز ۴) | Sonnet 4.6 |
-| Debugging پیچیده | **Opus 4.7** |
-| Code review | **Opus 4.7** |
-
-**قانون عملی:** ≥۳ مورد از پیچیدگی-تعدد فایل-تصمیم معماری → Opus، در غیر این صورت → Sonnet
-
-## 📋 پروتکل اجباری شروع چت جدید (قانون #۴۷)
-
-Claude **باید** ابتدا این فایل‌ها را با Filesystem MCP بخواند:
-
-1. `docs/سند_جامع_v2_9.md` بخش ۱۸ (درس‌نامه M1-M33)
-2. `docs/CLAUDE_CHECKLIST.md` (قوانین #۱-۵۴)
-3. `docs/SESSION_STATUS.md` (وضعیت جاری)
-4. `docs/CHAT_LOG.md` آخرین چت
-5. آخرین `docs/CHAT{N}_FINALIZE.md`
-
-سپس تأیید کند و منتظر دستور بعدی بماند.
-
-## 🚧 معلق برای چت ۸
-
-- **T2.10:** توسعه ARCHITECTURE.md
-- **T2.13:** ریشه‌یابی Bug #50 (React imports false positive)
-- مرور همه تنظیمات Claude Desktop
-- GitHub setup
-- اتصال Custom Instructions
-- بررسی Memory + Project + Filesystem MCP کامل
+- **Filesystem MCP:** read-only → Always Allow؛ write/edit/delete → Needs Approval (#۴۹/#۵۱). هرگز `.env`.
+- Web search/fetch · Artifacts · Memory.
 
 ## ⚠️ هشدارهای مهم
 
-- **هرگز** کد malicious تولید نکن
-- **هرگز** فایل `.env` را با MCP تغییر نده (هرچند MCP اجازه دارد)
-- **هرگز** خارج از پوشه `D:\Projects\trading-system` عمل نکن
-- **هرگز** پایان چت را خودکار شروع نکن (قانون #۲۷)
+- **هرگز** کد malicious تولید نکن.
+- **هرگز** فایل `.env` را با MCP تغییر نده.
+- **هرگز** خارج از `D:\Projects\trading-system` عمل نکن.
+- **هرگز** پایان چت را خودکار شروع نکن (#۲۷).
+- هش/شماره‌های مکانیکی را از منبع زنده بگیر، نه حافظه (#۸۶/M104).
 
 ---
 
-## 📌 یادداشت برای Claude
+## 📌 یادداشت برای Claude در شروع چت
 
-اگر در شروع چت این فایل را می‌خوانی:
-1. تأیید کن این فایل را خوانده‌ای
-2. با MCP فایل‌های `docs/` را بخوان
-3. منتظر دستور بعدی بمان
-4. هر زمان قانون جدید یا تغییر اساسی، **این فایل را در آپدیت سند، به‌روز کن و به کاربر بگو فایل جدید را در Project Knowledge جایگزین کند**
+1. اول `CHAT_BOOT_TRIGGER_TEMPLATE.md` را follow کن، سپس `PHASE_LEDGER.md`.
+2. acknowledgment بده (STEP 2)، منتظر تأیید کاربر بمان (STEP 3).
+3. هر تغییر قانون/درس اساسی → **این فایل را در آپدیت، به‌روز کن و به کاربر بگو نسخهٔ جدید را در Project Knowledge جایگزین کند** (#۵۵).

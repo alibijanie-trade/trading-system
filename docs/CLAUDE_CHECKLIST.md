@@ -1,3 +1,5 @@
+> ⚠️ **[DEPRECATED — part17 · Constitution v2.16]** این سند legacy است و دیگر source-of-truth نیست. مرجع فعال: `docs/constitution/01_rules.md` (قواعد) + `06_meta.md` (چک‌لیست‌ها). طبق Rule #۲۴ (No-Deletion) صرفاً برای تاریخچه حفظ شده. مرجع تصمیم: Review #۰۰۹.
+
 # ✅ CLAUDE_CHECKLIST — چک‌لیست اجباری عملیاتی
 
 > **هدف یک‌خطی:** فهرست explicit و قابل اجرای task ها برای Claude در ابتدا، میانه و انتهای هر چت.

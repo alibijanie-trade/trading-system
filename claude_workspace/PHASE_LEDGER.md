@@ -32,7 +32,8 @@
 | part12 | boot کامل + verify ۴/۴ فایل غول فاز ۲ (۷ یافته، همه Phase 3) + backfill `59c075a` در REVIEW_LOG #۰۰۵ و review#005 §۴/§۶ + **Phase 2 CLOSED** + پایه‌گذاری این Ledger + قانون تداوم دوحلقه‌ای | chat-end part12 = `5173e6f` |
 | part13 | boot کامل + M101 backfill part12=`5173e6f` (Ledger/CHAT_LOG) · **#۰ check_12_continuity ساخته شد** (file-based، invariant H==L+1، chicken-and-egg-safe) + test_12/13 · **F-A** DECISIONS_LOG→v1.4 · **F-B** check_1 سخت‌سازی (Latin→Persian anchor؛ true-PASS ۸۵/۸۵/۸۵) + test_14 · **F-C** backfill #۰۰۲=`3fd2405`/#۰۰۴=`234ba2f` · Review #۰۰۶/#۰۰۷. audit ۱۲/۱۲ + tests ۱۴/۱۴ PASS | chat-end part13 = `3eae91e` |
 | part14-15 | full-refresh اتمیک + reconcile: M101 backfill part13 (`3eae91e`) + بازنویسی SESSION_STATUS (part08→part13) + CHAT_LOG part09-13 + PENDING reconcile part09-13 + آشتی count + Z3.15/16/17/25 RESOLVED-mark + manifest D2 (Total=282، T1=28) + بستن Triple-Rule معوق part09 + P-candidate M104/#۸۶ (escape↔check_12 off-by-one). part14=full-refresh، part15=reconcile+manifest+commit+chat-end | chat-end part14-15 = `c30dbe5` |
-| part16 | boot کامل (M101 backfill part14-15=`c30dbe5` ✅) + **codify v2.16**: درس **M104** + قانون **#۸۶** (Escape-Aware Sequence Derivation) در ۱۱ فایل اتمیک + Review #۰۰۸ + Decision #۶۸ + PENDING P-candidate→CODIFIED. audit ۱۲/۱۲ + companion ۱۴/۱۴ PASS (دستی + هوک pre-commit) | codify=`8c9c6a7` · chat-end=`<backfill در part17 boot، M101>` |
+| part16 | boot کامل (M101 backfill part14-15=`c30dbe5` ✅) + **codify v2.16**: درس **M104** + قانون **#۸۶** (Escape-Aware Sequence Derivation) در ۱۱ فایل اتمیک + Review #۰۰۸ + Decision #۶۸ + PENDING P-candidate→CODIFIED. audit ۱۲/۱۲ + companion ۱۴/۱۴ PASS (دستی + هوک pre-commit) | codify=`8c9c6a7` · chat-end=`81a3562` |
+| part17 | boot کامل (M101 backfill part16=`81a3562` ✅) + **Phase 3 — ۴ Batch**: B4 stale/cosmetic (main.md branch+created-commit `5285fb6`+خط۱۷۷، test_2 «11»→«12»، boot-template ref→modular) · B1 deprecate ۱۰ سند legacy + **Review #۰۰۹** · B2 بازسازی PROJECT_KNOWLEDGE→v2.16 (#۵۵) · B3 catch-up README/CHANGELOG/TASK_BACKLOG (scoped) · P17-candidate (#۶۱ elicitation drop). **B5 + موارد موکول → PART18.** | chat-end part17 = `<backfill در PART18 boot، M101>` |
 
 > 🔎 **شکاف زنجیره (یک‌خطی، per دستور کاربر — نه بازسازی کامل):** part10 = escape (هیچ handoff) · part11 = codify (هیچ handoff، مستقیم به PART12). تاریخچهٔ ۱۱→۱۲ از همین Ledger خوانده می‌شود.
 
@@ -51,7 +52,8 @@
 - ✅ **F-C** backfill M101: #۰۰۲=`3fd2405` (S3.4 part08) · #۰۰۴=`234ba2f` (S4)
 - ✅ **DONE part14-15** (full-refresh اتمیک): بازنویسی SESSION_STATUS (part08→part13) + CHAT_LOG (part09-13) + PENDING reconcile (part09-13 + آشتی count + Z3.15/16/17/25) + PROJECT_MANIFEST D2 (Total=282) + بستن Triple-Rule معوق part09 (M93/#۷۳) + P-candidate M104/#۸۶ ثبت‌شد (codify v2.16 در part16)
 - ✅ **DONE part16** (codify v2.16): M104 + #۸۶ Locked + main bump (۸۶ قانون، M1-M104، ۸ Review) + Review #۰۰۸ + Decision #۶۸ + audit CURRENT_VERSION→v2.16 (ACCEPTABLE v2.14/15/16) + .pre-commit label + PENDING P-candidate→CODIFIED. codify=`8c9c6a7`، audit ۱۲/۱۲ + companion ۱۴/۱۴ (دستی + هوک)
-- ⏳ معلق: deprecate legacy docs · بازسازی PROJECT_KNOWLEDGE.md (#۵۵) · catch-up README/CHANGELOG/TASK_BACKLOG · workspace Tier · DECISIONS_LOG drift backfill · main.md stale (branch + `Created in commit`) · boot-template legacy ref #۲۱ · PERSIST TASKS A-G verify · backfill #۰۰۱/#۰۰۳ resolution · cosmetic comment «11» در test_2 · تصمیمات Settings (موکول)
+- ✅ **DONE part17** (Phase 3، ۴ Batch): B4 (stale/cosmetic: main.md branch/created-commit `5285fb6`/خط۱۷۷، test_2، boot-template ref) · B1 (deprecate ۱۰ legacy + Review #۰۰۹) · B2 (PROJECT_KNOWLEDGE→v2.16، #۵۵) · B3 (catch-up README/CHANGELOG/TASK_BACKLOG، scoped)
+- ⏳ معلق (→PART18، عمدتاً B5): DECISIONS_LOG drift backfill · resolution REVIEW_LOG #۰۰۱/#۰۰۳/#۰۰۹ با hash (git) · PERSIST TASKS A-G verify · workspace Tier · `Created in commit` سایر ماژول‌ها (01/02/06) · CHANGELOG [0.6.0] (تاریخ git) · TASK_BACKLOG Tier reconcile · تصمیمات Settings (موکول)
 - ارتقای تداوم دوحلقه‌ای: ✅ پایه part12 + ✅ enforcement مکانیکی (check_12) part13
 
 ### Objective 3 — Phase 4 (اسکن ۱۰۰٪ ۲۷۸ فایل classified)
@@ -67,7 +69,8 @@
 - **`3eae91e`** = chat-end part13 (check_12 + F-A/B/C + Review #۰۰۶/#۰۰۷ + این به‌روزرسانی Ledger + PART14 handoff)
 - **`c30dbe5`** = chat-end part14-15 (full-refresh + reconcile + manifest D2=282 + این ردیف + PART16 handoff + P-candidate M104/#۸۶) — backfill در part16 boot (M101) ✅ انجام شد
 - **`8c9c6a7`** = codify v2.16 part16 (M104 + #۸۶ + Review #۰۰۸ + Decision #۶۸ + M101 backfill c30dbe5 folded؛ push شد)
-- **`<chat-end part16>`** = chat-end part16 (این ردیف Ledger + PART17 handoff + SESSION_STATUS pointer) — backfill در part17 boot (M101)
+- **`81a3562`** = chat-end part16 (این ردیف Ledger + PART17 handoff + SESSION_STATUS pointer) — backfill در part17 boot (M101) ✅ انجام شد
+- **`<chat-end part17>`** = chat-end part17 (B4+B1+B2+B3 + Review #۰۰۹ + این ردیف Ledger + PART18 handoff + SESSION_STATUS) — backfill در PART18 boot (M101)
 - مرجع تاریخی: `234ba2f` (S4 part09) · `3fd2405` (S3.4 chat-end part08) · `35ea822` (S3.3 part08) · `5730173` (tag v0.6.0 main)
 
 ---

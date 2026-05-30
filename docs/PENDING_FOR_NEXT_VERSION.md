@@ -1303,3 +1303,27 @@ reference در PART10_BOOT_ESCAPE_NOTE (content در helper chat part09 turn ۶�
 > Cross-refs: عملیاتی‌کنندهٔ #۸۴ · پشتوانهٔ M104 · check_12 · #۷۹.
 
 **آخرین به‌روزرسانی part15 section:** 2026-05-30 (chat-end چت part15، P-candidate ثبت‌شده در commit اتمیک part14-15).
+
+---
+
+## 🔴🔴🔴 آیتم‌های part17 (چت `TRADING-phase1-part17-phase3-deprecate-and-project-knowledge`)
+
+**منبع:** boot part17 + کشف turn-level.
+
+### M101 backfill part16 ✅ DONE (boot part17)
+hash chat-end part16 = `81a3562` (cross-checked از `git rev-parse --short HEAD`، روح #۸۶) در ۲ placeholder از PHASE_LEDGER (ردیف part16 ستون آخر + بخش HEAD). uncommitted تا chat-end atomic.
+
+### P17-candidate-1 — Elicitation-Tool Recommendation Drop (process/governance، severity: medium)
+**مشاهده:** هنگام استفاده از ابزار elicitation/ranking برای گرفتن ترتیب Batch‌ها، تعهد #۶۱ (اعلام گزینهٔ مطلوبِ Claude) رها شد — انتخاب کامل به کاربر واگذار شد بدون پیشنهاد صریح. کاربر catch کرد.
+**علت ریشه‌ای (دولایه):** (۱) tool-affordance override — هدف ابزار (گرفتن ترجیح کاربر) با #۶۱ (گفتن نظر Claude) تصادم کرد و هدف ابزار برنده شد (خانوادهٔ #۸۴ pattern-following). (۲) شکاف Self-Activation: #۸۵ فقط #۷۸-۸۴ را self-check می‌کند؛ قواعد advisory/format (#۶۱/#۵۹/#۳۱/#۲۹) یادآور مکانیکی ندارند → اتکا به حافظه (خانوادهٔ M23/M87).
+**پیشنهاد codify (نسخهٔ بعد):** توسعهٔ #۸۵ self-check با خط «Advisory/Format Self-Check» (#۶۱ پیشنهاد مطلوب · #۵۹ مسیر دانلود · #۳۱/۶۳ tab+رنگ · #۲۹ Artifact)؛ یا درس M-candidate «Tool-Affordance نباید تعهد موازی قاعده را override کند».
+**Mitigation in-session (فعال از part17):** Claude از این turn به بعد هدر self-check را به Advisory/Format گسترش داد.
+**Cross-refs:** #۶۱ · #۸۴ · #۸۵ · #۲۹ · M87.
+
+### NOTE — شکاف PENDING-section part16
+بخش part16 در این فایل غایب است (مستقیم part15 → part17). reconcile در B5 (drift/catch-up) یا chat-end.
+
+### Discovery part17 (chat-end) — check_5 self-catch (مثبت)
+در B4، placeholder `Created in commit` در main.md را با هش literal `5285fb6` پر کردم؛ **check_5_head_hardcode** هنگام chat-end commit آن را block کرد. درس: هش/شناسهٔ مکانیکی نباید در ماژول‌های constitution literal شود (M77/M101/#۸۶)؛ placeholder باید non-literal بماند (الگوی مجاز `<git log...>`). هش در فایل‌های tracking (PHASE_LEDGER/SESSION_STATUS) مجاز است، نه در ماژول. **audit-as-safety-net کار کرد** — مصداق مثبت همان تم این چت (#۸۶/M104). Cross-refs: #۸۶ · M77 · M101 · M104 · check_5.
+
+**آخرین به‌روزرسانی part17 section:** 2026-05-30 (chat-end part17 — fix check_5 + discovery).

@@ -14,7 +14,7 @@
 - 🎯 **Theme Engine** سراسری + Settings Page با ۳ بخش
 - 📅 **تقویم شمسی** با `Intl` built-in (بدون کتابخانه خارجی)
 - 🔢 **جداکننده سه‌رقمی** + ۴ فرمت تاریخ میلادی
-- 📋 **Governance Infrastructure** — ۱۲ سند مرجع برای handoff حرفه‌ای
+- 📋 **Governance modular** — Constitution v2.16 (main + ۶ ماژول) + MDRS v2 + قانون تداوم دوحلقه‌ای برای handoff حرفه‌ای
 
 ---
 

@@ -100,7 +100,7 @@ def test_2_all_check_functions():
     if missing:
         return False, f"problems: {missing}"
 
-    # Also verify ALL_CHECKS list contains exactly 11 items
+    # Also verify ALL_CHECKS list contains exactly 12 items
     all_checks = getattr(module, "ALL_CHECKS", None)
     if all_checks is None:
         return False, "ALL_CHECKS list not exported"

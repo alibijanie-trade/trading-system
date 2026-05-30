@@ -1,9 +1,9 @@
 # Session Status — وضعیت پس از part13 (ورودی part14: full-refresh اتمیک Phase 3)
 
-> **آخرین به‌روزرسانی:** 2026-05-30 (chat-end چت `TRADING-phase1-part16-phase3-codify-v216-and-resume` — codify v2.16)
+> **آخرین به‌روزرسانی:** 2026-05-30 (chat-end چت `TRADING-phase1-part17-phase3-deprecate-and-project-knowledge` — Phase 3 B4/B1/B2/B3 + Review #۰۰۹)
 > **نسخه پروژه:** v0.6.0 (tag روی main: `5730173`؛ v0.7.0 در پایان MDRS v2)
 > **Constitution:** **v2.16** (Trust Rules #۷۸-۸۵ + M103؛ + Rule #۸۶/M104 codified در part16)
-> **چت جاری:** `TRADING-phase1-part16-phase3-codify-v216-and-resume` ✅ (codify v2.16 انجام شد؛ chat-end)
+> **چت جاری:** `TRADING-phase1-part17-phase3-deprecate-and-project-knowledge` ✅ (Phase 3: deprecate legacy + PROJECT_KNOWLEDGE + catch-up؛ chat-end)
 > **مرجع تجمعی:** `claude_workspace/PHASE_LEDGER.md` (قصهٔ part01→13؛ در boot اول خوانده شود)
 > ⚠️ **Naming (HM-3):** نام چت باید `TRADING-phase{N}-part{NN}-{topic}` باشد.
 
@@ -17,7 +17,7 @@
 ## 📍 وضعیت کلی
 - **فاز:** Phase 1 Skeleton ✅ + **MDRS v2 + remediation سه‌Objective در جریان** 🔄
 - **Branch:** `infra/v2.14-source-of-truth` 🔄
-- **Git HEAD:** `8c9c6a7` (codify v2.16 part16؛ پس از commit اتمیک chat-end part16 ارتقا — backfill در part17 boot)
+- **Git HEAD:** `81a3562` (chat-end part16؛ پس از commit اتمیک chat-end part17 ارتقا — backfill در PART18 boot، M101)
 - **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH) ✅
 - **Tag:** `v0.6.0` (`5730173` روی main) — `v0.7.0` در پایان MDRS v2 (S8)
 
@@ -31,15 +31,16 @@
 - ✅ **part13:** #۰ check_12_continuity (دوحلقه مکانیکی) + F-A (DECISIONS_LOG v1.4) + F-B (check_1 hardening، true-PASS ۸۵/۸۵/۸۵) + F-C (backfill #۰۰۲/#۰۰۴) + Review #۰۰۶/#۰۰۷ + M101 backfill part12. audit ۱۲/۱۲، tests ۱۴/۱۴.
 - ✅ **part14-15:** M101 backfill part13 (۴ نقطه) + full-refresh اتمیک (CHAT_LOG part09-13 / SESSION_STATUS / PENDING / MANIFEST D2 Total=282) + بستن Triple-Rule معوق part09. chat-end=`c30dbe5`.
 - ✅ **part16 (این چت):** codify **v2.16** — M104 + #۸۶ Locked + main bump + Review #۰۰۸ + Decision #۶۸ + audit v2.16. codify=`8c9c6a7`، audit ۱۲/۱۲ + companion ۱۴/۱۴ (دستی + هوک). chat-end دوحلقه (این commit).
-- ⏳ **باقی Phase 3:** deprecate legacy docs · PROJECT_KNOWLEDGE (#۵۵) · catch-up README/CHANGELOG/TASK_BACKLOG · workspace Tier · DECISIONS_LOG drift backfill · main.md stale (branch+placeholder) · boot-template ref #۲۱ · PERSIST TASKS A-G · backfill resolution #۰۰۱/#۰۰۳ · cosmetic test_2 «11»→«12» · Settings (موکول).
+- ✅ **part17 (این چت):** Phase 3 — B4 (stale/cosmetic: main.md branch/created-commit `5285fb6`/خط۱۷۷، test_2 «11»→«12»، boot-template ref→modular) + B1 (deprecate ۱۰ سند legacy + Review #۰۰۹) + B2 (بازسازی PROJECT_KNOWLEDGE→v2.16، #۵۵) + B3 (catch-up README/CHANGELOG/TASK_BACKLOG، scoped). chat-end دوحلقه (این commit).
+- ⏳ **باقی Phase 3 (→PART18، عمدتاً B5):** DECISIONS_LOG drift backfill · resolution REVIEW_LOG #۰۰۱/#۰۰۳/#۰۰۹ با hash (git) · PERSIST TASKS A-G verify · workspace Tier · `Created in commit` ماژول‌های 01/02/06 · CHANGELOG [0.6.0] (تاریخ git) · TASK_BACKLOG Tier reconcile · Settings (موکول).
 
 ### Objective 3 — Phase 4 (اسکن ۱۰۰٪ ۲۷۸ فایل)
 🔮 **TODO** (part14+) با #۷۸ + #۷۹ + #۸۴.
 
-## 📊 آمار پروژه (پس از part16)
+## 📊 آمار پروژه (پس از part17)
 - **قوانین قفل‌شده:** **۸۶** (#۱-۸۶) + ۲ Reserved (#۵۲، #۵۳).
 - **درس‌نامه:** **M1-M104** (۷۲ ثبت + ۳۲ Reserved شامل M89-M92) + **HM-1..HM-7**.
-- **Reviews:** **۸** (#۰۰۱-۰۰۸، همه Implemented).
+- **Reviews:** **۹** (#۰۰۱-۰۰۹؛ #۰۰۱-۰۰۸ Implemented، #۰۰۹ Approved/در انتظار commit part17).
 - **Audit:** **۱۲/۱۲ check** + **۱۴/۱۴ companion test** PASS (part16، دستی + هوک pre-commit).
 - **Tests دیگر:** pytest **۲۵/۲۵** + vitest **۳۰/۳۰** (بدون تغییر).
 - **MDRS v2 deliverables:** **۱۴/۲۴** (D1-D13 + D24 + D12). باقی: D14-D23 (۱۰).

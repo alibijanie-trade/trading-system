@@ -1,3 +1,5 @@
+> ⚠️ **[DEPRECATED — part17 · Constitution v2.16]** این سند legacy است و دیگر source-of-truth نیست. مرجع فعال برای وضعیت/Context: `docs/SESSION_STATUS.md` + `claude_workspace/PHASE_LEDGER.md` + `docs/constitution/`. طبق Rule #۲۴ (No-Deletion) صرفاً برای تاریخچه حفظ شده. مرجع تصمیم: Review #۰۰۹.
+
 # 🗂️ PROJECT_CONTEXT — Context پروژه برای Claude
 
 > **هدف یک‌خطی:** خلاصه‌سازی سریع context پروژه برای Claude در هر چت — تا با یک نگاه بداند کجاست.

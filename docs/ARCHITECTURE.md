@@ -1,3 +1,5 @@
+> ⚠️ **[DEPRECATED — part17 · Constitution v2.16]** این سند legacy است و دیگر source-of-truth نیست. مرجع فعال معماری: `docs/constitution/05_architecture.md`. (دیاگرام‌های Mermaid onboarding قابل مهاجرت به 05 — drift، بعد.) طبق Rule #۲۴ (No-Deletion) صرفاً برای تاریخچه حفظ شده. مرجع تصمیم: Review #۰۰۹.
+
 # 🏛️ ARCHITECTURE — معماری سامانه
 
 > **هدف یک‌خطی:** نمای فنی high-level از معماری backend + frontend با دیاگرام‌های Mermaid برای کمک به onboarding و طراحی فازهای بعدی.
