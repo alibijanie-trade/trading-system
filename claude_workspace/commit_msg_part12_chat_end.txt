@@ -1,0 +1,37 @@
+chore(part12): Phase 2 close + continuity ledger + part13 handoff
+
+part12 chat-end. Phase 2 (Trust Rules #78-85 codify, Constitution
+v2.15) verified and formally closed. Two-loop continuity upgrade
+established per user directive.
+
+Scope (M98 closure):
+- M101 backfill: replace "hash post-push" placeholder with 59c075a in
+  REVIEW_LOG row 005 + review #005 sec4 (Commits) and sec6 (Signatures).
+  Surgical: row 004 (also has "hash post-push" = 234ba2f) left untouched,
+  deferred to Phase 3.
+- new claude_workspace/PHASE_LEDGER.md: cumulative append-only ledger
+  (per-chat summary, live 3-Objective status, HEAD/hashes, part10/11 gap
+  one-liner) + canonical two-loop continuity rule.
+- new claude_workspace/incoming_permanent/PHASE1_PART13_HANDOFF.txt:
+  Phase 3 + Phase 4 delta handoff. Item #0 = check_12_continuity, DUE
+  part13 (hard deadline).
+
+Phase 2 verify result: 4/4 giant files read complete (01_rules,
+02_lessons, DECISIONS_LOG, 63_pre_commit_audit.py). Content of #78-85 /
+M103 / Decision #67 confirmed correct and complete; zero collateral
+damage. 7 pre-existing stale findings logged to Phase 3:
+  F-A DECISIONS_LOG version header/footer stale
+  F-B audit check_1 latin-label cross-file compare false-PASS risk
+  F-C M101 backfill pending for REVIEW_LOG rows 002 and 004
+  handoff chain gap part10/11; PERSIST TASKS A-G pending;
+  stale SESSION_STATUS (v2.14) + main.md (branch/placeholder);
+  boot-template legacy ref #21.
+
+Out of scope (defer to part13+):
+- check_12_continuity implementation + companion test + REVIEW_LOG #006
+  (DUE part13, item #0, no slip without explicit user approval)
+- Phase 3 remediation + full state-of-record refresh (Triple-Rule M93)
+- Phase 4 full 278-file classified scan
+
+Refs: Rule #51 #62 #66 #73 #74 #76 #78-85, M82 M93 M99 M101 M103,
+Review #005, Decision #67

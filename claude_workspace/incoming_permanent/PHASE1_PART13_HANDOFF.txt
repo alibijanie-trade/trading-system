@@ -1,0 +1,67 @@
+# HANDOFF — ادامهٔ part12 → part13 (Phase 3 + Phase 4)
+
+> فایل permanent (Rule #۶۲). چت part13 باید آن را در boot بخواند.
+> ساخته‌شده: پایان part12 (2026-05-30). Commit مرجع part12: <chat-end part12 hash — در part13 boot از git backfill شود (M101)>.
+> ⭐ منبع تجمعی: `claude_workspace/PHASE_LEDGER.md` — کل قصهٔ پروژه از یک فایل. اول آن را بخوان.
+
+---
+
+## ⭐ اصل حاکم (اول بخوان)
+جامعیت > یک‌چت. ناقص‌خواندن ممنوع (Rule #۸۰). هر جا budget کم آمد → بگو «چت جدید باز کن» + state امن را گزارش کن، نه ادامهٔ ناقص. تعداد چت اولویت دوم است.
+
+## 0) Context + boot اجباری
+- پروژه trading-system، Windows، root `D:\Projects\trading-system`، Filesystem MCP. Branch `infra/v2.14-source-of-truth`. کاربر: ali. زبان فارسی + انگلیسی فنی.
+- boot اجباری: `claude_workspace\CHAT_BOOT_TRIGGER_TEMPLATE.md` را follow کن. هیچ task قبل از STEP 2 (ack) و STEP 3 (تأیید کاربر).
+- **در boot، اول `PHASE_LEDGER.md` را بخوان** (کل تاریخچه). DEFER part12 معتبر می‌ماند مگر تغییر بدهی: سند جامع legacy + PENDING + helper-TODO فقط هنگام نیاز Phase 3 خوانده شوند.
+- **M101 backfill اول part13:** hash chat-end part12 را از git بگیر و در `PHASE_LEDGER.md` (ردیف part12 + بخش HEAD) و CHAT_LOG ثبت کن.
+- مکانیزم‌های هر turn فعال: `[Mechanism + Trust-Rules Self-Check]` بالا · `Honesty Audit (Rule #۸۳)` پایین گزارش‌ها · Scope Contract (#۷۸) قبل از trigger word · تأیید قبل از write (#۵۱) · commit `-F` ASCII (M99) · read-back (M82) · تک‌خوانی فایل غول (HM-9/M66).
+
+## 1) سه Objective (هیچ‌کدام فراموش نشود)
+1. **Phase 2:** ✅ **CLOSED در part12** (codify `59c075a` + verify کامل ۴ فایل بزرگ + backfill #۰۰۵). کاری نمانده.
+2. **Phase 3:** ⏳ Remediation + full refresh — این چت. (بخش ۲ پایین)
+3. **Phase 4:** 🔮 اسکن ۱۰۰٪ ۲۷۸ فایل — part13+. (بخش ۳ پایین)
+
+## 2) Phase 3 — Remediation (هیچ بند فراموش نشود)
+
+### 🔴🔴 آیتم #۰ — اولویت بحرانی — DEADLINE: پایان چت ۱۳ 🔴🔴
+**`check_12_continuity` در `scripts/63_pre_commit_audit.py`:** اگر شمارهٔ چت جاری (از commit/branch) جلوتر از آخرین ردیف ثبت‌شده در `PHASE_LEDGER.md` و آخرین `PHASE1_PART{N}_HANDOFF.txt` باشد → قرمز شود. یعنی هیچ چتی بدون append به ledger + ساخت HANDOFF بسته نشود.
+- + companion test (Rule #۲۲) + ردیف در REVIEW_LOG (#۰۰۶).
+- ⏰ **DEADLINE قطعی: پایان چت ۱۳. اجازهٔ سُرخوردن به Phase 4 یا بعد را ندارد.** اگر budget نرسید → تعویق فقط با تأیید صریح کاربر، و انتقال با همین درجهٔ پررنگ به چت ۱۴.
+
+### بقیهٔ یافته‌ها/کارهای Phase 3 (پس از #۰)
+- **F-A** نسخهٔ `DECISIONS_LOG.md` stale (header v1.0 / footer v1.3 — #۶۷/2026-05-30 منعکس نشده) → bump.
+- **F-B** ضعف audit `check_1`: regex مقایسهٔ main/SESSION به برچسب لاتین «sabt»/«qoflshode» تکیه دارد که `PERSIAN_TO_ASCII` (فقط رقم) تولید نمی‌کند → false-PASS برای drift شمارش قوانین → اصلاح regex (audit-hardening).
+- **F-C** backfill M101 معلق: REVIEW_LOG #۰۰۲ (`<S3.4...>`) و #۰۰۴ («S4 atomic commit (hash post-push)» = `234ba2f`).
+- شکاف handoff part10/11 (در ledger ثبت شد؛ نه بازسازی).
+- PERSIST TASKS A-G معلق از part09/10 (verify که در part11 جذب شده یا نه).
+- stale: «Constitution v2.14» در SESSION_STATUS · branch `infra/governance-overhaul` + placeholder `Created in commit` در main.md.
+- boot-template legacy ref **#۲۱**: `CHAT_BOOT_TRIGGER_TEMPLATE.md` به `سند_جامع_v2_11` ارجاع می‌دهد → اصلاح به modular.
+- **full refresh وضعیت‌نامه:** SESSION_STATUS (part08-era → part12) + CHAT_LOG (بخش part10+part11+part12) + PENDING + PROJECT_MANIFEST D2 re-run — atomic (Triple-Rule M93/#۷۳، شامل Triple-Rule معلق part09).
+- deprecate رسمی legacy docs (`سند_جامع_v2_6..v2_11`، PROJECT_GOVERNANCE، CLAUDE_CHECKLIST، PROJECT_CONTEXT، ARCHITECTURE).
+- بازسازی `PROJECT_KNOWLEDGE.md` همگام v2.15 (Rule #۵۵).
+- catch-up README/CHANGELOG/TASK_BACKLOG + workspace Tier protection + DECISIONS_LOG drift backfill (decisions جامانده part04-10).
+- تصمیمات Settings (Brightdata/Chrome/training/Skills/tokens) — **همه موکول، بدون تغییر بدون تأیید**.
+
+## 3) Phase 4 (part13+)
+اسکن ۱۰۰٪ ۲۷۸ فایل classified (T1-5) با Scope Contract صریح (#۷۸) + N/M (#۷۹) + بدون pattern-matching (#۸۴). حجیم → چند چت.
+
+## 4) شرط escape (دستور کاربر، فعال)
+HM-9 (hang) یا overflow budget → escape، باقی scope به چت بعد، **push نزن**، state امن را گزارش کن.
+**state امن فعلی:** `59c075a` push شده؛ backfill #۰۰۵ + PHASE_LEDGER + این handoff روی دیسک (در chat-end part12 commit می‌شوند).
+
+## 5) جملهٔ شروع پیشنهادی part13
+«part13 — boot استاندارد (با خواندن PHASE_LEDGER.md اول) را اجرا کن، سپس M101 backfill hash chat-end part12. بعد Phase 3 را شروع کن و **اولین کار = آیتم #۰ یعنی check_12_continuity که DEADLINE پایان همین چت ۱۳ را دارد و اجازهٔ تعویق ندارد**. سپس بقیهٔ یافته‌ها + full refresh وضعیت‌نامه. اصل حاکم: جامعیت > یک‌چت.»
+
+---
+
+## 🔁 قانون تداوم دوحلقه‌ای (به‌روزشده — جایگزین تک‌حلقه)
+
+هر چت در پایان، **به این ترتیب** (canonical در `PHASE_LEDGER.md`):
+1. **حلقهٔ ۱ (Ledger):** چند خط به جدول «خلاصهٔ هر چت» `PHASE_LEDGER.md` append + وضعیت ۳ Objective + HEAD/hashها + DEADLINEها را به‌روز کن (append-only، Rule #۲۴).
+2. **حلقهٔ ۲ (Handoff):** `PHASE1_PART{N+1}_HANDOFF.txt` دلتای خود را بساز (اهداف کامل + اصل حاکم + escape + همین قانون تداوم دوحلقه‌ای).
+3. هر دو در یک commit (read-back M82) + push (#۶۶) + متن paste + یادآوری به کاربر.
+
+زنجیره نباید بشکند. این عین روح M23 (عدم تولید handoff = اشتباه بحرانی) + Rule #۶۲ + جبران شکست تک‌حلقه (part10/11). enforcement مکانیکی = check_12 (آیتم #۰ بالا).
+
+---
+**پایان HANDOFF part13.**

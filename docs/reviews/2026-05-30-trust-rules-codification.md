@@ -45,7 +45,7 @@
 - `docs/SESSION_STATUS.md` — surgical only (rule count ۷۷→۸۵، lesson M1-M102→M1-M103) per decision B1 — برای سبز ماندن audit check_2
 
 ### Commits
-- part11 atomic commit (hash در post-push ثبت می‌شود)
+- part11 atomic commit (`59c075a`)
 
 ### Constitution impact
 - ۸ rule جدید Locked (#۷۸-۸۵)، ۱ lesson جدید (M103)
@@ -74,4 +74,4 @@
 
 - Claude: confirmed in part11 commit message + this Review file
 - User: explicit approval (scope contract + decisions A=v2.15/B1/C=Review#۰۰۵ + format M102 + Genesis line)
-- Commit boundary: part11 atomic commit (hash recorded post-push)
+- Commit boundary: part11 atomic commit (`59c075a`)
