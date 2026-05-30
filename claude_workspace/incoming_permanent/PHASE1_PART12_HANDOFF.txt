@@ -1,0 +1,120 @@
+# HANDOFF — ادامهٔ part11 → part12 (Phase 2 close + Phase 3 + Phase 4)
+
+> این فایل permanent است (Rule #۶۲). چت part12 باید آن را در boot بخواند تا هیچ بند به paste وابسته نماند.
+> ساخته‌شده: پایان part11 (2026-05-30). Commit مرجع part11: `59c075a`.
+
+---
+
+## ⭐ اصل حاکم بر part12 (مهم‌ترین — اول بخوان)
+
+اولویت مطلق با خواندن **کامل و سیستماتیک** است. ناقص‌خواندن یا بررسی سرسری به بهانهٔ صرفه‌جویی budget **ممنوع** است (Rule #۸۰ no self-imposed scope narrowing). هر جا Claude حس کرد budget کم می‌آید، **باید** بگوید «چت جدید باز کن» و state امن را گزارش کند — نه اینکه ناقص ادامه دهد. انجام‌شدن «همه در یک چت» هدف نیست؛ **جامعیت** هدف است. تعداد چت اولویت دوم است.
+
+---
+
+## 0) Context پروژه (ثابت) + boot اجباری
+
+- پروژه: **trading-system** (کریپتو+فارکس)، Windows، root `D:\Projects\trading-system`، دسترسی با **Filesystem MCP**.
+- Branch فعال: **`infra/v2.14-source-of-truth`**. زبان: فارسی + اصطلاح انگلیسی. کاربر: ali.
+- **اول boot اجباری پروژه را اجرا کن** (طبق userPreferences): `claude_workspace\CHAT_BOOT_TRIGGER_TEMPLATE.md` را بخوان و کامل follow کن (constitution + سند جامع + HELPER_PROTOCOL). **هیچ task قبل از STEP 2 (acknowledgment) و STEP 3 (user verification) شروع نشود.**
+- مکانیزم‌های هر turn فعال بمانند: `[Mechanism + Trust-Rules Self-Check]` بالای پاسخ، بلوک `Honesty Audit (Rule #۸۳)` پایین هر گزارش پیشرفت، Scope Contract (Rule #۷۸) قبل از task با trigger word، تأیید قبل از هر write (Rule #۵۱)، commit با `-F` (M99)، split فارسی بزرگ (Z3.20)، read-back (M82)، تک‌خوانی فایل‌های غول (HM-9 / M66).
+
+## 1) هدف کلان این چت (سه Objective — هیچ‌کدام فراموش نشود)
+
+1. **Objective 1 — Phase 2:** codify ۸ قانون Trust #۷۸-۸۵ + درس M103 در Constitution → **v2.15**. وضعیت: ✅ **انجام و commit/push شد** (`59c075a`). فقط verify نهایی (۴ فایل غول) + یک backfill مانده (بخش ۳).
+2. **Objective 2 — Phase 3:** remediation ~۲۱ یافتهٔ audit از part10 + full refresh وضعیت‌نامه (لیست کامل بخش ۴).
+3. **Objective 3 — Phase 4:** اسکن کامل ۱۰۰٪ همهٔ ۲۷۸ فایل classified (بخش ۵، در part12+).
+
+## 2) آنچه در part11 انجام شد (DONE) ✅
+
+Phase 2 codification — ۹ فایل scope + ۱ helper نوشته شد (همه با diff/تأیید):
+
+1. `scripts/63_pre_commit_audit.py` — CURRENT_VERSION->v2.15، ACCEPTABLE_VERSIONS->["v2.14","v2.15"]، ۲ label
+2. `.pre-commit-config.yaml` — hook label v2.15
+3. `docs/constitution/01_rules.md` — بخش جدید قوانین #۷۸-۸۵ (Normative + Implementation Notes + Genesis + Cross-refs) + ۸ ردیف جدول ۱.۹ + footer #۱-۸۵
+4. `docs/constitution/02_lessons.md` — M103 (جدول §۲.۳ + شرح §۲.۸ + index §۲.۷ + count ۷۰->۷۱)
+5. `docs/constitution/main.md` — H1/frontmatter v2.15 + آمار + version history + cross-refs (#۷۸-۸۵ + M103)
+6. `docs/DECISIONS_LOG.md` — Decision #۶۷ + آمار (Max ۶۷، Recorded ۶۲)
+7. `docs/reviews/2026-05-30-trust-rules-codification.md` — Review #۰۰۵ (فایل جدید، 5601 بایت)
+8. `docs/REVIEW_LOG.md` — row ۰۰۵
+9. `docs/SESSION_STATUS.md` — **surgical فقط** (۷۷->۸۵ و M1-M102->M1-M103؛ refresh کامل عمداً موکول به Phase 3 طبق تصمیم B1)
++ `claude_workspace/commit_msg_part11_trust_rules.txt` (ASCII، برای -F)
+
+- **audit واقعی اجرا شد: 11/11 PASS** ✅
+- **commit + push واقعی:** `59c075a` روی `origin/infra/v2.14-source-of-truth` ✅
+- **verify نهایی فاز ۲ — ۵/۹ فایل کامل خوانده شد و تمیزند:** `.pre-commit-config.yaml`، `REVIEW_LOG.md`، `review #005 file`، `SESSION_STATUS.md`، `main.md`.
+
+### یافته‌های verify این ۵ فایل (۷ بند گفت‌وگوی part11 — عصاره):
+- پیش‌بینی قبلی دربارهٔ check_1 **غلط بود**: audit واقعی `check_1` را با «85 rules» PASS داد (یعنی check_1 عدد را می‌خواند، فارسی را هم match می‌کند).
+- `SESSION_STATUS.md`: یک «Constitution: **v2.14** frontmatter» در روایت part08 — **stale-but-deferred** به Phase 3 (audit نمی‌گیرد).
+- `main.md`: `Branch: infra/governance-overhaul` (واقعی `infra/v2.14-source-of-truth`) + placeholder `Created in commit: <...>` — **pre-existing drift، نه از فاز ۲**، متعلق به Phase 3.
+- بقیهٔ ۵ فایل: ویرایش‌های فاز ۲ کامل و درست، بدون stale دیگر.
+
+## 3) کار فوری بعدی = بستن کامل Phase 2 (از همین‌جا ادامه بده) 🔄
+
+**الف) خواندن ۴ فایل غول باقی‌مانده — کامل و سیستماتیک، تک‌تک (نه batch، HM-9/M66 risk):**
+- `docs/DECISIONS_LOG.md` (~۸۵۰ خط)
+- `scripts/63_pre_commit_audit.py` (~۴۰KB)
+- `docs/constitution/01_rules.md` (~۴۶KB)
+- `docs/constitution/02_lessons.md` (~۵۰KB)
+
+هدف خواندن: (۱) یافتن stale-text که audit نمی‌گیرد، (۲) تأیید کامل و درست بودن متن قوانین #۷۸-۸۵ و درس M103، (۳) تأیید نبودن آسیب جانبی در نواحی لمس‌نشده. اگر وسط این ۴ فایل budget کم آمد → escape، چت جدید، **نه** خواندن سرسری.
+
+**ب) M101 hash backfill (آخرین write فاز ۲، نیاز به تأیید کاربر Rule #۵۱):**
+- رشتهٔ «hash post-push» را با `59c075a` جایگزین کن در:
+  - `docs/REVIEW_LOG.md` ردیف ۰۰۵ (ستون Resolution)
+  - `docs/reviews/2026-05-30-trust-rules-codification.md` §۴ (Commits) و §۶ (Signatures)
+- این تغییر مستندات است؛ commit جداگانهٔ کوچک یا ضمیمه به chat-end (با -F، ASCII).
+
+**ج) پس از ب:** Phase 2 رسماً **بسته** اعلام شود با گزارش کمی (N/M فایل خوانده، یافته‌ها).
+
+## 4) Phase 3 — Remediation (~۲۱ یافته + chat-end کامل) — هیچ بند فراموش نشود ⏳
+
+- **#۲۱:** boot template (`CHAT_BOOT_TRIGGER_TEMPLATE.md`) به legacy `سند_جامع_v2_11` ارجاع می‌دهد -> اصلاح.
+- **بازسازی `PROJECT_KNOWLEDGE.md`** همگام با constitution v2.15 (فایلی که کاربر در Project Knowledge آپلود می‌کند — Rule #۵۵).
+- **Deprecate رسمی legacy docs:** `سند_جامع_v2_6..v2_11`، `PROJECT_GOVERNANCE.md`، `CLAUDE_CHECKLIST.md`، `PROJECT_CONTEXT.md`، `ARCHITECTURE.md`.
+- **Catch-up اسناد:** `README.md`، `CHANGELOG.md`، `TASK_BACKLOG.md`.
+- **Workspace Tier protection** + **PERSIST TASKS A-G**.
+- **Triple-Rule معلق از part09** (chat-end atomic ۶-فایلی).
+- **DECISIONS_LOG drift backfill** (decisions جامانده part04-10).
+- **Full refresh وضعیت‌نامه (مهم):** `SESSION_STATUS.md` الان part08-era است و می‌گوید «چت بعدی part09» در حالی که ما در part11/12 هستیم -> refresh کامل + `CHAT_LOG.md` بخش part10+part11 + `PENDING_FOR_NEXT_VERSION.md` + `PROJECT_MANIFEST.md` D2 re-run.
+- **اصلاح stale های بخش ۳:** «v2.14» در SESSION_STATUS، branch/placeholder در main.md.
+- **تصمیمات جزئی Settings** (Brightdata/Chrome/training=ON/Skills/tokens) — **همه موکول، بدون تغییر Settings بدون تأیید**.
+
+## 5) Phase 4 / Objective 3 (part12+) 🔮
+
+- اسکن کامل ۱۰۰٪ همهٔ ۲۷۸ فایل classified (Tier 1-5)، با Scope Contract صریح (Rule #۷۸) و گزارش کمی N/M (Rule #۷۹). بدون pattern-matching (Rule #۸۴).
+
+## 6) تصمیمات قفل‌شدهٔ کاربر (مرجع)
+
+- **A:** version bump -> **v2.15** (minor؛ precedent: batch قانون = minor).
+- **B/B1:** SESSION_STATUS فقط **surgical** در فاز ۲؛ refresh کامل -> Phase 3 chat-end.
+- **C:** Review **#۰۰۵** (نه #۰۰۴ که از قبل D12/part09 بود — این با verify مستقل REVIEW_LOG ثابت شد، Rule #۸۴).
+- متن canonical قوانین verbatim از handoff part10، فرمت M102 (Normative + Implementation Notes جدا)، خط **Genesis: part10 audit session (`TRADING-phase1-part10-mdrs-v2-infrastructure-sprint`)** در هر قانون.
+
+## 7) شرط escape (دستور کاربر، فعال)
+
+اگر وسط کار HM-9 (hang ابزار) یا overflow budget -> escape کن، باقی scope به چت بعد، **push نزن**، state امن را گزارش کن. **state فعلاً امن است: `59c075a` push شده، هیچ کار نیمه‌کاره روی دیسک نیست.**
+
+## 8) جملهٔ شروع پیشنهادی برای part12
+
+«part12 — boot استاندارد پروژه را اجرا کن، بعد این HANDOFF (`claude_workspace/incoming_permanent/PHASE1_PART12_HANDOFF.txt`) را مرجع scope بگیر. از بخش ۳ ادامه بده: ۴ فایل غول را کامل و سیستماتیک بخوان، یافته‌ها را گزارش کن، بعد با تأییدم `59c075a` را backfill کن تا Phase 2 رسماً بسته شود. سپس برای Phase 3 (بخش ۴) و Phase 4 (بخش ۵) برنامه بده. اصل حاکم: جامعیت > یک‌چت — هر جا budget کم آمد بگو چت جدید باز کنم.»
+
+---
+**پایان HANDOFF part12.**
+
+---
+
+## 🔁 قانون تداوم HANDOFF (زنجیره‌ای — برای همه چت‌های بعد)
+
+این فرآیند باید **ادامه‌دار** باشد. چت part12 (و هر چت بعد) در پایان کار، **موظف است** دقیقاً همین کار را برای چت بعدی خود انجام دهد:
+
+1. یک فایل HANDOFF جدید بسازد (`PHASE1_PART{N+1}_HANDOFF.txt` در `claude_workspace/incoming_permanent/`) که **همهٔ اهداف** (نه فقط task جاری) را حمل کند: چه done شد، چه مانده، از کجا ادامه دهد.
+2. **اصل حاکم** (جامعیت > یک‌چت) و **شرط escape** را در آن تکرار کند.
+3. **همین بخش (قانون تداوم)** را در HANDOFF جدید هم بگذارد تا زنجیره نشکند.
+4. فایل را روی دیسک بنویسد (read-back M82) + در git commit کند (paste-independent شود) + متن paste خلاصه بدهد.
+5. این پیوستگی را به کاربر یادآوری کند.
+
+**هدف:** هیچ چتی نباید context را گم کند؛ هر چت پلی به چت بعد می‌سازد. این عین روح M23 (عدم تولید handoff = اشتباه بحرانی) + Rule #۶۲ (permanence) است.
+
+---
+**پایان واقعی فایل.**

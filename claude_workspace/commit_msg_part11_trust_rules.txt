@@ -1,0 +1,19 @@
+feat(constitution): Trust and Anti-Sycophancy Rules #78-85 + M103 (v2.15)
+
+Codify 8 Locked rules (SCM, QHP, NSISN, RDEM, MPTC, HAT, APMM,
+Self-Activation Lock) and lesson M103 (Audit Over-Promise Pattern,
+part10 origin) into Constitution v2.15.
+
+Files:
+- 01_rules.md: Trust Rules section #78-85 + table 1.9 (8 rows) + footer #1-85
+- 02_lessons.md: M103 (table 2.3 + detail 2.8 + index 2.7 + count 70->71)
+- main.md: frontmatter v2.14->v2.15 + H1 + stats + version history + cross-refs
+- 63_pre_commit_audit.py: CURRENT_VERSION + ACCEPTABLE_VERSIONS (transitional, M102)
+- .pre-commit-config.yaml: hook label v2.15
+- DECISIONS_LOG.md: Decision #67
+- reviews/2026-05-30-trust-rules-codification.md: Review #005 (NEW)
+- REVIEW_LOG.md: row 005
+- SESSION_STATUS.md: surgical count 77->85, M1-M103 (full refresh deferred to Phase 3)
+
+refs: Rules #78-85, M103, Decision #67, Review #005
+Genesis: part10 audit session (TRADING-phase1-part10-mdrs-v2-infrastructure-sprint)
