@@ -1,0 +1,304 @@
+# HELPER SANDBOX HANDOFF — part08 → part09
+
+> Source: helper chat for TRADING-phase1-part08-mdrs-v2-s33-s34-completion
+> Date: 2026-05-24 (post part08 chat-end commit 3fd2405)
+> Next helper chat name: HELPER-TRADING-phase1-part09-mdrs-v2-s4-audit-checks
+> Branch: infra/v2.14-source-of-truth
+> Last main chat hash: 3fd2405 (part08 chat-end, Stage S3 COMPLETE)
+
+═══════════════════════════════════════════════════════════════
+CRITICAL: PASTE THIS ENTIRE FILE AS FIRST MESSAGE IN NEW HELPER CHAT
+═══════════════════════════════════════════════════════════════
+
+This file is the boot context for a fresh helper-sandbox chat. The
+new helper chat has NO memory of previous helper sessions. Paste this
+file content as your first user message in the new helper chat.
+
+CHAT NAMING CONVENTION (BINDING USER CONSTRAINT):
+- Main chats: TRADING-phase{N}-part{NN}-{topic}
+- Helper chats: HELPER-TRADING-phase{N}-part{NN}-{topic}
+  (keyword "HELPER" prefixed before "TRADING" — established by user
+  in part08, must be honored in all future helper chat naming)
+
+═══════════════════════════════════════════════════════════════
+SECTION 1 — HELPER ROLE & WORKFLOW MECHANICS
+═══════════════════════════════════════════════════════════════
+
+You are the HELPER SANDBOX assistant for the TRADING-system MDRS v2
+project. You are NOT the main chat. Your role:
+
+1. READ-ONLY filesystem operations on D:\Projects\trading-system
+   (Filesystem MCP read tools only — NEVER write to project files
+   except your own handoff files in claude_workspace/)
+2. Review main chat outputs and identify ambiguities, drift, concerns
+3. Provide consultation in PERSIAN (Farsi) for explanations
+4. Prepare paste-ready text blocks in ``` code blocks for user to
+   copy to the main chat (chat 9, the new part09 chat)
+5. DO NOT generate EXECUTE blocks (CMD commands) — that is main
+   chat's responsibility
+6. Place YOUR OWN ambiguities/concerns in a `HELPER AMBIGUITIES`
+   copy-able box at the END of each paste-ready response
+
+CRITICAL constraints from user (BINDING — DO NOT REPEAT in output,
+keep in helper internal memory):
+- minimum-necessary, no scope expansion
+- no unnecessary complexity, stay on main project path
+- helper ambiguities in copy-box at end of paste-ready text
+- responses in Persian (technical terms in English acceptable)
+- DO NOT keep listing the 3 binding constraints in every response —
+  keep them in memory silently
+- Helper chat naming: HELPER prefix before TRADING (NEW constraint
+  part08 end)
+
+Auxiliary user preferences observed:
+- User pastes full main-chat responses (not just code boxes)
+- Helper writes paste-ready text in ``` blocks
+- For future efficiency, USER DECISIONS NEEDED box also suggested as
+  parallel pattern to HELPER AMBIGUITIES (proposed in part08 — TBD
+  adoption in part09 main chat)
+
+═══════════════════════════════════════════════════════════════
+SECTION 2 — PROJECT STATE AS OF part08 CHAT-END
+═══════════════════════════════════════════════════════════════
+
+Branch: infra/v2.14-source-of-truth
+HEAD: 3fd2405 (part08 chat-end, Stage S3 COMPLETE, pushed)
+Constitution: v2.14 fully synced (all 7 module headers + main.md
+frontmatter + audit script + .pre-commit-config.yaml)
+
+STAGE S3 — RESMAN COMPLETE
+| Sub | Hash | Chat | Deliverable |
+|---|---|---|---|
+| S3.0 | 15e8e37 | part04 | Review #002 Draft + LOG row Approved |
+| S3.0.5 | 4e851b0 | part05 | Z3.21-Z3.24 PENDING entries |
+| D24 | 3bf66bf | part06 | HELPER_PROTOCOL.md + Review #003 |
+| S3.1 | f0adb63 | part07 | D8+D9: Rules #68-77 + Lessons M88+M93-M102 + HM-1-HM-7 |
+| S3.2 | 938cd2d | part07 | D10: Golden Rule + Templates 11-12 |
+| S3.3 | 35ea822 | part08 | D11+D13: Module headers v2.14 + audit sync + Z3.12+Z3.19 RESOLVED |
+| S3.4 | 3fd2405 | part08 | Triple-Rule atomic stage-end + Review #002 Implemented |
+
+Deliverables done: 13/24 (D1-D11 + D13 + D24)
+Remaining: 11 deliverables (D12 + D14-D23) for Stages S4-S8
+
+Key counts post-part08:
+- Rules Locked: 77 (#1-77) + 2 Reserved (#52, #53)
+- Lessons: M1-M102 (70 ثبت + 32 Reserved including M89-M92) + HM-1 to HM-7
+- Bugs Z3.x open: 22 (Z3.1-Z3.24, Z3.12 + Z3.19 RESOLVED in S3.3)
+- Reviews: 3 (#001, #002, #003 all Implemented)
+- PROJECT_MANIFEST.md: 325 files seen, 278 classified (post-D2 re-run)
+
+═══════════════════════════════════════════════════════════════
+SECTION 3 — part09 SCOPE (NEXT MAIN CHAT)
+═══════════════════════════════════════════════════════════════
+
+Main chat name: TRADING-phase1-part09-mdrs-v2-s4-audit-checks
+Helper chat name: HELPER-TRADING-phase1-part09-mdrs-v2-s4-audit-checks
+
+Priority order (per PHASE1_PART09_HANDOFF.txt in
+claude_workspace/incoming_permanent/):
+
+1. Boot protocol per Rule #48 (read 9 mandatory + handoff files)
+2. M101 backfill: part08 chat-end hash 3fd2405 in CHAT_LOG part09
+   boot section (mutual chain: part04 8a91138 -> part05 91d20d8 ->
+   D24 3bf66bf -> part07 05d7388 -> part08 3fd2405 -> part09 future)
+3. S4 (D12 — Audit Checks #8-11) implementation:
+   - Check #8: Detect uncommitted state files (M93 enforcement)
+   - Check #9: Manifest self-row existence + first-run gap (Z3.15)
+   - Check #10: Review numbering integrity (Z3.16)
+   - Check #11: Z-ID Permanence (Z3.17 + M96 enforcement)
+4. S5 (D14 — Second Review Report) if S4 fits
+5. K3-K8 remaining items per part07 status + K9+K10 formalization
+
+S4 specifics:
+- File: scripts/63_pre_commit_audit.py (T3, code change)
+- Companion test: scripts/63b_test_pre_commit_audit.py (T3 test —
+  must extend with 4 new test functions)
+- Pattern precedent: existing 7 check functions (check_1 through
+  check_7) — new check_8 through check_11 same structure
+- Companion test extension: test_2_all_check_functions must include
+  4 new names + verify ALL_CHECKS list has 11 items (not 7)
+- Z3.20 mitigation: edit_file with smaller batches if needed
+
+═══════════════════════════════════════════════════════════════
+SECTION 4 — KEY DECISIONS THIS HELPER SESSION (part08)
+═══════════════════════════════════════════════════════════════
+
+[DECISION] Bootstrap mode upfront for S3.3 + S3.4 (no helper round)
+[DECISION] Z3.12 (hook label) + script internal labels included in
+  S3.3 atomic alongside Z3.19 (proactive scan caught these)
+[DECISION] RESERVED_LESSON_IDS extension M89-M92 in S3.3 (one line)
+[DECISION] M-series count precise = 70 (not ~82, not 76) — math
+  verified: M1-M21 + M23 + M25-M28 + M30-M31 + M44 + M56-M79 +
+  M82-M87 + M88 + M93-M102 = 70 ثبت. Reserved = 32. Total IDs = 102.
+[DECISION] main.md frontmatter: ADD تاریخ v2.14 + ADD چت مسئول v2.14
+  (Rule #24 No-Deletion honored)
+[DECISION] 02_lessons.md status section count also refreshed
+  (consistency cross-file)
+[DECISION] M101 backfill defer to S3.4 atomic (precedent part07)
+[DECISION] S4 deferred to part09 per conservative policy
+[DECISION] Naming part09 = TRADING-phase1-part09-mdrs-v2-s4-audit-checks
+  (drop d12 reference for simplicity)
+[DECISION] Helper chat naming = HELPER prefix before TRADING (NEW
+  constraint part08 end)
+
+═══════════════════════════════════════════════════════════════
+SECTION 5 — DISCOVERIES (part08, 8 total — for HM-formalization in part09)
+═══════════════════════════════════════════════════════════════
+
+#1 (meta, HM-8 candidate): Tool-Discovery-First violation in boot
+   turn — main chat declared "no filesystem access" before tool_search
+   call. System prompt explicit: "tool_search is free, call it before
+   assuming a capability is unavailable."
+
+#2 (tool, HM-9 candidate): MCP filesystem server hang
+   mid-conversation x 2 events in part08 — 4-min timeouts without
+   warning, user restart resolved. Pattern: server liveness not
+   guaranteed across single chat.
+
+#3 (drift, cosmetic): HANDOFF_TEMPLATE.md section 7 "Rule #68.2 Boot
+   Protocol" typo (should be #48). defer.
+
+#4 (timing, cosmetic): PHASE1_PART08_HANDOFF.txt said section 6.8
+   Custom Instructions but actual location section 6.4. defer.
+
+#5 (drift, cosmetic): Module sub-headers descriptive prose stale
+   ("M1-M63 از v2.11"). defer.
+
+#6 (communication, cosmetic): User constraint adopted —
+   "helper ambiguities in copy-able box" pattern.
+
+#7 (validation, POSITIVE): HM-7 metric empirically validated — S3.3
+   = 0 audit fail (proactive scan worked, helper-validated).
+   3-datapoint trajectory: S3.1=3 fail, S3.2=0 fail, S3.3=0 fail.
+
+#8 (communication, cosmetic): CMD silent-on-success confusion —
+   user thought cd/git add didn't run. Lesson: note silent commands
+   in future EXECUTE blocks.
+
+═══════════════════════════════════════════════════════════════
+SECTION 6 — HELPER META-LEARNINGS (part08 — for HM-namespace)
+═══════════════════════════════════════════════════════════════
+
+Helper-side observations from part08 worth recording:
+
+[HM-META-A] Helper ambiguity-box pattern effective: user adopted
+"HELPER AMBIGUITIES copy-able box at end of response" constraint.
+worked well — non-blocking ambiguities surfaced explicit, user could
+catch concerns before forwarding to main chat.
+
+[HM-META-B] Helper math errors: in S3.3, helper initially miscounted
+M-series as 76 (should be 70). User accepted helper's recalc later.
+LESSON: helper should do math verification immediately, not rely on
+quick estimate. Show work explicit when count matters.
+
+[HM-META-C] Helper-vs-main-chat decision pattern: when main chat
+asked options A/B/C and helper recommended one, helper should
+explicit say "گزینه (الف) - Include" but ALSO list (ب) and (ج) in
+main chat's view-context. context gap potential if user only pastes
+helper's chosen option.
+
+[HM-META-D] Section label drift: helper referenced "section 2.9"
+when actual target was footer status section. Precision matters in
+edit_file old_str references. always use exact section header text.
+
+[HM-META-E] User constraint communication evolution:
+- "ابهام helper در کادر copy-able" (turn 12 part08)
+- "constraint 3 را تکرار نکن، در حافظه نگه دار" (turn ~15 part08)
+- "USER DECISIONS NEEDED box parallel pattern" (proposed turn 27)
+- "Helper chat naming: HELPER prefix before TRADING" (turn 32+ part08)
+
+[HM-META-F] Helper paste-only pattern clarification: user clarified
+that helper's previous-turn proposals are NOT to be re-pasted in main
+chat — only the latest finalized helper text. Workflow: helper
+proposes options -> user approves -> helper writes final paste-ready
+text -> user pastes ONLY that final text. Previous helper proposals
+are context for user only.
+
+[HM-META-G] Helper should NOT generate CMD/EXECUTE blocks. That is
+main chat's responsibility. Helper provides logic, decisions, paste
+text only.
+
+═══════════════════════════════════════════════════════════════
+SECTION 7 — CRITICAL FILE PATHS (verbatim)
+═══════════════════════════════════════════════════════════════
+
+Constitution:
+- docs/constitution/main.md (v2.14 frontmatter)
+- docs/constitution/01_rules.md to 06_meta.md (v2.14 headers)
+
+State-of-record (T1):
+- docs/SESSION_STATUS.md (part08 chat-end version)
+- docs/CHAT_LOG.md (part08 section appended)
+- docs/PROJECT_MANIFEST.md (post-D2 re-run)
+- docs/PENDING_FOR_NEXT_VERSION.md (K-section part08 + K9 + K10)
+- docs/REVIEW_LOG.md (Review #002 Implemented)
+
+Governance (T1):
+- docs/HELPER_PROTOCOL.md (D24 deliverable)
+- docs/REVIEW_PROTOCOL.md
+- docs/PRE_ADD_CHECKLIST.md
+- docs/HANDOFF_TEMPLATE.md
+
+Scripts (T3):
+- scripts/63_pre_commit_audit.py (S4 target for D12 extension)
+- scripts/63b_test_pre_commit_audit.py (companion test)
+- scripts/64_generate_manifest.py (D2 manifest generator)
+
+Pre-commit:
+- .pre-commit-config.yaml (v2.14 hook label)
+
+Handoffs:
+- claude_workspace/incoming_permanent/PHASE1_PART09_HANDOFF.txt (active)
+- claude_workspace/incoming_permanent/PHASE1_PART07_HANDOFF.txt (stale,
+  defer cleanup per Z3.18/Z3.23)
+- claude_workspace/incoming_permanent/PHASE1_PART08_HANDOFF.txt (stale,
+  defer cleanup)
+
+Workspace untracked commit_msg_*.txt: preserved per Z3.18/Z3.23
+
+═══════════════════════════════════════════════════════════════
+SECTION 8 — HOW TO USE THIS HANDOFF
+═══════════════════════════════════════════════════════════════
+
+Step 1: User opens new helper chat with name
+HELPER-TRADING-phase1-part09-mdrs-v2-s4-audit-checks
+(HELPER prefix mandatory per user constraint)
+
+Step 2: User pastes THIS ENTIRE FILE as first message
+
+Step 3: New helper acknowledges receipt with brief confirmation:
+"part09-helper context loaded. Stage S3 COMPLETE confirmed. ready
+to assist part09 (S4 — D12 Audit Checks #8-11)."
+
+Step 4: New helper waits for first paste from main chat (part09)
+
+Step 5: New helper resumes normal workflow per SECTION 1 mechanics
+
+NOTE: New helper should NOT need to re-read all constitution files
+on boot — this handoff has consolidated state. Read specific files
+on-demand when user pastes from main chat and verification needed.
+
+═══════════════════════════════════════════════════════════════
+SECTION 9 — PENDING TASKS FOR part09
+═══════════════════════════════════════════════════════════════
+
+[PENDING] M101 backfill: part08 chat-end hash 3fd2405 in CHAT_LOG
+  part09 boot section
+[PENDING] S4 (D12 Audit Checks #8-11) implementation
+[PENDING] S5 (D14 Second Review Report) if S4 fits
+[PENDING] K9 + K10 HM-formalization (HM-8 + HM-9) — likely in S5 or
+  later maintenance pass
+[PENDING] K3-K7 remaining items per part07 status
+[PENDING] Discoveries #3, #4, #5 part08 cosmetic fixes — defer to S8
+  cleanup or maintenance pass
+[PENDING] HM-META-A through HM-META-G formalization — helper-side
+  lessons for HELPER_PROTOCOL.md update in future
+
+═══════════════════════════════════════════════════════════════
+END OF HELPER SANDBOX HANDOFF
+═══════════════════════════════════════════════════════════════
+
+ساخته توسط: helper sandbox در پایان session part08
+تاریخ: 2026-05-24
+آماده برای: paste در فرست پیام helper chat جدید part09
+نام helper chat جدید (binding): HELPER-TRADING-phase1-part09-mdrs-v2-s4-audit-checks

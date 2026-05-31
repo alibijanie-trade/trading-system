@@ -1,0 +1,28 @@
+docs(state): part14-15 full-refresh + reconcile (Triple-Rule M93)
+
+Atomic state-of-record reconciliation completing part14 deferred work
+(part14 escaped pre-commit; completed in part15). Single atomic commit
+per Rule #73 / M93. Hash of this commit = chat-end part14-15 (M101).
+
+Scope (M98 closure):
+- M101 backfill part13 (3eae91e) - on disk from part14
+- SESSION_STATUS rewrite (part08-era -> part13/14 current)
+- CHAT_LOG part09-13 sections (from part14)
+- REVIEW_LOG #006/#007 resolution (from part14)
+- PENDING reconcile: part09-13 sections + count reconciliation
+  + Z3.15/16/17/25 RESOLVED markers (S4 part09 234ba2f)
+- PROJECT_MANIFEST D2 re-run (Total 282, T1 28)
+- PHASE_LEDGER row part14-15 + HEAD + DEADLINE done (loop 1)
+- PHASE1_PART16_HANDOFF.txt (loop 2)
+- P-candidate M104 + Rule #86 (Escape-Aware Sequence Derivation)
+  recorded in PENDING; full codify deferred to part16 (v2.16)
+
+Out of scope (defer to part16):
+- codify v2.16 (M104 + Rule #86 + Review #008)
+- deprecate legacy docs, PROJECT_KNOWLEDGE #55, README/CHANGELOG
+- remaining Phase 3 items + Phase 4 scan
+
+check_12 continuity: ledger part15 <-> handoff PART16 (H == L + 1).
+
+Refs: M93, Rule #73, M101, M104(candidate), Rule #86(candidate),
+M103, check_12, Z3.15, Z3.16, Z3.17, Z3.25

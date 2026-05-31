@@ -1,0 +1,27 @@
+part16 — اول claude_workspace\PHASE_LEDGER.md را بخوان، سپس boot استاندارد:
+claude_workspace\CHAT_BOOT_TRIGGER_TEMPLATE.md را کامل follow کن. هیچ task قبل از STEP 2 (ack) و STEP 3 (تأیید من).
+نام این چت: TRADING-phase1-part16-phase3-codify-v216-and-resume
+
+در boot اول بزن:  git -C D:\Projects\trading-system status -sb  +  rev-parse --short HEAD
+انتظار: HEAD = c30dbe5 ، branch infra/v2.14-source-of-truth، clean و sync با origin.
+(اگر HEAD عوض شده بود، یعنی بین part15 و این چت commit دیگری زده شده — گزارش بده، فرض نکن.)
+
+اولین کار part16 = M101 backfill سه‌نقطه‌ای:
+hash چت‌قبل (c30dbe5 = chat-end part14-15) را در PHASE_LEDGER جایگزین دو placeholder کن:
+  - ردیف part14-15 ستون آخر: <backfill در part16 boot>
+  - بخش «HEAD و hashها»: خط <atomic part14-15>
+(این یک اصلاح کوچک است → طبق #۳۰ idempotent، با read-back M82.)
+
+سپس اولویت اصلی = codify v2.16 (M104 + Rule #۸۶ — Escape-Aware Sequence Derivation).
+متن verbatim هر دو در PHASE1_PART16_HANDOFF.txt و در PENDING بخش part15 موجود است.
+زنجیرهٔ کامل (همه اتمیک، Triple-Rule M93/#۷۳):
+  02_lessons (M104 + count درس) · 01_rules (#۸۶ + جدول ۱.۹) · main.md (bump v2.16 + آمار + version history) ·
+  REVIEW_LOG #۰۰۸ + فایل review · DECISIONS_LOG · audit CURRENT_VERSION→v2.16 · .pre-commit label.
+  audit واقعی ۱۲/۱۲ + tests، بعد commit -F ASCII + push.
+
+سپس بقیهٔ Phase 3 (THEN-IF-BUDGET): بازسازی PROJECT_KNOWLEDGE.md (#۵۵، به‌بهانهٔ v2.16) ·
+deprecate legacy docs · README/CHANGELOG/TASK_BACKLOG · main.md stale · boot-template #۲۱ ·
+PERSIST A-G verify · backfill REVIEW_LOG #۰۰۱/#۰۰۳ · cosmetic test_2 «11»→«12» · Settings (موکول).
+سپس Phase 4 (اسکن ۲۸۲ فایل).
+
+اصل حاکم: جامعیت > یک‌چت. budget کم آمد → escape، push نزن، state امن گزارش.

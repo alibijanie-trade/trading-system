@@ -1,0 +1,227 @@
+# 🎯 HANDOFF — چت بعدی: TRADING-phase1-part02-binance-client
+
+> **تاریخ ساخت:** 2026-05-21
+> **چت قبل:** `TRADING-infra-governance-finalize-and-merge` (چت ۱۱.۰.ج) ✅ COMPLETED
+> **چت بعد پیشنهادی:** `TRADING-phase1-part02-binance-client`
+> **هدف چت بعد:** ساخت `binance_client.py` (REST wrapper) — اولین گام واقعی فاز ۱
+
+═══════════════════════════════════════════════════════════════
+## 📋 پیام شروع چت بعد (این متن را در پیام اول copy کنید)
+═══════════════════════════════════════════════════════════════
+
+سلام Claude.
+
+این چت `TRADING-phase1-part02-binance-client` است. شروع رسمی فاز ۱ پروژه سامانه هوشمند ترید.
+
+**اول این کارها را انجام بده:**
+
+1. `D:\Projects\trading-system\docs\constitution\main.md` را بخوان (index — v2.13 Modular)
+2. `D:\Projects\trading-system\docs\SESSION_STATUS.md` را بخوان (وضعیت پایان چت ۱۱.۰.ج)
+3. `D:\Projects\trading-system\claude_workspace\incoming_permanent\PHASE1_PART02_BINANCE_CLIENT_HANDOFF.txt` را بخوان (همین فایل، کل context)
+4. `D:\Projects\trading-system\docs\constitution\05_architecture.md` بخش Phase 1 / Binance Integration را بخوان
+
+سپس به من گزارش بده:
+- چه فهمیدی از constitution v2.13 (به‌خصوص قانون #۶۷ Cross-shell mandatory و M87)
+- چه طراحی پیشنهادی برای `binance_client.py` داری
+- چه سؤالی داری قبل از شروع
+
+═══════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════
+## ✅ DONE — کارهای انجام‌شده تا الان (چت ۱۱.۰ trilogy)
+═══════════════════════════════════════════════════════════════
+
+### Subgoal ۱۱.۰.الف — Modular Split (8 commits)
+- ✅ Constitution split از v2.11 monolithic (۲۲۰KB) به v2.12 Modular (7 ماژول < ۵۰KB هرکدام)
+- ✅ Atomic update v2.12: قانون #۶۶ (Push mandatory) + درس‌های M71-M86 + Bug #54
+- ✅ Archive سند قدیمی به `docs/constitution/archive/v2_11_legacy.md`
+- ✅ Redirect stub در `docs/PROJECT_CONSTITUTION.md`
+
+### Subgoal ۱۱.۰.ب — Layer 1 Pre-commit Audit
+- ✅ `scripts/63_pre_commit_audit.py` (~۲۲KB) — ۷ check function
+- ✅ `scripts/63b_test_pre_commit_audit.py` (~۱۲KB) — ۷ test function
+- ✅ Integration به `.pre-commit-config.yaml`
+- ✅ Audit: 7/7 PASS — Test: 7/7 PASS
+
+### Subgoal ۱۱.۰.ج — Atomic v2.13 + Merge
+- ✅ قانون #۶۷ (Cross-shell EXECUTE blocks mandatory)
+- ✅ درس M87 (Active-Writing Self-Binding Failure) — extension of M62
+- ✅ راه‌حل سه‌لایه: Layer 1 (positive constraint) + Layer 2 (visible verification) + Layer 3 (audit آینده)
+- ✅ Z2.20 RESOLVED v2.13
+- ✅ CHAT_LOG.md update (v1.7) با بخش‌های 11.0.ب + 11.0.ج
+- ✅ Merge to main (commit `65d0159`)
+- ✅ Tag `v0.6.0` push شد
+- ✅ SESSION_STATUS final state
+
+### Git History (12 commits merged به main)
+- 5285fb6  Skeleton (commit 1)
+- 1eb1196..22c8b6c  6 ماژول migration (commits 2-7)
+- ac1266b  Atomic v2.12 + archive (commit 8)
+- 1f55ace  docs cleanup (commit 9)
+- bd51a07  Layer 1 audit (commit 10)
+- 04a674a  Atomic v2.13 Cross-shell mandatory (commit 11)
+- 7e9a2b9  CHAT_LOG update (commit 12)
+- 65d0159  ⭐ merge: chat 11.0 trilogy
+
+═══════════════════════════════════════════════════════════════
+## 📊 آمار پروژه (پایان چت ۱۱.۰.ج)
+═══════════════════════════════════════════════════════════════
+
+- **نسخه پروژه:** v0.6.0
+- **Constitution:** v2.13 (Modular)
+- **قوانین Locked:** ۶۷ (#۱-۶۷ با ۲ Reserved: #۵۲, #۵۳)
+- **درس‌نامه:** M1-M87 (با ۲۸ Reserved)
+- **Bug ها:** ۵۴ ثبت‌شده + ۱۶ در constitution
+- **Decisions:** Max ID ۶۶، ۶۱ Recorded
+- **اسکریپت‌ها:** ~۶۶ (تا چت ۱۰: ~۶۴ + ۲ در چت ۱۱.۰.ب)
+- **Audit + Test:** 7/7 + 7/7 PASS
+- **Branch:** `main` فعلاً (پس از merge)
+- **Tag:** `v0.6.0` (الان فعال)
+
+═══════════════════════════════════════════════════════════════
+## 📋 TODO — کارهای چت بعد (فاز ۱ part ۲)
+═══════════════════════════════════════════════════════════════
+
+### هدف اصلی: `binance_client.py` (REST wrapper)
+
+این اولین component واقعی فاز ۱ است. مسئولیت‌ها:
+
+1. **REST API wrapper** برای Binance Spot
+   - Public endpoints: klines، ticker، orderbook
+   - Authenticated endpoints: account info، open orders، place/cancel order
+   - Rate limiting (Binance: 1200 req/min vanilla، WS برای real-time بهتر)
+   - Retry logic + exponential backoff
+   - Error handling: HTTP errors، Binance-specific error codes
+
+2. **Integration با CCXTDataSource موجود**
+   - `backend/datasource/ccxt_source.py` از چت ۱۰ موجود است
+   - `binance_client.py` می‌تواند به‌عنوان BinanceDataSource خاص‌تر باشد
+   - یا standalone برای موارد خارج از CCXT abstraction (مثلاً WS که CCXT خوب پشتیبانی نمی‌کند)
+
+3. **Tests**
+   - `backend/tests/test_binance_client.py` — pytest
+   - Mock Binance API responses
+   - بخش‌های authenticated با fixtures
+
+4. **Documentation**
+   - Docstrings (Sphinx style)
+   - مثال‌های استفاده در docs/
+
+### Sub-tasks پیشنهادی
+
+| Sub | شرح | اولویت |
+|---|---|---|
+| ۱ | بررسی `05_architecture.md` بخش Binance + CCXT (طراحی موجود) | 🎯 first |
+| ۲ | تصمیم: standalone یا extension از CCXTDataSource | 🎯 |
+| ۳ | تعریف interface (abstract methods, type hints) | 🎯 |
+| ۴ | پیاده‌سازی REST endpoints (public اول، auth بعد) | 🎯 |
+| ۵ | Rate limiting + retry layer | 💡 |
+| ۶ | تست‌نامه‌نویسی | 🎯 |
+| ۷ | Integration test با Binance testnet | 💡 |
+
+═══════════════════════════════════════════════════════════════
+## ⚠️ CHECK — نکات حیاتی قبل از شروع
+═══════════════════════════════════════════════════════════════
+
+### قانون #۶۷ Cross-shell mandatory (v2.13 — جدید)
+- هر EXECUTE block باید cross-shell باشد
+- ممنوع: `Copy-Item`, `Get-ChildItem`, `Test-Path`, `New-Item`, `Remove-Item`, `Move-Item`, `Out-File`
+- مجاز cross-shell: `copy`, `dir`, `mkdir`, `del`, `move`, `if exist`
+- استثنا فقط با label صریح `[SHELL-SPECIFIC: PowerShell]` در header
+
+### درس M87 (Active-Writing Self-Binding Failure)
+- نوشتن قانون ≠ ساختن habit در همان چت
+- Layer 2: قبل از هر EXECUTE block، یک خط verification visible بنویسد:
+  ```
+  Shell context: user prompt `<exact prompt>` → CMD/PowerShell detected → cross-shell mode
+  ```
+
+### کاربر و محیط
+- **نام کاربر:** ali (alibijanie@gmail.com)
+- **زبان:** فارسی (Persian)
+- **سطح:** برنامه‌نویس نیست — توضیحات کاربردی، نه فنی محض
+- **OS:** Windows 11
+- **Shell:** CMD (`(venv) D:\>` prompt — توجه: PS prompt `(venv) PS D:\>`)
+- **Python:** ۳.۱۲+ در `venv` فعال
+- **Working dir:** `D:\Projects\trading-system`
+- **MCP available:** Filesystem MCP فعال (در همین چت)
+
+### درس‌های مهم اخیر
+- **M82:** بعد از هر write_file/edit_file حتماً read-back با head/tail
+- **M83:** Retry first, restructure last — edit_file failures اغلب با re-read قابل حل
+- **M84:** Multi-line `-m` با چند `-m` flag (cross-shell)، نه `\n`
+- **M85+M87:** Terminal awareness + Cross-shell positive constraint
+- **M86:** commit و push همیشه در دو EXECUTE block جدا
+
+═══════════════════════════════════════════════════════════════
+## 💡 NOTE — جزئیات اضافی
+═══════════════════════════════════════════════════════════════
+
+### Branch strategy
+- `main` الان at `65d0159` (merge commit)
+- `infra/governance-overhaul` همچنان وجود دارد (12 commits merged)
+- می‌توان بعداً delete کرد یا برای history نگه داشت
+- چت بعد می‌تواند branch جدید `feature/binance-client` بسازد یا مستقیم روی main کار کند (پیشنهاد: branch)
+
+### Pre-commit hooks فعلی
+- trim trailing whitespace ✅
+- fix end of files ✅
+- check yaml ✅
+- check json ✅
+- check for added large files ✅
+- check for merge conflicts ✅
+- black ✅
+- isort ✅
+- Anti-Patterns A1-A10 check ✅
+- Layer 1 — Documentation Consistency Audit ✅ (جدید در چت ۱۱.۰.ب)
+
+### TASK های موکول‌شده (نه برای فاز ۱)
+- ⏳ Finalize chat script (G) — `scripts/64_finalize_chat.py` (~۳۰۰ خط) — chat اختصاصی
+- ⏳ Layer 2 (pre-push hook) — git state checks
+- ⏳ Layer 3 audit extension — اسکن chat history برای PowerShell cmdlets
+
+### اگر مشکل audit رخ داد
+- اولین run بعد از تغییر — black ممکن است فایل را reformat کند (M15)
+- subprocess + Persian → cp1252 crash → `encoding="utf-8"` + `errors="replace"` لازم (M67)
+
+═══════════════════════════════════════════════════════════════
+## 🔗 فایل‌های مرجع (must read قبل از شروع)
+═══════════════════════════════════════════════════════════════
+
+| اولویت | فایل | شرح |
+|---|---|---|
+| 🎯 ۱ | `docs/constitution/main.md` | Index — v2.13 — Quick start |
+| 🎯 ۲ | `docs/SESSION_STATUS.md` | وضعیت دقیق پایان چت ۱۱.۰.ج |
+| 🎯 ۳ | همین فایل (handoff) | کل context چت بعد |
+| 🎯 ۴ | `docs/constitution/05_architecture.md` | Phase 1 + Binance details |
+| 💡 ۵ | `docs/constitution/01_rules.md` (قانون #۶۷) | Cross-shell mandatory |
+| 💡 ۶ | `docs/constitution/02_lessons.md` (M87) | Active-Writing Self-Binding |
+| 💡 ۷ | `backend/datasource/ccxt_source.py` | CCXT integration موجود از چت ۱۰ |
+| 💡 ۸ | `docs/CHAT_LOG.md` (v1.7) | تاریخچه کامل |
+
+═══════════════════════════════════════════════════════════════
+## 🚀 پیشنهاد اولین EXECUTE block چت بعد
+═══════════════════════════════════════════════════════════════
+
+```
+git status
+git log --oneline -5
+git tag -l
+python scripts\63_pre_commit_audit.py
+```
+
+این چهار دستور:
+- وضعیت کاری clean را تأیید می‌کند
+- آخرین commits را نشان می‌دهد (merge `65d0159` در HEAD)
+- tag `v0.6.0` را تأیید می‌کند
+- audit 7/7 PASS را تأیید می‌کند
+
+═══════════════════════════════════════════════════════════════
+## 📌 پایان handoff
+═══════════════════════════════════════════════════════════════
+
+**ساخته‌شده در:** چت `TRADING-infra-governance-finalize-and-merge`
+**در:** 2026-05-21
+**توسط:** Claude Opus 4.7 + Filesystem MCP
+
+**موفق باشید! 🚀**

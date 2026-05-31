@@ -1,0 +1,42 @@
+feat(constitution): S3.3 v2.14 module headers + audit version sync + Z3.19 fix
+
+Atomic v2.13 to v2.14 version label sync across constitution modular files
+plus pre-commit audit script and hook config. Resolves Z3.19 ordering
+dependency by extending ACCEPTABLE_VERSIONS atomically with module header
+updates.
+
+Scope (M98 closure):
+- main.md: H1, version frontmatter, ADD tarikh v2.14 line, ADD chat-masul
+  v2.14 line, stats heading update (remove stale frontmatter note),
+  M-series count refresh (~82 to 70 precise), version history NEW row
+- 6 module headers v2.12 to v2.14: 01_rules, 02_lessons, 03_bugs,
+  04_principles, 05_architecture, 06_meta
+- 02_lessons.md status section M-series count refresh (~82 to 70)
+- 06_meta.md section 6.4 Custom Instructions: nuskhe v2.12 to v2.14 (2 refs)
+- scripts/63_pre_commit_audit.py: CURRENT_VERSION v2.14, ACCEPTABLE_VERSIONS
+  [v2.13, v2.14] transitional pinning per M102, RESERVED_LESSON_IDS
+  extended with M89-M92, docstring + argparse + print heading labels synced,
+  constants comment refreshed
+- .pre-commit-config.yaml: Layer 1 hook name v2.12 to v2.14 (Z3.12
+  resolution)
+
+Out of scope (defer to S3.4 atomic stage-end):
+- State-of-record refresh (SESSION_STATUS, CHAT_LOG, PENDING, REVIEW_LOG)
+- Manifest D2 re-run
+- Review #002 Status transition Approved to Implemented
+- M101 backfill of part07 chat-end hash 05d7388
+- K-section part08 PENDING entries (K8, Discoveries part08, descriptive
+  prose Discovery #9)
+- PHASE1_PART09 handoff file
+
+Total: 9 files, 22 edits.
+
+Audit verification: Layer 1 expected 7/7 PASS post-update.
+ACCEPTABLE_VERSIONS extension is the unlocking factor for atomic header
+label sync (Z3.19 ordering dependency resolved atomically per M102
+transitional safety pattern).
+
+Refs: Rule #71 (VERSION SSoT), Rule #73 (Triple-Rule Atomic), M71
+(Documentation Drift), M88 (Hidden Regeneration Hazard), M93 (Triple-Rule),
+M98 (Scope Closure), M102 (Rule-Implementation Decoupling), Z3.12
+(RESOLVED), Z3.19 (RESOLVED), Review #002 (in progress to Implemented).

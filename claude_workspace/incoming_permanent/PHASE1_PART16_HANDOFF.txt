@@ -1,0 +1,83 @@
+# HANDOFF — ادامهٔ part15 (part14-15 atomic) → part16
+
+> فایل permanent (Rule #۶۲). چت part16 باید آن را در boot بخواند.
+> ساخته‌شده: chat-end part15 (2026-05-30). Commit مرجع part14-15: <atomic part14-15 hash — در part16 boot از git backfill شود (M101)>.
+> ⭐ منبع تجمعی: `claude_workspace/PHASE_LEDGER.md` — اول آن را بخوان.
+> 🏷️ NEXT CHAT NAME (MANDATORY — HM-3): `TRADING-phase1-part16-phase3-codify-v216-and-resume`
+
+---
+
+## ⭐ اصل حاکم (اول بخوان)
+جامعیت > یک‌چت. ناقص‌خواندن ممنوع (Rule #۸۰). budget کم آمد → escape + state امن، نه ادامهٔ ناقص.
+
+## 0) Context + boot اجباری
+- trading-system، Windows، root `D:\Projects\trading-system`، Filesystem MCP. Branch `infra/v2.14-source-of-truth`. کاربر ali. فارسی + انگلیسی فنی.
+- boot: `claude_workspace\CHAT_BOOT_TRIGGER_TEMPLATE.md` را follow کن. هیچ task قبل از STEP 2/3.
+- اول `PHASE_LEDGER.md` را بخوان (part01→part14-15).
+- مکانیزم‌های هر turn: Self-Check بالا · Honesty Audit (#۸۳) پایین · Scope Contract (#۷۸) · تأیید قبل از write (#۵۱) · commit `-F` ASCII (M99) · read-back (M82) · تک‌خوانی فایل غول (HM-9/M66) · check_12 دوحلقه مکانیکی.
+
+## 1) M101 backfill اول part16 (سه‌نقطه‌ای)
+hash chat-end part14-15 (از `git -C D:\Projects\trading-system rev-parse --short HEAD` پس از push part15) → سه جای placeholder:
+  1. `PHASE_LEDGER.md` ردیف `part14-15` ستون آخر: `<backfill در part16 boot>` → hash واقعی.
+  2. `PHASE_LEDGER.md` بخش «HEAD و hashها»: خط `<atomic part14-15>` → hash واقعی.
+  3. (اختیاری) اگر CHAT_LOG بخش boot part16 ساخته شد، parent=این hash ثبت شود.
+
+## 2) 🟠 اولویت اصلی part16 — codify v2.16 (M104 + Rule #۸۶)
+**علت (root-cause گرفته‌شده در part15):** part14 escape-note شمارهٔ handoff را «PART16» hard-code کرد (الگو/نام انسانی، نه اشتقاق مکانیکی)؛ چون part14 escape بود frontier جلو نرفت و مقدار درست مکانیکی PART15 بود → تعارض با check_12 (H==L+1). نقض #۸۴ (APMM) + cross-check نکردن escape↔check_12. (نسخهٔ کامل P-candidate در PENDING بخش part15.)
+
+**زنجیرهٔ کامل codify (همه atomic — Triple-Rule M93/#۷۳ + Review trigger #۶۹):**
+- `02_lessons.md`: افزودن M104 (متن verbatim پایین) + به‌روز count درس ۷۱→۷۲ + §۲.۲ fast-look اگر لازم.
+- `01_rules.md`: افزودن قانون #۸۶ (متن verbatim پایین) به جدول ۱.۹ + بخش شرح کامل.
+- `main.md`: bump v2.15 → v2.16 + آمار (قوانین ۸۵→۸۶، درس ۷۱→۷۲) + version history row.
+- `docs/REVIEW_LOG.md`: Review #۰۰۸ (trigger = constitution change) + فایل `docs/reviews/2026-..-..-escape-aware-sequence-derivation.md`.
+- `docs/DECISIONS_LOG.md`: تصمیم متناظر.
+- `scripts/63_pre_commit_audit.py`: `CURRENT_VERSION` → `v2.16` + `ACCEPTABLE_VERSIONS` extend (transitional، per M102/#۷۱).
+- `.pre-commit-config.yaml`: label نسخه اگر دارد.
+- audit واقعی اجرا (۱۲/۱۲) + tests، سپس commit اتمیک + push.
+
+### متن verbatim M104 (codify در 02_lessons.md)
+### M104 — Mechanical-Claim Verification before Persisting
+Lesson (Normative): هر عدد/شناسهٔ مکانیکی در artifact پایدار (شمارهٔ handoff، hash، ردیف ledger، شمارهٔ قانون/درس/Review، نسخه) باید پیش از نوشتن از منبع زنده (اسکریپت/فایل/git) استخراج شود، نه از حافظه/الگو/استنتاج دنباله‌ای. اگر قابل‌استخراج نیست → فرمول/اشتقاق («بالاترین موجود + ۱») یا placeholder + TODO، نه hard-code.
+Corollary (Escape): پس از escape، شمارنده‌های frontier جلو نمی‌روند؛ هر عدد دنباله‌ای مشکوک است و باید با frontier واقعی + invariant فعال (check_12: H==L+1) cross-check شود.
+Genesis: part14 escape-note off-by-one (PART16 به‌جای مکانیکیِ PART15).
+Cross-refs: نمونهٔ خاص #۸۴ · مکمل #۸۶ · check_12 · M101 · M82.
+
+### متن verbatim #۸۶ (codify در 01_rules.md)
+### #۸۶ — Escape-Aware Sequence Derivation
+Normative: در هر artifact تداوم (escape/handoff/continuity/ledger row) هیچ شمارندهٔ دنباله‌ای literal از حافظه/الگو نوشته نشود؛ باید (الف) از frontier موجود مشتق شود («بالاترین + ۱») و (ب) پیش از قطعی‌شدن با invariant مکانیکی فعال (check_12، H==L+1) سازگار باشد. اگر چت escape شد، صریح ثبت شود frontier جلو نرفته.
+Implementation: قالب escape/handoff به‌جای عدد ثابت بنویسد «handoff بعدی = بالاترین PHASE1_PART{N}_HANDOFF موجود + ۱»؛ قبل از commitِ دارای گیت پیوستگی، audit واقعی اجرا شود؛ تمایز escape (frontier ثابت) ↔ chat-end (frontier +۱) صریح باشد.
+Genesis: part14 escape-note off-by-one.
+Cross-refs: عملیاتی‌کنندهٔ #۸۴ · پشتوانهٔ M104 · check_12 · #۷۹.
+
+## 3) باقیماندهٔ Phase 3 (THEN-IF-BUDGET — در part15 نرسید)
+- deprecate رسمی legacy docs (`سند_جامع_v2_6..v2_11`، PROJECT_GOVERNANCE، CLAUDE_CHECKLIST، PROJECT_CONTEXT، ARCHITECTURE).
+- بازسازی `PROJECT_KNOWLEDGE.md` همگام v2.16 (Rule #۵۵).
+- catch-up README/CHANGELOG/TASK_BACKLOG + workspace Tier protection + DECISIONS_LOG drift backfill.
+- main.md stale: branch `infra/governance-overhaul` + placeholder `Created in commit`.
+- boot-template legacy ref #۲۱: ارجاع به `سند_جامع_v2_11` → اصلاح به modular.
+- PERSIST TASKS A-G معلق part09/10 (verify جذب در part11).
+- backfill resolution REVIEW_LOG #۰۰۱ و #۰۰۳ با hash واقعی (git log).
+- cosmetic: کامنت `# ... exactly 11 items` در test_2 → ۱۲.
+- تصمیمات Settings — موکول، بدون تغییر بدون تأیید.
+
+## 4) Phase 4 (part16+)
+اسکن ۱۰۰٪ ۲۷۸ (الان ۲۸۲) فایل classified با #۷۸ + #۷۹ + #۸۴. حجیم → چند چت.
+
+## 5) شرط escape (دستور کاربر، فعال)
+HM-9 یا overflow → escape، باقی به چت بعد، push نزن، state امن گزارش.
+
+## 6) جملهٔ شروع پیشنهادی part16
+«part16 — boot استاندارد (اول PHASE_LEDGER)، سپس M101 backfill سه‌نقطه‌ای (hash chat-end part14-15 → ردیف ledger + HEAD). بعد اولویت = codify v2.16 (M104 + #۸۶، متن verbatim در این handoff/PENDING) در یک batch اتمیک با Review #۰۰۸ + audit version bump. سپس بقیهٔ Phase 3 (deprecate legacy + PROJECT_KNOWLEDGE + …). اصل: جامعیت > یک‌چت.»
+
+---
+
+## 🔁 قانون تداوم دوحلقه‌ای (canonical — check_12 مکانیکی)
+۱) حلقهٔ ۱ (Ledger): ردیف + ۳ Objective + HEAD + DEADLINE (append-only #۲۴). ۲) حلقهٔ ۲ (Handoff): `PHASE1_PART{N+1}_HANDOFF.txt` با اشتقاق مکانیکی شماره (#۸۶ candidate). ۳) هر دو در یک commit (M82) + push (#۶۶) + paste. check_12: H==L+1.
+
+## 🔢 وضعیت frontier در لحظهٔ ساخت این handoff
+- Ledger L = part15 (ردیف بازه‌ای part14-15).
+- این handoff = PHASE1_PART16 → H = 16 → H==L+1 (16=15+1) ✅ سبز.
+- (مطابق #۸۶ candidate: شماره ۱۶ = بالاترین handoff موجود (۱۴) ... نه — اینجا به‌خاطر بستن part14-15 در یک چت، frontier از ۱۴ مستقیم به ۱۶ رفت چون L به ۱۵ رسید. اشتقاق: H = L_new + 1 = 16.)
+
+---
+پایان HANDOFF part16.

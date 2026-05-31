@@ -1,0 +1,55 @@
+feat(audit): S4 D12 - extend pre-commit audit with checks #8-11 (v2.14)
+
+S4 deliverable D12 - Audit Checks extension per MDRS v2 plan.
+Adds 4 new audit checks to scripts/63_pre_commit_audit.py with full
+companion test extension in scripts/63b_test_pre_commit_audit.py.
+
+Scope (M98 closure):
+- check_8_uncommitted_state_files: M93 Triple-Rule enforcement, Rule #73
+  Detects state-of-record files modified-not-staged when others are
+  staged. Skips routine T3 code commits (state-file edits unrelated).
+- check_9_manifest_self_row: Z3.15 first-run gap mitigation
+  Verifies PROJECT_MANIFEST.md self-row with <self> placeholder.
+- check_10_review_numbering: Z3.16 enforcement
+  Verifies REVIEW_LOG.md IDs sequential, no gaps, no duplicates.
+- check_11_z_id_permanence: Rule #74 + M96 enforcement
+  Scans Locked permanent docs (main, 01_rules, 04_principles,
+  05_architecture) for Z-ID references. Excludes 02_lessons, 03_bugs,
+  06_meta, state-of-record where Z-tracking is legitimate.
+
+Audit script changes:
+- imports: + subprocess (for git status in check_8)
+- new constants: STATE_OF_RECORD_FILES, PROJECT_MANIFEST_MD,
+  REVIEW_LOG_MD, PERMANENT_DOCS_NO_Z_IDS, Z_ID_PATTERN
+- ALL_CHECKS list extended from 7 to 11 entries
+- argparse --check help: 1-7 -> 1-11
+- top docstring M-mappings: + M93, M96, Z3.15, Z3.16
+
+Companion test changes (Rule #22 mandatory):
+- test_2_all_check_functions: 7 -> 11 expected names + ALL_CHECKS len 11
+- test_6_reserved_lesson_ids: fix Z3.25 drift (S3.3 retroactive)
+  + range(89, 93) for M89-M92, len check 28 -> 32
+- new tests: test_8_check_8_runs through test_11_check_11_runs
+- _run_specific_check helper (DRY pattern for check-specific tests)
+- ALL_TESTS list extended from 7 to 11 entries
+
+Out of scope (defer to part10):
+- HM-8 + HM-9 formalization (K9 + K10) in 02_lessons.md
+- K3-K8 remaining items
+- D14 Second Review Report
+- Cosmetic Discoveries #3-#5 + #8 from part08
+
+Resolves:
+- Z3.15: Manifest self-reference first-run gap (check_9)
+- Z3.16: Review numbering integrity (check_10)
+- Z3.17: Z-ID Permanence anti-pattern (check_11 + Rule #74)
+- Z3.25: test_6 drift from S3.3 (M89-M92 sync, RESOLVED in test_6)
+
+Review record:
+- Review #004 (lightweight LOG-only, no separate Draft)
+- Subject: D12 audit checks extension - 4 new checks for v2.14
+- Status: Implemented (this commit)
+- Resolution: this commit hash
+
+Refs: M22, M93, M96, M98, M99, M100, M102, Rule #22, #73, #74, #76,
+      Z3.15, Z3.16, Z3.17, Z3.25 (NEW)

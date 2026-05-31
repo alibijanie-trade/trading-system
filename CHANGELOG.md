@@ -22,7 +22,24 @@
 - Phase 3 باقیمانده (drift backfill) + Phase 4 (اسکن ۱۰۰٪ ۲۸۲ فایل classified).
 - فاز ۱: CCXT + WebSocket data layer.
 
-> 📌 جزئیات granular per-chat در `claude_workspace/PHASE_LEDGER.md` + `docs/CHAT_LOG.md`. entry رسمی **[0.6.0]** (تگ `5730173`) در catch-up بعدی با تاریخ git افزوده می‌شود (موکول part17/B5→PART18 — بدون fabricate از حافظه).
+> 📌 جزئیات granular per-chat در `claude_workspace/PHASE_LEDGER.md` + `docs/CHAT_LOG.md`. entry رسمی **[0.6.0]** در پایین افزوده شد (catch-up part18، تاریخ از git tag).
+
+---
+
+## [0.6.0] — 2026-05-22
+
+> 🏛️ **Governance & MDRS v2 milestone** — tag `5730173` (روی main). این tag یک نقطهٔ milestone برای کار حاکمیتی است؛ جزئیات granular در `claude_workspace/PHASE_LEDGER.md` + `docs/CHAT_LOG.md`.
+
+### ماهیت tag (verify‌شده از git)
+- commit مرجع: `5730173172040cac20119c58e034e963c6bf0b2e` — "fix(docs): complete chat 11.0.ج SESSION_STATUS update + correct next-chat ref".
+- تاریخ tag: 2026-05-22.
+
+### Changed (تا این milestone)
+- Constitution به ساختار **modular** مهاجرت کرد (v2.12) — main + ۶ ماژول.
+- **MDRS v2** (Manifest-Driven Source-of-Truth): چارچوب Tier، REVIEW_PROTOCOL، PROJECT_MANIFEST، audit checks.
+- پایه‌گذاری Helper Infrastructure (HELPER_PROTOCOL.md) + Reviews اولیه.
+
+> ⚠️ توجه: این entry milestone-level است؛ پیشرفت‌های بعدی (v2.13→v2.17، Trust Rules، #۸۶-۸۸) در [Unreleased] تا release بعدی (v0.7.0) تجمیع می‌شوند.
 
 ---
 
@@ -293,5 +310,5 @@ npm run test:coverage  # با گزارش پوشش (HTML در coverage/)
 
 ---
 
-**به‌روز:** 2026-05-17
-**نسخه فعلی:** v0.4.0
+**به‌روز:** 2026-05-30
+**نسخه فعلی:** v0.6.0 (tag `5730173`)؛ governance در جریان به سوی v0.7.0

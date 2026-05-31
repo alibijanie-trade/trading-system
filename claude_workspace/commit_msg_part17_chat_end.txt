@@ -1,0 +1,10 @@
+docs(phase3): part17 - deprecate legacy + PROJECT_KNOWLEDGE rebuild + catch-up + M101 backfill
+
+B4 stale/cosmetic: main.md branch + created-commit (5285fb6) + line177 note; test_2 comment 11->12; boot-template ref -> modular
+B1 deprecate 10 legacy docs (sand-jame v2.6-v2.11 + PROJECT_GOVERNANCE/CLAUDE_CHECKLIST/PROJECT_CONTEXT/ARCHITECTURE) via DEPRECATED banner (Rule #24, no-delete) + Review #009
+B2 rebuild claude_workspace/snapshots/PROJECT_KNOWLEDGE.md synced to Constitution v2.16 (Rule #55)
+B3 catch-up README + CHANGELOG [Unreleased] + TASK_BACKLOG bridge (scoped; [0.6.0] entry + Tier reconcile deferred to part18)
+boot: M101 backfill part16 = 81a3562 (PHASE_LEDGER row + HEAD)
+PENDING: P17-candidate (Elicitation-Tool Recommendation Drop, Rule #61)
+two-loop chat-end: PHASE_LEDGER part17 row + 3-Objective + HEAD; SESSION_STATUS refresh; PHASE1_PART18_HANDOFF (mechanical #86, H==L+1)
+B5 + deferred items -> part18

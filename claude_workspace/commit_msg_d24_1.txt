@@ -1,0 +1,47 @@
+feat(governance): D24 HELPER_PROTOCOL.md T1 governance doc
+
+D24 Helper Infrastructure - main deliverable.
+
+Created:
+  docs/HELPER_PROTOCOL.md  (T1 governance, ~32KB)
+
+Scope (10 sections covering 5 design scopes):
+  1. Purpose and Scope (positive/negative def, authority hierarchy, scope boundary)
+  2. Persistent Context Layer (Layer A Project K, Layer B Custom Instructions,
+     setup procedure, refresh enforcement, CI template)
+  3. Operating Protocol (invocation, info bridge, Bounded Bootstrap pattern,
+     escalation criteria, round 2 entry/exit)
+  4. 8-Layer Review Framework (L1-L8, application modes, output format)
+  5. Cross-Chat Learning Continuity (HM-namespace design, storage, numbering,
+     Z3.24 migration, implementation timing in part07)
+  6. Triggers and Operating Modes (severity-based per Rule #77 candidate)
+  7. Upfront Constraint Checklist Pattern (META self-applied)
+  8. Anti-patterns helper-side
+  9. Cross-references
+  10. Version and Maintenance
+
+Key design decisions:
+  - Single Project trading-system for main + helper chats (architecture)
+  - HM-namespace deliberate separation from M-series
+  - Bounded Bootstrap: max 2 rounds, escalation criteria explicit
+  - L1.1 critical fix applied: Project K list pattern-based (M88 genus prev)
+  - L8.1 high fix applied: refresh enforcement protocol (anti-silent-failure)
+
+Atomic boundary M98 honored: this sub-commit scope = HELPER_PROTOCOL.md only.
+REVIEW_LOG status transition + state-of-record + handoff in chat-end (D24-chat-end).
+
+Subject of Review #003 (Status=Approved, will transition to Implemented at
+chat-end with full commit chain).
+
+Lessons applied:
+  - M82 (verification claim verified - read-back done post-write)
+  - M86 (commit/push separate)
+  - M88 (anti-pattern self-violation prevention - L1.1 fix)
+  - M93 (Triple-Rule atomic boundary)
+  - M95+M97 (ASCII-only commit msg)
+  - M98 (scope closure)
+  - M99 (-F flag)
+  - M100 (Pre-Add Checklist visibility)
+  - M-candidate Late-Catch Cascade (Bounded Bootstrap self-application)
+
+Source chat: TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure

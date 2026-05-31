@@ -1,0 +1,49 @@
+chore(pending): record Z3.21-Z3.24 from part05 boot for v2.14 (S3.0.5)
+
+Helper post-part04 audit and Claude part05 boot reasoning surfaced
+four additional items for v2.14 PENDING during the 6-turn sign-off
+preparation. Recorded now per Rule #60 spirit (PENDING-EOC
+in-the-moment logging extended to Z-drift) and M98 (Review Scope
+Closure: isolate from S3.1 constitution content edits).
+
+Z3.21: Manifest re-run policy at chat-end mid-stage
+  Category: open policy question (not state drift)
+  Severity: medium
+  Source: helper post-part04 audit
+
+Z3.22: Rule #60 text expansion - scope clarification
+  Category: rule text refinement
+  Direction: Z3.22 -> Rule #60 text update in v2.14 (Z-to-Rule, NOT reverse)
+  Severity: low
+  Source: helper + Claude part05 reasoning
+
+Z3.23: Workspace handoff files lifecycle policy
+  Category: open policy question
+  Severity: low
+  Source: helper post-part04 audit (broader pattern from Z3.18)
+
+Z3.24: Namespace categorization gap in PENDING_FOR_NEXT_VERSION.md
+  Category: meta-design / broader namespace issue
+  Severity: high (escalated from medium, Discovery #4)
+  Source: Claude part05 turn 3 self-reasoning
+  Note: this item itself exemplifies the mixed namespace it critiques.
+
+Discovery #8 noted: aggregate count line in existing PENDING has
+arithmetic discrepancy (17+3+9+2+1+1=33, listed as 30, plus 10 Rule
+candidates not counted). Reconciliation deferred to S3.4 PENDING
+cleanup, not addressed here per M98 scope closure.
+
+Lessons applied:
+- Rule #60 (PENDING-EOC in-the-moment) extended to Z-drift
+- M98 (Review Scope Closure) isolation rationale
+- M75 (Within-File Consistency) split into 4 separate entries
+- Rule #77 candidate (Continuous Discovery Logging) eat-your-own-dogfood
+- M95 + M97 (ASCII-only commit message)
+- M99 (-F flag standard)
+- M86 (commit/push in separate EXECUTE blocks)
+
+Branch: infra/v2.14-source-of-truth
+Sub-commit: S3.0.5 (between S3.0 and S3.1)
+Parent: 8a91138 (chat-end of part04)
+Scope: docs/PENDING_FOR_NEXT_VERSION.md only (Triple-Rule prep, full
+state-of-record refresh in S3.4 atomic stage-end)

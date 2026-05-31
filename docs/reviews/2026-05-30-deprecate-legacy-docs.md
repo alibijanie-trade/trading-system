@@ -3,7 +3,7 @@
 > **تاریخ:** 2026-05-30
 > **Trigger:** §2.2 + §2.4 (حذف از scope / redirect-stub + moving files between tiers)
 > **Related artifacts:** ۱۰ سند legacy (سند_جامع_v2_6..v2_11، PROJECT_GOVERNANCE، CLAUDE_CHECKLIST، PROJECT_CONTEXT، ARCHITECTURE) · Constitution v2.16 modular · part17
-> **Status:** Approved (روی دیسک implemented؛ commit در part17 chat-end)
+> **Status:** Implemented (commit part17 chat-end = `55f4f66`، M101 backfill)
 
 ## ۱. Context — چرا الان؟
 
@@ -39,4 +39,4 @@ Constitution از v2.12 به ساختار modular مهاجرت کرد (`docs/con
 
 - **Claude:** این Review + اعمال ۱۰ banner (هر کدام با read-back diff).
 - **User:** تأیید گزینهٔ A («پیشنهاد خودت» + تأیید B1 sequence در Pre-Task Checkpoint).
-- **Commit boundary:** `<pending part17 chat-end>` (backfill per M101 در boot چت بعد یا chat-end).
+- **Commit boundary:** `55f4f66` (part17 chat-end؛ M101 backfill در boot part18، مشتق از git).

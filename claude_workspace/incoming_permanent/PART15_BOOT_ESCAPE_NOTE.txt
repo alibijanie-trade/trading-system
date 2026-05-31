@@ -1,0 +1,82 @@
+# PART15 BOOT ESCAPE NOTE — full-refresh نیمه‌تمام part14 (ادامه در part15)
+
+🚨 P15-BOOT-PRIORITY-1: این note قبل از regular handoff خوانده شود.
+
+تاریخ: 2026-05-30
+چت مبدأ: TRADING-phase1-part14-phase3-fullrefresh
+Branch: infra/v2.14-source-of-truth
+علت: escape به‌خاطر budget (مصوب کاربر) — جلوگیری از شتاب در PENDING reconcile حساس (۷۳KB). اصل: جامعیت > یک‌چت.
+Parent / commit امن: 3eae91e (chat-end part13، push شده). هیچ commit/push جدیدی در part14 زده نشد.
+
+== هشدار حفظ کار (مهم‌ترین) ==
+۴ فایل state-of-record در part14 روی دیسک تغییر کرده ولی COMMIT نشده‌اند. نباید گم شوند:
+- هرگز `git checkout -- <file>` / `git reset --hard` / `git stash` روی این ۴ فایل نزن تا commit اتمیک part15 انجام شود.
+- part15 در boot اول با `git status -sb` و `git diff --stat` تأیید کند این ۴ فایل modified هستند و HEAD هنوز 3eae91e است.
+
+== کاری که در part14 انجام و روی دیسک read-back شد (uncommitted) ==
+۱) M101 backfill چهارنقطه‌ای (hash chat-end part13 = 3eae91e):
+   - claude_workspace/PHASE_LEDGER.md: ردیف part13 (placeholder → 3eae91e) + بخش HEAD (همان).
+   - docs/REVIEW_LOG.md: resolution #۰۰۶ و #۰۰۷ → `3eae91e` (part13 chat-end).
+   - docs/CHAT_LOG.md: بخش «boot چت part14» با parent=3eae91e.
+۲) full-refresh (بخش انجام‌شده):
+   - docs/CHAT_LOG.md: ۵ بخش کامل part09/10/11/12/13 افزوده شد (بین part08 و marker boot part13) + footer → v2.6 + marker part14 به‌روز + slug کامل part11/part12.
+   - docs/SESSION_STATUS.md: بازنویسی کامل از part08-era → part13/14-current (v2.15، ۸۵ قانون، M1-M103، ۷ Review، Phase 2 CLOSED، سه Objective، آمار، محیط).
+   همه با read-back (M82) تأیید شد. part15 این‌ها را دوباره ننویسد — فقط verify کند روی دیسک هستند.
+
+== state گیت در لحظهٔ escape (با git تأیید شد) ==
+- HEAD = 3eae91e، branch با origin sync (نه ahead).
+- Modified (۴): claude_workspace/PHASE_LEDGER.md، docs/CHAT_LOG.md، docs/REVIEW_LOG.md، docs/SESSION_STATUS.md.
+- diff --stat تقریبی: PHASE_LEDGER ±۴، CHAT_LOG +۱۱۳ (و +۲ ویرایش slug)، REVIEW_LOG ±۴، SESSION_STATUS ۱۶۱ ins/۲۱۲ del.
+- Untracked (دست‌نخورده، معلق per Z3.18/Z3.23): commit_msg_*.txt (چندتا)، HELPER_SANDBOX_HANDOFF_PART09*.txt، question-answer.txt، incoming_permanent/PHASE1_PART02_BINANCE_CLIENT_HANDOFF.txt، و همین escape note (PART15_BOOT_ESCAPE_NOTE.txt).
+
+== باقیمانده برای part15 (همه در یک commit اتمیک — Triple-Rule M93/#۷۳) ==
+الف) PENDING_FOR_NEXT_VERSION.md reconcile (سنگین، در part14 نشد):
+   - افزودن بخش K/P-candidate + Discoveries برای part09/10/11/12/13 (الان فقط تا part08):
+     * part09: ۸ P10-candidate + ۱۲ Discovery + PERSIST TASKS A-G (منبع: PART09_CHAT_END_DEFERRED_NOTE.txt).
+     * part10: M103 genesis + HM-9 #۹/#۱۰ + شکست handoff (منبع: PART10_BOOT_ESCAPE_NOTE.txt).
+     * part11/12/13: per ردیف‌های PHASE_LEDGER + handoffها (PART12/PART13/PART14_HANDOFF).
+   - مارک RESOLVED برای Z3.15 / Z3.16 / Z3.17 / Z3.25 (S4 part09، منبع deferred note) — الان بدون marker.
+   - آشتی count مجموع (خط «۳۰ آیتم» stale + Discovery #۸ part05 با اختلاف حساب 17+3+9+2+1+1=33).
+   - علامت Trust Rules #۷۸-۸۵ از candidate → Locked در v2.15 (اگر جایی candidate مانده).
+ب) PROJECT_MANIFEST.md — D2 re-run (اجرای کاربر):
+   tab «2 scripts»: python scripts/64_generate_manifest.py  →  خروجی stat به part15 paste شود.
+   (manifest فعلی stale است: part08، 2026-05-24. T1=24/T2=22/T3=216/T4.1=12/T4.2=4/Total=278.)
+پ) commit اتمیک + push:
+   فایل‌های batch: PHASE_LEDGER + REVIEW_LOG + CHAT_LOG + SESSION_STATUS + PENDING + PROJECT_MANIFEST.
+   اول فایل commit message بساز (ASCII-only، M95/M97/M99): claude_workspace/commit_msg_part14_fullrefresh.txt
+   git add <این ۶ فایل>
+   git commit -F claude_workspace/commit_msg_part14_fullrefresh.txt
+   git push origin infra/v2.14-source-of-truth
+   پیام پیشنهادی (ASCII): "docs(state): part14 full-refresh - M101 backfill part13 + CHAT_LOG part09-13 + SESSION_STATUS rewrite + PENDING reconcile + manifest D2 (Triple-Rule M93)"
+   توجه: این commit در part15 انجام می‌شود ولی کار part14 است (full-refresh). hash آن = «chat-end part14» برای M101.
+ت) chat-end دوحلقه (پس از commit):
+   - حلقهٔ ۱ (Ledger): ردیف part14 (full-refresh) با hash commit اتمیک + به‌روز بخش HEAD (append-only #۲۴).
+   - حلقهٔ ۲ (Handoff): PHASE1_PART16_HANDOFF.txt (شمارهٔ چت بعدِ part15).
+   - check_12: invariant فعلی mid-escape = Ledger L=part13، Handoff H=part14 (سبز، chicken-and-egg-safe). پس از commit، ردیف part14 به ledger + handoff بعدی ساخته شود.
+
+== بقیهٔ Phase 3 (پس از بستن full-refresh — از PART14_HANDOFF، گم نشود) ==
+deprecate legacy docs (سند جامع v2.6-v2.11، PROJECT_GOVERNANCE، CLAUDE_CHECKLIST، PROJECT_CONTEXT، ARCHITECTURE) ·
+بازسازی PROJECT_KNOWLEDGE.md (#۵۵) ·
+catch-up README/CHANGELOG/TASK_BACKLOG ·
+workspace Tier protection ·
+DECISIONS_LOG drift backfill (decisions جامانده part04-10) ·
+main.md stale (branch governance-overhaul + placeholder «Created in commit») ·
+boot-template ref #۲۱ → modular ·
+PERSIST TASKS A-G verify (جذب در part11؟) ·
+backfill resolution REVIEW_LOG #۰۰۱ و #۰۰۳ با hash واقعی (git log) ·
+cosmetic: کامنت «exactly 11 items» در test_2 → ۱۲ ·
+تصمیمات Settings (Brightdata/Chrome/training/Skills/tokens) — همه موکول، بدون تغییر بدون تأیید.
+
+== Phase 4 ==
+اسکن ۱۰۰٪ ۲۷۸ فایل classified (T1-5) با Scope Contract (#۷۸) + N/M (#۷۹) + بدون pattern-matching (#۸۴). حجیم → چند چت.
+
+== boot discipline برای part15 ==
+ترتیب: این note اول → CHAT_BOOT_TRIGGER_TEMPLATE.md → PHASE_LEDGER.md (اول) → regular boot (STEP 1 mandatory reads).
+اول کار: git status -sb + git diff --stat (تأیید ۴ فایل modified + HEAD 3eae91e). هرگز reset/checkout/stash روی این ۴ فایل.
+منابع: PHASE1_PART14_HANDOFF.txt + این note + PHASE_LEDGER.md + PART09_CHAT_END_DEFERRED_NOTE.txt + PART10_BOOT_ESCAPE_NOTE.txt.
+NEXT CHAT NAME (HM-3): TRADING-phase1-part15-phase3-fullrefresh-resume
+
+== اصل حاکم ==
+جامعیت > یک‌چت. ناقص‌خوانی ممنوع (#۸۰). budget کم آمد → escape، نه ادامهٔ ناقص. شتاب نزن، مخصوصاً روی PENDING حساس.
+
+پایان PART15 BOOT ESCAPE NOTE.

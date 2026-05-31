@@ -1,0 +1,33 @@
+docs(phase3): part18 - codify v2.17 (#87/#88 + M105) + B5 drift-backfill 7/7
+
+Codify two Locked rules into Constitution v2.17 (atomic batch) plus
+lesson M105, and close Phase 3 B5 drift-backfill (7/7).
+
+Rules (v2.17):
+- #87 Settings/Instructions/Project-Asset Sync Reminder
+      (+ Materiality Threshold + Full-Text Delivery clause)
+- #88 AI-Optimized Prompt/Artifact Authoring (8 criteria)
+
+Lesson:
+- M105 EXECUTE Command Paste-Integrity (&-chain) - part18 origin
+      coupled in lessons table/index/detail/footer + main x2 + SESSION_STATUS
+
+B5 drift-backfill (7/7 closed):
+- B5-1 Created-in-commit placeholders non-literal (check_5-safe)
+- B5-2 REVIEW_LOG resolution: #001=35a634f, #003=3bf66bf, #008=8c9c6a7 (git-verified)
+- B5-3 DECISIONS drift = 0 (from git grep)
+- B5-4 PERSIST TASKS A-G: main-side absorbed (verified); helper-side DEFER
+- B5-5 workspace Tier: snapshots tracked in MANIFEST (verify, no change)
+- B5-6 CHANGELOG [0.6.0] = 2026-05-22 (tag 5730173, non-fabricated)
+- B5-7 TASK_BACKLOG: SUPERSEDED declaration (Phase 0 frozen)
+
+State + continuity (two-loop, Rule #62 + M101 + check_12):
+- Review #010 + #011 (LOG rows + 2 review files); Decision #69 + #70
+- main bump v2.16 -> v2.17; audit CURRENT_VERSION -> v2.17; .pre-commit label
+- PHASE_LEDGER row part18 (M101 backfill part17 = 55f4f66)
+- PHASE1_PART19_HANDOFF.txt created (mechanical number, check_12 H==L+1)
+- manual_boxes/ source files (SETTINGS + PROJECT_INSTRUCTIONS verbatim)
+
+Audit: 12/12 checks + 14/14 companion tests PASS (with check_2 M75 self-catch).
+
+Refs: Rule #87, Rule #88, M105, Review #010, Review #011, Decision #69, Decision #70

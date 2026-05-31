@@ -1,0 +1,65 @@
+docs(chat-end): revert S3.1 Chunk 1a + state updates + D24 PENDING + handoff (part05)
+
+Strategic decision: defer S3.1 to part06, build D24 helper infrastructure first.
+
+Late-Catch Cascade Pattern recognized during S3.1 Chunk 1 (Rules #68 + #69)
+drafting attempt: 3 iterations with 7+ helper catches per chunk, including
+critical M88 self-violation (Rule #68 violated the very anti-pattern it
+codified). Pattern signals process upstream needs change, not drafting.
+User decision (turn 11): stop S3.1, deliver D24 (Helper Infrastructure)
+first, S3.1 redo in part06 with D24 benefit.
+
+Scope:
+
+1. REVERT working tree:
+   - docs/constitution/01_rules.md back to S3.0.5 state (4e851b0)
+   - Rules #68 + #69 designs preserved in chat history (turn 9-10),
+     will be re-applied in part06 post-D24 infrastructure
+
+2. STATE UPDATES:
+   - docs/SESSION_STATUS.md: full refactor to post-S3.0.5 chat-end
+     state with D24 next pointer and part06 deferred sub-pointer
+   - docs/CHAT_LOG.md: append part05 section with full narrative
+     (Boot, S3.0.5, helper iterations, S3.1 attempt, Late-Catch
+     Cascade recognition, strategic deferral)
+   - M101 backfill applied: chat-end commit of part04
+     = 8a91138bc9a47a1a0b37a4bcf7ba7a23c74861e2 explicitly
+     recorded in CHAT_LOG part05 section (self-application of
+     M101 candidate)
+
+3. PENDING ADDITIONS (docs/PENDING_FOR_NEXT_VERSION.md
+   strategic section at end):
+   - D24 - Helper Infrastructure deliverable (parallel to D8-D23)
+     with 5-scope outline (persistent context, HELPER_PROTOCOL.md,
+     7-layer review, learning continuity, triggers/modes)
+   - M-candidate: Late-Catch Cascade Pattern (M-ID assignment
+     deferred to part06, consistent with Reserved IDs philosophy
+     and to avoid collision with Discovery #9 helper-side)
+   - 13 Discoveries consolidated (#1-#13 of part05)
+   - Stale handoff file noted (PHASE1_PART05_..._HANDOFF.txt
+     cleanup deferred to S8 per Z3.18/Z3.23 policy)
+
+4. HANDOFF FILE:
+   - claude_workspace/incoming_permanent/PHASE1_D24_HELPER_INFRA_HANDOFF.txt
+     for chat TRADING-mdrs-v2-D24-helper-infrastructure
+   - Includes boot protocol, 5-scope detail, 6 gotchas from part05
+
+Lessons applied:
+- M93 (Triple-Rule atomic boundary - chat-end inherently multi-scope)
+- M86 (commit/push separate)
+- M99 (-F flag for long commit messages)
+- M95 + M97 (ASCII-only commit message, no metachars)
+- M100 (Pre-Add Checklist visibility)
+- M101 candidate (Post-Handoff State Drift - self-applied: part04
+  chat-end commit hash backfilled in CHAT_LOG)
+- Rule #51 (explicit user approval - workflow corrected mid-chat)
+
+Branch: infra/v2.14-source-of-truth
+Previous commit: 4e851b0 (S3.0.5 - Z3.21-Z3.24 PENDING)
+Grandparent: 8a91138 (part04 chat-end - M101 backfill source)
+Next chat: TRADING-mdrs-v2-D24-helper-infrastructure
+After D24: TRADING-phase1-part06-mdrs-v2-s31-redo-with-helper-infra
+
+Stale workspace file (NOT removed, per Rule #24 No-Deletion + Z3.18/Z3.23
+policy):
+  claude_workspace/incoming_permanent/PHASE1_PART05_MDRS_V2_S31_REDO_HANDOFF.txt

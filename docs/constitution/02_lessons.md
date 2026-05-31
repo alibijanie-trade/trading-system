@@ -4,7 +4,7 @@
 >
 > **محتوا:** درس‌نامه اشتباهات Claude (M1-M63 از v2.11) با علت ریشه‌ای، راه‌حل، cross-refs.
 > **منبع:** سند جامع v2.11 → سند ۱۸ (درس‌نامه اشتباهات Claude — AI Mistakes Log)
-> **Created in commit:** `<git log -1 --format=%h پس از commit 3 پر شود>`
+> **Created in commit:** `<git log --diff-filter=A --oneline -- docs/constitution/02_lessons.md>` (migrate سند ۱۸ → 02_lessons، commit 3/8؛ هش از git مشتق شود — نه hardcode در ماژول، per #۸۶/check_5)
 >
 > **توجه:** درس‌های M64-M86 و موارد جدید در **commit 8** (Atomic Update v2.12) افزوده می‌شوند. این فایل در حال حاضر فقط migrate از v2.11 است (single-purpose commit).
 
@@ -54,7 +54,7 @@ Claude گاهی کد، دستور، یا پیشنهادی می‌دهد که د�
 
 ---
 
-## ۲.۳ جدول کامل اشتباهات (M1-M63 + M88-M104 — M64-M87 در §۲.۷ خلاصه)
+## ۲.۳ جدول کامل اشتباهات (M1-M63 + M88-M105 — M64-M87 در §۲.۷ خلاصه)
 
 | # | اشتباه | علت ریشه‌ای | راه‌حل آینده | چت |
 |---|---|---|---|---|
@@ -117,6 +117,7 @@ Claude گاهی کد، دستور، یا پیشنهادی می‌دهد که د�
 | **M102** ⭐ | Rule-Implementation Decoupling (Interface-Implementation separation) — قانون normative text با implementation detail mixed → drift در implementation = rule violation | فرض «detail در rule body بهتر است» | Rules: Normative paragraph + جدا Implementation Notes section. detail در script/config/companion doc. normative stays stable، implementation evolves | S3.1 design phase |
 | **M103** ⭐⭐⭐ | Audit Over-Promise Pattern — ادعای «deep-scan تقریباً کامل» با ~۳۵٪ coverage واقعی + self-imposed scope narrowing + optimistic reporting (screenshot coverage = project coverage) | اعتماد به pattern-matching + خوش‌بینی در گزارش به‌جای اعداد دقیق | ۸ Trust Rule #۷۸-۸۵ (scope contract + quantitative honesty + no self-narrowing + refuse/defer + pre-task checkpoint + honesty audit + anti-pattern-matching + self-activation lock) | part10 |
 | **M104** ⭐⭐⭐ | Mechanical-Claim Verification before Persisting — عدد/شناسهٔ مکانیکی (handoff/hash/ledger/قانون/Review/نسخه) باید از منبع زنده استخراج شود نه حافظه/الگو/استنتاج دنباله‌ای | اعتماد به استنتاج دنباله‌ای به‌جای استخراج از frontier واقعی + بدون cross-check با invariant فعال | قانون #۸۶ + corollary escape (frontier پس از escape جلو نمی‌رود) | part14 |
+| **M105** ⭐ | EXECUTE Command Paste-Integrity (`&`-chain) — دستورهای چندتایی CMD در خطوط جدا هنگام یک‌paste وسط زنجیره متوقف می‌شوند (آخری منتظر Enter) | CMD line-buffering خطوط متعدد را جدا اجرا می‌کند؛ echo/خروجی طولانی buffering را بدتر می‌کند | دستورهای کوتاه/مرتبط را با `&` در یک خط زنجیر کن (یک paste + یک Enter)؛ مکمل #۶۷/M99 | part18 |
 
 ---
 
@@ -507,6 +508,10 @@ Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude De
 ### درس v2.16 — Mechanical-Claim Verification
 
 - **M104** ⭐⭐⭐ Mechanical-Claim Verification before Persisting (part14 origin) — جزئیات در ۲.۸. پشتیبان قانون #۸۶.
+
+### درس v2.17 — EXECUTE Paste-Integrity
+
+- **M105** ⭐ EXECUTE Command Paste-Integrity (`&`-chain) (part18 origin) — جزئیات در ۲.۸. دستورهای چندتایی ترمینال با `&` در یک خط؛ مکمل #۶۷/M99.
 
 ### درس‌های helper-side v2.14 — HM-series
 
@@ -899,6 +904,30 @@ git commit -F claude_workspace/commit_msg_{stage}.txt
 
 ---
 
+### M105 ⭐ — EXECUTE Command Paste-Integrity (`&`-chain)
+
+**کشف‌شده در:** part18 (گزارش کاربر) | **اهمیت:** 🟠 high (workflow friction تکرارشونده) | **Cross-refs:** #۶۳ (Convention EXECUTE)، #۶۷ (cross-shell)، M99 (دستور طولانی)، M86
+
+**اشتباه:** EXECUTE block‌هایی که چند دستور را در **خطوط جداگانه** دادند — کاربر کل کادر را کپی می‌کرد ولی همه با هم اجرا نمی‌شدند؛ باید می‌دید تا کدام دستور اجرا شده و ادامه را دوباره کپی می‌کرد (اتلاف وقت + ریسک خطا).
+
+**علت:** CMD خطوط متعددِ paste‌شده را جداگانه buffer/اجرا می‌کند؛ خطوطی که خروجی چندخطی (مثل `echo` یا `git log`) تولید می‌کنند buffering را برهم می‌زنند و دستور آخر منتظر Enter دستی می‌ماند.
+
+**راه‌حل (standard EXECUTE format):** دستورهای کوتاه/مرتبط را با `&` در **یک خط** زنجیر کن تا CMD کل را یک فرمان واحد ببیند (یک paste + یک Enter):
+
+```cmd
+cd /d D:\Projects\trading-system & echo [1] & <cmd1> & echo [2] & <cmd2> & echo [DONE]
+```
+
+- `&` = «بعدی را در هر صورت اجرا کن» (برای query‌هایی که خطایشان مهم نیست).
+- `&&` = «فقط اگر قبلی موفق بود» (توقف روی خطا — برای زنجیرهٔ وابسته مثل add→commit→push).
+- برچسب `echo [N]` بین دستورها خوانایی خروجی را بالا می‌برد.
+
+**استثنا:** دستورهای واقعاً مستقل یا طولانی (مثل commit با -F) می‌توانند کادر جدا داشته باشند، ولی هر کدام تک‌خطی. هیچ‌وقت چند خط جدا که وسطش گیر کند.
+
+**تمایز با M99:** M99 دربارهٔ *commit message* چندخطی است (راه‌حل: -F flag)؛ M105 دربارهٔ *چند دستور جدا* در یک EXECUTE block است (راه‌حل: `&`-chain تک‌خطی). هر دو از همان genus‌اند: CMD multi-line paste غیرقابل‌اعتماد.
+
+---
+
 ## ۲.۹ Helper Consultation Lessons (HM-series)
 
 ### HM-namespace rationale
@@ -1074,7 +1103,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 ✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1)**
 
 **جمع‌بندی درس‌ها:**
-- M-series ثبت: ۷۲ (M1-M63 + M64-M87 + M88 + M93-M104)
+- M-series ثبت: ۷۳ (M1-M63 + M64-M87 + M88 + M93-M105)
 - M-series Reserved: ۳۲ (M22, M24, M29, M32-M43, M45-M55, M80, M81, M89-M92)
 - HM-series: ۷ (HM-1 to HM-7)
 

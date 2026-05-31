@@ -6,7 +6,7 @@
 > **به‌روز توسط:** Claude در پایان هر چت (فاز ۳ مرحله ۳ چک‌لیست)  
 > **نسخه این Backlog:** v1.5 (2026-05-19 — چت ۸: ادغام Tier 2 + ۸ task جدید زیرساخت Claude Desktop)
 >
-> ⚠️ **بریج part17 (2026-05-30):** این Backlog از چت ۸ به‌طور کامل reconcile نشده (Tierها stale). مرجع زندهٔ وضعیت/اولویت: `docs/SESSION_STATUS.md` (سه Objective) + `claude_workspace/PHASE_LEDGER.md`. reconcile کامل Tierها → PART18 (بدون fabricate).
+> ⚠️ **بریج part18 (2026-05-30) — SUPERSEDED:** این Backlog در چت ۹ (پایان فاز ۰) **منجمد** شد. از part10 به بعد (MDRS v2 + Phase 2/3)، مرجع زندهٔ وظایف/اولویت = `claude_workspace/PHASE_LEDGER.md` (سه Objective + قصهٔ part01→جاری) + `docs/SESSION_STATUS.md`. reconcile کامل Tierهای فاز ۰ به MDRS v2 عمداً **انجام نشد** (تصمیم part18): بازنویسی‌اش کم‌ارزش بود؛ آمار پایین = snapshot تاریخی فاز ۰ (حفظ پر #۲۴ No-Deletion، نه وضعیت جاری).
 
 ---
 

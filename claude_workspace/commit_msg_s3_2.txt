@@ -1,0 +1,40 @@
+feat(constitution): S3.2 v2.14 Golden Rule + Templates 11-12 + proactive M-range fix
+
+S3.2 atomic constitution update for v2.14 MDRS v2 integration.
+
+Scope (M98 closed):
+- 04_principles.md: NEW section 4.11 Golden Rule (Tier classification
+  by role, not hardcoded list). Codifies M88 + Rule #68. Includes
+  Tier hierarchy table (illustration only, authoritative source =
+  manifest), role-based rationale, self-application evidence.
+- 04_principles.md: Proactive M-range scan fix (Discovery #1+#3
+  mitigation). Sections 4.2 and 4.10 updated: rules #1-65 to #1-77.
+- 06_meta.md: Section 6.3 heading updated 10 Template to 12 Template.
+- 06_meta.md: NEW Template 11 Pre-Action Checklist Visibility
+  (supports Rule #76 + M100). Bullet and table formats with
+  reference examples.
+- 06_meta.md: NEW Template 12 Git Commit -F Flag Standard (supports
+  M95+M97+M99). Workflow, requirements, standard template format,
+  reference files, inline -m exception.
+
+Out of scope (defer per Z3.19 ordering):
+- 04_principles.md section 4.6 Metarules integration full M71-M102
+  (post-S3.3 maintenance pass)
+- Module headers v2.12 to v2.14 (S3.3 with ACCEPTABLE_VERSIONS update)
+- 06_meta.md section 6.8 Custom Instructions version label v2.12 to
+  v2.14 (S3.3 atomic with module headers)
+- Audit script CURRENT_VERSION bump (S3.3)
+- State-of-record atomic refresh (S3.4 Triple-Rule M93)
+
+Discovery #1+#3 self-application: S3.2 design phase included
+explicit full T1 descriptive scan for M-range and Rule-range
+references. Caught 2 drift instances in 04_principles.md
+proactively (rules #1-65 to #1-77). Validates user-predicted
+constraint checklist refinement (K8 PENDING expansion target).
+
+Triple-Rule note: state-of-record files NOT updated in this commit.
+S3.4 stage-end atomic refresh per M93. Mirrors S2.3-S2.4 + S3.1
+precedent.
+
+Refs: M88, M95, M97, M99, M100. Rules #68, #76. Template 11, 12.
+Discovery #1, #3 (Rule #77 logging).

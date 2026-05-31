@@ -1,0 +1,17 @@
+docs(state): part16 chat-end - two-loop ledger + PART17 handoff
+
+Loop 1 (Ledger): append part16 row + update Objective 2 + HEAD section
+in PHASE_LEDGER.md. Update SESSION_STATUS pointers (current chat part16,
+HEAD 8c9c6a7, stats date) per deferred chat-end refresh.
+
+Loop 2 (Handoff): create PHASE1_PART17_HANDOFF.txt with handoff number
+derived mechanically per new Rule #86 (highest existing PART16 + 1 = 17;
+cross-checked H==L+1 against check_12).
+
+- PHASE_LEDGER.md: part16 row (codify 8c9c6a7) + Objective 2 DONE part16
+  + HEAD entries (8c9c6a7 known, chat-end placeholder per M101)
+- SESSION_STATUS.md: current chat -> part16, HEAD -> 8c9c6a7, audit part16
+- PHASE1_PART17_HANDOFF.txt: new (frontier L=16 H=17)
+
+Continuity check_12: H==L+1 (17==16+1). part16 chat-end hash backfills
+in part17 boot (M101 - self-reference impossibility).

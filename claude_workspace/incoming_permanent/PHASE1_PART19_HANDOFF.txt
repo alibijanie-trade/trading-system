@@ -1,0 +1,96 @@
+================================================================
+PHASE1_PART19_HANDOFF — trading-system
+chat-end part18 (codify v2.17 + B5 + M105) -> boot part19
+================================================================
+
+## 0) ROLE + GOAL (Rule #88 criterion 1)
+تو Claude در چت بعدی (part19) پروژه trading-system هستی. هدف این فایل:
+بوت تمیز + ادامه Phase 3/Phase 4 بدون از دست رفتن context. این فایل طبق
+Rule #88 (AI-Optimized Authoring) نوشته شده: نقش/هدف، ساختار شماره‌دار،
+DoD شمارش‌پذیر، گارد صریح، منبع زنده نه حافظه.
+
+## 1) BOOT SEQUENCE (Rule #48 — قبل از هر task)
+ترتیب الزامی خواندن (mandatory):
+  1. claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md  (STEP 0->4 follow)
+  2. claude_workspace/PHASE_LEDGER.md                (اول از همه — قصه تجمعی)
+  3. docs/constitution/main.md (v2.17 index)
+  4. docs/constitution/01_rules.md  (#1-88)
+  5. docs/constitution/02_lessons.md (M1-M105 + HM-1..7)
+  6. docs/constitution/06_meta.md
+  7. docs/SESSION_STATUS.md
+  8. docs/PENDING_FOR_NEXT_VERSION.md
+  9. این فایل (PART19_HANDOFF)
+هیچ task قبل از STEP 2 (acknowledgment) + STEP 3 (تایید کاربر) شروع نشود.
+
+## 2) FIRST ACTION = M101 BACKFILL (mechanical, Rule #86)
+اولین عمل اتمیک بعد از تایید کاربر:
+  - هش chat-end part18 را با:  git rev-parse --short HEAD  (یا git log) بگیر.
+  - این هش را backfill کن در 3 جا (همه الان placeholder اند):
+      a. PHASE_LEDGER.md  ردیف part18 ستون آخر (الان: "<backfill در boot part19، M101>")
+      b. PHASE_LEDGER.md  بخش "HEAD و hashها" خط "<chat-end part18>"
+      c. docs/REVIEW_LOG.md ردیف #010 و #011 Resolution (الان: "<chat-end part18 — backfill در boot part19، M101>")
+      d. docs/reviews/2026-05-30-settings-instructions-sync-reminder.md  (Commit boundary)
+      e. docs/reviews/2026-05-30-ai-optimized-authoring-standard.md       (Commit boundary)
+  - گارد (Rule #86/M104): هش را از git زنده بگیر، نه حافظه. literal نزن در ماژول constitution (check_5).
+
+## 3) STATE OF RECORD (منبع زنده — Rule #88 criterion 7)
+شمارش معتبر فعلی (NOT memory — از فایل بخوان):
+  - Constitution = v2.17
+  - قوانین Locked = 88 (#1-88) + 2 Reserved (#52,#53)
+  - درس‌نامه = M1-M105 (73 ثبت + 32 Reserved) + HM-1..HM-7
+  - Reviews = 11 (#001-011؛ همه Implemented؛ #010/#011 resolution backfill در گام 2)
+  - Decisions = Max 70 / Recorded 65
+  - audit = 12 check + 14 companion test (در part18: 12/12 + 14/14 PASS)
+  - Git HEAD chat-end part18 = <در گام 2 از git بگیر>
+  - parent (part17) = 55f4f66
+
+## 4) DONE در part18 (DoD — Rule #88 criterion 3)
+  [x] codify v2.17: Rule #87 (Sync Reminder + Materiality + Full-Text Delivery)
+  [x] codify v2.17: Rule #88 (AI-Optimized Authoring, 8 criteria)
+  [x] درس M105 (EXECUTE &-chain Paste-Integrity) + coupling 4 نقطه lessons + main x2 + SESSION
+  [x] main bump v2.16->v2.17 + version history row
+  [x] Review #010 + #011 (LOG rows + 2 review files)
+  [x] Decision #69 + #70 (DECISIONS_LOG v1.6)
+  [x] audit CURRENT_VERSION->v2.17 + ACCEPTABLE [v2.14..v2.17] + .pre-commit label
+  [x] B5 drift-backfill 7/7:
+      - B5-1 Created-in-commit non-literal (01/02/06) — check_5-safe
+      - B5-2 REVIEW resolution: #001=35a634f, #003=3bf66bf, #008=8c9c6a7 (همه git-verified)
+      - B5-3 DECISIONS drift = 0 (از git grep؛ نه اسکن exhaustive)
+      - B5-4 PERSIST TASKS: main-side جذب‌شده verify؛ helper-side DEFER
+      - B5-5 workspace Tier: snapshots در MANIFEST tracked (بدون تغییر)
+      - B5-6 CHANGELOG [0.6.0]=2026-05-22 (tag 5730173, non-fabricated)
+      - B5-7 TASK_BACKLOG: SUPERSEDED declaration (frozen فاز 0)
+  [x] manual_boxes/ source files ساخته شد (SETTINGS + PROJECT_INSTRUCTIONS verbatim)
+  [x] audit 12/12 + companion 14/14 PASS (دستی، با self-catch check_2 M75)
+
+## 5) TODO / DEFER برای part19+ (Rule #88 criterion 4 — گاردها)
+  [ ] HELPER-SIDE (DEFER، منبع helper chat part09، خارج دسترس — fabricate نکن):
+        HM-META-H/I/J/K + W4-W5
+  [ ] CHAT_LOG.md sections part15/16/17/18 (stops at "boot part14") — boot observation،
+        خارج B5 scope بود. اگر کاربر خواست: catch-up یا defer.
+  [ ] تصمیمات Settings/connector (Brightdata/Chrome/training/tokens) — نیاز تصمیم کاربر.
+  [ ] Phase 4 (اسکن 100% 278 فایل classified) — با Rule #78 Scope Contract + #79 N/M + #84.
+  [ ] stale handoff files در incoming_permanent/ (part02 binance + قدیمی‌ها) —
+        Z3.18/Z3.23 policy، cleanup در S8 یا decision کاربر.
+
+## 6) GUARDS (Rule #88 criterion 4 — چه نکن)
+  - هرگز پایان چت خودکار (Rule #27) — فقط با تایید صریح کاربر.
+  - هرگز .env با MCP تغییر نده. هرگز خارج D:\Projects\trading-system.
+  - هرگز هش literal در ماژول constitution (check_5/#86/M104).
+  - EXECUTE چندتایی = یک خط &-chain (M105): cd /d ... & echo [1] & cmd1 & echo [2] & cmd2 & echo [DONE]
+  - commit message چندخطی = -F flag از فایل ASCII در claude_workspace/ (M99).
+  - write/edit با MCP = تایید صریح کاربر اول (Rule #51).
+  - فایل بزرگ = head/tail/view_range نه کل‌فایل (HM-9 timeout risk؛ sanity-ping اول).
+  - Rule #87: هر تغییر material روی 3 manual box = یادآوری Full-Text Delivery (کل متن، نه "خط X").
+
+## 7) DECISIONS PENDING USER (Rule #88 criterion 5 — format)
+هیچ تصمیم بازِ بلوک‌کننده برای part19 boot نیست. ادامه طبق دستور کاربر.
+
+## 8) NEXT CHAT NAME (HM-3 mandatory pattern)
+الگو: TRADING-phase{N}-part{NN}-{topic-slug}
+پیشنهاد: TRADING-phase1-part19-phase3-catchup-or-phase4-scan
+(کاربر می‌تواند topic-slug را عوض کند؛ phase1-part19 ثابت.)
+
+================================================================
+END PHASE1_PART19_HANDOFF
+================================================================

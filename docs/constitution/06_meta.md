@@ -4,7 +4,7 @@
 >
 > **محتوا:** Session/Context + Chat Handoff + Templates پاسخ + Claude MAX + Pre-commit + GitHub + Filesystem MCP + Claude Desktop + claude_workspace + Skills
 > **منبع v2.11:** سند ۱۳ + ۱۴ + ۱۵ + ۱۶ + ۱۷ + ۱۹ + ۲۰ + ۲۱ + ۲۲ + ۲۳ + ۲۴ + ۲۵ (۱۲ سند)
-> **Created in commit:** `<git log -1 --format=%h پس از commit 7 پر شود>`
+> **Created in commit:** `<git log --diff-filter=A --oneline -- docs/constitution/06_meta.md>` (migrate سند ۱۳-۲۵ → 06_meta، commit 7/8؛ هش از git مشتق شود — نه hardcode در ماژول، per #۸۶/check_5)
 
 ---
 
@@ -472,6 +472,10 @@ inline -m flag OK برای این موارد. -F flag برای commits با subj
 - **Rule #۶۶:** Push اجباری در پایان هر چت (متمم — هر commit message file که -F شد، push هم هست)
 - **Rule #۷۶:** Pre-Action Checklist Visibility (Template 11) — اعمال قبل از commit
 
+#### EXECUTE multi-command paste (M105 — 🆕 v2.17)
+
+برای EXECUTE block‌هایی که چند دستور دارند، دستورهای کوتاه/مرتبط باید با `&` در **یک خط** زنجیر شوند تا با یک paste + یک Enter پشت‌سرهم اجرا شوند (CMD خطوط جدا را وسط زنجیره متوقف می‌کند). الگو: `cd /d <root> & echo [1] & <cmd1> & echo [2] & <cmd2> & echo [DONE]`. جزئیات: `02_lessons.md` M105.
+
 ---
 
 ## ۶.۴ Claude MAX Real-Time (سند ۱۹ منبع)
@@ -760,6 +764,8 @@ Filesystem MCP یک extension برای Claude Desktop است که به Claude ا
 - پایان هر چت، Claude نسخه به‌روز را تولید (قانون #۵۵)
 - کاربر در Project Knowledge جایگزین می‌کند
 - snapshot در `claude_workspace/snapshots/` (قانون #۵۸)
+
+> 🆕 v2.17 (قانون #۸۷): سه target خارج‌از‌MCP که فقط کاربر دستی تغییر می‌دهد (Settings→General Instructions، Project Instructions box، Project Knowledge files) باید هنگام هر تغییر **material** با یادآوری صریح + گرفتن تأیید انجام sync شوند (Materiality Threshold — برای تغییرات non-material یادآوری نده). همچنین هر artifact نوشتاری پروژه طبق ۸ معیار AI-Optimized Authoring (قانون #۸۸) نوشته شود. شرح کامل: `01_rules.md` بخش «شرح کامل قوانین Sync & Authoring (#۸۷-۸۸)».
 
 ### Settings → Capabilities & Feature Preview
 

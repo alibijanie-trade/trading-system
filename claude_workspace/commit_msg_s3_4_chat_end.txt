@@ -1,0 +1,56 @@
+docs(chat-end): S3.4 part08 state updates + Review #002 Implemented + PHASE1_PART09 handoff
+
+Triple-Rule atomic stage-end commit closing Stage S3. State-of-record
+files refreshed atomically per M93. Review #002 transitions Approved to
+Implemented with full commit chain. Manifest D2 re-run post-stage-end
+per Z3.21 policy.
+
+Stage S3 officially COMPLETE: S3.0 + S3.0.5 + D24 + S3.1 + S3.2 + S3.3
++ S3.4. Deliverables D8 + D9 (S3.1 part07) + D10 (S3.2 part07) + D11 +
+D13 (S3.3 part08). D12 (Audit Checks 8-11) deferred to S4 part09.
+
+Scope (M98 closure):
+- SESSION_STATUS.md: full refactor (part08 chat-end version, Stage S3
+  COMPLETED marker, K1-K10 status update, post-D2 manifest stats)
+- CHAT_LOG.md: part08 section append (boot, S3.3, S3.4, Discoveries
+  1-8, M101 backfill 05d7388, plan part09)
+- PENDING_FOR_NEXT_VERSION.md: Z3.19 + Z3.12 RESOLVED markers,
+  K-section part08 NEW (K9 + K10 HM-candidates, 8 Discoveries
+  consolidated, K1-K8 status update)
+- REVIEW_LOG.md: Review #002 Status Approved to Implemented +
+  Resolution chain complete (f0adb63 to 938cd2d to 35ea822 to this
+  hash)
+- PROJECT_MANIFEST.md: D2 re-run output (post-stage-end per Z3.21)
+- claude_workspace/incoming_permanent/PHASE1_PART09_HANDOFF.txt: NEW
+  handoff for part09 (S4 D12 Audit Checks 8-11 priority, S5 D14
+  Second Review Report secondary)
+
+HM-7 metric validation (3 datapoints, post-D24 efficiency consistent):
+- S3.1 part07: 9 turn, 3 audit fail (reactive iteration)
+- S3.2 part07: 2 turn, 0 audit fail (proactive applied learning)
+- S3.3 part08: 1 commit, 0 audit fail (proactive plus helper-validated)
+
+NEW HM-candidates in part08 (formalize in HM-series part09 or later):
+- HM-8 candidate (K9): Tool Discovery First. Pattern: Claude must call
+  tool_search before declaring capability gap. System prompt explicit:
+  "Treat tool_search as free and call it before assuming a capability
+  is unavailable."
+- HM-9 candidate (K10): MCP Liveness Mid-Conversation. Pattern: MCP
+  server can hang mid-conversation without warning (2 observations in
+  part08: boot + S3.4 Phase 1). Recovery: user restart, sanity-ping,
+  verify state, retry. Severity escalated medium to medium-high.
+
+NEW conventions adopted in part08 (preserve for part09 plus):
+- HELPER AMBIGUITIES copy-box at end of response when helper text used
+- USER DECISIONS NEEDED copy-box at end of response when decisions
+  needed from user
+- CMD silent-on-success awareness in EXECUTE blocks
+
+Refs: Rule #66 (Push), Rule #67 (Cross-shell), Rule #73 (Triple-Rule
+Atomic), Rule #76 (Pre-Action Visibility), Rule #77 (Discovery
+Logging), M71 (Documentation Drift), M82 (Read-back), M86 (Commit
+Push Separate), M88 (Hidden Regeneration Hazard), M93 (Triple-Rule),
+M95 plus M97 (ASCII commit), M98 (Scope Closure), M99 (-F flag), M100
+(Visible Checklist), M101 (mutual chain link 05d7388), M102 (Rule
+Implementation Decoupling), Review #002 (Implemented), Z3.12
+(RESOLVED), Z3.19 (RESOLVED), K9 + K10 (NEW HM-candidates).

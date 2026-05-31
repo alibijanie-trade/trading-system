@@ -1,0 +1,31 @@
+docs(reviews): D24 Review #003 Draft + LOG row Approved
+
+D24 Helper Infrastructure Review (eat-your-own-dogfood for REVIEW_PROTOCOL).
+
+Created:
+  docs/reviews/2026-05-23-helper-infrastructure-d24.md  (Review #003 file)
+
+Updated:
+  docs/REVIEW_LOG.md  (row #003 added, Status=Approved)
+
+Trigger: REVIEW_PROTOCOL section 2.2 (T1 doc creation) + 2.4 (helper workflow restructure).
+
+Options Considered:
+  A. Minimal HELPER_PROTOCOL (operating only)        - rejected
+  B. Full HELPER_PROTOCOL covering 5 scopes          - SELECTED
+  C. Split per scope into multiple T1/T2 docs       - rejected
+
+Driver: M-candidate Late-Catch Cascade Pattern (Discovery #13 part05).
+
+Source chat: TRADING-phase1-part06-mdrs-v2-D24-helper-infrastructure
+Parent commit: 91d20d8 (chat-end part05)
+
+Status transition planned:
+  D24.0 (this commit): Approved
+  D24-chat-end: Implemented (with full commit chain)
+
+Atomic boundary M98 honored: this sub-commit scope = Review #003 only.
+HELPER_PROTOCOL.md creation in next sub-commit (D24.1).
+State-of-record updates in chat-end (D24-chat-end).
+
+Lessons applied: M86, M88, M93, M95+M97, M98, M99.

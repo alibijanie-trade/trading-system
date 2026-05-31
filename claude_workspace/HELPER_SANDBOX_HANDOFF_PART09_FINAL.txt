@@ -1,0 +1,350 @@
+═══════════════════════════════════════════════════════════════
+HELPER SANDBOX HANDOFF — part09-mid → part09-continuation
+═══════════════════════════════════════════════════════════════
+
+> Source: helper sandbox session for TRADING-phase1-part09-mdrs-v2-s4-audit-checks
+> Date: 2026-05-25 (mid-part09, post-S4 COMPLETE)
+> Next helper chat name: HELPER-TRADING-phase1-part09-continuation-chat-end-housekeeping
+> Branch: infra/v2.14-source-of-truth
+> Last main chat hash: 234ba2f (S4 COMPLETE, pushed)
+
+CRITICAL: PASTE THIS ENTIRE FILE AS FIRST MESSAGE IN NEW HELPER CHAT
+
+═══════════════════════════════════════════════════════════════
+SECTION 0 — REASON FOR HANDOFF
+═══════════════════════════════════════════════════════════════
+
+این یک انتقال mid-chat است (نه end-of-chat معمول). دلیل:
+- helper session فعلی به turn ۵۰+ رسیده
+- علائم context drift (۶+ اصلاح موضع توسط user)
+- chat-end housekeeping part09 خود کار سنگینی است (۷-۱۰ turn)
+- handoff به part10 بزرگ‌ترین handoff تاریخ پروژه خواهد بود
+- helper تازه با ذهن fresh کیفیت بهتری در chat-end می‌دهد
+
+═══════════════════════════════════════════════════════════════
+SECTION 1 — HELPER ROLE & WORKFLOW MECHANICS
+═══════════════════════════════════════════════════════════════
+
+You are the HELPER SANDBOX assistant for TRADING-system MDRS v2.
+
+Constraints (held in memory, NOT repeated in every response):
+- minimum-necessary, no scope expansion
+- no unnecessary complexity, stay on main project path
+- helper ambiguities in copy-able box at end of response
+- responses in Persian (technical terms in English acceptable)
+- HELPER prefix in chat naming
+
+Active helper rules (informal, will be formalized in part10):
+- HM-META-H: تفکیک کادر (paragraph for user, code-block for chat 9)
+- HM-META-I: ساختار چهارجزئی سؤال (options/preference/strengths-weaknesses/path-impact)
+- HM-META-J: Proactive Advisory (mandatory scan each turn, explicit "هیچ موردی" if none)
+- HM-META-K: Automation-First (memory only as bridge to automation)
+- HM-META-L: HELPER_BOOTSTRAP_PROMPT.md for LLM-portability
+- HM-META-M: Backward Inclusion Principle (retroactive application)
+- HM-META-N: Self-Awareness about Memory Limits (acknowledge mistakes fast)
+- HM-META-O: Input Inventory Discipline (list_directory at session start)
+- HM-META-P: Filesystem Claims Must Be Filesystem-Verified
+- HM-META-Q: Three-Constraint Footer (minimum-necessary, stay-on-path, no-complexity)
+
+═══════════════════════════════════════════════════════════════
+SECTION 2 — CURRENT PROJECT STATE
+═══════════════════════════════════════════════════════════════
+
+Branch: infra/v2.14-source-of-truth
+HEAD: 234ba2f (S4 COMPLETE, pushed)
+Previous parent: 3fd2405 (part08 chat-end)
+Constitution: v2.14
+
+STAGE S4 — COMPLETE ✅
+- D12 (Audit Checks #8-11) implemented
+- check_11 violations resolved through 2 iterations (8 + 5 edits)
+- 21 → 0 Z-ID violations in 01_rules.md
+- All tests 11/11 PASS, audit 11/11 PASS
+
+Deliverables: 14/24 done (D1-D11 + D13 + D24 + D12)
+Remaining: 10 deliverables (D14-D23 for Stages S5-S8)
+
+Z-bug status post-S4:
+- Z3.15 RESOLVED (Check #9)
+- Z3.16 RESOLVED (Check #10)
+- Z3.17 RESOLVED (Check #11 + Rule #74 refactor)
+- Z3.25 RESOLVED (test_6 drift retroactive fix)
+- Open Z3.x: 22 → 18
+
+═══════════════════════════════════════════════════════════════
+SECTION 3 — IMMEDIATE TASK (REASON FOR NEW HELPER)
+═══════════════════════════════════════════════════════════════
+
+main chat در حال شروع batch upfront preview برای chat-end
+housekeeping است (DECISION 8 = گزینه الف approved).
+
+محتوای preview که main chat آماده می‌کند:
+1. SESSION_STATUS update
+2. CHAT_LOG part09 section (شامل ۱۲ Discoveries + M101 backfill)
+3. REVIEW_LOG #002 Resolution + Row #004 NEW (D12, Implemented)
+4. PENDING updates (4 RESOLVED + K-section + HM-9 flag)
+5. PROJECT_MANIFEST D2 re-run
+6. PHASE1_PART10_HANDOFF.txt (huge — see SECTION 5)
+7. commit_msg_chat_end_part09.txt
+
+نقش helper جدید:
+- وقتی user batch preview main chat را برای cross-check فرستاد
+- هر بخش را در برابر SECTION 5 این handoff verify کن
+- اگر چیزی از قلم افتاد، paste-ready اصلاح آماده کن
+- در پایان، تأیید نهایی برای commit + push
+
+═══════════════════════════════════════════════════════════════
+SECTION 4 — DECISIONS LOG (D09.1 — D09.17)
+═══════════════════════════════════════════════════════════════
+
+D09.1: HELPER_PROTOCOL formalization → chat-end part09 (option ب)
+D09.2: HELPER_PROTOCOL update scope → فقط 4 قاعده جدید v1.0→v1.1
+D09.3: Claude Projects setup → part10 (option ب)
+D09.4: HM-META-H + HM-META-I (4-part question structure)
+D09.5: HM-META-J Proactive Advisory (active from turn detected)
+D09.6: HM-META-K Automation-First Principle
+D09.7: Infrastructure Sprint (option ج) — جدا از S4, قبل از S5
+D09.8: Framework Portability Vision (Phase α/β/γ/δ)
+D09.9: Repo architecture → defer to Phase β (option ج)
+D09.10: Bootstrap script → defer to Phase β (option ج)
+D09.11 REVISED: Scope tagging INCLUDES retroactive (override per
+       Backward Inclusion Principle HM-META-M)
+D09.12: Continue chat 9 with S4 (option الف)
+D09.13: helper_decisions/ directory + ARTIFACT_REGISTRY
+D09.14: Draft PART09_DECISIONS now (option الف)
+D09.15: Self-correction on HELPER_SANDBOX_HANDOFF_PART09.txt
+       (initially said "ignore", corrected to "read")
+D09.16: Root-cause incident documented (artifact inventory blindness)
+D09.17: Project Files Sync Rule (universal scope)
+       Plus: "همیشه آخرین نسخه سند جامع در Project Files"
+
+═══════════════════════════════════════════════════════════════
+SECTION 5 — INFRASTRUCTURE SPRINT SCOPE FOR part10
+═══════════════════════════════════════════════════════════════
+
+Items A through K (≈12 items):
+
+A) HELPER_PROTOCOL.md v1.0 → v1.1
+   - Add HM-META-H, I, J, K (4 rules confirmed)
+   - Consider adding L, M, N, O, P, Q from this session
+   - Owner: main chat, chat-end part09 OR start of part10
+
+B) Project Files setup
+   - Upload 11 stable files + سند_جامع_v2_11.md (12 total)
+   - Owner: user, at start of part10
+   - List:
+     * docs/constitution/main.md
+     * docs/constitution/01_rules.md
+     * docs/constitution/02_lessons.md
+     * docs/constitution/03_processes.md
+     * docs/constitution/04_templates.md
+     * docs/constitution/05_known_issues.md
+     * docs/constitution/06_meta.md
+     * docs/HELPER_PROTOCOL.md (v1.1)
+     * docs/REVIEW_PROTOCOL.md
+     * docs/PRE_ADD_CHECKLIST.md
+     * docs/HANDOFF_TEMPLATE.md
+     * docs/سند_جامع_v2_11.md (NEW — added per user instruction)
+
+C1) Rule #48 amendment with version sanity check
+    - Boot-time check between Project Files version and disk version
+
+C2) check #12 audit-based staleness
+    - .project_files_manifest.json
+
+D) check #13 size tripwire (constitution lines threshold)
+
+E) check #14 HM-9 tripwire + hm9_event_log in MASTER_PLAN
+
+F) MASTER_PLAN.md creation
+   - Pending items tracking
+   - Decision Log
+   - Risk Register
+   - Dependencies
+
+G) Decision Log inside MASTER_PLAN (formalized)
+
+H) Risk Register inside MASTER_PLAN
+
+I) helper_decisions/ directory
+   - PART09_DECISIONS.md (already drafted in this session — see SECTION 4)
+   - Template for future PART{N}_DECISIONS.md
+
+J) HM-META-O Input Inventory Discipline (formalize)
+
+K) ARTIFACT_REGISTRY.md + Naming Conventions
+
+L) Three-Constraint Footer (HM-META-Q) formalization
+
+M) NEW (post-DECISION 6 discovery):
+   Full-File Scan Before Edit (HM-META or Rule)
+   Discovery #10 part09 → systematic prevention
+
+N) NEW: Eat-Your-Own-Dogfood Meta-Rule
+   "Rule enforcing anti-pattern must not contain that anti-pattern
+   in its own body"
+   Sibling to Concern C1 part05 (Rule #68 explicit list)
+   Discovery #9 part09 → meta-rule candidate
+
+O) NEW (CRITICAL): Reconciliation سند جامع v2.11 ↔ MDRS v2
+   - Documentation Schism between two governance systems
+   - 65 rules in سند جامع + 63 lessons (M1-M63)
+   - 77 rules in MDRS v2 + 102 lessons (M1-M102) + HM-1 to HM-7
+   - Map equivalences, identify deprecated, identify additions
+   - Heaviest item — may need its own sub-sprint
+
+═══════════════════════════════════════════════════════════════
+SECTION 6 — RISK REGISTER (10 risks identified part09)
+═══════════════════════════════════════════════════════════════
+
+R09.1 HIGH — Project Files staleness — Mitigation: C1+C2+check#12
+R09.2 LOW — Constitution scaling — Mitigation: check #13 tripwire
+R09.3 INFO — Claude Code future — Mitigation: E (HM-9 counter)
+R09.4 MEDIUM — Audit script single point of trust — Mitigation: smoke test
+R09.5 MEDIUM — PENDING.md as graveyard — Mitigation: check #17 max-age
+R09.6 MEDIUM — helper-main sync new rules — Mitigation: check #18 cross-ref
+R09.7 MEDIUM — handoff paste single point of failure — Mitigation: check #19
+R09.8 MEDIUM (future) — framework v0.1 wrong assumptions — Mitigation: cautious Phase β
+R09.9 MEDIUM — helper cognitive dependency — Mitigation: HELPER_BOOTSTRAP_PROMPT.md
+R09.10 HIGH (future) — cross-project context contamination — Mitigation: hard rule "one project = one Claude Project"
+
+═══════════════════════════════════════════════════════════════
+SECTION 7 — DISCOVERIES part09 (12 total)
+═══════════════════════════════════════════════════════════════
+
+#1: HM-9 #3 hang on list_allowed_directories turn 1
+#2: HM-9 #4 hang same tool turn 3 after restart
+#3: HM-9 selective-hang sub-pattern (Plan B first convention)
+#4: helper sandbox handoff file convention discovered
+#5: HM-9 #5 read_text_file vs read_multiple_files selective
+#6: test_6 drift pre-existing (S3.3 retroactive) → Z3.25
+#7: User constraint "sequential commands single box"
+#8: Documentation Schism discovered (سند جامع v2.11 ↔ MDRS v2)
+#9: Eat-your-own-dogfood failure in Rule #74 (meta-rule candidate)
+#10: Surgical fix iteration 1 missed scope — full-file scan needed
+#11: Project Files Sync Rule (universal — user emphasized)
+#12: Documentation versioning hygiene (only latest in Project Files)
+
+HM-9 cumulative count: 7 (part08: 2, part09: 5)
+- Reached escalation threshold (≥5 combined)
+- Rule promotion candidate in part10 infrastructure sprint
+
+═══════════════════════════════════════════════════════════════
+SECTION 8 — FRAMEWORK EXTRACTION ROADMAP
+═══════════════════════════════════════════════════════════════
+
+Phase α (active now): Tagging + extraction candidates list
+Phase β (trigger: trading-system milestone): First extraction
+Phase γ (trigger: user's second project): Framework v0.1 validation
+Phase δ (after 3-4 projects): Stable framework v1.0
+
+User stated intent: Will name second project at start of part10.
+
+Universal-scope items identified so far:
+- All HM-META rules (H, I, J, K, L, M, N, O, P, Q)
+- Project Files Sync Rule
+- "One project = one Claude Project" rule
+- Backward Inclusion Principle
+- Eat-Your-Own-Dogfood Meta-Rule
+- Full-File Scan Before Edit
+- HELPER_BOOTSTRAP_PROMPT.md template
+- Three-Constraint Footer pattern
+
+═══════════════════════════════════════════════════════════════
+SECTION 9 — KEY USER CONSTRAINTS (held in memory across session)
+═══════════════════════════════════════════════════════════════
+
+- Proactive Advisory MANDATORY ("حتما حتما حتما" — emphasized 3x)
+- Automation-First (memory only as bridge)
+- Continuous Risk Scanning
+- Backward Inclusion (always include retroactive when applicable)
+- Project Files Sync (latest version only)
+- Sequential commands in single box, not multiple boxes
+- Helper questions = visible options + helper preference + strengths-weaknesses + path impact
+- Visual separation: paragraph text vs code-block for chat 9
+- Three-Constraint Footer at end of every paste-ready
+
+═══════════════════════════════════════════════════════════════
+SECTION 10 — CRITICAL FILE PATHS
+═══════════════════════════════════════════════════════════════
+
+Constitution (MDRS v2):
+- docs/constitution/main.md (v2.14)
+- docs/constitution/01_rules.md to 06_meta.md (v2.14)
+
+Comprehensive Document (سند جامع):
+- docs/سند_جامع_v2_11.md (LATEST — should be in Project Files)
+- docs/سند_جامع_v2_6.md to v2_10.md (older versions, on disk only)
+
+State-of-record:
+- docs/SESSION_STATUS.md
+- docs/CHAT_LOG.md
+- docs/PROJECT_MANIFEST.md
+- docs/PENDING_FOR_NEXT_VERSION.md
+- docs/REVIEW_LOG.md
+
+Governance:
+- docs/HELPER_PROTOCOL.md (v1.0, to become v1.1 in part10)
+- docs/REVIEW_PROTOCOL.md
+- docs/PRE_ADD_CHECKLIST.md
+- docs/HANDOFF_TEMPLATE.md
+
+Scripts:
+- scripts/63_pre_commit_audit.py (now with 11 checks)
+- scripts/63b_test_pre_commit_audit.py (now with 11 tests)
+- scripts/64_generate_manifest.py
+
+Handoffs:
+- claude_workspace/incoming_permanent/PHASE1_PART09_HANDOFF.txt (current)
+- claude_workspace/HELPER_SANDBOX_HANDOFF_PART09.txt (from part08-end)
+- THIS FILE = HELPER_SANDBOX_HANDOFF_PART09_FINAL.txt
+
+═══════════════════════════════════════════════════════════════
+SECTION 11 — IMMEDIATE NEXT ACTIONS FOR NEW HELPER
+═══════════════════════════════════════════════════════════════
+
+1. Acknowledge receipt with brief confirmation:
+   "part09-continuation helper context loaded. S4 COMPLETE confirmed.
+    Ready to assist chat-end housekeeping."
+
+2. Wait for user to provide main chat's batch preview output
+
+3. Cross-check preview against SECTION 5 (Infrastructure Sprint Scope)
+   - Verify SESSION_STATUS reflects S4 completion
+   - Verify CHAT_LOG covers all 12 Discoveries + M101 backfill
+   - Verify PENDING has all 4 RESOLVED markers + K-section + HM-9 flag
+   - Verify PHASE1_PART10_HANDOFF.txt covers items A-O from SECTION 5
+
+4. Critical attention areas for cross-check:
+   - Did main chat include Documentation Schism (item O) in handoff?
+   - Did main chat include all HM-META rules (H through Q)?
+   - Did main chat flag HM-9 escalation correctly?
+   - Did main chat include Backward Inclusion override for D09.11?
+
+5. If anything missing, prepare paste-ready correction for user
+
+6. After approval, signal commit/push readiness
+
+═══════════════════════════════════════════════════════════════
+SECTION 12 — HOW TO USE THIS HANDOFF
+═══════════════════════════════════════════════════════════════
+
+Step 1: User opens new helper chat with name
+HELPER-TRADING-phase1-part09-continuation-chat-end-housekeeping
+
+Step 2: User pastes THIS ENTIRE FILE as first message
+
+Step 3: New helper acknowledges per SECTION 11 step 1
+
+Step 4: New helper waits for batch preview from main chat (part09)
+
+Step 5: New helper resumes workflow per SECTION 11 steps 3-6
+
+═══════════════════════════════════════════════════════════════
+END OF HELPER SANDBOX HANDOFF (mid-part09 transition)
+═══════════════════════════════════════════════════════════════
+
+ساخته توسط: helper sandbox (mid-part09 turn ~50)
+تاریخ: 2026-05-25
+آماده برای: paste در فرست پیام helper chat جدید (part09-continuation)
+نام helper chat جدید: HELPER-TRADING-phase1-part09-continuation-chat-end-housekeeping

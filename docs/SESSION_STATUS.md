@@ -2,7 +2,7 @@
 
 > **آخرین به‌روزرسانی:** 2026-05-30 (chat-end چت `TRADING-phase1-part17-phase3-deprecate-and-project-knowledge` — Phase 3 B4/B1/B2/B3 + Review #۰۰۹)
 > **نسخه پروژه:** v0.6.0 (tag روی main: `5730173`؛ v0.7.0 در پایان MDRS v2)
-> **Constitution:** **v2.16** (Trust Rules #۷۸-۸۵ + M103؛ + Rule #۸۶/M104 codified در part16)
+> **Constitution:** **v2.17** (Trust Rules #۷۸-۸۵ + M103؛ Rule #۸۶/M104 در part16؛ + Rule #۸۷/#۸۸ codified در part18)
 > **چت جاری:** `TRADING-phase1-part17-phase3-deprecate-and-project-knowledge` ✅ (Phase 3: deprecate legacy + PROJECT_KNOWLEDGE + catch-up؛ chat-end)
 > **مرجع تجمعی:** `claude_workspace/PHASE_LEDGER.md` (قصهٔ part01→13؛ در boot اول خوانده شود)
 > ⚠️ **Naming (HM-3):** نام چت باید `TRADING-phase{N}-part{NN}-{topic}` باشد.
@@ -17,7 +17,7 @@
 ## 📍 وضعیت کلی
 - **فاز:** Phase 1 Skeleton ✅ + **MDRS v2 + remediation سه‌Objective در جریان** 🔄
 - **Branch:** `infra/v2.14-source-of-truth` 🔄
-- **Git HEAD:** `81a3562` (chat-end part16؛ پس از commit اتمیک chat-end part17 ارتقا — backfill در PART18 boot، M101)
+- **Git HEAD:** `55f4f66` (chat-end part17؛ M101 backfill در PART18 boot، مشتق از git ref زنده — parent `81a3562`)
 - **GitHub remote:** `alibijanie-trade/trading-system` (Private، SSH) ✅
 - **Tag:** `v0.6.0` (`5730173` روی main) — `v0.7.0` در پایان MDRS v2 (S8)
 
@@ -38,9 +38,9 @@
 🔮 **TODO** (part14+) با #۷۸ + #۷۹ + #۸۴.
 
 ## 📊 آمار پروژه (پس از part17)
-- **قوانین قفل‌شده:** **۸۶** (#۱-۸۶) + ۲ Reserved (#۵۲، #۵۳).
-- **درس‌نامه:** **M1-M104** (۷۲ ثبت + ۳۲ Reserved شامل M89-M92) + **HM-1..HM-7**.
-- **Reviews:** **۹** (#۰۰۱-۰۰۹؛ #۰۰۱-۰۰۸ Implemented، #۰۰۹ Approved/در انتظار commit part17).
+- **قوانین قفل‌شده:** **۸۸** (#۱-۸۸) + ۲ Reserved (#۵۲، #۵۳).
+- **درس‌نامه:** **M1-M105** (۷۳ ثبت + ۳۲ Reserved شامل M89-M92) + **HM-1..HM-7**.
+- **Reviews:** **۱۱** (#۰۰۱-۰۱۱؛ #۰۰۱-۰۰۹ Implemented، #۰۱۰/#۰۱۱ در انتظار commit part18).
 - **Audit:** **۱۲/۱۲ check** + **۱۴/۱۴ companion test** PASS (part16، دستی + هوک pre-commit).
 - **Tests دیگر:** pytest **۲۵/۲۵** + vitest **۳۰/۳۰** (بدون تغییر).
 - **MDRS v2 deliverables:** **۱۴/۲۴** (D1-D13 + D24 + D12). باقی: D14-D23 (۱۰).

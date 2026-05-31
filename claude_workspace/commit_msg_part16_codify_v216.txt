@@ -1,0 +1,23 @@
+docs(constitution): codify v2.16 - Mechanical-Claim Verification (M104 + Rule #86)
+
+Atomic codification of lesson M104 + Locked Rule #86 (Escape-Aware
+Sequence Derivation) into Constitution v2.16. Mechanical/sequential
+identifiers (handoff numbers, hashes, ledger rows, rule/lesson/review
+numbers, versions) must derive from a live source, not memory/pattern.
+
+Driver: part14 escape-note off-by-one (PART16 instead of mechanical
+PART15), conflicting with check_12 (H==L+1), caught in part15.
+
+- 02_lessons.md: M104 (table 2.3 + index 2.7 + section 2.8 + 71->72)
+- 01_rules.md: Rule #86 (table 1.9 + full section + footer #1-86)
+- main.md: v2.15->v2.16 + stats (85->86, M1-M104) + history + xrefs
+- SESSION_STATUS.md: rule 85->86, M1-M104, reviews 7->8, v2.16
+- REVIEW_LOG.md: Review #008 row
+- reviews/2026-05-30-escape-aware-sequence-derivation.md: new
+- DECISIONS_LOG.md: Decision #68 + stats (Max 68) + v1.5
+- 63_pre_commit_audit.py: CURRENT_VERSION v2.16 + ACCEPTABLE v2.14/15/16
+- .pre-commit-config.yaml: hook name v2.16
+- PHASE_LEDGER.md: M101 backfill part14-15 hash c30dbe5 (folded)
+- PENDING_FOR_NEXT_VERSION.md: part15 P-candidate -> CODIFIED v2.16
+
+Audit 12/12 + companion 14/14 PASS. Review #008. Decision #68.

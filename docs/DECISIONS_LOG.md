@@ -4,7 +4,7 @@
 
 > **محل قرارگیری:** `docs/DECISIONS_LOG.md`  
 > **به‌روز توسط:** Claude در پایان چت اگر تصمیم جدید گرفته شد (CLAUDE_CHECKLIST فاز ۳ مرحله ۴)  
-> **نسخه:** v1.5 (2026-05-30)
+> **نسخه:** v1.6 (2026-05-30)
 
 ---
 
@@ -63,7 +63,7 @@
 | **Auth & Security** | #11, #12, #13 |
 | **Frontend Architecture** | #20-#29 |
 | **Theme & UI Design** | #30-#48 |
-| **Process & Governance** | #50-#57, #67, #68 |
+| **Process & Governance** | #50-#57, #67, #68, #69, #70 |
 | **Quality Hardening (Tier 2)** | #55, #56, #57 |
 | **Pre-commit & Git** | #58, #59, #60 |
 | **CCXT & Architecture (Phase 1)** | #61, #62, #63, #64 |
@@ -862,18 +862,84 @@ Binance API rate limits دارد. آیا custom token bucket بسازیم؟
 
 ---
 
+### Decision #۶۹ — Settings/Instructions/Project-Asset Sync Reminder (Rule #۸۷) adoption
+
+**ثبت‌شده در:** چت part18 (`TRADING-phase1-part18-phase3-b5-drift-backfill`)
+**تاریخ:** 2026-05-30
+**Status:** ✅ Accepted
+**دسته:** Process & Governance
+
+#### Context
+سه target در Claude.ai (Settings→General Instructions، Project Instructions box، Project Knowledge files) خارج از دسترس Filesystem MCP اند (M17) و فقط کاربر دستی تغییرشان می‌دهد. بدون یادآوری ساختاری، تغییرات material در این سه نقطه sync نمی‌شوند → Claude چت بعد دچار فهم غلط. نیاز به قاعدهٔ یادآوری + گرفتن تأیید.
+
+#### Options Considered
+1. **Option A — Rule #۸۷ Locked با Materiality Threshold** ✅ — یادآوری فقط برای تغییرات material، پرهیز از پیام‌اسپم.
+2. **Option B — توسعهٔ #۵۵ بدون قانون جدید** — #۵۵ فقط Project Knowledge را پوشش می‌دهد، دو target دیگر پوشش نمی‌شوند.
+3. **Option C — بدون قانون، اتکا به حافظه** — M87 spirit: بدون positive constraint فراموش می‌شود.
+
+#### Decision
+✅ **Option A** — Rule #۸۷ Locked + Materiality Threshold (هم‌batch v2.17 با #۸۸).
+
+#### Rationale
+- positive constraint > negative reminder (#۴۶/#۶۷ precedent)
+- Materiality Threshold تعادل با #۱۶ (کم‌حرفی) — پرهیز از over-reminding.
+- تعمیم #۵۵ به هر سه target + جنبهٔ گرفتن تأیید انجام.
+
+#### Consequences
+- 👍 همگام‌سازی material بین دیسک و سه target خارج‌از‌MCP
+- 👎 سربار یادآوری برای تغییرات material (پذیرفته‌شده)
+
+#### Reference
+- `01_rules.md` بخش «شرح کامل قوانین Sync & Authoring (#۸۷-۸۸)»
+- Review #۰۱۰ (`docs/reviews/2026-05-30-settings-instructions-sync-reminder.md`)
+
+---
+
+### Decision #۷۰ — AI-Optimized Prompt/Artifact Authoring (Rule #۸۸) adoption
+
+**ثبت‌شده در:** چت part18 (`TRADING-phase1-part18-phase3-b5-drift-backfill`)
+**تاریخ:** 2026-05-30
+**Status:** ✅ Accepted
+**دسته:** Process & Governance
+
+#### Context
+artifactهای نوشتاری پروژه (پرامپت چت بعد، handoff، Instructions، Scope Contract، دستور به Claude دیگر) کیفیت متغیر داشتند. نیاز به استاندارد prompt-engineering برای کیفیت/سرعت + کاهش خطای تفسیر.
+
+#### Options Considered
+1. **Option A — Rule #۸۸ Locked (۸ معیار)** ✅ — ساختاری، self-checked هر turn.
+2. **Option B — principle در 04_principles.md** — ضعیف‌تر؛ principle الزام enforcement ندارد.
+3. **Option C — بدون codify** — درخواست دائمی کاربر بدون پشتوانهٔ دائم.
+
+#### Decision
+✅ **Option A** — Rule #۸۸ Locked (هم‌batch v2.17 با #۸۷).
+
+#### Rationale
+- درخواست صریح کاربر (دستور دائمی).
+- ۸ معیار عینی/شمارش‌پذیر (هم‌راستا #۷۹ QHP).
+- متوازن با #۱۶ (کم‌حرفی) — فقط artifactهای پایدار.
+
+#### Consequences
+- 👍 artifactهای نوشتاری باکیفیت، تکرارپذیر، کاهش drift تفسیر
+- 👎 سربار چک ۸ معیار پیش از تحویل (پذیرفته‌شده)
+
+#### Reference
+- `01_rules.md` بخش «شرح کامل قوانین Sync & Authoring (#۸۷-۸۸)»
+- Review #۰۱۱ (`docs/reviews/2026-05-30-ai-optimized-authoring-standard.md`)
+
+---
+
 ## آمار
 
 | Status | تعداد |
 |---|---|
-| ✅ Accepted (Recorded) | ۶۳ |
+| ✅ Accepted (Recorded) | ۶۵ |
 | ⬜ Reserved (غیر-ثبت‌شده) | ۵ (#۱۶-۱۹، #۴۹) |
 | ⚠️ Superseded | ۰ |
 | ❌ Rejected | ۰ |
 | ⏳ Pending | ۰ |
 
-**Max Decision ID:** ۶۸  
-**Total Recorded:** ۶۳  
+**Max Decision ID:** ۷۰  
+**Total Recorded:** ۶۵  
 **Reserved Slots:** ۵ (در دسته‌بندی موضوعی بالا مستند شد)
 
 **تصمیم برای Reserved IDs (پایان چت ۱۰ round 2):**  
@@ -883,6 +949,6 @@ Binance API rate limits دارد. آیا custom token bucket بسازیم؟
 
 ## 📌 پایان DECISIONS_LOG
 
-**نسخه:** v1.5 (2026-05-30 — part16/Phase 3: Decision #۶۸ (Mechanical-Claim Verification، M104 + Rule #۸۶، Review #۰۰۸))  
-**تصمیمات ثبت‌شده:** ۶۳ (Max ID ۶۸ — ۵ اسلات Reserved)  
+**نسخه:** v1.6 (2026-05-30 — part18/Phase 3: Decision #۶۹ (Settings/Instructions/Project-Asset Sync، Rule #۸۷) + #۷۰ (AI-Optimized Authoring، Rule #۸۸)، Reviews #۰۱۰/#۰۱۱)  
+**تصمیمات ثبت‌شده:** ۶۵ (Max ID ۷۰ — ۵ اسلات Reserved)  
 **Status کلی:** همه Accepted

@@ -1327,3 +1327,34 @@ hash chat-end part16 = `81a3562` (cross-checked از `git rev-parse --short HEAD
 در B4، placeholder `Created in commit` در main.md را با هش literal `5285fb6` پر کردم؛ **check_5_head_hardcode** هنگام chat-end commit آن را block کرد. درس: هش/شناسهٔ مکانیکی نباید در ماژول‌های constitution literal شود (M77/M101/#۸۶)؛ placeholder باید non-literal بماند (الگوی مجاز `<git log...>`). هش در فایل‌های tracking (PHASE_LEDGER/SESSION_STATUS) مجاز است، نه در ماژول. **audit-as-safety-net کار کرد** — مصداق مثبت همان تم این چت (#۸۶/M104). Cross-refs: #۸۶ · M77 · M101 · M104 · check_5.
 
 **آخرین به‌روزرسانی part17 section:** 2026-05-30 (chat-end part17 — fix check_5 + discovery).
+
+---
+
+## 🔴🔴🔴 آیتم‌های part18 (چت `TRADING-phase1-part18-phase3-b5-drift-backfill`)
+
+**منبع:** درخواست صریح کاربر (part18، mid-chat) + boot.
+
+### P18-candidate-1 — AI-Optimized Authoring Standard (process/governance، severity: high)
+
+**دستور دائمی کاربر:** هر «artifact نوشتاری» پروژه — پرامپت چت بعد، handoff، متن Instructions/Project Knowledge، Scope Contract، هر دستور به Claude دیگر — باید طبق اصول prompt-engineering بهینهٔ مدل نوشته شود.
+
+**استاندارد (Normative — ۸ بند «خوب نوشته‌شده»):**
+1. نقش + هدف صریح در ابتدا (۱-۲ خط).
+2. ساختار شماره‌دار/بخش‌بندی‌شده، نه متن یک‌تکه.
+3. معیار موفقیت شمارش‌پذیر / Definition-of-Done (اعداد N/M، #۷۹) — نه واژهٔ مبهم.
+4. قیدها و گاردهای صریح (چه نکن).
+5. فرمت خروجی مشخص.
+6. ترتیب گام‌به‌گام برای taskهای چندمرحله‌ای.
+7. ارجاع به منبع زنده (git/فایل) نه حافظه (هم‌راستا #۸۶).
+8. در صورت کمک‌کنندگی: مثال مثبت + مثال منفی.
+
+**Rationale:** کیفیت + سرعت بالاتر چت بعد، کاهش خطای تفسیر/drift، تکرارپذیری، هم‌راستا با اصل ۳ (radical honesty).
+
+**وضعیت:** 🟢 اعمال فوری از part18 (پیش از codify، مثل #۶۱) + خط Self-Check هر turn.
+
+**codify پیشنهادی:** Rule **#۸۸** (نه #۸۷ — تصادم با Settings/Instructions Sync Reminder) «AI-Optimized Prompt/Artifact Authoring»، یا principle در 04_principles.md. batch اتمیک با Review **#۰۱۱** + Decision **#۷۰** + version (v2.17 اگر هم‌batch با #۸۷، یا v2.18 اگر جدا). سپس انعکاس در PROJECT_KNOWLEDGE + Instructions (#۵۵ + #۸۷).
+
+**Cross-refs:** #۱۶ (کم‌حرفی) · #۳۱/#۶۳ (tab/EXECUTE) · #۵۹ (مسیر دانلود) · #۷۸ (SCM) · #۷۹ (QHP) · #۸۶ (منبع زنده) · اصل ۳ (radical honesty).
+
+**ثبت‌شده توسط:** #۶۰ (با تأیید #۵۱) · نشان داده به کاربر: ✅ (#۶۵).
+**آخرین به‌روزرسانی part18 section:** 2026-05-30 (mid part18، P18-candidate).

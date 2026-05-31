@@ -1,0 +1,33 @@
+feat(constitution): S3.1 v2.14 Rules #68-77 + Lessons M88+M93-M102 + HM-1-HM-7 + main cross-ref
+
+S3.1 atomic constitution update for v2.14 MDRS v2 integration.
+
+Scope (M98 closed):
+- 01_rules.md: 10 new Locked Rules #68-#77 (MDRS v2 framework
+  + Continuous Discovery Logging). Pattern: Normative + Implementation
+  Notes per M102 decoupling.
+- 02_lessons.md: 11 new M-lessons (M88 + M93-M102) + 4 Reserved
+  (M89-M92). NEW section 2.9 HM-series with HM-1 to HM-7
+  (helper consultation patterns).
+- main.md: Cross-references section adds HELPER_PROTOCOL.md
+  navigation. Stats table reflects S3.1 deltas. Frontmatter version
+  unchanged (v2.13) per Z3.19 defer to S3.3.
+
+Out of scope (defer per Z3.19 ordering):
+- Module headers v2.12 to v2.14 (S3.3 with ACCEPTABLE_VERSIONS update)
+- 04_principles.md Golden Rule (S3.2)
+- 06_meta.md Templates 11-12 (S3.2)
+- Audit script CURRENT_VERSION bump (S3.3)
+- State-of-record atomic refresh (S3.4 Triple-Rule M93)
+
+Triple-Rule note: state-of-record files (SESSION_STATUS, CHAT_LOG,
+PENDING, REVIEW_LOG) NOT updated in this commit. They will be
+updated atomically in S3.4 stage-end per M93. This is intentional
+sub-commit isolation within an atomic stage boundary, mirroring
+S2.3-S2.4 precedent (D6, D7).
+
+Review #002 status: Approved (transitions to Implemented in S3.4
+when all S3.1-S3.3 sub-commits are atomic complete).
+
+Refs: M88, M93, M98, M99, M101, M102. Rules #68-#77. HM-1 to HM-7.
+Reserved M89-M92 per M79 CVE-like gap policy.
