@@ -27,6 +27,7 @@
 
 1. `docs/constitution/main.md` (Constitution v2.14 index)
 2. `docs/constitution/01_rules.md` (همه قواعد #1-#77)
+   - ⚡ **و بلافاصله** `claude_workspace/LOCKED_RULES_INBOX.md` — قوانین Quick-Lockشده (**binding فوری، هر boot؛ هم‌سطح Locked**). اگر موجود نبود silent skip.
 3. `docs/constitution/02_lessons.md` (همه M-lessons + HM-lessons)
 4. `docs/constitution/06_meta.md` (meta principles)
 5. `docs/constitution/04_principles.md` + `docs/constitution/05_architecture.md` (modular — جایگزین سند جامع legacy منسوخ)
@@ -181,6 +182,7 @@ helper chat نقش consultation است (per HELPER_PROTOCOL §1.2).
 | Date | Source | Update |
 |------|--------|--------|
 | 2026-05-26 | helper part09 turn ۷۹ | Initial creation با enforcement layer (حل F57) |
+| 2026-05-31 | part19 | افزودن `LOCKED_RULES_INBOX.md` به STEP 1 reads + مکانیزم Quick-Lock (QL-0/QL-1/QL-2) |
 
 ---
 

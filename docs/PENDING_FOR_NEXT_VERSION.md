@@ -1458,4 +1458,15 @@ hash chat-end part16 = `81a3562` (cross-checked از `git rev-parse --short HEAD
 **Cross-refs:** #۵۱ · #۷۸ (SCM scope) · #۸۲ (MPTC) · #۸۷ (sync).
 **نشان داده به کاربر:** ✅ (#۶۵).
 
-**آخرین به‌روزرسانی part19 section:** 2026-05-31 (boot part19 — Discovery REVIEW↔file gap + اقدام check_13).
+### P19-candidate-4 — Manual-Box Full-Text Delivery (Locked-bound) + درس partial-delivery hazard (governance، severity: high)
+
+**Driver (خطای part19، #۶۵ lesson-from-mistake):** Claude برای به‌روزرسانی Project Instructions یک **بلوک قطعه‌ای** داد و گفت «اضافه کن»؛ کاربر کل کادر را با همان بلوک جایگزین کرد → overwrite کل متن کادر. بازیابی از آینهٔ `claude_workspace/manual_boxes/PROJECT_INSTRUCTIONS.md` (Full-Text Delivery درست) انجام شد. این دقیقاً نقض «Full-Text Delivery» در #۸۷ بود.
+
+**قانون الزامی کاربر (Locked، part19):** پیش از هر به‌روزرسانی هر یک از سه کادر دستی، Claude **موظف** است: (۱) متن کامل فعلی کادر را **ببیند** (از آینهٔ manual_boxes/ با verify last-sync؛ یا اگر آینه مطمئن نیست، از کاربر paste بخواهد)؛ (۲) سپس **کل متن جدید را یک‌جا** تحویل دهد (select-all → paste). تحویل قطعه‌ای/partial با دستور «اضافه/کم کن» **ممنوع مطلق** است.
+
+**codify پیشنهادی (نیازمند Review #۶۹):** تشدید #۸۷ با زیربند «Manual-Box Full-Text Protocol» (الزام دیدن متن قبلی + منع مطلق partial) + درس جدید (Partial Manual-Box Delivery Hazard) + به‌روزرسانی خط #۸۷ در PROJECT_KNOWLEDGE. به‌صورت batch اتمیک (مانند codify part16/part18).
+**وضعیت:** 🔴 کاربر صریح Locked اعلام کرد؛ منتظر codify رسمی (تأیید scope/timing).
+**Cross-refs:** #۸۷ (Full-Text) · #۸۸ · #۶۵ (lesson-from-mistake) · M17 (کادرهای خارج MCP) · #۶۹ (Review trigger) · manual_boxes/ mirrors.
+**نشان داده به کاربر:** ✅ (#۶۵).
+
+**آخرین به‌روزرسانی part19 section:** 2026-05-31 (boot part19 — Discovery REVIEW↔file gap + اقدام check_13 + P19-candidate-4 Manual-Box Full-Text).

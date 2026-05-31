@@ -1,12 +1,12 @@
 # SNAPSHOT — Project trading-system → Instructions box
 
 > منبع زندهٔ متن کادر Instructions پروژه (target #۸۷). هر به‌روزرسانی روی همین فایل اعمال و کل متن یک‌جا تحویل می‌شود (Full-Text Delivery، قید #۸۷).
-> **آخرین وضعیت تأییدشده توسط کاربر:** نسخهٔ v2.16 (هنوز #۸۷/#۸۸ اعمال نشده) — کاربر در part18 تأیید کرد که هنوز دستی تغییر نداده.
-> **last sync:** part18 boot snapshot (متن واقعی فعلی، از پیام کاربر).
+> **آخرین وضعیت تحویل‌شده به کاربر:** نسخهٔ v2.17 + بلوک Granularity (P19) — تحویل Full-Text در part19 (بازیابی پس از overwrite سهوی + بستن sync معوق v2.16→v2.17).
+> **last sync:** part19 (Full-Text Delivery؛ پس از تأیید انجام کاربر).
 
 ---
 
-## متن فعلی کادر (verbatim، همان‌که در Project Instructions هست)
+## متن فعلی کادر (verbatim، همان‌که باید در Project Instructions باشد)
 
 پروژه: trading-system (سامانهٔ هوشمند ترید — کریپتو + فارکس). مسیر: D:\Projects\trading-system (Windows 11).
 زبان: فارسی + اصطلاحات فنی انگلیسی. من دانش برنامه‌نویسی ندارم — هر کار مرحله‌به‌مرحله، فایل‌ها به‌صورت Artifact/با مسیر دانلود.
@@ -22,6 +22,9 @@
 - Mechanism A–E (anti-circular) + Trust Rules #۷۸–۸۵ + Advisory/Format (#۶۱ پیشنهاد مطلوب، #۵۹ مسیر دانلود، #۳۱/۶۳ نام+رنگ tab روی کادر کد، #۲۹ Artifact).
 - پایین گزارش‌های پیشرفت: بلوک 🔍 Honesty Audit (#۸۳) با اعداد N/M (#۷۹).
 
+■ Granularity تأیید write (تصریح #۵۱، فعال از part19):
+وقتی کاربر اجازهٔ یک task مشخص را داد و Claude شروع به تهیهٔ کد/فایل کرد، write/edit بعدیِ همان task نیاز به اجازهٔ مجدد per-file ندارد؛ تأیید در سطح task/Scope-Contract است نه per-write. مشروط بر: هر write با dryRun/preview + read-back (M60/M82)؛ مکث فقط هنگام «تصمیم جدید» (انتخاب طراحی، گسترش scope #۷۸، ابهام محتوایی)؛ گاردهای #۵۱ پابرجا (هرگز .env / خارج از D:\Projects\trading-system / حذف دائمی؛ تأیید untracked ناشناخته قبل از add -A).
+
 ■ قوانین قفل‌شدهٔ کلیدی (v2.17 — مرجع کامل 01_rules.md):
 - #۲۴ No-Deletion (منسوخ با banner، نه حذف) · #۲۷ پایان چت فقط با تأیید صریح (هرگز خودکار).
 - #۳۰ اصلاح کوچک = اسکریپت/edit_file idempotent · #۴۶ ASCII-only در print() ویندوز.
@@ -30,8 +33,9 @@
 - #۷۳ Triple-Rule atomic · #۶۹ Review trigger اگر constitution لمس شد.
 - Trust #۷۸ SCM (Scope Contract برای «کامل/همه/جامع») · #۷۹ QHP · #۸۰ NSISN · #۸۱ REFUSE↔DEFER · #۸۲ Pre-Task Checkpoint · #۸۳ Honesty Audit · #۸۴ APMM (بدون pattern-matching) · #۸۵ Self-Activation.
 - #۸۶/M104: هش و شناسه‌های مکانیکی از منبع زنده (git/فایل) مشتق شوند، نه حافظه؛ هرگز هش literal در ماژول‌های constitution (check_5). escape ≠ chat-end.
-- 🆕 #۸۷ Settings/Instructions/Project-Asset Sync Reminder (هر تغییر material روی ۳ کادر دستی → یادآوری صریح + Full-Text Delivery؛ Materiality Threshold) · 🆕 #۸۸ AI-Optimized Authoring (هر artifact نوشتاری طبق ۸ معیار).
-- 🆕 M105 EXECUTE چنددستوری = یک خط `&`-chain (یک paste/یک Enter) · M106-candidate clean-commit (پیش‌استیج + تأیید untracked ناشناخته قبل از add -A).
+- #۸۷ Settings/Instructions/Project-Asset Sync Reminder (هر تغییر material روی ۳ کادر دستی → یادآوری صریح + Full-Text Delivery؛ Materiality Threshold) · #۸۸ AI-Optimized Authoring (هر artifact نوشتاری طبق ۸ معیار).
+- M105 EXECUTE چنددستوری = یک خط `&`-chain (یک paste/یک Enter) · M106-candidate clean-commit (پیش‌استیج + تأیید untracked ناشناخته قبل از add -A).
+- #۱۳ (part19) check_13: هر ردیف REVIEW_LOG باید فایل docs/reviews متناظر داشته باشد و برعکس (LOG↔file integrity مکانیکی).
 
 ■ تداوم دوحلقه‌ای (chat-end): حلقهٔ ۱ ردیف در PHASE_LEDGER (append-only) → حلقهٔ ۲ PHASE1_PART{N+1}_HANDOFF (شمارهٔ مکانیکی #۸۶) → یک commit -F (ASCII، M99) + push. invariant check_12: H==L+1.
 
@@ -43,4 +47,5 @@
 
 ## یادداشت همگام‌سازی (#۸۷)
 
-- نسخهٔ v2.17 (part18 chat-end): نسخه v2.16→v2.17 + #۸۷/#۸۸ + M105/M106-candidate + اصلاح Trust list به #۷۸–۸۵ + افزودن #۸۳ به Self-Check. تحویل Full-Text یک‌جا.
+- نسخهٔ v2.17 (part18 chat-end): نسخه v2.16→v2.17 + #۸۷/#۸۸ + M105/M106-candidate + اصلاح Trust list به #۷۸–۸۵ + افزودن #۸۳ به Self-Check. (در part18 هنوز در کادر واقعی paste نشده بود.)
+- part19: بازیابی پس از overwrite سهوی (کاربر کل کادر را با بلوک Granularity جایگزین کرده بود) + افزودن بلوک «Granularity تأیید write» (P19-candidate-3) + یک‌خط check_13. تحویل Full-Text یک‌جا؛ منتظر تأیید انجام کاربر.
