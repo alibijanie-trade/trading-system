@@ -22,6 +22,9 @@ Z3-derived audits (without single M-lesson origin):
 Continuity chain (two-loop, Rule #62 + M23 + M101):
     Ledger <-> Handoff frontier integrity   -> check_12      (NEW part13)
 
+Review integrity (REVIEW_PROTOCOL section 4):
+    REVIEW_LOG row <-> docs/reviews file    -> check_13      (NEW part19)
+
 Usage:
     python scripts/63_pre_commit_audit.py
     python scripts/63_pre_commit_audit.py --verbose
@@ -150,6 +153,9 @@ PROJECT_MANIFEST_MD = DOCS / "PROJECT_MANIFEST.md"
 
 # Review log path for sequential numbering check (Z3.16)
 REVIEW_LOG_MD = DOCS / "REVIEW_LOG.md"
+
+# Reviews directory for LOG<->file integrity check (check_13, part19)
+REVIEWS_DIR = DOCS / "reviews"
 
 # Locked permanent docs where Z-ID references are NOT permitted (Rule #74, M96).
 # Excluded by design:
@@ -1044,6 +1050,100 @@ def check_12_continuity() -> CheckResult:
 
 
 # =============================================================================
+# CHECK 13: Review LOG <-> file integrity (REVIEW_PROTOCOL section 4, part19)
+# =============================================================================
+
+
+def check_13_review_file_integrity() -> CheckResult:
+    """
+    Verify bidirectional integrity between REVIEW_LOG.md rows and the
+    docs/reviews/*.md files (REVIEW_PROTOCOL section 4):
+
+      (a) row -> file : every LOG row {date}-{slug} has a matching file
+                        docs/reviews/{date}-{slug}.md
+      (b) file -> row : every docs/reviews/*.md (except README.md) has a
+                        matching LOG row (same date + slug)
+      (c) heading ID  : each review file's "# Review #NNN" heading matches
+                        the LOG row ID for that date+slug
+
+    Gap origin (part19): check_10 verified only LOG numbering continuity, so
+    rows #010/#011 passed while their files were missing. This check closes
+    that hole mechanically (behavioral -> mechanical, reliability-audit theme).
+    """
+    name = "check_13_review_file_integrity"
+    details: List[str] = []
+
+    if not REVIEW_LOG_MD.exists():
+        return CheckResult(name, True, "REVIEW_LOG.md not found (skip)", details)
+    if not REVIEWS_DIR.exists():
+        return CheckResult(name, False, f"reviews dir not found: {REVIEWS_DIR}", details)
+
+    log_text = REVIEW_LOG_MD.read_text(encoding="utf-8")
+
+    # Parse LOG rows: | NNN | YYYY-MM-DD | slug | ...
+    row_pattern = re.compile(
+        r"^\|\s*(\d{3})\s*\|\s*(\d{4}-\d{2}-\d{2})\s*\|\s*([a-z0-9][a-z0-9-]*)\s*\|",
+        re.MULTILINE,
+    )
+    rows = {}  # (date, slug) -> id
+    for m in row_pattern.finditer(log_text):
+        rows[(m.group(2), m.group(3))] = int(m.group(1))
+
+    if not rows:
+        return CheckResult(name, True, "no parseable Review rows (skip)", details)
+
+    details.append(f"REVIEW_LOG.md: {len(rows)} parseable row(s)")
+
+    # Collect review files (exclude README.md)
+    review_files = {p.stem: p for p in REVIEWS_DIR.glob("*.md") if p.name.lower() != "readme.md"}
+    details.append(f"docs/reviews/: {len(review_files)} review file(s) (README excluded)")
+
+    heading_pattern = re.compile(r"^#\s*Review\s*#0*(\d+)", re.IGNORECASE | re.MULTILINE)
+    violations: List[str] = []
+
+    # (a) row -> file  + (c) heading ID match
+    for (date, slug), rid in sorted(rows.items(), key=lambda kv: kv[1]):
+        stem = f"{date}-{slug}"
+        fpath = review_files.get(stem)
+        if fpath is None:
+            violations.append(
+                f"row->file MISSING: Review #{rid:03d} expects docs/reviews/{stem}.md"
+            )
+            continue
+        ftext = fpath.read_text(encoding="utf-8")
+        hm = heading_pattern.search(ftext)
+        if not hm:
+            violations.append(f"file {stem}.md: no '# Review #NNN' heading found")
+        elif int(hm.group(1)) != rid:
+            violations.append(
+                f"heading ID mismatch in {stem}.md: heading #{int(hm.group(1)):03d} != LOG #{rid:03d}"
+            )
+
+    # (b) file -> row
+    row_stems = {f"{date}-{slug}" for (date, slug) in rows.keys()}
+    for stem in sorted(review_files.keys()):
+        if stem not in row_stems:
+            violations.append(
+                f"file->row MISSING: docs/reviews/{stem}.md has no matching REVIEW_LOG row"
+            )
+
+    if violations:
+        return CheckResult(
+            name,
+            False,
+            f"{len(violations)} Review LOG<->file integrity violation(s)",
+            details + violations[:10],
+        )
+
+    return CheckResult(
+        name,
+        True,
+        f"Review LOG<->file integrity intact ({len(rows)} rows <-> {len(review_files)} files)",
+        details,
+    )
+
+
+# =============================================================================
 # Main runner
 # =============================================================================
 
@@ -1060,6 +1160,7 @@ ALL_CHECKS: List[Callable[[], CheckResult]] = [
     check_10_review_numbering,
     check_11_z_id_permanence,
     check_12_continuity,
+    check_13_review_file_integrity,
 ]
 
 
@@ -1074,7 +1175,7 @@ def main():
         "--check",
         type=int,
         default=0,
-        help="Run only check N (1-12); default 0 = run all",
+        help="Run only check N (1-13); default 0 = run all",
     )
     args = parser.parse_args()
 

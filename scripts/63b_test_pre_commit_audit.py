@@ -6,7 +6,7 @@ Per Rule #22: every {N}_*.py must have {N}b_test_*.py companion.
 
 Tests:
     test_1_script_imports          - audit script imports without error
-    test_2_all_check_functions     - all 12 check functions exist and callable
+    test_2_all_check_functions     - all 13 check functions exist and callable
     test_3_run_on_real_project     - audit run on real project state (info only)
     test_4_persian_digit_translation - to_ascii_digits() works
     test_5_constants_valid         - all path constants resolve
@@ -19,6 +19,8 @@ Tests:
     test_12_check_12_runs          - check_12 (continuity chain) runs
     test_13_check_12_logic         - check_12 returns PASS on current healthy chain
     test_14_check_1_logic          - check_1 passes AND extracts main+session counts (F-B guard)
+    test_15_check_13_runs          - check_13 (Review LOG<->file integrity) runs
+    test_16_check_13_logic         - check_13 returns PASS on current healthy state
 
 Exit codes:
     0 - all tests passed
@@ -69,7 +71,7 @@ def test_1_script_imports():
 
 
 def test_2_all_check_functions():
-    """All 12 check functions are exported and callable."""
+    """All 13 check functions are exported and callable."""
     expected_names = [
         "check_1_rule_counts",
         "check_2_lesson_counts",
@@ -83,6 +85,7 @@ def test_2_all_check_functions():
         "check_10_review_numbering",
         "check_11_z_id_permanence",
         "check_12_continuity",
+        "check_13_review_file_integrity",
     ]
     try:
         module = load_audit_module()
@@ -100,14 +103,14 @@ def test_2_all_check_functions():
     if missing:
         return False, f"problems: {missing}"
 
-    # Also verify ALL_CHECKS list contains exactly 12 items
+    # Also verify ALL_CHECKS list contains exactly 13 items
     all_checks = getattr(module, "ALL_CHECKS", None)
     if all_checks is None:
         return False, "ALL_CHECKS list not exported"
-    if len(all_checks) != 12:
-        return False, f"ALL_CHECKS has {len(all_checks)} items, expected 12"
+    if len(all_checks) != 13:
+        return False, f"ALL_CHECKS has {len(all_checks)} items, expected 13"
 
-    return True, "all 12 check functions present and callable"
+    return True, "all 13 check functions present and callable"
 
 
 def test_3_run_on_real_project():
@@ -379,6 +382,37 @@ def test_14_check_1_logic():
     return True, f"check_1 green + both counts extracted ({result.message})"
 
 
+def test_15_check_13_runs():
+    """check_13 (Review LOG<->file integrity, REVIEW_PROTOCOL section 4) runs without crash."""
+    return _run_specific_check(13)
+
+
+def test_16_check_13_logic():
+    """
+    check_13_review_file_integrity() returns PASS on the current state: every
+    REVIEW_LOG row has its docs/reviews file and vice versa (part19 backfill of
+    #010/#011 closed the gap that motivated this check).
+    """
+    try:
+        module = load_audit_module()
+    except Exception as e:
+        return False, f"cannot load module: {e}"
+
+    fn = getattr(module, "check_13_review_file_integrity", None)
+    if fn is None:
+        return False, "check_13_review_file_integrity not exported"
+
+    try:
+        result = fn()
+    except Exception as e:
+        return False, f"check_13_review_file_integrity raised: {e}"
+
+    if not getattr(result, "passed", False):
+        return False, f"check_13 not green: {getattr(result, 'message', '?')}"
+
+    return True, f"check_13 green ({result.message})"
+
+
 # =============================================================================
 # Main
 # =============================================================================
@@ -398,6 +432,8 @@ ALL_TESTS = [
     ("test_12_check_12_runs", test_12_check_12_runs),
     ("test_13_check_12_logic", test_13_check_12_logic),
     ("test_14_check_1_logic", test_14_check_1_logic),
+    ("test_15_check_13_runs", test_15_check_13_runs),
+    ("test_16_check_13_logic", test_16_check_13_logic),
 ]
 
 

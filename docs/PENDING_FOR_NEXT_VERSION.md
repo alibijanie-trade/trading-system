@@ -1427,3 +1427,35 @@ hash chat-end part16 = `81a3562` (cross-checked از `git rev-parse --short HEAD
 **نشان داده به کاربر:** ✅ (#۶۵).
 
 **آخرین به‌روزرسانی part18 chat-end section:** 2026-05-30.
+
+---
+
+## 🔴🔴🔴 آیتم‌های part19 (چت `TRADING-phase1-part19-phase3-catchup`)
+
+**منبع:** boot part19 — هنگام M101 backfill هش part18 (طبق handoff §2) کشف شد دو target از پنج target (دو فایل review) وجود ندارند.
+
+### Discovery part19-1 — REVIEW_LOG↔file Integrity Gap (validation/governance، severity: high)
+
+**مشاهده:** ردیف‌های Review **#۰۱۰** و **#۰۱۱** در `REVIEW_LOG.md` وجود داشتند (Status=Implemented)، ولی فایل‌های متناظرشان در `docs/reviews/` **ساخته نشده بودند** (فقط تا #۰۰۹ فایل موجود بود). part18 هنگام codify فقط rowها را ساخت، نه فایل‌ها را.
+
+**علت ریشه‌ای (مکانیکی، تأیید‌شده از خواندن کد):** `check_10_review_numbering` فقط **پیوستگی شماره‌ها** (no gaps/no duplicates) را در جدول LOG چک می‌کند — وجود فایل `docs/reviews/{slug}.md` را (نه row→file نه file→row) verify نمی‌کند. چون #۰۱۰/#۰۱۱ متوالی بودند، check_10 PASS داد. این همان چیزی است که `REVIEW_LOG §۴` آرزو کرده («هر file یک row و برعکس») ولی در کد پیاده نشده بود — شکاف پوشش مکانیکی، نه خطای اجرا.
+
+**اقدام جلوگیری (مکانیکی — هم‌راستا meta-deliverable reliability-audit: رفتاری→مکانیکی):**
+- ✅ **A1:** دو فایل review #۰۱۰/#۰۱۱ ساخته شد (با یادداشت صریح backfill، نه وانمود به ساخت در part18).
+- ✅ **A2:** backfill هش (ledger=`a6e7625` frontier؛ REVIEW_LOG #۰۱۰/#۰۱۱ resolution + Commit boundary دو فایل = `29b2b56` codify commit).
+- ⏳ **A4:** افزودن **check_13_review_file_integrity** به `scripts/63_pre_commit_audit.py` (row↔file دوطرفه + slug match + ID-heading match) + companion test (#۲۲).
+- ⏳ **A5:** Review **#۰۱۲** برای A4 (طبق #۶۹ trigger، precedent #۰۰۶/#۰۰۷).
+
+**Genesis:** boot part19 (handoff §2 targets d/e برای فایل‌های ناموجود).
+**Cross-refs:** check_10 · check_13 (NEW) · #۶۹ (Review Trigger) · REVIEW_PROTOCOL §۴ · M82 · #۸۴ (verify نه فرض) · meta-deliverable reliability-audit (part18).
+**نشان داده به کاربر:** ✅ (#۶۵).
+
+### P19-candidate-3 — Per-Task Write Approval Granularity (process، severity: medium)
+
+**دستور دائمی کاربر (part19):** وقتی کاربر اجازهٔ یک task را داد و Claude شروع به تهیه کد/فایل کرد، برای writeهای بعدی لازم نیست اجازهٔ مجدد per-file بگیرد — مگر نیاز به تصمیم جدید باشد. (تصریح granularity #۵۱: تأیید per-task/scope-contract نه per-write.)
+**وضعیت:** 🟢 اعمال فوری از part19.
+**codify/persist پیشنهادی:** افزودن به **Project Instructions** (#۸۷ sync) تا چت‌های بعد ارث ببرند؛ احتمالاً تبصره بر #۵۱ یا #۸۲ (MPTC).
+**Cross-refs:** #۵۱ · #۷۸ (SCM scope) · #۸۲ (MPTC) · #۸۷ (sync).
+**نشان داده به کاربر:** ✅ (#۶۵).
+
+**آخرین به‌روزرسانی part19 section:** 2026-05-31 (boot part19 — Discovery REVIEW↔file gap + اقدام check_13).
