@@ -25,9 +25,13 @@ DoD شمارش‌پذیر، گارد صریح، منبع زنده نه حافظ�
 ## 2) FIRST ACTION = M101 BACKFILL (mechanical, Rule #86)
 اولین عمل اتمیک بعد از تایید کاربر:
   - هش chat-end part18 را با:  git rev-parse --short HEAD  (یا git log) بگیر.
-  - NOTE: part18 دو commit chat-end داشت: 29b2b56 (batch اصلی codify+B5) و
-    5876f20 (follow-up: PENDING M106-candidate). هش backfill = آخرین HEAD
-    (احتمالا 5876f20 مگر بعدا commit دیگری رفته باشد — از git زنده verify کن، نه از این عدد).
+  - NOTE: part18 چند commit chat-end داشت (به ترتیب):
+      29b2b56 (batch اصلی codify v2.17 + B5)
+      5876f20 (follow-up: PENDING M106-candidate)
+      7199739 (handoff dual-commit note)
+      041b80e (sweep نهایی: #87 boxes v2.17 + PROJECT_KNOWLEDGE live + archive + PENDING candidates)
+    هش backfill = آخرین HEAD (در زمان نوشتن این فایل = 041b80e، ولی از git
+    زنده با `git rev-parse --short HEAD` verify کن، نه از این عدد ثابت — M101/M106 sweep).
   - این هش را backfill کن در 3 جا (همه الان placeholder اند):
       a. PHASE_LEDGER.md  ردیف part18 ستون آخر (الان: "<backfill در boot part19، M101>")
       b. PHASE_LEDGER.md  بخش "HEAD و hashها" خط "<chat-end part18>"
