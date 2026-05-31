@@ -23,6 +23,7 @@
 | QL-0 | 2026-05-31 | **مکانیزم Quick-Lock:** قفل‌کردن = append یک‌خطی اینجا + binding فوری، بدون batch/bump/Decision؛ codify رسمی ادواری و به‌خواست کاربر. این فایل هر boot خوانده شود. Genesis: اصطکاکِ part19 (هر قفل ساده به batch ۱۰فایلی تبدیل می‌شد). | process · #۸۷/#۸۸ | ACTIVE — pending periodic codify |
 | QL-1 | 2026-05-31 | **Manual-Box Full-Text Protocol:** پیش از هر به‌روزرسانی هر یک از سه کادر دستی (Settings→General / Project Instructions / Project Knowledge)، Claude باید (۱) **اول** متن کامل فعلی کادر را ببیند (از آینهٔ `claude_workspace/manual_boxes/` با verify last-sync؛ یا اگر آینه مطمئن نیست از کاربر paste بخواهد)، سپس (۲) **کل متن نهایی** را یک‌جا (select-all→paste) تحویل دهد. تحویل قطعه‌ای/partial با «اضافه/کم کن» **ممنوع مطلق**. آینه پس از هر تحویل به‌روز و read-back شود. Genesis: overwrite سهوی part19. | تشدید #۸۷ (Full-Text Delivery) | ACTIVE — pending codify (P19-candidate-4) |
 | QL-2 | 2026-05-31 | **Per-Task Write Approval Granularity:** پس از تأیید یک task توسط کاربر و شروع تهیهٔ کد/فایل، write/edit بعدیِ همان task نیاز به اجازهٔ مجدد per-file ندارد (تأیید در سطح task/Scope-Contract، نه per-write)؛ مشروط بر dryRun/preview + read-back (M60/M82) و مکث فقط هنگام «تصمیم جدید»؛ گاردهای #۵۱ پابرجا (هرگز .env / خارج از مسیر / حذف دائمی؛ تأیید untracked ناشناخته قبل از add -A). | تبصرهٔ #۵۱ | ACTIVE — در Project Instructions هم هست (P19-candidate-3) |
+| QL-3 | 2026-05-31 | **Next-Chat-Name Declaration (chat-end):** در هر chat-end، Claude باید **صریحاً نام چت بعد** را طبق الگوی HM-3 (`TRADING-phase{N}-part{NN}-{topic-slug}`) به کاربر اعلام کند — علاوه بر ثبت در handoff §۸. شمارهٔ phase/part مکانیکی (#۸۶)؛ topic-slug پیشنهادی و قابل تغییر توسط کاربر. فراموشیِ اعلام = نقض پروتکل chat-end. Genesis: فراموشیِ تکرارشونده در part18/part19. | HM-3 · #۶۲ (handoff) · process | ACTIVE |
 
 ---
 
@@ -31,4 +32,4 @@
 - این فایل source-of-truth برای قوانین Quick-Lockشده است؛ محتوای آن هرگز در حافظهٔ چت بازسازی نشود — همیشه از disk خوانده شود (هم‌راستا #۸۶).
 - هنگام codify رسمی، ردیف‌ها به‌جای حذف، `CODIFIED → #N/MN` می‌گیرند (#۲۴).
 
-**آخرین به‌روزرسانی:** part19 (2026-05-31) — ایجاد inbox + ثبت QL-0/QL-1/QL-2.
+**آخرین به‌روزرسانی:** part19 (2026-05-31) — ایجاد inbox + ثبت QL-0/QL-1/QL-2 + QL-3 (next-chat-name declaration).

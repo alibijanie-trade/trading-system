@@ -45,7 +45,7 @@ chat-end part19 (check_13 + CHAT_LOG catch-up + Quick-Lock) -> boot part20
 شمارش معتبر فعلی (NOT memory — از فایل بخوان):
   - Constitution = v2.17 (codify رسمی Quick-Lock هنوز انجام نشده — DEFER، گام 5)
   - قوانین Locked = 88 (#1-88) + 2 Reserved (#52,#53)
-  - Quick-Lock فعال = QL-0 (مکانیزم) / QL-1 (Manual-Box Full-Text) / QL-2 (per-task write)
+  - Quick-Lock فعال = QL-0 (مکانیزم) / QL-1 (Manual-Box Full-Text) / QL-2 (per-task write) / QL-3 (next-chat-name در chat-end)
     -> در claude_workspace/LOCKED_RULES_INBOX.md (binding، هنوز در constitution codify نشده)
   - درس‌نامه = M1-M105 (73 ثبت + 32 Reserved) + HM-1..HM-7
   - Reviews = 12 (#001-012؛ همه Implemented؛ همه resolution backfillشده)
@@ -95,6 +95,7 @@ chat-end part19 (check_13 + CHAT_LOG catch-up + Quick-Lock) -> boot part20
   - QL-1 / Rule #87: هر تغییر manual box = اول متن کامل قبلی را ببین (از manual_boxes/) +
         کل متن نهایی را یک‌جا بده. هرگز قطعه‌ای "این را اضافه/کم کن" (Genesis: overwrite part19).
   - black ممکن است .py را reformat کند (M94): اگر commit aborted، فقط .py را دوباره add + commit (clean-commit M106-candidate).
+  - QL-3 / HM-3: در هر chat-end، نام چت بعد را صریحاً به کاربر اعلام کن (نه فقط در handoff §8).
 
 ## 7) DECISIONS PENDING USER (Rule #88 criterion 5)
 هیچ تصمیم بازِ بلوک‌کننده برای part20 boot نیست. ادامه طبق دستور کاربر.
