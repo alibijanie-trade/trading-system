@@ -2512,8 +2512,92 @@ full-refresh اتمیک وضعیت‌نامه (همین چت) + بقیهٔ Phase
 
 ---
 
+## 🗂️ Catch-up بخش‌های part14→part18 (افزوده در part19؛ منبع: PHASE_LEDGER)
+
+> این چهار چت در زمان خودشان بخش کامل CHAT_LOG نگرفتند (drift Phase 3). در part19 از روی `PHASE_LEDGER.md` (source-of-truth تجمعی) + REVIEW_LOG + reviews/ بازنویسی شدند (#۸۴ verify، نه extrapolation). جزئیات کامل در همان منابع.
+
+---
+
+## چت `TRADING-phase1-part14-phase3-fullrefresh` (+ part15 reconcile) — full-refresh اتمیک + reconcile
+
+**تاریخ:** 2026-05-30
+**Branch:** `infra/v2.14-source-of-truth`
+**Parent commit (chat-end part13):** `3eae91e`
+
+### دستاوردها
+- ✅ **full-refresh اتمیک وضعیت‌نامه (part14):** بخش‌های کامل part09→part13 به CHAT_LOG + بازنویسی SESSION_STATUS (part08→part13) + reconcile PENDING (part09→part13) + آشتی count.
+- ✅ **Z3.15/16/17/25** RESOLVED-mark + **manifest D2** (Total=282، T1=28) + بستن Triple-Rule معوق part09.
+- ✅ **P-candidate M104/#۸۶** (escape↔check_12 off-by-one) ثبت شد.
+- ✅ part15 = reconcile + manifest + commit + chat-end (ردیف بازه‌ای part14-15 در Ledger).
+
+### Commits
+- `c30dbe5` — chat-end part14-15 (full-refresh + reconcile + manifest D2 + Ledger + PART16 handoff + P-candidate) — push شد.
+
+---
+
+## چت `TRADING-phase1-part16-codify-v216` — codify v2.16 (M104 + #۸۶)
+
+**تاریخ:** 2026-05-30
+**Branch:** `infra/v2.14-source-of-truth`
+**Parent commit (chat-end part14-15):** `c30dbe5`
+
+### دستاوردها
+- ✅ boot کامل + **M101 backfill part14-15=`c30dbe5`**.
+- ✅ **codify v2.16:** درس **M104** (Mechanical-Claim Verification before Persisting) + قانون **#۸۶** (Escape-Aware Sequence Derivation) در ۱۱ فایل اتمیک.
+- ✅ **Review #۰۰۸** + **Decision #۶۸** + PENDING P-candidate→CODIFIED.
+- ✅ audit **12/12** + companion **14/14** PASS (دستی + هوک pre-commit).
+
+### Commits
+- `8c9c6a7` — codify v2.16 (M104 + #۸۶ + Review #۰۰۸ + Decision #۶۸ + M101 backfill c30dbe5 folded) — push شد.
+- `81a3562` — chat-end part16 (Ledger part16 + PART17 handoff + SESSION_STATUS pointer) — push شد.
+
+---
+
+## چت `TRADING-phase1-part17-phase3-batches` — Phase 3 (۴ Batch B1-B4)
+
+**تاریخ:** 2026-05-30
+**Branch:** `infra/v2.14-source-of-truth`
+**Parent commit (chat-end part16):** `81a3562`
+
+### دستاوردها
+- ✅ boot کامل + **M101 backfill part16=`81a3562`**.
+- ✅ **B4** stale/cosmetic: main.md (branch + created-commit `5285fb6` + خط۱۷۷)، test_2 «11»→«12»، boot-template ref→modular.
+- ✅ **B1** deprecate ۱۰ سند legacy + **Review #۰۰۹**.
+- ✅ **B2** بازسازی PROJECT_KNOWLEDGE→v2.16 (#۵۵).
+- ✅ **B3** catch-up README/CHANGELOG/TASK_BACKLOG (scoped) + **P17-candidate** (#۶۱ elicitation drop).
+
+### Commits
+- `55f4f66` — chat-end part17 (B4+B1+B2+B3 + Review #۰۰۹ + Ledger part17 + PART18 handoff + SESSION_STATUS) — push شد.
+
+### معوق به part18
+B5 + موارد موکول.
+
+---
+
+## چت `TRADING-phase1-part18-codify-v217` — codify v2.17 (#۸۷/#۸۸ + M105 + B5)
+
+**تاریخ:** 2026-05-30
+**Branch:** `infra/v2.14-source-of-truth`
+**Parent commit (chat-end part17):** `55f4f66`
+
+### دستاوردها
+- ✅ boot کامل + **M101 backfill part17=`55f4f66`**.
+- ✅ **codify v2.17:** ۲ قانون Locked **#۸۷** (Settings/Instructions/Project-Asset Sync Reminder + Materiality Threshold + Full-Text Delivery) + **#۸۸** (AI-Optimized Authoring) در batch اتمیک (۱۰ فایل) + **Review #۰۱۰/#۰۱۱** + **Decision #۶۹/#۷۰** + main bump v2.17 (۸۸ قانون، M1-M105، ۱۱ Review) + audit CURRENT_VERSION→v2.17 + .pre-commit label.
+- ✅ **درس M105** (EXECUTE `&`-chain Paste-Integrity).
+- ✅ **B5 drift-backfill ۷/۷:** Created-in-commit non-literal · REVIEW resolution #۰۰۱=`35a634f`/#۰۰۳=`3bf66bf`/#۰۰۸=`8c9c6a7` · DECISIONS drift=۰ · PERSIST TASKS main-side ✓ helper-side DEFER · workspace Tier verify · CHANGELOG [0.6.0]=2026-05-22 · TASK_BACKLOG SUPERSEDED.
+- ✅ audit **12/12** + companion **14/14** PASS (دستی، با self-catch check_2 M75).
+
+### Commits
+- `29b2b56` — codify v2.17 (#۸۷/#۸۸ + M105 + B5) — push شد.
+- زنجیرهٔ chat-end: `5876f20` → `7199739` → sweep `041b80e` → **`a6e7625`** (frontier part18؛ از git زنده در boot part19 تأیید شد).
+
+### یادداشت (part19)
+شکاف REVIEW_LOG↔file (فایل‌های Review #۰۱۰/#۰۱۱ ساخته‌نشده) در boot part19 کشف و با check_13 بسته شد (Review #۰۱۲، commit `dcb5c20`).
+
+---
+
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v2.6 (2026-05-30 — part14 full-refresh: بخش‌های part09→part13 افزوده شد + boot part14 marker (parent `3eae91e`)؛ بخش‌های تا part08 دست‌نخورده)
-**به‌روز شده در:** چت `TRADING-phase1-part14-phase3-fullrefresh` (full-refresh اتمیک Phase 3)
+**نسخه:** v2.7 (2026-05-31 — part19 catch-up: بخش‌های کامل part14-15/16/17/18 از PHASE_LEDGER افزوده شد) · v2.6 (2026-05-30 — part14 full-refresh: بخش‌های part09→part13 + boot part14 marker، parent `3eae91e`؛ تا part08 دست‌نخورده)
+**به‌روز شده در:** چت `TRADING-phase1-part19-phase3-catchup` (catch-up part14→part18) · قبلاً part14 (full-refresh part09→part13)
 **به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ + #۷۳ (Triple-Rule honored)
