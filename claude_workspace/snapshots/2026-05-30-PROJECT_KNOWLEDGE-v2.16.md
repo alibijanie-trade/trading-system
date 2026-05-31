@@ -2,7 +2,7 @@
 
 > **هدف این فایل:** خلاصهٔ فشرده برای Project Knowledge در Claude Desktop.
 > **مرجع کامل (زنده، با Filesystem MCP):** `docs/constitution/` (modular — `main.md` + `01_rules.md` … `06_meta.md`)
-> **آخرین به‌روزرسانی:** part18 (2026-05-30) — همگام Constitution **v2.17**
+> **آخرین به‌روزرسانی:** part17 (2026-05-30) — همگام Constitution **v2.16**
 > ⚠️ اسناد جامع v2.6–v2.11 و PROJECT_GOVERNANCE/CLAUDE_CHECKLIST/PROJECT_CONTEXT/ARCHITECTURE **منسوخ (DEPRECATED)** شدند؛ مرجع فعال modular است.
 
 ---
@@ -29,20 +29,20 @@
 | Hooks | pre-commit 3.7 + black 24.4 + isort (Hybrid mode) |
 | Python | 3.11 |
 
-## 📊 وضعیت جاری (part18)
+## 📊 وضعیت جاری (part17)
 
 - **فاز:** Phase 1 Skeleton ✅ + MDRS v2 + **Phase 3 remediation در جریان** 🔄
-- **Constitution:** **v2.17** (modular)
-- **Git HEAD:** `7199739` (chat-end part18؛ زنجیره: `29b2b56` batch اصلی → `5876f20` → `7199739`) · **Tag:** `v0.6.0` (`5730173` روی main)
-- **قوانین قفل‌شده:** **۸۸** (#۱-۸۸) + ۲ Reserved (#۵۲، #۵۳)
-- **درس‌نامه:** **M1-M105** (۷۳ ثبت + ۳۲ Reserved) + **HM-1..HM-7**
-- **Reviews:** **۱۱** (#۰۰۱-۰۱۱؛ همه Implemented؛ #۰۱۰/#۰۱۱ resolution در boot part19 backfill)
+- **Constitution:** **v2.16** (modular)
+- **Git HEAD:** `81a3562` (chat-end part16) · **Tag:** `v0.6.0` (`5730173` روی main)
+- **قوانین قفل‌شده:** **۸۶** (#۱-۸۶) + ۲ Reserved (#۵۲، #۵۳)
+- **درس‌نامه:** **M1-M104** (۷۲ ثبت + ۳۲ Reserved) + **HM-1..HM-7**
+- **Reviews:** **۹** (#۰۰۱-۰۰۹؛ #۰۰۹ Approved/در انتظار commit part17)
 - **Tests:** pytest **۲۵/۲۵** + vitest **۳۰/۳۰** · audit **۱۲/۱۲** + companion **۱۴/۱۴** PASS
 
 ## 🎯 سه Objective
 
 1. **Phase 2 (Trust Rules → v2.15):** ✅ CLOSED (part12)
-2. **Phase 3 (Remediation + full-refresh):** ⏳ IN PROGRESS (part13→part18: check_12، full-refresh، codify v2.16، deprecate legacy، codify v2.17 + B5 drift-backfill ۷/۷، …)
+2. **Phase 3 (Remediation + full-refresh):** ⏳ IN PROGRESS (part13→part17: check_12، full-refresh، codify v2.16، deprecate legacy، بازسازی این فایل، …)
 3. **Phase 4 (اسکن ۱۰۰٪ ۲۸۲ فایل classified):** 🔮 TODO
 
 ## 🔒 مهم‌ترین قوانین (مرجع کامل: `01_rules.md`)
@@ -67,7 +67,7 @@
 - **#۶۷:** Cross-shell EXECUTE blocks اجباری
 - **#۶۸-۷۷ (v2.14 MDRS v2):** Tier hierarchy، Review trigger، Path validator، VERSION SSoT، Manifest self-awareness، Triple-Rule atomic (#۷۳)، Z-ID permanence، Scope closure، Pre-Action checklist، Continuous discovery logging
 
-### Trust & Anti-Sycophancy (#۷۸-۸۵، v2.15) + #۸۶ (v2.16) + #۸۷-۸۸ (v2.17)
+### Trust & Anti-Sycophancy (#۷۸-۸۵، v2.15) + #۸۶ (v2.16)
 - **#۷۸ SCM:** Scope Contract اجباری برای trigger words («کامل/همه/جامع/…»)
 - **#۷۹ QHP:** اعداد N/M، بدون واژگان مبهم
 - **#۸۰ NSISN:** بدون self-narrowing خودسرانه
@@ -77,12 +77,6 @@
 - **#۸۴ APMM:** بدون extrapolation از sample؛ هر مورد مستقل verify
 - **#۸۵ Self-Activation Lock:** قواعد #۷۸-۸۴ خودکار، نه با یادآوری کاربر
 - **#۸۶ Escape-Aware Sequence Derivation:** شناسه‌های دنباله‌ای (handoff/ledger/hash/شماره) از منبع زنده مشتق شوند، نه حافظه؛ escape ≠ chat-end
-- **🆕 #۸۷ Settings/Instructions/Project-Asset Sync Reminder:** هر تغییر **material** روی ۳ کادر دستی (Settings→General Instructions / Project Instructions / Project Knowledge files) → یادآوری صریح + گرفتن تأیید انجام + Full-Text Delivery (کل متن یک‌جا، نه «خط X را عوض کن»)؛ با Materiality Threshold (پرهیز از over-reminding برای تغییرات non-material)
-- **🆕 #۸۸ AI-Optimized Authoring:** هر artifact نوشتاری (پرامپت/handoff/Instructions/Scope Contract/دستور به Claude دیگر) طبق ۸ معیار prompt-engineering بهینه (نقش/هدف، ساختار، DoD شمارش‌پذیر، گارد، فرمت، گام‌به‌گام، منبع زنده، مثال)
-
-### درس‌های اجرایی کلیدی (v2.17)
-- **🆕 M105:** EXECUTE چنددستوری = یک خط `&`-chain (یک paste/یک Enter)؛ CMD خطوط جدا را وسط زنجیره متوقف می‌کند. `&`=اجرا بدون توجه به خطا (query)، `&&`=توقف روی خطا (زنجیرهٔ وابسته مثل add→commit→push). مکمل #۶۷/M99.
-- **M106-candidate:** clean-commit — پیش‌استیج (`git add -A` + hook) قبل از commit اصلی برای پرهیز از دوبار-commit (M94)؛ + تأیید فایل‌های untracked ناشناخته قبل از `add -A` (هم‌راستا #۵۱).
 
 ## 🔁 قانون تداوم دوحلقه‌ای (canonical)
 
@@ -91,9 +85,9 @@
 ## 📋 پروتکل اجباری شروع چت (#۴۸)
 
 Claude **باید** اول `claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md` را follow کند (STEP 0→4). فایل‌های mandatory read (به ترتیب):
-1. `docs/constitution/main.md` (index v2.17)
-2. `docs/constitution/01_rules.md` (#۱-۸۸)
-3. `docs/constitution/02_lessons.md` (M1-M105 + HM)
+1. `docs/constitution/main.md` (index v2.16)
+2. `docs/constitution/01_rules.md` (#۱-۸۶)
+3. `docs/constitution/02_lessons.md` (M1-M104 + HM)
 4. `docs/constitution/06_meta.md`
 5. `docs/constitution/04_principles.md` + `05_architecture.md`
 6. `docs/HELPER_PROTOCOL.md`
@@ -119,7 +113,6 @@ Atomic end-of-chat / Indicators / Strategies / Debugging پیچیده / Code rev
 - **هرگز** خارج از `D:\Projects\trading-system` عمل نکن.
 - **هرگز** پایان چت را خودکار شروع نکن (#۲۷).
 - هش/شماره‌های مکانیکی را از منبع زنده بگیر، نه حافظه (#۸۶/M104).
-- EXECUTE چنددستوری = یک خط `&`-chain (M105). commit message چندخطی = `-F` flag از فایل ASCII (M99).
 
 ---
 
@@ -127,4 +120,4 @@ Atomic end-of-chat / Indicators / Strategies / Debugging پیچیده / Code rev
 
 1. اول `CHAT_BOOT_TRIGGER_TEMPLATE.md` را follow کن، سپس `PHASE_LEDGER.md`.
 2. acknowledgment بده (STEP 2)، منتظر تأیید کاربر بمان (STEP 3).
-3. هر تغییر قانون/درس اساسی → **این فایل را در آپدیت، به‌روز کن و به کاربر بگو نسخهٔ جدید را در Project Knowledge جایگزین کند** (#۵۵ + #۸۷ Full-Text Delivery).
+3. هر تغییر قانون/درس اساسی → **این فایل را در آپدیت، به‌روز کن و به کاربر بگو نسخهٔ جدید را در Project Knowledge جایگزین کند** (#۵۵).

@@ -1382,7 +1382,30 @@ hash chat-end part16 = `81a3562` (cross-checked از `git rev-parse --short HEAD
 **Cross-refs:** M94 (Black re-stage) · M99/M105 (CMD) · #۵۱ (تأیید) · #۶۶ (push).
 **نشان داده به کاربر:** ✅ (#۶۵).
 
+### P19-candidate-2 — Post-Handoff Sweep Commit (process، severity: medium)
+
+**دستور دائمی کاربر (part18 chat-end):** پس از commit/push اصلی chat-end، اگر کارهای بعدی (مثل تولید سه کادر #۸۷، آرشیو snapshot، اصلاح مسیر) فایل‌های جدید uncommitted ساختند، باید **یک commit پایانیِ جاروب (sweep)** زده شود تا دیسک = GitHub یکی شود و هیچ کار uncommitted باقی نماند؛ سپس handoff به‌روز شود که «backfill از این هش آخر».
+
+**علت ریشه‌ای:** chat-end معمولاً یک commit اتمیک دارد، ولی کارهای #۸۷ (Full-Text Delivery سه کادر) + #۵۵ (PROJECT_KNOWLEDGE) **بعد** از آن commit رخ می‌دهند → فایل‌های uncommitted باقی می‌مانند (نقض روح #۶۶ backup فوری + ریسک state-drift دیسک≠HEAD).
+
+**راه‌حل (الزامی از part19):** ترتیب صحیح chat-end:
+1. commit/push اصلی (codify + دو حلقه).
+2. کارهای پساحلقه (#۸۷ سه کادر، #۵۵، آرشیو snapshot، اصلاح مسیر).
+3. **commit پایانیِ جاروب** (sweep) برای همهٔ uncommittedهای گام ۲ + push.
+4. به‌روزرسانی handoff: «backfill هش = آخرین HEAD (sweep)، از git زنده verify».
+
+**نکته chicken-and-egg:** آخرین sweep خودش هش جدید می‌سازد که handoff نمی‌تواند ثبت کند (M77/M101). راه‌حل: handoff صراحتاً بنویسد «از git زنده بگیر، نه عدد ثابت». پس از sweep دیگر commit نزن (توقف — وگرنه حلقهٔ بی‌پایان).
+
+**Genesis:** part18 chat-end (سه کادر #۸۷ + آرشیو snapshot بعد از commit اصلی → نیاز به sweep).
+**وضعیت:** 🟢 اعمال فوری رفتاری از part18 (همین chat-end).
+**codify پیشنهادی:** ادغام در درس **M106** (clean-commit family) یا درس مستقل، در part19 هم‌batch با M106. اشاره در پروتکل ۱۲-مرحلهٔ پایان چت (06_meta §۶.۱ مرحلهٔ ۱۲) + Template ۱۲.
+**Cross-refs:** M106-candidate · #۶۶ (push) · #۸۷ (Full-Text) · #۵۵ · M101 (chicken-and-egg) · M93 (atomic state).
+**نشان داده به کاربر:** ✅ (#۶۵).
+
 ### تصمیم معلق کاربر — `question-answer.txt`
 این فایل در `29b2b56` commit شد. تصمیم part19: نگه‌داری یا منسوخی با banner (#۲۴) یا .gitignore. معلق تا تصمیم کاربر.
+
+### 🆕 محل canonical فایل زندهٔ PROJECT_KNOWLEDGE (part18 chat-end discovery)
+فایل زندهٔ PROJECT_KNOWLEDGE.md که کاربر در Project files بارگذاری می‌کند، محل canonical‌اش = `claude_workspace/snapshots/PROJECT_KNOWLEDGE.md` (نام ثابت). آرشیو نسخه‌های قبلی با الگوی `{تاریخ}-PROJECT_KNOWLEDGE-v{X}.md` در همان پوشه. سند 06_meta §۶.۹ این نقش دوگانهٔ snapshots (هم زنده هم آرشیو) را صریح نگفته بود → باعث اشتباه مکان‌گذاری root در part18 شد (اصلاح شد). codify در part19: افزودن این صراحت به §۶.۹.
 
 **آخرین به‌روزرسانی part18 chat-end section:** 2026-05-30.

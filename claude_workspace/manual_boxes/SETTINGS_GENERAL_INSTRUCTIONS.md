@@ -8,11 +8,10 @@
 
 ## متن فعلی کادر (verbatim، همان‌که در Settings هست)
 
-در ابتدای هر chat برای پروژه trading-system، اگر filesystem MCP در دسترس داری و D:\Projects\trading-system\ accessible است، فایل D:\Projects\trading-system\claude_workspace\CHAT_BOOT_TRIGGER_TEMPLATE.md را بخوان و کامل follow کن. این فایل MANDATORY BOOT SEQUENCE دارد که شامل reading modular constitution (docs/constitution/) + HELPER_PROTOCOL + اول‌خواندن PHASE_LEDGER.md است. هیچ task شروع نکن قبل از STEP 2 (acknowledgment) و STEP 3 (user verification). اگر هر کدام موجود نبودند، silent skip و طبق دستور کاربر ادامه بده.
+در ابتدای هر chat برای پروژه trading-system، اگر filesystem MCP در دسترس داری و D:\Projects\trading-system\ accessible است، فایل D:\Projects\trading-system\claude_workspace\CHAT_BOOT_TRIGGER_TEMPLATE.md را بخوان و کامل follow کن. این فایل MANDATORY BOOT SEQUENCE دارد که شامل reading modular constitution v2.17 (docs/constitution/) + HELPER_PROTOCOL + اول‌خواندن PHASE_LEDGER.md است. هیچ task شروع نکن قبل از STEP 2 (acknowledgment) و STEP 3 (user verification). اگر هر کدام موجود نبودند، silent skip و طبق دستور کاربر ادامه بده.
 
 ---
 
 ## یادداشت همگام‌سازی (#۸۷)
 
-- این کادر **material** را در v2.17 نیاز به به‌روزرسانی دارد (افزودن #۸۷/#۸۸ + اشارهٔ نسخه)، چون رفتار boot/قوانین کلیدی تغییر کرد.
-- نسخهٔ v2.17 کامل در chat-end part18 تولید و یک‌جا تحویل می‌شود.
+- نسخهٔ v2.17 (part18): تنها تغییر = اشارهٔ نسخه (v2.17) در متن. کادر Settings عمداً مینیمال است (فقط نقطهٔ ورود boot)؛ فهرست قوانین در Project Instructions است نه اینجا (پرهیز از drift دوجایی).
