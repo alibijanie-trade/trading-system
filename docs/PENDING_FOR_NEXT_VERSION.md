@@ -1357,4 +1357,32 @@ hash chat-end part16 = `81a3562` (cross-checked از `git rev-parse --short HEAD
 **Cross-refs:** #۱۶ (کم‌حرفی) · #۳۱/#۶۳ (tab/EXECUTE) · #۵۹ (مسیر دانلود) · #۷۸ (SCM) · #۷۹ (QHP) · #۸۶ (منبع زنده) · اصل ۳ (radical honesty).
 
 **ثبت‌شده توسط:** #۶۰ (با تأیید #۵۱) · نشان داده به کاربر: ✅ (#۶۵).
+**وضعیت:** ✅ **CODIFIED v2.17** (part18 chat-end `29b2b56`) — قانون #۸۸ Locked + Review #۰۱۱ + Decision #۷۰.
 **آخرین به‌روزرسانی part18 section:** 2026-05-30 (mid part18، P18-candidate).
+
+---
+
+## 🔴🔴🔴 آیتم‌های part18 chat-end (`29b2b56`) — P19-candidate
+
+**منبع:** مشاهدات chat-end خود part18 (درخواست صریح کاربر برای قانون‌کردن مشکلات تکرارشونده).
+
+### P19-candidate-1 — M106: Clean-Commit Pre-Stage + Untracked Audit (process، severity: medium)
+
+**دو مشکل تکرارشونده در chat-end (part18 + چت‌های قبل):**
+
+**(الف) دوبار-commit ناشی از hook whitespace fix (خانوادهٔ M94):** commit اول fail می‌شود چون pre-commit hook (trailing-whitespace/end-of-file-fixer) فایل‌های untracked با CRLF/trailing-space را اصلاح می‌کند → نیاز به `git add -A` + commit دوم. در part18 روی `question-answer.txt` + `HELPER_SANDBOX_*` رخ داد.
+**راه‌حل (پیشگیرانه):** پیش از EXECUTE نهایی commit، یک گام پیش‌استیج + اجرای hook اضافه شود تا fixها قبل از commit اصلی اعمال شوند (یک EXECUTE جدا: `git add -A & pre-commit run --all-files`) — سپس commit در یک‌بار می‌گذرد. یا حداقل از ابتدا به کاربر بگو «commit اول ممکن است با hook fix دوبار شود (M94 طبیعی)» تا گیج نشود.
+
+**(ب) `git add -A` فایل ناشناخته را بی‌صدا commit کرد:** `question-answer.txt` (فایلی که Claude ماهیتش را نمی‌دانست) در commit `29b2b56` وارد repo شد.
+**راه‌حل (پیشگیرانه):** پیش از `git add -A` در chat-end، فایل‌های untracked ناشناخته (خارج از الگوی شناختهٔ commit_msg_*/handoff/manual_boxes) صریحاً به کاربر گزارش + تأیید گرفته شود (یا .gitignore شوند). هم‌راستا #۵۱ (تأیید قبل از write/commit).
+
+**Genesis:** part18 chat-end (دو بار commit + ورود `question-answer.txt`).
+**وضعیت:** 🟢 اعمال فوری رفتاری از part19 (پیش از codify، مثل #۶۱).
+**codify پیشنهادی:** درس **M106** (رفتاری، مثل M94/M99/M105 — بدون version bump) در 02_lessons §۲.۸ + coupling check_2 (M105→M106 در lessons + main×2 + SESSION) + اشاره در Template ۱۲ (06_meta). در part19 یا بعد، هم‌batch با سایر candidateها.
+**Cross-refs:** M94 (Black re-stage) · M99/M105 (CMD) · #۵۱ (تأیید) · #۶۶ (push).
+**نشان داده به کاربر:** ✅ (#۶۵).
+
+### تصمیم معلق کاربر — `question-answer.txt`
+این فایل در `29b2b56` commit شد. تصمیم part19: نگه‌داری یا منسوخی با banner (#۲۴) یا .gitignore. معلق تا تصمیم کاربر.
+
+**آخرین به‌روزرسانی part18 chat-end section:** 2026-05-30.
