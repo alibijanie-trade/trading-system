@@ -71,4 +71,4 @@
 
 - Claude: confirmed (part19 commit + این فایل)
 - User: explicit approval (scope A1-A6 + check_13 جدا + دستور «ثبت + اقدام جلوگیری» part19)
-- Commit boundary: part19 atomic commit (hash از git زنده در boot part20، M101)
+- Commit boundary: `dcb5c20` (part19 — commit افزودن check_13 + companion tests)

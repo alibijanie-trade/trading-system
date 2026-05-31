@@ -1,0 +1,109 @@
+================================================================
+PHASE1_PART20_HANDOFF — trading-system
+chat-end part19 (check_13 + CHAT_LOG catch-up + Quick-Lock) -> boot part20
+================================================================
+
+## 0) ROLE + GOAL (Rule #88 criterion 1)
+تو Claude در چت بعدی (part20) پروژه trading-system هستی. هدف این فایل:
+بوت تمیز + ادامه Phase 3/Phase 4 بدون از دست رفتن context. طبق Rule #88
+(AI-Optimized Authoring): نقش/هدف، ساختار شماره‌دار، DoD شمارش‌پذیر، گارد
+صریح، منبع زنده نه حافظه.
+
+## 1) BOOT SEQUENCE (Rule #48 — قبل از هر task)
+ترتیب الزامی خواندن (mandatory):
+  1. claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md  (STEP 0->4 follow)
+  2. claude_workspace/PHASE_LEDGER.md                (اول از همه — قصه تجمعی)
+  3. docs/constitution/main.md (v2.17 index)
+  4. docs/constitution/01_rules.md  (#1-88)
+     -> و بلافاصله claude_workspace/LOCKED_RULES_INBOX.md  (NEW part19 —
+        قوانین Quick-Lockشده QL-0/1/2؛ binding فوری، هم‌سطح Locked)
+  5. docs/constitution/02_lessons.md (M1-M105 + HM-1..7)
+  6. docs/constitution/06_meta.md
+  7. docs/SESSION_STATUS.md
+  8. docs/PENDING_FOR_NEXT_VERSION.md
+  9. این فایل (PART20_HANDOFF)
+هیچ task قبل از STEP 2 (acknowledgment) + STEP 3 (تایید کاربر) شروع نشود.
+
+## 2) FIRST ACTION = M101 BACKFILL (mechanical, Rule #86)
+اولین عمل اتمیک بعد از تایید کاربر:
+  - هش chat-end part19 را با:  git rev-parse --short HEAD  (یا git log) بگیر.
+  - NOTE: part19 چهار commit داشت (به ترتیب):
+      dcb5c20 (check_13 + Review #012 + 2 review file + test_15/16)
+      104abf0 (CHAT_LOG catch-up part14->18)
+      a6300ce (Quick-Lock inbox + بازیابی Project Instructions + boot template + PENDING)
+      <chat-end> (این ردیف Ledger part19 + PART20 handoff + backfill #012)
+    هش backfill = آخرین HEAD (chat-end). از git زنده verify کن، نه عدد ثابت (M101/#86).
+  - این هش را backfill کن در 2 جا (هر دو الان placeholder):
+      a. PHASE_LEDGER.md  ردیف part19 ستون آخر  ("<backfill در boot part20، M101>")
+      b. PHASE_LEDGER.md  بخش "HEAD و hashها" خط "<chat-end part19>"
+  - ALREADY DONE (در chat-end part19، نیازی به backfill نیست):
+      * REVIEW_LOG #012 Resolution = dcb5c20 (commit افزودن check_13)
+      * docs/reviews/2026-05-31-review-file-integrity-check.md Commit boundary = dcb5c20
+  - گارد (#86/M104): هش از git زنده. literal در ماژول constitution نزن (check_5).
+
+## 3) STATE OF RECORD (منبع زنده — Rule #88 criterion 7)
+شمارش معتبر فعلی (NOT memory — از فایل بخوان):
+  - Constitution = v2.17 (codify رسمی Quick-Lock هنوز انجام نشده — DEFER، گام 5)
+  - قوانین Locked = 88 (#1-88) + 2 Reserved (#52,#53)
+  - Quick-Lock فعال = QL-0 (مکانیزم) / QL-1 (Manual-Box Full-Text) / QL-2 (per-task write)
+    -> در claude_workspace/LOCKED_RULES_INBOX.md (binding، هنوز در constitution codify نشده)
+  - درس‌نامه = M1-M105 (73 ثبت + 32 Reserved) + HM-1..HM-7
+  - Reviews = 12 (#001-012؛ همه Implemented؛ همه resolution backfillشده)
+  - Decisions = Max 70 / Recorded 65 (part19 تصمیم جدید نیفزود)
+  - audit = 13 check + 16 companion test (در part19: 13/13 + 16/16 PASS)
+  - Git HEAD chat-end part19 = <در گام 2 از git بگیر>
+  - parent (part18 frontier) = a6e7625
+
+## 4) DONE در part19 (DoD — Rule #88 criterion 3)
+  [x] boot کامل (STEP 0->4) + تایید کاربر
+  [x] M101 backfill part18 frontier = a6e7625 (از git زنده؛ نه 041b80e stale)
+      -> در PHASE_LEDGER (2 جا) + REVIEW_LOG #010/#011 = 29b2b56
+  [x] کشف drift REVIEW_LOG<->file: ردیف #010/#011 فایل نداشتند (علت: check_10 فقط numbering)
+  [x] A1: ساخت 2 فایل review گمشده #010/#011 (با یادداشت صریح backfill)
+  [x] A4: check_13_review_file_integrity (دوطرفه row<->file + slug + heading-ID)
+      + REVIEWS_DIR + ALL_CHECKS + help 1-13 + companion test_15/test_16 + test_2 (12->13)
+  [x] A5: Review #012 (file + LOG row) + commit dcb5c20
+  [x] CHAT_LOG catch-up: 4 بخش part14-15/16/17/18 از PHASE_LEDGER (verify #84) + footer v2.7 + commit 104abf0
+  [x] بازیابی Project Instructions پس از overwrite سهوی (از آینه manual_boxes/) + sync v2.16->v2.17
+  [x] مکانیزم Quick-Lock: LOCKED_RULES_INBOX.md (QL-0/1/2) + ثبت در boot template STEP 1 + commit a6300ce
+  [x] ثبت P19-candidate-3 (per-task write) + P19-candidate-4 (Manual-Box Full-Text) در PENDING
+  [x] audit 13/13 + companion 16/16 PASS
+
+## 5) TODO / DEFER برای part20+ (Rule #88 criterion 4 — گاردها)
+  [ ] codify رسمی Quick-Lock (QL-0/1/2) به constitution — ادواری، هر وقت کاربر خواست
+        (پیشنهاد: یک batch با M106-candidate clean-commit؛ bump به v2.18 + Decision + Review).
+        تا آن زمان QL-ها از LOCKED_RULES_INBOX binding اند (نیازی به عجله نیست).
+  [ ] re-upload PROJECT_KNOWLEDGE.md به Project (#87) — غیر-material، رفرش بعدی PK.
+  [ ] پاک‌سازی 2 فایل untracked (تصمیم کاربر — حذف user-side):
+        claude_workspace/COMMIT_MSG_part19_A6.txt + COMMIT_MSG_part19_chatlog.txt
+        (یا .gitignore برای الگوی COMMIT_MSG_*.txt)
+  [ ] HELPER-SIDE (DEFER، منبع helper chat part09، خارج دسترس — fabricate نکن):
+        HM-META-H/I/J/K + W4-W5
+  [ ] تصمیمات Settings/connector (Brightdata/Chrome/training/tokens) — نیاز تصمیم کاربر.
+  [ ] Phase 4 (اسکن 100% فایل‌های classified) — با Rule #78 Scope Contract + #79 N/M + #84.
+  [ ] stale handoff files در incoming_permanent/ (part02 binance + قدیمی‌ها) —
+        Z3.18/Z3.23 policy، cleanup در S8 یا decision کاربر.
+
+## 6) GUARDS (Rule #88 criterion 4 — چه نکن)
+  - هرگز پایان چت خودکار (Rule #27) — فقط با تایید صریح کاربر.
+  - هرگز .env با MCP. هرگز خارج D:\Projects\trading-system.
+  - هرگز هش literal در ماژول constitution (check_5/#86/M104).
+  - EXECUTE چندتایی = یک خط &-chain (M105): cd /d ... & cmd1 & cmd2 & echo [DONE]
+  - commit message چندخطی = -F flag از فایل ASCII (M99). تک‌خطی = -m مجاز.
+  - write/edit با MCP = تایید task اول؛ ولی per-file مجدد لازم نیست (QL-2 / تبصره #51).
+  - فایل بزرگ = head/tail/view_range نه کل‌فایل (HM-9 timeout).
+  - QL-1 / Rule #87: هر تغییر manual box = اول متن کامل قبلی را ببین (از manual_boxes/) +
+        کل متن نهایی را یک‌جا بده. هرگز قطعه‌ای "این را اضافه/کم کن" (Genesis: overwrite part19).
+  - black ممکن است .py را reformat کند (M94): اگر commit aborted، فقط .py را دوباره add + commit (clean-commit M106-candidate).
+
+## 7) DECISIONS PENDING USER (Rule #88 criterion 5)
+هیچ تصمیم بازِ بلوک‌کننده برای part20 boot نیست. ادامه طبق دستور کاربر.
+
+## 8) NEXT CHAT NAME (HM-3 mandatory pattern)
+الگو: TRADING-phase{N}-part{NN}-{topic-slug}
+پیشنهاد: TRADING-phase1-part20-quicklock-codify-or-phase4-scan
+(کاربر می‌تواند topic-slug را عوض کند؛ phase1-part20 ثابت.)
+
+================================================================
+END PHASE1_PART20_HANDOFF
+================================================================
