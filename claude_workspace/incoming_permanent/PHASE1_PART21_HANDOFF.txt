@@ -44,7 +44,7 @@ chat-end part20 (governance repair Batch 1+2) -> boot part21
   - Reviews = 12 (#001-012؛ همه Implemented)
   - Decisions = تا #70 (از فایل verify کن)
   - audit = 13/13 check + 16/16 test PASS (part19)
-  - Git HEAD part20 = `17bb60a` ✅ (commitشده و pushشده)
+  - Git HEAD نهایی part20 = `f9d4db8` ✅ (backfill commit)
   - parent (part19 frontier) = 5de05e0 (backfill در چت 20 انجام شد)
 
 ================================================================
@@ -65,6 +65,12 @@ chat-end part20 (governance repair Batch 1+2) -> boot part21
   ~ claude_workspace/tmp_commit_msg.txt
       تغییر: به‌روزرسانی commit message برای درج نام PHASE1_PART21_HANDOFF
       ⚠️ موقت — **حذف شد** در پایان همین چت ✅
+
+  ### فایل‌های untracked که در commit backfill وارد شدند (git add -A ۱۳۳۵۵۴۲۹):
+  + claude_workspace/COMMIT_MSG_part19_A6.txt (pre-existing untracked)
+  + claude_workspace/COMMIT_MSG_part19_chatlog.txt (pre-existing untracked)
+  + claude_workspace/repair files handoff/REPAIR_SUMMARY.md (pre-existing untracked)
+  + claude_workspace/repair files handoff/repair_files_handoff.md (pre-existing untracked)
 
 ### فایل‌های تغییریافته:
 

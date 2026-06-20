@@ -85,7 +85,8 @@
 - ✅ **check_12_continuity — DONE part13** (DEADLINE رعایت شد؛ Review #۰۰۶؛ audit ۱۲/۱۲ runtime-verified). از این پس دوحلقه مکانیکی enforce می‌شود.
 - ✅ **full-refresh وضعیت‌نامه — DONE part14-15** (SESSION_STATUS/CHAT_LOG/PENDING/MANIFEST atomic در commit اتمیک part14-15؛ Triple-Rule معوق part09 بسته شد).
 
-- **`17bb60a`** = chat-end part20 (governance repair Batch 1+2 — 12 files changed, 493 insertions) — backfill انجام شد ✅
+- **`17bb60a`** = chat-end part20 commit 1 (governance repair Batch 1+2 — 12 files changed)
+- **`f9d4db8`** = chat-end part20 commit 2 backfill (hashes + remove tmp + 4 untracked files committed) — HEAD نهایی part20 ✅
 
 ---
 **📌 پایان PHASE_LEDGER.md — append-only؛ هر چت در chat-end حلقهٔ ۱ را اینجا می‌زند.**
