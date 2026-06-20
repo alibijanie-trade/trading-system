@@ -27,7 +27,7 @@ chat-end part20 (governance repair Batch 1+2) -> boot part21
   - هش HEAD فعلی را از git زنده بگیر: git rev-parse --short HEAD
   - این هش را backfill کن در PHASE_LEDGER.md ردیف part21
   ⚠️ NOTE: backfill هش part19 (5de05e0) در چت 20 انجام شد.
-  ⚠️ NOTE: backfill هش part20 (f0d31d3) در همین handoff ثبت است — نیاز به کار ندارد.
+  ⚠️ NOTE: backfill هش part20 (fca4dd3) — آخرین HEAD این چت است — در همین handoff ثبت است، نیاز به کار ندارد.
 
 ## 3) STATE OF RECORD (منبع زنده — از فایل بخوان)
   - Constitution = v2.17
@@ -45,11 +45,12 @@ chat-end part20 (governance repair Batch 1+2) -> boot part21
   - Reviews = 12 (#001-012؛ همه Implemented)
   - Decisions = تا #70 (از فایل verify کن)
   - audit = 13/13 check + 16/16 test PASS (part19)
-  - Git HEAD نهایی part20 = `f0d31d3` ✅ (آخرین commit — housekeeping)
+  - Git HEAD نهایی part20 = `fca4dd3` ✅ (handoff finalize commit)
   - زنجیره commitهای part20:
       `17bb60a` = Batch 1+2 اصلی (12 files changed, 493 insertions)
       `f9d4db8` = backfill هش + حذف tmp_commit_msg + 4 untracked committed
       `f0d31d3` = housekeeping (LEDGER + handoff با هش‌های نهایی)
+      `fca4dd3` = handoff finalize (FILE CHANGES LOG کامل)
   - parent (part19 frontier) = 5de05e0
 
 ================================================================
