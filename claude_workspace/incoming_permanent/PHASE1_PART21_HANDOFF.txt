@@ -45,13 +45,8 @@ chat-end part20 (governance repair Batch 1+2) -> boot part21
   - Reviews = 12 (#001-012؛ همه Implemented)
   - Decisions = تا #70 (از فایل verify کن)
   - audit = 13/13 check + 16/16 test PASS (part19)
-  - Git HEAD نهایی part20 = `d4721e2` ✅
-  - زنجیره commitهای part20:
-      `17bb60a` = Batch 1+2
-      `f9d4db8` = backfill + حذف tmp + 4 untracked
-      `f0d31d3` = housekeeping
-      `fca4dd3` = handoff finalize
-      `d4721e2` = final hashes (HEAD نهایی)
+  - Git HEAD نهایی part20 = `<backfill در boot part21>`
+  - زنجیره commitهای part20: از `17bb60a` شروع — هش نهایی را M101 در boot part21 از `git rev-parse --short HEAD` بگیر و جایگزین کن
   - parent (part19 frontier) = 5de05e0
 
 ================================================================
