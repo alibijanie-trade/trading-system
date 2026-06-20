@@ -1,6 +1,6 @@
 # ماژول ۰۲ — درس‌نامه اشتباهات Claude
 
-> بخشی از **Constitution v2.14 (Modular)** — [بازگشت به main](./main.md)
+> بخشی از **Constitution v2.17 (Modular)** — [بازگشت به main](./main.md)
 >
 > **محتوا:** درس‌نامه اشتباهات Claude (M1-M63 از v2.11) با علت ریشه‌ای، راه‌حل، cross-refs.
 > **منبع:** سند جامع v2.11 → سند ۱۸ (درس‌نامه اشتباهات Claude — AI Mistakes Log)

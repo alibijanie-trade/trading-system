@@ -1,6 +1,6 @@
 # ماژول ۰۳ — کاتالوگ Bug ها
 
-> بخشی از **Constitution v2.14 (Modular)** — [بازگشت به main](./main.md)
+> بخشی از **Constitution v2.17 (Modular)** — [بازگشت به main](./main.md)
 >
 > **محتوا:** کاتالوگ Bug های پروژه (#1-#54) با علائم، علت ریشه‌ای، fix، تست regression.
 > **منبع v2.11:**

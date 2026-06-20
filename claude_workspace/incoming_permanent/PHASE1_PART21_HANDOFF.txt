@@ -1,0 +1,220 @@
+================================================================
+PHASE1_PART21_HANDOFF — trading-system
+chat-end part20 (governance repair Batch 1+2) -> boot part21
+================================================================
+
+## 0) ROLE + GOAL (Rule #88 criterion 1)
+تو Claude در چت بعدی (part21) پروژه trading-system هستی. هدف این فایل:
+بوت تمیز + ادامه کار بدون از دست رفتن context. دو کار موازی در صف است:
+  الف) ادامهٔ governance repair (Batch 3+)
+  ب)  codify v2.18 (Scope Contract کامل آماده است — ببین §5)
+
+## 1) BOOT SEQUENCE (Rule #48)
+ترتیب الزامی خواندن:
+  1. claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md  (STEP 0->4)
+  2. claude_workspace/PHASE_LEDGER.md                (قصه تجمعی)
+  3. docs/constitution/main.md (v2.17 index)
+  4. docs/constitution/01a_rules_core.md  (#1-88 جدول + بخش‌های پایه) ← NEW از part20
+     -> 01b_rules_detail.md فقط on-demand (شرح مفصل قانون خاص)
+     -> و بلافاصله claude_workspace/LOCKED_RULES_INBOX.md (شامل QL-0..QL-6)
+  5. docs/constitution/02_lessons.md
+  6. docs/constitution/06_meta.md
+  7. docs/SESSION_STATUS.md
+  8. docs/PENDING_FOR_NEXT_VERSION.md
+  9. این فایل (PART21_HANDOFF)
+
+## 2) FIRST ACTION = M101 BACKFILL
+  - هش commit Batch 1+2 را از git زنده بگیر: git rev-parse --short HEAD
+  - این هش را backfill کن در PHASE_LEDGER.md ردیف part20
+  ⚠️ NOTE: backfill هش part19 (5de05e0) قبلاً در چت 20 انجام شده — نیازی به تکرار نیست.
+
+## 3) STATE OF RECORD (منبع زنده — از فایل بخوان)
+  - Constitution = v2.17
+  - قوانین Locked = 88 (#1-88) + 2 Reserved (#52,#53)
+  - Quick-Lock فعال = QL-0..QL-6 (در LOCKED_RULES_INBOX.md)
+      QL-0: مکانیزم Quick-Lock
+      QL-1: Manual-Box Full-Text (هرگز partial)
+      QL-2: per-task write تأیید
+      QL-3: next-chat-name اعلام در chat-end
+      QL-4: هش فقط از HEAD زنده
+      QL-5: عدم اتکا به حافظهٔ انسان
+      QL-6: مدل helper تغییر کرد — چت قبلی نقش کمکی دارد (تصمیم part20)
+             HELPER_PROTOCOL.md = مرجع تاریخی، نه پروتکل فعال (#24 حفظ، بدون لمس)
+  - درس‌نامه = M1-M105 + HM-1..7
+  - Reviews = 12 (#001-012؛ همه Implemented)
+  - Decisions = تا #70 (از فایل verify کن)
+  - audit = 13/13 check + 16/16 test PASS (part19)
+  - Git HEAD part20 = <از git زنده در boot بگیر>
+  - parent (part19 frontier) = 5de05e0 (backfill در چت 20 انجام شد)
+
+================================================================
+## FILE CHANGES LOG — part20 (این چت = governance repair)
+================================================================
+
+### فایل‌های جدید ایجادشده:
+  + docs/constitution/01a_rules_core.md
+      محتوا: header + بخش‌های ۱.۱-۱.۹ + جدول کامل #1-88
+      دلیل: split از 01_rules.md (75KB → ~25KB boot-critical) — مشکل #2
+      shell standard: بخش ۱.۷ به PowerShell به‌روز شد — مشکل #3
+
+  + claude_workspace/incoming_permanent/PHASE1_PART21_HANDOFF.txt (این فایل)
+
+  ~ claude_workspace/PHASE_LEDGER.md
+      تغییر: افزودن ردیف part20 (با placeholder `<part20-hash>` — backfill در boot part21)
+
+  ~ claude_workspace/tmp_commit_msg.txt
+      ⚠️ موقت — باید بعد از commit حذف یا gitignore شود
+
+### فایل‌های تغییریافته:
+
+  ~ docs/constitution/01_rules.md
+      تغییر: header → v2.14 → v2.17 — مشکل #10
+      (legacy نگه داشته شد per Rule #24؛ boot به 01a ارجاع دارد)
+
+  ~ docs/constitution/02_lessons.md
+      تغییر: header → v2.14 → v2.17 — مشکل #10
+
+  ~ docs/constitution/03_bugs.md
+      تغییر: header → v2.14 → v2.17 — مشکل #10
+
+  ~ docs/constitution/04_principles.md
+      تغییر: header → v2.14 → v2.17 — مشکل #10
+
+  ~ docs/constitution/05_architecture.md
+      تغییر: header → v2.14 → v2.17 — مشکل #10
+      (بخش 5.1.2 shell از v2.12 صحیح بود — دست‌نخورده)
+
+  ~ docs/constitution/06_meta.md
+      تغییر: header → v2.14 → v2.17 — مشکل #10
+
+  ~ docs/constitution/main.md
+      تغییر 1: Quick-start — افزودن LOCKED_RULES_INBOX.md — مشکل #6
+      تغییر 2: Quick-start — ref از 01_rules.md → 01a_rules_core.md
+      تغییر 3: Quick-start — توضیح on-demand برای 01b_rules_detail.md
+
+  ~ docs/SESSION_STATUS.md
+      تغییر: بازنویسی کامل — مشکل #1
+      قبل: part13 header + بدنه تا part17 (stale)
+      بعد: part19 header + بدنه کامل به‌روز (Git HEAD=5de05e0، Reviews=12، audit=13/13+16/16)
+
+  ~ claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md
+      تغییر 1: STEP 1 — افزودن PHASE_LEDGER.md — مشکل #7
+      تغییر 2: شماره‌گذاری آیتم‌ها از 12 به 13
+      تغییر 3: ref Constitution از v2.14 → v2.17
+      تغییر 4: شماره قواعد از #1-#77 → #1-#88
+      تغییر 5: Section D — افزودن ردیف 2026-06-20
+
+### کارهای part20 (چت قبل از این — چت 20):
+  ~ claude_workspace/PHASE_LEDGER.md
+      backfill هش part19 = 5de05e0 در 2 نقطه (انجام‌شده در چت 20)
+
+================================================================
+## FILE CHANGES LOG — چت‌های قبلی (خلاصه تجمعی)
+================================================================
+
+### part19:
+  + claude_workspace/LOCKED_RULES_INBOX.md (QL-0/1/2)
+  + docs/reviews/2026-05-31-review-file-integrity-check.md
+  + docs/reviews/...-010.md و ...-011.md (backfill)
+  ~ scripts/63_pre_commit_audit.py (check_13 + test_15/16)
+  ~ docs/REVIEW_LOG.md (#012 + resolution #010/#011)
+  ~ docs/CHAT_LOG.md (catch-up part14-18)
+  ~ claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md (LOCKED_RULES_INBOX در STEP 1)
+  ~ claude_workspace/manual_boxes/* (بازیابی Project Instructions)
+
+### part18 (codify v2.17):
+  ~ docs/constitution/main.md, 01_rules.md, 02_lessons.md
+  ~ docs/REVIEW_LOG.md (#010/#011), docs/DECISIONS_LOG.md (#69/#70)
+  ~ scripts/63_pre_commit_audit.py (CURRENT_VERSION→v2.17)
+  ~ + B5 drift-backfill 7/7
+
+### part17 (Phase 3 B4/B1/B2/B3):
+  ~ docs/constitution/main.md, README.md, CHANGELOG.md, TASK_BACKLOG.md
+  + docs/PROJECT_KNOWLEDGE.md (→v2.16)
+  ~ docs/REVIEW_LOG.md (#009)
+  ~ (10 سند legacy deprecate)
+
+### part16 (codify v2.16):
+  ~ docs/constitution/main.md, 01_rules.md, 02_lessons.md
+  ~ scripts/63_pre_commit_audit.py, docs/REVIEW_LOG.md (#008), docs/DECISIONS_LOG.md (#68)
+
+### part14-15 (full-refresh):
+  ~ docs/SESSION_STATUS.md, docs/CHAT_LOG.md, docs/PENDING_FOR_NEXT_VERSION.md
+  ~ docs/PROJECT_MANIFEST.md (D2=282), claude_workspace/PHASE_LEDGER.md
+
+### part13 (check_12 + F-A/B/C):
+  + scripts/63_pre_commit_audit.py (check_12_continuity)
+  ~ docs/DECISIONS_LOG.md (v1.4), docs/REVIEW_LOG.md (#006/#007)
+  ~ docs/constitution/01_rules.md (check_1 hardening)
+
+================================================================
+## 4) DONE در part20
+  [x] خواندن REPAIR_SUMMARY.md + repair_files_handoff.md (73KB کامل)
+  [x] خواندن چت 20 (docx آپلودشده) و تطبیق با کارهای انجام‌شده
+  [x] Batch 1: مشکل #10 — header v2.14→v2.17 در 6 فایل ماژول
+  [x] Batch 1: مشکل #6 — LOCKED_RULES_INBOX در Quick-start main.md
+  [x] Batch 1: مشکل #7 — PHASE_LEDGER در STEP 1 boot template
+  [x] Batch 1: مشکل #1 — بازنویسی SESSION_STATUS از part13 به part19
+  [x] Batch 2: مشکل #2 — split 01_rules.md → 01a (core) + 01b (detail)
+  [x] Batch 2: مشکل #3 — shell standard CMD→PowerShell در 01a بخش ۱.۷
+  [x] commit message آماده در tmp_commit_msg.txt
+  [ ] commit + push — منتظر اجرای کاربر
+
+================================================================
+## 5) TODO برای part21+
+================================================================
+
+  ⚡ اولویت اول — commit Batch 1+2 (کاربر اجرا می‌کند):
+  [ ] اجرای دستور commit آماده‌شده (در جلسه قبل به کاربر داده شد)
+  [ ] حذف tmp_commit_msg.txt بعد از commit
+
+  ——— codify v2.18 (از چت 20 — Scope Contract کامل، تأیید کاربر لازم) ———
+  ⚠️ چت 20 با دو سؤال بی‌پاسخ تمام شد. در boot part21 باید از کاربر بپرسی:
+      سؤال ۱: آیا با فهرست «انجام بده/انجام نده» زیر موافقی؟
+      سؤال ۲: آیا B4 (Authority Hierarchy) و B1/B2 (HM-9/HM-8→M108/M109)
+               در constitution اصلی تثبیت شوند یا منجمد بمانند؟
+
+  [ ] codify v2.18 — batch اتمیک پس از تأیید:
+      A1: QL-0 → Rule #89 (Quick-Lock Mechanism)
+      A2: QL-1 → تشدید #87 + درس M107 (Partial Manual-Box Hazard)
+      A3: QL-2 → تبصرهٔ #51
+      A4: QL-3 → ارتقای HM-3 → قانون chat-end + #62
+      A5: QL-4 → تبصرهٔ #86
+      A6: QL-5 → اصل در 04_principles + Rule #90
+      A7: M106 (Clean-Commit pre-stage + untracked audit)
+      A8: bump → v2.18 + Review #013 + Decisions + audit CURRENT_VERSION
+      A9: همگام‌سازی هدر همه ماژول‌ها → v2.18 (بعد از bump)
+      B1: HM-9 → درس M108 (MCP Liveness — پروژه‌ای) [نیاز تأیید]
+      B2: HM-8 → درس M109 (Tool-Discovery-First — پروژه‌ای) [نیاز تأیید]
+      B4: یک خط در 04_principles: «تأیید صریح کاربر در صدر» [نیاز تأیید]
+      C1: banner منسوخی نرم روی HELPER_PROTOCOL.md
+      C2: ثبت QL-6 در LOCKED_RULES_INBOX + PENDING (اگر هنوز انجام نشده)
+      ❌ انجام نده: B5، B6، C3، C4
+
+  ——— governance repair — Batches باقیمانده ———
+  [ ] Batch 3: مشکل #16 — اجرای scripts/64_generate_manifest.py
+  [ ] Batch 3: مشکل #5 — اتوماسیون‌ها (بخش ۷ repair handoff)
+  [ ] مشکلات متوسط: #8، #9، #13، #15
+  [ ] مشکلات پایین: #4، #11، #14، #17
+
+  ——— موارد روتین ———
+  [ ] PHASE_LEDGER ردیف part20 — backfill هش بعد از commit
+  [ ] بررسی نیاز به Review #013 برای Batch 1+2
+
+## 6) GUARDS
+  - هرگز پایان چت خودکار (Rule #27)
+  - هرگز هش literal در ماژول constitution (check_5/#86/M104)
+  - 01b_rules_detail.md فقط on-demand (نه در boot)
+  - shell standard = PowerShell (01a بخش ۱.۷)
+  - tmp_commit_msg.txt موقت — پس از commit حذف شود
+  - HELPER_PROTOCOL.md = منجمد (#24)؛ بدون لمس محتوا
+  - QL-6 binding است (حتی قبل از codify رسمی در v2.18)
+  - هر task روی constitution → Scope Contract (#78) + تأیید کاربر اول
+
+## 7) NEXT CHAT NAME (HM-3 / QL-3)
+الگو: TRADING-phase1-part21-{topic-slug}
+پیشنهاد: TRADING-phase1-part21-codify-v218-and-governance-repair
+
+================================================================
+END PHASE1_PART21_HANDOFF
+================================================================

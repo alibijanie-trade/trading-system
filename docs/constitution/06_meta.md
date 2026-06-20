@@ -1,6 +1,6 @@
 # ماژول ۰۶ — Meta (Session/Templates/Tooling)
 
-> بخشی از **Constitution v2.14 (Modular)** — [بازگشت به main](./main.md)
+> بخشی از **Constitution v2.17 (Modular)** — [بازگشت به main](./main.md)
 >
 > **محتوا:** Session/Context + Chat Handoff + Templates پاسخ + Claude MAX + Pre-commit + GitHub + Filesystem MCP + Claude Desktop + claude_workspace + Skills
 > **منبع v2.11:** سند ۱۳ + ۱۴ + ۱۵ + ۱۶ + ۱۷ + ۱۹ + ۲۰ + ۲۱ + ۲۲ + ۲۳ + ۲۴ + ۲۵ (۱۲ سند)

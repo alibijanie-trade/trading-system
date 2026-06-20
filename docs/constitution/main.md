@@ -61,13 +61,15 @@
 
 1. **`main.md`** (همین فایل) — برای آشنایی با ساختار modular
 2. **`04_principles.md`** — برای فهم سطح‌بندی و فلسفه پروژه
-3. **`01_rules.md`** — قوانین کامل Locked
-4. **`02_lessons.md`** — درس‌نامه برای جلوگیری از تکرار اشتباهات
-5. **`docs/PENDING_FOR_NEXT_VERSION.md`** — PENDING آیتم‌های ادغام نشده
-6. **`docs/SESSION_STATUS.md`** — وضعیت فعلی پروژه
-7. **`docs/DECISIONS_LOG.md`** — تصمیمات معماری ثبت‌شده
-8. **`docs/CHAT_LOG.md`** بخش چت قبل
-9. **اجرای M73 audit** — Cross-Document Consistency Check
+3. **`01a_rules_core.md`** — قوانین کامل Locked (جدول #۱-۸۸ + بخش‌های پایه) ⭐
+   - `01b_rules_detail.md` — شرح مفصل قوانین — **on-demand** (فقط وقتی شرح خاص قانونی لازم است)
+4. **`claude_workspace/LOCKED_RULES_INBOX.md`** — قوانین Locked فعال (۶ قانون binding که هنوز در 01_rules.md ادغام نشده‌اند) ⭐
+5. **`02_lessons.md`** — درس‌نامه برای جلوگیری از تکرار اشتباهات
+6. **`docs/PENDING_FOR_NEXT_VERSION.md`** — PENDING آیتم‌های ادغام نشده
+7. **`docs/SESSION_STATUS.md`** — وضعیت فعلی پروژه
+8. **`docs/DECISIONS_LOG.md`** — تصمیمات معماری ثبت‌شده
+9. **`docs/CHAT_LOG.md`** بخش چت قبل
+10. **اجرای M73 audit** — Cross-Document Consistency Check
 
 سایر ماژول‌ها (`03_bugs.md`, `05_architecture.md`, `06_meta.md`) **on-demand** خوانده می‌شوند — وقتی موضوع مرتبط مطرح شد.
 

@@ -1,6 +1,6 @@
 # ماژول ۰۴ — اصول بنیادی و فلسفه پروژه
 
-> بخشی از **Constitution v2.14 (Modular)** — [بازگشت به main](./main.md)
+> بخشی از **Constitution v2.17 (Modular)** — [بازگشت به main](./main.md)
 >
 > **محتوا:** ۸ اصل بنیادی + سطح‌بندی 🔒/🎯/💡 + No-Deletion + Atomic Updates + Metarules M71-M82
 > **منبع v2.11:** سند ۱۳.۵ (راهنمای تکامل) + سند ۱۶ (مدیریت دانش) + CHAT11_HANDOFF بخش 0-
