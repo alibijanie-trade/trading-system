@@ -88,7 +88,8 @@
 - **`17bb60a`** = chat-end part20 commit 1 (governance repair Batch 1+2 — 12 files changed)
 - **`f9d4db8`** = chat-end part20 commit 2 (backfill hashes + remove tmp + 4 untracked)
 - **`f0d31d3`** = chat-end part20 commit 3 (housekeeping LEDGER+handoff)
-- **`fca4dd3`** = chat-end part20 commit 4 — HEAD نهایی part20 ✅ (handoff finalize)
+- **`fca4dd3`** = chat-end part20 commit 4 (handoff finalize)
+- **`d4721e2`** = chat-end part20 commit 5 — HEAD نهایی part20 ✅ (LEDGER+handoff final hashes)
 
 ---
 **📌 پایان PHASE_LEDGER.md — append-only؛ هر چت در chat-end حلقهٔ ۱ را اینجا می‌زند.**

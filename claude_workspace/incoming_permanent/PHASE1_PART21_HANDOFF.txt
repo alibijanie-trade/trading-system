@@ -45,12 +45,13 @@ chat-end part20 (governance repair Batch 1+2) -> boot part21
   - Reviews = 12 (#001-012؛ همه Implemented)
   - Decisions = تا #70 (از فایل verify کن)
   - audit = 13/13 check + 16/16 test PASS (part19)
-  - Git HEAD نهایی part20 = `fca4dd3` ✅ (handoff finalize commit)
+  - Git HEAD نهایی part20 = `d4721e2` ✅
   - زنجیره commitهای part20:
-      `17bb60a` = Batch 1+2 اصلی (12 files changed, 493 insertions)
-      `f9d4db8` = backfill هش + حذف tmp_commit_msg + 4 untracked committed
-      `f0d31d3` = housekeeping (LEDGER + handoff با هش‌های نهایی)
-      `fca4dd3` = handoff finalize (FILE CHANGES LOG کامل)
+      `17bb60a` = Batch 1+2
+      `f9d4db8` = backfill + حذف tmp + 4 untracked
+      `f0d31d3` = housekeeping
+      `fca4dd3` = handoff finalize
+      `d4721e2` = final hashes (HEAD نهایی)
   - parent (part19 frontier) = 5de05e0
 
 ================================================================
