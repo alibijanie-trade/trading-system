@@ -1,0 +1,11 @@
+part19: CHAT_LOG catch-up part14-18 (Phase 3 drift)
+
+CHAT_LOG.md full sections stopped at part13 (the part14 full-refresh only
+covered part09-13). Added the 4 missing full sections - part14-15, part16,
+part17, part18 - transcribed from PHASE_LEDGER (source of truth) + REVIEW_LOG +
+reviews/, verified per Rule #84 (no extrapolation). Footer bumped to v2.7.
+
+Separate atomic commit from the check_13 work (M98 scope closure): different
+concept (historical narrative vs mechanical guard).
+
+Refs: Rule #23/#26/#60/#73/#84, M93 (CHAT_LOG is state-of-record), M98.

@@ -1,0 +1,25 @@
+part19: REVIEW_LOG<->file integrity remediation + check_13
+
+Discovered in boot part19 (while backfilling the part18 chat-end hash):
+REVIEW_LOG rows #010 and #011 existed (Implemented) but their docs/reviews/
+files were never created. Root cause: check_10 verified only LOG numbering
+continuity, not file existence, so the sequential rows passed while the files
+were missing. This converts an aspired-to (REVIEW_PROTOCOL section 4) but
+never-coded guarantee into a mechanical check.
+
+Remediation (behavioral gap -> mechanical guard, reliability-audit theme):
+- A1: create the 2 missing review files #010/#011 (with explicit backfill note,
+  no pretense of creation in part18).
+- A2: backfill hashes from live git - REVIEW_LOG #010/#011 resolution = 29b2b56
+  (part18 codify commit); PHASE_LEDGER part18 frontier = a6e7625.
+- A3: record finding in PENDING (Discovery part19-1, high) + P19-candidate-3
+  (per-task write-approval granularity).
+- A4: add check_13_review_file_integrity (bidirectional row<->file existence +
+  slug-via-filename + heading-ID match) + REVIEWS_DIR + ALL_CHECKS + docstring
+  + help text 1-13; companion test_15 + test_16; test_2 updated 12->13.
+- A5: Review #012 (file + LOG row) documenting the check_13 addition.
+
+Verify (run before commit): audit 13/13 PASS (check_13 = 12 rows <-> 12 files;
+check_10 001-012 sequential). companion tests 16/16 PASS.
+
+Refs: check_10, check_13, Rule #22/#69/#84/#86, M82/M101, REVIEW_PROTOCOL s4.
