@@ -1,7 +1,8 @@
 # Custom Instructions — برای Project trading-system
 
 > این متن را در Project Settings → Custom Instructions جای‌گذاری کنید.
-> **مسیر در Claude Desktop:** Project → Settings → Custom Instructions (یا What should Claude know about this project)
+> **مسیر در Claude Desktop:** Project → Settings → Custom Instructions
+> **آخرین به‌روزرسانی:** part21 (2026-06-21) — sync با boot sequence v2.18
 
 ---
 
@@ -10,45 +11,37 @@
 ```
 من روی پروژه trading-system (D:\Projects\trading-system) کار می‌کنم.
 
-Stack: FastAPI + SQLAlchemy + React + Vite، Windows 11.
+Stack: FastAPI + SQLAlchemy + React 19.2 + Vite، Windows 11، PowerShell.
 زبان ارتباط: فارسی، اصطلاحات فنی انگلیسی.
 Filesystem MCP فعال است.
 
-پروتکل اجباری شروع هر چت:
-1. فایل PROJECT_KNOWLEDGE.md در Project Knowledge را بخوان
-2. با Filesystem MCP این فایل‌ها را بخوان:
-   - docs/سند_جامع_v2_9.md (به‌خصوص بخش ۱۸ M1-M33 درس‌نامه + سند ۱۷ Templates)
-   - docs/CLAUDE_CHECKLIST.md (قوانین #۱-۵۴+)
-   - docs/SESSION_STATUS.md
-   - آخرین docs/CHAT{N}_FINALIZE.md
-3. تأیید کن خوانده‌ای
-4. منتظر دستور بعدی بمان
+پروتکل اجباری شروع هر چت (Rule #48 — v2.18):
+با Filesystem MCP این فایل‌ها را به ترتیب بخوان:
+1. claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md  (STEP 0→4)
+2. claude_workspace/PHASE_LEDGER.md
+3. docs/constitution/main.md  (index v2.18)
+4. docs/constitution/01a_rules_core.md  (جدول #1-90 — boot-critical)
+5. claude_workspace/LOCKED_RULES_INBOX.md  (QL-0..QL-6 binding)
+6. docs/constitution/02_lessons.md  (M1-M110)
+7. docs/constitution/06_meta.md
+8. docs/SESSION_STATUS.md
+9. docs/PENDING_FOR_NEXT_VERSION.md
+10. claude_workspace/incoming_permanent/PHASE1_PART{N}_HANDOFF.txt
 
 قوانین کلیدی:
-- #۲۷: پایان چت فقط با تأیید صریح کاربر
-- #۳۰: اصلاحات کوچک = اسکریپت Python idempotent
-- #۳۱: بالای هر کادر کد دستوری: 🟦(backend)/🟩(scripts)/🟧(frontend)/🟥(BACKUP) + شماره tab
-- #۳۴: zip ها در root پروژه دانلود می‌شوند
-- #۳۸: اسکریپت‌های .py تنها → scripts/، zip → root
-- #۴۶: ASCII-only در print() اسکریپت‌های Windows
-- #۴۷: قبل از هر کار، درس‌نامه (M1-M33) چک شود
-- #۵۵: اگر فایل Project Knowledge به‌روز شد، نسخه جدید تولید کن تا کاربر آپلود کند
-
-سبک پاسخ:
-- صریح، بدون مقدمه طولانی
-- اسکریپت Python idempotent ترجیح بر paste دستی
-- زیپ برای multi-file، فایل تنها برای single-file
-- پس از هر کار، چک‌لیست تأیید (verification steps)
-- در پایان چت: handoff message + اسم چت بعدی + لیست فایل‌های Project Knowledge برای آپدیت
-
-Model فعلی: Opus 4.7 + Adaptive Thinking ON
-Plan: Claude Max 5x
+- هر فایلی که می‌سازی یا ویرایش می‌کنی فوراً در FILE CHANGES LOG handoff ثبت کن
+- git add -A ممنوع — فقط فایل‌های مشخص add شوند
+- هش commit فقط از git rev-parse --short HEAD زنده (QL-4)
+- shell = PowerShell (نه CMD-only cmdlets)
+- تأیید صریح کاربر قبل از هر write/delete (Rule #51)
 ```
 
 ---
 
-## نکات اضافه
+## یادداشت نگهداری
 
-**حداکثر طول:** Custom Instructions در Claude معمولاً حداکثر ۲۰۰۰-۳۰۰۰ کاراکتر است. متن بالا حدود ۱۲۰۰ کاراکتر است که در محدوده مجاز قرار دارد.
+این فایل snapshot از متن Custom Instructions است.
+هر بار که boot sequence یا قوانین کلیدی تغییر کردند، این فایل باید sync شود (Rule #87 — Materiality Threshold).
 
-**به‌روزرسانی:** اگر قانون جدیدی به سند v2.10 اضافه شد و کاربردی برای پاسخ‌های روزمره دارد، در پایان چت Claude باید این Custom Instructions به‌روز را تولید کند.
+**نسخه constitution:** v2.18
+**فایل مرجع:** `docs/constitution/main.md` بخش Quick-start

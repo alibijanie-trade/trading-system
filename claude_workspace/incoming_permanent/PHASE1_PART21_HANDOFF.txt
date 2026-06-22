@@ -95,8 +95,16 @@ chat-end part20 (governance repair Batch 1+2) -> boot part21
       تغییر: جدول ماژول‌ها — اندازه‌های واقعی جایگزین برآورد (مشکل #۵)
                + اضافه ۰۱a_rules_core.md به جدول + آمار v2.18 (۹۰ قانون، 77 درس، Reviews+Decisions)
 
+  ~ claude_workspace/snapshots/CUSTOM_INSTRUCTIONS.md
+      تغییر: بازنویسی کامل — حذف ارجاع به سند_جامع_v2_9.md + sync با boot sequence v2.18
+
+  ~ docs/PROJECT_MANIFEST.md
+      تغییر: regenerate با scripts/64_generate_manifest.py (365 فایل، 290 classified)
+
+  ~ docs/PENDING_FOR_NEXT_VERSION.md
+      تغییر: افزودن Z2.P21-A (Legacy Reference Elimination — single-version-ref principle)
+
   ⚠️ مشکل #۸ (HELPER_PROTOCOL.md Rule #77 candidate) — SKIP (فایل منجمد QL-6/#24)
-      این تضاد در PENDING_FOR_NEXT_VERSION ثبت شود.
 
   ~ docs/constitution/06_meta.md
       تغییر: header v2.17 → v2.18

@@ -1470,3 +1470,24 @@ hash chat-end part16 = `81a3562` (cross-checked از `git rev-parse --short HEAD
 **نشان داده به کاربر:** ✅ (#۶۵).
 
 **آخرین به‌روزرسانی part19 section:** 2026-05-31 (boot part19 — Discovery REVIEW↔file gap + اقدام check_13 + P19-candidate-4 Manual-Box Full-Text).
+
+---
+
+## 📌 Z2-candidates اضافه‌شده part21
+
+### Z2.P21-A — Legacy Reference Elimination (single-version-ref principle)
+
+**تاریخ:** 2026-06-21 (part21)
+**نوع:** اصل کلی پروژه
+
+**اصل:** در سرتاسر پروژه، **همه ارجاعات به سند فقط به آخرین ورژن (constitution v2.x) باشند**. سندهای قدیمی (مثل `docs/سند_جامع_v2_9.md`) یا حذف می‌شوند یا در archive نگهداشته می‌شوند، ولی هیچ ارجاعی به آن‌ها **داده نمی‌شود**. اگر مطلبی از سند قدیمی باید منتقل شود، ابتدا به آخرین ورژن منتقل می‌شود.
+
+**کارهای لازم (task مستقل):**
+1. audit سرتاسر پروژه برای پیدا کردن همه ارجاعات به فایل‌های legacy (`grep -r "سند_جامع" + سایر patterns`).
+2. verify که محتوای فایل‌های قدیمی کاملاً در constitution v2.18 ادغام شده (یا محتوای منحصربه‌فرد تشخیص و migrate شود).
+3. `claude_workspace/snapshots/CUSTOM_INSTRUCTIONS.md` — بازنویسی طبق boot sequence v2.18 (حذف ارجاع به `سند_جامع_v2_9.md`).
+4. `docs/PROJECT_MANIFEST.md` — regenerate با `scripts/64_generate_manifest.py` (مشکل #۱۶).
+5. حذف یا جابجایی به archive فایل‌های قدیمی پس از verify.
+
+**اولویت:** بالا — در چت مستقل انجام شود.
+**Cross-refs:** #۲۴ (No-Deletion) · #۲۶ (Atomic Updates) · M71 (Documentation Drift)
