@@ -1,17 +1,19 @@
-# Constitution سامانه هوشمند ترید — v2.17 (Modular)
+# Constitution سامانه هوشمند ترید — v2.18 (Modular)
 
 > **Intelligent Trading System — Modular Constitution**
 > در بازارهای مالی | ارز دیجیتال و فارکس
 >
-> **نسخه:** 2.17 (atomic amendment از v2.16 — Governance Self-Sync + Authoring: Rule #۸۷ + Rule #۸۸)
+> **نسخه:** 2.18 (atomic amendment از v2.17 — codify Quick-Lock: #۸۹/#۹۰ + M106-M109 + اصل تأیید صریح + تبصره‌های QL-1..4)
 > **تاریخ شروع split:** اردیبهشت ۱۴۰۵ (May 2026)
 > **تاریخ v2.13:** خرداد ۱۴۰۵ (May 2026)
 > **تاریخ v2.14:** خرداد ۱۴۰۵ (May 2026)
 > **تاریخ v2.15:** خرداد ۱۴۰۵ (May 2026)
 > **تاریخ v2.16:** خرداد ۱۴۰۵ (May 2026)
 > **تاریخ v2.17:** خرداد ۱۴۰۵ (May 2026)
+> **تاریخ v2.18:** خرداد ۱۴۰۵ (June 2026)
 > **چت مسئول:** ۱۱.۰.ج (`TRADING-infra-governance-finalize-and-merge`)
 > **چت مسئول v2.14:** part04-part08 (`TRADING-phase1-part04..part08-mdrs-v2-*`)
+> **چت مسئول v2.18:** part21 (`TRADING-phase1-part21-codify-v218-and-governance-repair`)
 > **Branch:** `infra/v2.14-source-of-truth`
 > **Created in commit:** `<git log --diff-filter=A --oneline -- docs/constitution/main.md>` (scaffold modular constitution v2.12، commit 1/8؛ هش از git مشتق شود — نه hardcode در ماژول، per #۸۶/check_5)
 
@@ -61,9 +63,9 @@
 
 1. **`main.md`** (همین فایل) — برای آشنایی با ساختار modular
 2. **`04_principles.md`** — برای فهم سطح‌بندی و فلسفه پروژه
-3. **`01a_rules_core.md`** — قوانین کامل Locked (جدول #۱-۸۸ + بخش‌های پایه) ⭐
-   - `01b_rules_detail.md` — شرح مفصل قوانین — **on-demand** (فقط وقتی شرح خاص قانونی لازم است)
-4. **`claude_workspace/LOCKED_RULES_INBOX.md`** — قوانین Locked فعال (۶ قانون binding که هنوز در 01_rules.md ادغام نشده‌اند) ⭐
+3. **`01a_rules_core.md`** — قوانین کامل Locked (جدول #۱-۹۰ + بخش‌های پایه) ⭐
+   - `01_rules.md` — شرح مفصل قوانین — **on-demand** (فقط وقتی شرح خاص قانونی لازم است)
+4. **`claude_workspace/LOCKED_RULES_INBOX.md`** — قوانین Quick-Lock فعال (QL-0..QL-6 binding) ⭐
 5. **`02_lessons.md`** — درس‌نامه برای جلوگیری از تکرار اشتباهات
 6. **`docs/PENDING_FOR_NEXT_VERSION.md`** — PENDING آیتم‌های ادغام نشده
 7. **`docs/SESSION_STATUS.md`** — وضعیت فعلی پروژه
@@ -187,6 +189,7 @@
 
 | نسخه | تاریخ | چت(ها) | تغییرات اصلی |
 |---|---|---|---|
+| v2.18 | June 2026 | part21 | **codify Quick-Lock** — قانون #۸۹ (Quick-Lock Mechanism) + #۹۰ (No-Reliance on Human Memory) + درس‌های M106-M109 + اصل تأیید صریح (§۴.۱۲) + تبصره‌های #۵۱.۱/#۶۲.۱/#۸۶.۱/#۸۷.۱ + Review #۰۱۳ + Decision #۷۱ + بانر HELPER_PROTOCOL |
 | v2.17 | May 2026 | part18 | **Governance Self-Sync + Authoring** — قانون #۸۷ (Settings/Instructions/Project-Asset Sync Reminder با Materiality Threshold) + قانون #۸۸ (AI-Optimized Prompt/Artifact Authoring) + Reviews #۰۱۰+#۰۱۱ + Decisions #۶۹+#۷۰ |
 | v2.16 | May 2026 | part16 | **Mechanical-Claim Verification** — قانون #۸۶ (Escape-Aware Sequence Derivation) + درس M104 + Review #۰۰۸ |
 | v2.15 | May 2026 | part11 | **Trust & Anti-Sycophancy Rules** — قوانین #۷۸-۸۵ (SCM/QHP/NSISN/RDEM/MPTC/HAT/APMM/Self-Activation Lock) + M103 (Audit Over-Promise، part10 origin) + Review #۰۰۵ |

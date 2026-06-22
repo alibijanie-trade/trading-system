@@ -53,7 +53,65 @@ chat-end part20 (governance repair Batch 1+2) -> boot part21
   - parent (part19 frontier) = 5de05e0
 
 ================================================================
-## FILE CHANGES LOG — part20 (این چت = governance repair)
+## FILE CHANGES LOG — part21 (این چت = codify v2.18)
+================================================================
+
+### فایل‌های تغییریافته:
+
+  ~ claude_workspace/LOCKED_RULES_INBOX.md
+      تغییر: افزودن QL-6 (مدل helper تغییر کرد — HELPER_PROTOCOL منجمد)
+      بازنویسی کامل (write_file) به دلیل خرابی ساختار از edit‌های متوالی
+
+  ~ docs/constitution/01_rules.md
+      تغییر: افزودن قانون #۸۹ (Quick-Lock Mechanism) + #۹۰ (No-Reliance on Human Memory)
+               + تبصره‌های #۵۱.۱ / #۶۲.۱ / #۸۶.۱ / #۸۷.۱
+               + footer به‌روزشده v2.18
+
+  ~ docs/constitution/01a_rules_core.md
+      تغییر: افزودن ردیف‌های #۸۹ + #۹۰ به جدول + تبصره quick-ref + footer
+               + اصلاح cross-ref از 01b_rules_detail.md → 01_rules.md
+
+  ~ docs/constitution/02_lessons.md
+      تغییر: افزودن §۲.۱۰ (درس‌های v2.18: M106-M109)
+               + footer به‌روزشده
+
+  ~ docs/constitution/04_principles.md
+      تغییر: header v2.17 → v2.18 + افزودن §۴.۱۲ (اصل تأیید صریح کاربر)
+               + footer به‌روزشده
+
+  ~ docs/constitution/main.md
+      تغییر: bump v2.17 → v2.18 + تاریخ v2.18 + چت مسئول v2.18
+               + Quick-start #۱-۹۰ + اصلاح cross-ref 01b→01 + inbox label
+               + افزودن ردیف v2.18 در changelog
+
+  ~ docs/constitution/03_bugs.md
+      تغییر: header v2.17 → v2.18
+
+  ~ docs/constitution/05_architecture.md
+      تغییر: header v2.17 → v2.18
+
+  ~ docs/constitution/06_meta.md
+      تغییر: header v2.17 → v2.18
+
+  ~ docs/HELPER_PROTOCOL.md
+      تغییر: افزودن بانر ⚠️ FROZEN HISTORICAL REFERENCE (فقط header، محتوا دست نخورد)
+
+  ~ docs/DECISIONS_LOG.md
+      تغییر: افزودن Decision #۷۱ + به‌روز آمار (Max ID ۷۱، Total ۶۶)
+               + نسخه v1.6 → v1.7
+
+  ~ docs/REVIEW_LOG.md
+      تغییر: افزودن ردیف Review #013 (codify-v218-quick-lock)
+
+  ~ scripts/63_pre_commit_audit.py
+      تغییر: CURRENT_VERSION v2.17 → v2.18 + ACCEPTABLE_VERSIONS اضافه v2.18
+               + docstring v2.17 → v2.18
+
+  ~ claude_workspace/incoming_permanent/PHASE1_PART21_HANDOFF.txt (این فایل)
+      تغییر: به‌روز FILE CHANGES LOG + STATE OF RECORD
+
+================================================================
+## FILE CHANGES LOG — part20 (چت قبلی = governance repair)
 ================================================================
 
 ### فایل‌های جدید ایجادشده:
@@ -208,8 +266,8 @@ chat-end part20 (governance repair Batch 1+2) -> boot part21
 ================================================================
 
   ⚡ اولویت صفر (اول از همه — mechanical):
-  [ ] M101 backfill: git rev-parse --short HEAD → جایگزین placeholder در PHASE_LEDGER
-  [ ] commit سبک این backfill (فقط PHASE_LEDGER + این handoff) + push
+  [x] M101 backfill: a0172ca — قبلاً در part20 کامل شده بود (placeholder در LEDGER پر شده)
+  [x] QL-6 → LOCKED_RULES_INBOX.md اضافه شد (part21 مرحله ۱)
 
   ——— اولویت اول — codify v2.18 ———
   ⚠️ چت 20 با دو سؤال بی‌پاسخ تمام شد. در boot part21 باید بپرسی:

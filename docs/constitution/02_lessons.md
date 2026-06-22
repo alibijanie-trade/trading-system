@@ -1098,27 +1098,71 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 
 ---
 
-## 🚧 وضعیت این ماژول
+## §۲.۱۰ — درس‌های v2.18 (M106-M109) — part21
 
-✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1)**
+### M106 — Clean-Commit Pre-Stage + Untracked Audit
 
-**جمع‌بندی درس‌ها:**
-- M-series ثبت: ۷۳ (M1-M63 + M64-M87 + M88 + M93-M105)
-- M-series Reserved: ۳۲ (M22, M24, M29, M32-M43, M45-M55, M80, M81, M89-M92)
-- HM-series: ۷ (HM-1 to HM-7)
+**کشف‌شده در:** part18/part19 chat-end | **اهمیت:** 🟠 medium-high | **Cross-refs:** M94 (Black re-stage) · M99/M105 (CMD paste) · #۵۱ (تأیید) · #۶۶ (push)
 
-✅ **افزوده‌های v2.14 اعمال‌شده (S3.1 part07):**
-- M88 (Hidden Regeneration Hazard)
-- M89-M92 Reserved (CVE-like gap)
-- M93-M102 (۱۰ critical lesson)
-- §۲.۹ NEW — HM-series sub-section (HM-1 to HM-7)
-- §۲.۲ fast-look table: ۶ category جدید
-- §۲.۷ index: M88+M93-M102 listing + HM-series pointer
+**Pattern الف (double-commit ناشی از hook):** commit اول fail می‌شود چون pre-commit hook (trailing-whitespace/end-of-file-fixer) فایل‌ها را اصلاح می‌کند → نیاز به `git add -A` + commit دوم.
 
-🔮 **افزوده‌های بعدی (S3.2-S3.4):**
-- ماژول header v2.12 → v2.14 (S3.3 atomic با ACCEPTABLE_VERSIONS)
-- State-of-record atomic refresh (S3.4 Triple-Rule M93)
+**Pattern ب (untracked ناشناخته در commit):** `git add -A` فایلی را که Claude ماهیتش را نمی‌داند بی‌سروصدا commit می‌کند.
+
+**راه‌حل (prehttps-stage pattern):**
+1. پیش از commit نهایی: `git add {files}` سپس `pre-commit run --files {files}` → fixها اعمال شدند → `git add {files}` دوباره.
+2. پیش از `git add`، فایل‌های untracked ناشناخته (خارج الگوی مجاز: commit_msg_*، handoff، manual_boxes) صریحاً به کاربر گزارش و تأیید گرفته شود (#۵۱).
+3. هرگز `git add -A` بدون بررسی اولیه استفاده نشود.
 
 ---
 
-**📌 پایان 02_lessons.md (S3.1 اتمیک v2.14 applied)**
+### M107 — Partial Manual-Box Delivery Hazard
+
+**کشف‌شده در:** part19 boot (overwrite سهوی Project Instructions) | **اهمیت:** 🔴 critical | **Cross-refs:** #۸۷ · #۸۸ · M17 · QL-1
+
+**Pattern:** Claude برای به‌روزرسانی یکی از سه کادر دستی، یک **بلوک قطعه‌ای** می‌دهد و می‌گوید «اضافه کن». کاربر کل کادر را با همان بلوک جایگزین می‌کند → overwrite كل متن قبلی.
+
+**راه‌حل (Full-Text Protocol):** پیش از هر به‌روزرسانی: (۱) متن کامل فعلی را ببین (manual_boxes/ یا paste کاربر). (۲) متن جدید = متن قبلی + تغییر بر آن. (۳) کل متن نهایی را یک‌جا تحویل ده (select-all → paste). تحویل قطعه‌ای/partial **ممنوع مطلق** (تبصره #۸۷.۱).
+
+---
+
+### M108 — MCP Liveness Mid-Conversation
+
+**کشف‌شده در:** part08 (HM-9 candidate) | **اهمیت:** 🟠 medium-high | **Cross-refs:** HM-9 · #۸۲ (MPTC) · #۹۰
+
+**Pattern:** MCP server پس از N ترن موفق، بدون اخطار hang می‌کند — حتی در میانهٔ یک batch. timeout مشخص نمی‌کند عملیات server-side انجام شده یا نه.
+
+**راه‌حل (sanity-ping + recovery):**
+1. پیش از batch سنگین: یک `list_allowed_directories` سبک بزن (سانیتی-پینگ).
+2. اگر timeout: restart → sanity-ping → verify state روی disk → retry از همان نقطه.
+3. هرگز retry بدون ویریفی اولیهٔ حالت disk (M82).
+
+---
+
+### M109 — Tool-Discovery-First
+
+**کشف‌شده در:** part08 (HM-8 candidate) | **اهمیت:** 🟠 medium-high | **Cross-refs:** HM-8 · #۴۸ (boot) · #۹۰
+
+**Pattern:** Claude بدون صدا زدن `tool_search` ادعای می‌کند «این قابلیت را ندارم» — در حالی که tool deferred بوده و فقط با جستجو قابل بارگذاری بود.
+
+**راه‌حل:** پیش از هر ادعای «نداشتن قابلیت»، `tool_search` با keyword مرتبط (مثل: `filesystem`، `git`، `browser`) صدا زده شود. اگر نتیجه برگشت → آنگاه tool واقعاً موجود نیست.
+
+---
+
+## 🚧 وضعیت این ماژول
+
+✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1) + v2.18 (M106-M109)**
+
+**جمع‌بندی درس‌ها:**
+- M-series ثبت: ۷۷ (M1-M63 + M64-M87 + M88 + M93-M109)
+- M-series Reserved: ۳۲ (M22, M24, M29, M32-M43, M45-M55, M80, M81, M89-M92)
+- HM-series: ۷ (HM-1 to HM-7)
+
+✅ **افزوده‌های v2.18 اعمال‌شده (part21):**
+- M106 (Clean-Commit Pre-Stage + Untracked Audit)
+- M107 (Partial Manual-Box Delivery Hazard)
+- M108 (MCP Liveness Mid-Conversation)
+- M109 (Tool-Discovery-First)
+
+---
+
+**📌 پایان 02_lessons.md (v2.18 applied — part21)**

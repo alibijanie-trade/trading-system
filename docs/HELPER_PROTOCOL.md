@@ -1,5 +1,9 @@
 # HELPER_PROTOCOL — پروتکل عملیاتی Helper Consultation
 
+> ⚠️ **[منجمد — FROZEN HISTORICAL REFERENCE]**
+> مدل helper تغییر کرده است. این فایل اکنون یک مرجع تاریخی است و **پروتکل فعال نیست**.
+> محتوای این فایل بدون لمس حفظ می‌شود (QL-6 · #۲۴ · part20/part21).
+>
 > **هدف:** تعریف نقش، حدود، و عملیات helper consultation در پروژه trading-system.
 > **نسخه:** v1.0 (D24 از MDRS v2 — parallel to D8-D23)
 > **Tier:** T1 (Constitution + Governance)

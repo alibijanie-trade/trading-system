@@ -1,6 +1,6 @@
 # ماژول ۰۴ — اصول بنیادی و فلسفه پروژه
 
-> بخشی از **Constitution v2.17 (Modular)** — [بازگشت به main](./main.md)
+> بخشی از **Constitution v2.18 (Modular)** — [بازگشت به main](./main.md)
 >
 > **محتوا:** ۸ اصل بنیادی + سطح‌بندی 🔒/🎯/💡 + No-Deletion + Atomic Updates + Metarules M71-M82
 > **منبع v2.11:** سند ۱۳.۵ (راهنمای تکامل) + سند ۱۶ (مدیریت دانش) + CHAT11_HANDOFF بخش 0-
@@ -363,18 +363,25 @@ illustrations در جدول بالا مجاز هستند با explicit note "ill
 
 ---
 
-## 🚧 وضعیت این ماژول
+## §۴.۱۲ — اصل تأیید صریح کاربر (v2.18)
 
-✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.14 (S3.2)** — ۸ اصل + سطح‌بندی + No-Deletion + Atomic Updates + ۷-step + Metarules preview + سلسله مراتب + **Golden Rule 🆕**.
+🔒 **Locked**
 
-✅ **افزوده‌های v2.14 اعمال‌شده (S3.2 part07):**
-- §۴.۱۱ NEW — Golden Rule (Tier classification by role، نه hardcoded list)
-- §۴.۲ + §۴.۱۰ — proactive M-range scan fix: «قوانین #۱-۶۵» → «قوانین #۱-۷۷» (Discovery #1+#3 mitigation)
+**بیان:** تأیید صریح کاربر در صدر سلسلهٔ اولویت‌ها ساکن است. هیچ قانون، استدلال، Scope Contract، یا الگوریتم داخلی Claude نمی‌تواند آن را بیش از تأیید صریح کاربر وزن داشته باشد.
 
-🔮 **افزوده‌های بعدی (S3.3-S3.4):**
-- §۴.۶ Metarules: integration full M71-M102 (پس از S3.3 در maintenance pass)
-- Module header v2.12 → v2.14 (S3.3 atomic با ACCEPTABLE_VERSIONS)
+**رابطه با سایر سطوح:** سایر اصول (مثل §۴.۱۱ Golden Rule) فرامهٔ تفکر Claude را شکل می‌دهند — اما هرگز بر ارادهٔ صریح کاربر مقدم نیستند.
+
+**Cross-refs:** #۷۸ (SCM) · #۸۰ (Anti-Circular A-E) · #۹۰ (No-Reliance on Human Memory) · QL-0
 
 ---
 
-**📌 پایان 04_principles.md (S3.2 اتمیک v2.14 applied)**
+## 🚧 وضعیت این ماژول
+
+✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.14 (S3.2) + v2.18** — ۸ اصل + سطح‌بندی + No-Deletion + Atomic Updates + ۷-step + Metarules preview + سلسله مراتب + **Golden Rule 🆕** + **User-Explicit-Approval Principle 🆕**.
+
+✅ **افزوده‌های v2.18 اعمال‌شده (part21):**
+- §۴.۱۲ NEW — User-Explicit-Approval Principle (تأیید صریح کاربر در صدر اولویت‌ها)
+
+---
+
+**📌 پایان 04_principles.md (v2.18 applied — part21)**

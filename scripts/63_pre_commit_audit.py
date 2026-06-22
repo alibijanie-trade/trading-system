@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Pre-commit Audit Script (Layer 1) - Constitution v2.17
+Pre-commit Audit Script (Layer 1) - Constitution v2.18
 
 Purpose: Documentation consistency check before each commit.
 
@@ -93,8 +93,8 @@ RESERVED_RULE_IDS = {52, 53}
 # Current active version of Constitution + acceptable versions in module headers.
 # Module headers may reference previous (v2.14/v2.15/v2.16) or current (v2.17).
 # Both are valid - check_6 accepts any version in ACCEPTABLE_VERSIONS.
-CURRENT_VERSION = "v2.17"
-ACCEPTABLE_VERSIONS = ["v2.14", "v2.15", "v2.16", "v2.17"]
+CURRENT_VERSION = "v2.18"
+ACCEPTABLE_VERSIONS = ["v2.14", "v2.15", "v2.16", "v2.17", "v2.18"]
 
 # Git hash pattern: 7-40 hex chars
 GIT_HASH_PATTERN = re.compile(r"\b[a-f0-9]{7,40}\b")

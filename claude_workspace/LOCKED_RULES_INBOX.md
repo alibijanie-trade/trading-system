@@ -26,6 +26,7 @@
 | QL-3 | 2026-05-31 | **Next-Chat-Name Declaration (chat-end):** در هر chat-end، Claude باید **صریحاً نام چت بعد** را طبق الگوی HM-3 (`TRADING-phase{N}-part{NN}-{topic-slug}`) به کاربر اعلام کند — علاوه بر ثبت در handoff §۸. شمارهٔ phase/part مکانیکی (#۸۶)؛ topic-slug پیشنهادی و قابل تغییر توسط کاربر. فراموشیِ اعلام = نقض پروتکل chat-end. Genesis: فراموشیِ تکرارشونده در part18/part19. | HM-3 · #۶۲ (handoff) · process | ACTIVE |
 | QL-4 | 2026-05-31 | **Chat-End Hash from Live HEAD Only:** هش frontier/chat-end فقط از `git rev-parse --short HEAD` زنده گرفته شود؛ هیچ هش میانی یا ثابت از handoff/Ledger/حافظه کپی نشود. در artifactهای تداوم هیچ عدد هشِ ثابتی که وسوسهٔ کپی ایجاد کند نوشته نشود. Genesis: part19 — افزودن commit بعد از ساخت handoff → frontier جابه‌جا شد. | #۸۶/M104 · M101 | ACTIVE |
 | QL-5 | 2026-05-31 | **No Reliance on Human Memory/Attention (اصل بنیادین):** Claude هرگز نباید برای جلوگیری از خطا به حافظه، توجه، یا یادآوریِ انسان (کاربر یا خودِ Claude) متکی باشد. هر نیازمندیِ تکرارشونده باید با **گارد مکانیکی** (check خودکار / invariant / منبع زندهٔ مشتق‌شده / قاعدهٔ enforceable) تضمین شود، نه با «تذکر». اگر برای چیزی فقط می‌توان یادآوری کرد، آن خودِ یک نقص است که باید مکانیکی شود. Genesis: part19 — دو بار اتکا به یادآوری به‌جای گارد (next-chat-name، frontier hash). | اصل reliability-audit (رفتاری→مکانیکی) · #۸۴/#۸۵ · check_* | ACTIVE |
+| QL-6 | 2026-06-21 | **Helper Model Change:** مدل helper تغییر کرد — چت‌های قبلی در نقش کمکی نیستند و HELPER_PROTOCOL.md = مرجع تاریخی منجمد (نه پروتکل فعال). محتوای HELPER_PROTOCOL.md بدون لمس حفظ می‌شود (#۲۴). تصمیم در part20 گرفته شد. | QL-6 · #۲۴ · HELPER_PROTOCOL | ACTIVE — pending codify v2.18 |
 
 ---
 
@@ -34,4 +35,4 @@
 - این فایل source-of-truth برای قوانین Quick-Lockشده است؛ محتوای آن هرگز در حافظهٔ چت بازسازی نشود — همیشه از disk خوانده شود (هم‌راستا #۸۶).
 - هنگام codify رسمی، ردیف‌ها به‌جای حذف، `CODIFIED → #N/MN` می‌گیرند (#۲۴).
 
-**آخرین به‌روزرسانی:** part19 (2026-05-31) — ایجاد inbox + ثبت QL-0/QL-1/QL-2 + QL-3 (next-chat-name) + QL-4 (live-HEAD hash) + QL-5 (عدم اتکا به حافظهٔ انسانی).
+**آخرین به‌روزرسانی:** part21 (2026-06-21) — افزودن QL-6 (Helper Model Change).

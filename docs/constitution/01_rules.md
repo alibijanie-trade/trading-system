@@ -1291,24 +1291,87 @@ part14 escape-note off-by-one (PART16 به‌جای مکانیکیِ PART15).
 
 ---
 
-## 🚧 وضعیت این ماژول
+### قانون #۸۹ ⭐⭐⭐ — Quick-Lock Mechanism
 
-✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1) + Trust Rules v2.15 (#۷۸-۸۵)** — قوانین #۱-۸۶ با شرح authoritative.
+**نسخه افزوده:** v2.18
+**سطح:** 🔒 Locked
 
-✅ **افزوده‌های v2.13 اعمال‌شده (چت ۱۱.۰.ج):**
-- قانون #۶۷ Locked (Cross-shell EXECUTE blocks اجباری) — تبدیل از M87 candidate
+#### متن قانون (Normative)
 
-✅ **افزوده‌های v2.14 اعمال‌شده (S3.1 از MDRS v2 — چت part07):**
-- قوانین #۶۸-#۷۷ Locked (۱۰ قانون جدید) — تبدیل از PENDING Rules-candidate
-- پشتیبان framework: M88, M93-M102 (در `02_lessons.md`) + HM-1 to HM-7 (در `02_lessons.md` §۲.۹)
-- HELPER_PROTOCOL.md cross-ref در `main.md` Cross-references section
+قفل‌کردن یک قانون = append یک ردیف به `claude_workspace/LOCKED_RULES_INBOX.md` + binding فوری، **بدون** version bump / Decision / Review / batch چندفایلی. codify رسمی (افزودن به 01_rules + bump) ادواری و به‌خواست کاربر انجام می‌شود. این فایل در هر boot خوانده می‌شود (STEP 1 mandatory reads). ردیف‌های codify‌شده با `CODIFIED → #N/MN` علامت می‌خورند (حذف نمی‌شوند، #۲۴).
 
-🔮 **افزوده‌های بعدی (در S3.2-S3.3 part07):**
-- Golden Rule principle در `04_principles.md` (S3.2)
-- Templates 11-12 در `06_meta.md` (S3.2)
-- Module headers v2.12 → v2.14 + ACCEPTABLE_VERSIONS extension (S3.3 atomic، module header sync resolved)
-- Audit script CURRENT_VERSION update (S3.3)
+#### Implementation Notes
+
+- trigger: کاربر گفت «قفل/اجباری کن» یا معادل آن.
+- فرمت ردیف: QL-N | تاریخ | متن کامل قانون (#۸۸) | مرتبط | وضعیت.
+- binding از لحظهٔ append است، نه از لحظهٔ codify رسمی.
+- در تعارض بین QL و قانون Locked، آخرین دستور صریح کاربر مرجع است.
+
+#### Genesis
+
+part19 — اصطکاک تکرارشونده: هر قفل ساده به batch ۱۰فایلی تبدیل می‌شد. QL-0 در LOCKED_RULES_INBOX.
+
+#### Cross-refs
+
+- `claude_workspace/LOCKED_RULES_INBOX.md` · #۲۴ (No-Deletion) · #۸۸ (AI-Optimized Authoring) · #۴۸ (boot protocol)
 
 ---
 
-**📌 پایان 01_rules.md (S3.1 اتمیک v2.14 applied)**
+### قانون #۹۰ ⭐⭐⭐ — No-Reliance on Human Memory/Attention
+
+**نسخه افزوده:** v2.18
+**سطح:** 🔒 Locked
+
+#### متن قانون (Normative)
+
+Claude هرگز نباید برای جلوگیری از خطا به حافظه، توجه، یا یادآوریِ انسان (کاربر یا خودِ Claude) متکی باشد. هر نیازمندیِ تکرارشونده باید با **گارد مکانیکی** (check خودکار / invariant / منبع زندهٔ مشتق‌شده / قاعدهٔ enforceable) تضمین شود، نه با «تذکر». اگر برای چیزی فقط می‌توان یادآوری کرد، آن خودِ یک نقص است که باید مکانیکی شود.
+
+#### Implementation Notes
+
+- معیار تشخیص: «اگر Claude یا کاربر این را فراموش کنند، چه اتفاقی می‌افتد؟» — اگر خرابی واقعی → باید مکانیکی شود.
+- مصادیق گارد مکانیکی: check_* در audit script، invariant‌های git (H==L+1)، منبع زنده (git rev-parse)، LOCKED_RULES_INBOX در boot.
+- مصادیق نقض: «یادت باشد در chat-end X را انجام دهی» بدون check مکانیکی.
+
+#### Genesis
+
+part19 — دو بار اتکا به یادآوری به‌جای گارد: next-chat-name + frontier hash. QL-5 در LOCKED_RULES_INBOX.
+
+#### Cross-refs
+
+- #۸۴ (APMM) · #۸۵ (Self-Activation Lock) · #۸۶ (Escape-Aware Sequence) · check_* (audit scripts) · QL-5
+
+---
+
+### تبصره‌های v2.18 روی قوانین موجود
+
+#### تبصره #۵۱.۱ — Per-Task Write Approval Granularity (QL-2)
+
+پس از تأیید یک task توسط کاربر، write/editهای همان task نیاز به اجازهٔ مجدد per-file ندارند (تأیید در سطح task/Scope-Contract). مکث **فقط** هنگام «تصمیم جدید». گاردهای اصلی #۵۱ پابرجا (هرگز .env / خارج مسیر / حذف دائمی / untracked ناشناخته).
+
+#### تبصره #۶۲.۱ — Next-Chat-Name Declaration (QL-3)
+
+در هر chat-end، Claude باید صریحاً نام چت بعد را طبق الگوی `TRADING-phase{N}-part{NN}-{topic-slug}` اعلام کند — علاوه بر ثبت در handoff. شمارهٔ phase/part از frontier مکانیکی (#۸۶)؛ topic-slug پیشنهادی و قابل تغییر.
+
+#### تبصره #۸۶.۱ — Live-HEAD-Only Hash (QL-4)
+
+هش frontier/chat-end فقط از `git rev-parse --short HEAD` زنده گرفته شود. هیچ هش ثابتی از handoff/Ledger/حافظه کپی نشود. در artifactهای تداوم هیچ عدد هش ثابتی که وسوسهٔ کپی ایجاد کند نوشته نشود.
+
+#### تبصره #۸۷.۱ — Manual-Box Full-Text Protocol (QL-1)
+
+پیش از هر به‌روزرسانی هر یک از سه کادر دستی (Settings→General / Project Instructions / Project Knowledge)، Claude باید (۱) متن کامل فعلی کادر را ببیند (از آینهٔ `claude_workspace/manual_boxes/` یا paste کاربر)، سپس (۲) **کل متن نهایی** را یک‌جا تحویل دهد. تحویل قطعه‌ای/partial **ممنوع مطلق**.
+
+---
+
+## 🚧 وضعیت این ماژول
+
+✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1) + Trust Rules v2.15 (#۷۸-۸۵) + v2.18 (#۸۹-۹۰)** — قوانین #۱-۹۰ با شرح authoritative.
+
+✅ **افزوده‌های v2.18 اعمال‌شده (part21):**
+- قانون #۸۹ Locked (Quick-Lock Mechanism)
+- قانون #۹۰ Locked (No-Reliance on Human Memory/Attention)
+- تبصره‌های #۵۱.۱ / #۶۲.۱ / #۸۶.۱ / #۸۷.۱ (تکمیل QL-2/3/4/1)
+- درس‌های M106-M109 (در 02_lessons.md)
+
+---
+
+**📌 پایان 01_rules.md (v2.18 applied — part21)**

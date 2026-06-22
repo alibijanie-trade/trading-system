@@ -4,7 +4,7 @@
 
 > **محل قرارگیری:** `docs/DECISIONS_LOG.md`  
 > **به‌روز توسط:** Claude در پایان چت اگر تصمیم جدید گرفته شد (CLAUDE_CHECKLIST فاز ۳ مرحله ۴)  
-> **نسخه:** v1.6 (2026-05-30)
+> **نسخه:** v1.7 (2026-06-21 — part21: Decision #۷۱ codify v2.18 Quick-Lock)
 
 ---
 
@@ -938,8 +938,8 @@ artifactهای نوشتاری پروژه (پرامپت چت بعد، handoff، I
 | ❌ Rejected | ۰ |
 | ⏳ Pending | ۰ |
 
-**Max Decision ID:** ۷۰  
-**Total Recorded:** ۶۵  
+**Max Decision ID:** ۷۱  
+**Total Recorded:** ۶۶  
 **Reserved Slots:** ۵ (در دسته‌بندی موضوعی بالا مستند شد)
 
 **تصمیم برای Reserved IDs (پایان چت ۱۰ round 2):**  
@@ -947,8 +947,23 @@ artifactهای نوشتاری پروژه (پرامپت چت بعد، handoff، I
 
 ---
 
+## Decision #۷۱ — codify v2.18: Quick-Lock Rules + M106-M109 + اصل تأیید صریح
+
+**ثبت‌شده در:** `TRADING-phase1-part21-codify-v218-and-governance-repair`  
+**تاریخ:** 2026-06-21  
+**Status:** ✅ Accepted  
+**دسته:** Process / Governance
+
+**تصمیم:** codify رسمی QL-0..QL-5 به دو قانون جدید (#۸۹ Quick-Lock Mechanism + #۹۰ No-Reliance on Human Memory) و چهار تبصره روی قوانین موجود (#۵۱.۱/#۶۲.۱/#۸۶.۱/#۸۷.۱). افزودن M106-M109 + اصل تأیید صریح در 04_principles + بانر HELPER_PROTOCOL + QL-6 در inbox. constitution v2.18: **90 قانون، 77 درس، Review #013**.
+
+**دلیل:** QL-ها از part19 در LOCKED_RULES_INBOX مستند بودند. codify رسمی آن‌ها را در constitution مستحکم و single source of truth را حفظ می‌کند.
+
+**Cross-refs:** `01_rules.md` #۸۹/#۹۰ · `02_lessons.md` M106-M109 · `04_principles.md` §۴.۱۲ · Review #۰۱۳
+
+---
+
 ## 📌 پایان DECISIONS_LOG
 
-**نسخه:** v1.6 (2026-05-30 — part18/Phase 3: Decision #۶۹ (Settings/Instructions/Project-Asset Sync، Rule #۸۷) + #۷۰ (AI-Optimized Authoring، Rule #۸۸)، Reviews #۰۱۰/#۰۱۱)  
-**تصمیمات ثبت‌شده:** ۶۵ (Max ID ۷۰ — ۵ اسلات Reserved)  
+**نسخه:** v1.7 (2026-06-21 — part21: Decision #۷۱ codify v2.18)  
+**تصمیمات ثبت‌شده:** ۶۶ (Max ID ۷۱ — ۵ اسلات Reserved)  
 **Status کلی:** همه Accepted

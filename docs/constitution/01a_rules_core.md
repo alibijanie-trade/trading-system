@@ -203,8 +203,15 @@ Claude در تمام مراحل پروژه همزمان در نقش‌های ز�
 | **۸۷ ⭐⭐⭐ 🆕** | Settings/Instructions/Project-Asset Sync Reminder — یادآوری صریح + تأیید انجام + persist (با Materiality Threshold) | v2.17 |
 | **۸۸ ⭐⭐⭐ 🆕** | AI-Optimized Prompt/Artifact Authoring — هر artifact نوشتاری طبق ۸ معیار prompt-engineering بهینه نوشته شود | v2.17 |
 
+| **۸۹ 🆕 🔒** | Quick-Lock Mechanism — قفل‌کردن = append به LOCKED_RULES_INBOX + binding فوری، بدون bump/Decision/Review. codify رسمی ادواری. | v2.18 |
+| **۹۰ 🆕 🔒** | No-Reliance on Human Memory/Attention — Claude هرگز به حافظه/توجه/یادآوری انسان متکی نشود؛ هر نیاز تکرارشونده باید گارد مکانیکی داشته باشد. | v2.18 |
+
 ---
 
-> **شرح کامل قوانین #۱۴-۸۸:** در `01b_rules_detail.md` — on-demand خوانده شود.
+> **تبصره‌های v2.18:** #۵۱.۱ (per-task write) · #۶۲.۱ (next-chat-name) · #۸۶.۱ (live-HEAD hash) · #۸۷.۱ (manual-box full-text) — شرح در `01_rules.md` بخش «تبصره‌های v2.18».
 
-**📌 پایان 01a_rules_core.md**
+---
+
+> **شرح کامل قوانین #۱۴-۹۰:** در `01_rules.md` — on-demand خوانده شود.
+
+**📌 پایان 01a_rules_core.md (v2.18 applied — part21)**
