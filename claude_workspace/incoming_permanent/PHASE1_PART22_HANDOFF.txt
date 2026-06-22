@@ -1,0 +1,178 @@
+================================================================
+PHASE1_PART22_HANDOFF — trading-system
+chat-end part21 (codify v2.18 + governance repair Batch 3+4) -> boot part22
+================================================================
+
+## 0) ROLE + GOAL (Rule #88 criterion 1)
+تو Claude در چت بعدی (part22) پروژه trading-system هستی. هدف این فایل:
+بوت تمیز + ادامه کار بدون از دست رفتن context.
+
+## 1) BOOT SEQUENCE (Rule #48)
+ترتیب الزامی خواندن:
+  1. claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md  (STEP 0->4)
+  2. claude_workspace/PHASE_LEDGER.md
+  3. docs/constitution/main.md
+  4. docs/constitution/01a_rules_core.md             (جدول #1-90 boot-critical)
+  5. claude_workspace/LOCKED_RULES_INBOX.md          (QL-0..QL-6 binding)
+  6. docs/constitution/02_lessons.md                 (M1-M110)
+  7. docs/constitution/06_meta.md
+  8. docs/SESSION_STATUS.md
+  9. docs/PENDING_FOR_NEXT_VERSION.md
+  10. این فایل (PHASE1_PART22_HANDOFF.txt)
+
+بعد از خواندن: M101 backfill هش <backfill-part21-final> را در PHASE_LEDGER جایگزین placeholder کن و commit بزن.
+
+## 2) STATE OF RECORD
+
+- HEAD: <backfill-part21-final> -- M101 در boot part22 از git rev-parse --short HEAD بگیر
+- Branch: infra/v2.14-source-of-truth
+- Constitution: v2.18 (90 قانون + M1-M110 + 13 Review + 66 Decision)
+- Audit: 13/13 PASS (check_1=90 rules, check_2=M1-M110)
+- Project version: v0.6.0
+
+## 3) QUICK-LOCK BINDINGS (همه binding -- QL-0..QL-6)
+
+- QL-0: Quick-Lock Mechanism (#89)
+- QL-1: Manual-Box Full-Text Protocol (#87.1)
+- QL-2: Per-Task Write Approval Granularity (#51.1)
+- QL-3: Next-Chat-Name Declaration (#62.1)
+- QL-4: Live-HEAD-Only Hash (#86.1)
+- QL-5: No-Reliance on Human Memory (#90)
+- QL-6: HELPER_PROTOCOL.md منجمد (#24) -- محتوا دست نخورد
+
+## 4) GUARDS این چت
+
+- git add -A ممنوع -- فقط فایل‌های مشخص
+- هش فقط از git rev-parse --short HEAD زنده (QL-4)
+- هر فایل تغییریافته -> فوری در FILE CHANGES LOG این handoff ثبت شود
+- 01b_rules_detail.md وجود ندارد -- شرح کامل در 01_rules.md است
+- اگر MCP hang کرد -> Ctrl+C -> restart -> sanity-ping -> retry (M108)
+- heading درس‌های جدید در 02_lessons.md باید ### **M{N}** باشد (M110)
+- هر بار constitution bump شد: ردیف‌های جدید داخل جدول section 1.9 + SESSION_STATUS sync (M110)
+
+## 5) اولویت‌های part22
+
+### اولویت اول -- Legacy Reference Elimination (Z2.P21-A)
+audit سرتاسر پروژه برای همه ارجاعات به فایل‌های legacy:
+  1. grep -r "سند_جامع" و سایر patterns قدیمی
+  2. verify محتوا در constitution v2.18 ادغام شده
+  3. حذف یا جابجایی به archive
+  اصل: همه ارجاعات فقط به آخرین ورژن (Rule #87 + Z2.P21-A)
+
+### اولویت دوم -- CHAT_LOG catch-up
+  - اضافه کردن part20 و part21 به docs/CHAT_LOG.md
+
+### اولویت سوم -- governance repair Batch 5
+  - بررسی مشکلات جدید احتمالی
+
+### اولویت چهارم -- توسعه واقعی پروژه
+  - Phase 4: Objective 3
+
+## 6) CONSTITUTION v2.18 -- خلاصه تغییرات part21
+
+commit 7df436e -- codify v2.18:
+  - قانون #89: Quick-Lock Mechanism
+  - قانون #90: No-Reliance on Human Memory/Attention
+  - تبصره‌های #51.1 / #62.1 / #86.1 / #87.1
+  - M106-M110 (Clean-Commit/Manual-Box/MCP-Liveness/Tool-Discovery/Audit-Counter-Drift)
+  - §4.12: اصل تأیید صریح کاربر
+  - HELPER_PROTOCOL banner FROZEN
+  - QL-6 در inbox
+  - Review #013 + Decision #71
+  - header sync همه ماژول‌ها v2.18
+
+commit db8c08c -- governance repair Batch 3:
+  - React 18 -> 19.2.6
+  - آمار واقعی ماژول‌ها در main.md
+  - footer 05_architecture بازنویسی
+
+commit 223db85 -- governance repair Batch 4:
+  - CUSTOM_INSTRUCTIONS.md sync v2.18
+  - PROJECT_MANIFEST regenerate (290 فایل)
+  - Z2.P21-A در PENDING
+
+## 7) KNOWN ISSUES / TODO
+
+| # | مشکل | وضعیت |
+|----|------|--------|
+| #8 | HELPER_PROTOCOL Rule#77 candidate | SKIP -- منجمد (QL-6) |
+| Z2.P21-A | Legacy reference elimination | PENDING -- part22 اولویت اول |
+| CHAT_LOG | part20/part21 اضافه نشده | TODO part22 |
+
+## 8) CHAT-END INFO
+
+- نام این چت: TRADING-phase1-part21-codify-v218-and-governance-repair
+- نام چت بعدی: TRADING-phase1-part22-legacy-ref-elimination-and-governance
+- commit نهایی part21: <backfill-part21-final> -- M101 در boot part22
+
+================================================================
+## FILE CHANGES LOG -- part21 (codify v2.18 + governance repair)
+================================================================
+
+  [x] M101 backfill: a0172ca -- قبلاً در part20 کامل شده بود
+  [x] QL-6 -> LOCKED_RULES_INBOX.md (بازنویسی کامل write_file)
+
+  ~ docs/constitution/01_rules.md
+      تغییر: #89/#90 در جدول section 1.9 + شرح کامل + تبصره‌های QL-1..4 + footer v2.18
+
+  ~ docs/constitution/01a_rules_core.md
+      تغییر: ردیف‌های #89/#90 + cross-ref fix + footer
+
+  ~ docs/constitution/02_lessons.md
+      تغییر: §2.10 (M106-M110 با ### **M{N}**) + footer (78 ثبت)
+
+  ~ docs/constitution/03_bugs.md
+      تغییر: header v2.17 -> v2.18
+
+  ~ docs/constitution/04_principles.md
+      تغییر: header v2.17 -> v2.18 + §4.12 NEW + footer
+
+  ~ docs/constitution/05_architecture.md
+      تغییر: header + React 19.2.6 + footer بازنویسی
+
+  ~ docs/constitution/06_meta.md
+      تغییر: header v2.17 -> v2.18
+
+  ~ docs/constitution/main.md
+      تغییر: bump v2.18 + جدول ماژول‌ها (اندازه‌های واقعی) + آمار v2.18 + cross-refs
+
+  ~ docs/DECISIONS_LOG.md
+      تغییر: Decision #71 + آمار (Max 71، Total 66) + v1.7
+
+  ~ docs/HELPER_PROTOCOL.md
+      تغییر: banner FROZEN (فقط header، محتوا دست نخورد)
+
+  ~ docs/PENDING_FOR_NEXT_VERSION.md
+      تغییر: Z2.P21-A افزوده
+
+  ~ docs/PROJECT_MANIFEST.md
+      تغییر: regenerate (290 فایل classified)
+
+  ~ docs/REVIEW_LOG.md
+      تغییر: Review #013 افزوده
+
+  ~ docs/SESSION_STATUS.md
+      تغییر: header v2.18 + آمار (90 قانون، M1-M110)
+
+  + docs/reviews/2026-06-21-codify-v218-quick-lock.md
+      ایجاد: فایل review #013
+
+  ~ scripts/63_pre_commit_audit.py
+      تغییر: CURRENT_VERSION v2.18 + ACCEPTABLE_VERSIONS + docstring
+
+  ~ claude_workspace/snapshots/CUSTOM_INSTRUCTIONS.md
+      تغییر: بازنویسی کامل -- ارجاع سند_جامع حذف + boot v2.18
+
+  ~ claude_workspace/PHASE_LEDGER.md
+      تغییر: ردیف part21 افزوده + placeholder backfill a0172ca
+
+  ~ claude_workspace/LOCKED_RULES_INBOX.md
+      تغییر: QL-6 افزوده + بازنویسی کامل
+
+  ~ claude_workspace/incoming_permanent/PHASE1_PART21_HANDOFF.txt
+      تغییر: FILE CHANGES LOG به‌روز
+
+  + claude_workspace/incoming_permanent/PHASE1_PART22_HANDOFF.txt
+      ایجاد: این فایل
+
+================================================================

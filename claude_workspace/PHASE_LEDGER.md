@@ -40,6 +40,8 @@
 
 > 🔎 **شکاف زنجیره (یک‌خطی، per دستور کاربر — نه بازسازی کامل):** part10 = escape (هیچ handoff) · part11 = codify (هیچ handoff، مستقیم به PART12). تاریخچهٔ ۱۱→۱۲ از همین Ledger خوانده می‌شود.
 
+| part21 | boot کامل (M101 backfill part20=`a0172ca` ✅) + **codify v2.18**: #۸۹/#۹۰ + M106-M110 + §۴.۱۲ + تبصره‌های QL-1..4 + QL-6 + banner HELPER_PROTOCOL + Review #۰۱۳ + Decision #۷۱. **Batch 3**: React 19.2 + آمار واقعی ماژول‌ها + footer 05_arch. **Batch 4**: CUSTOM_INSTRUCTIONS v2.18 + manifest regenerate (290 فایل) + legacy-ref-elimination در PENDING + M110. | chat-end part21 = `<backfill-part21-final>` — **M101 در boot part22** |
+
 ---
 
 ## 🎯 وضعیت زندهٔ سه Objective
@@ -86,7 +88,9 @@
 - ✅ **full-refresh وضعیت‌نامه — DONE part14-15** (SESSION_STATUS/CHAT_LOG/PENDING/MANIFEST atomic در commit اتمیک part14-15؛ Triple-Rule معوق part09 بسته شد).
 
 - **`17bb60a`** = chat-end part20 commit 1 (governance repair Batch 1+2)
-- **`<backfill-part20-final>`** = HEAD نهایی part20 — **M101 در boot part21 از git زنده بگیر و جایگزین کن**
+- **`a0172ca`** = HEAD نهایی part20 (governance repair Batch 1+2) — backfilled در boot part21 (M101) ✅
+
+- **`223db85`** = chat-end part21 (codify v2.18 [#۸۹/#۹۰ + M106-M110 + §۴.۱۲ + تبصره‌های QL-1..4] + governance repair Batch 3 [React 19.2 + آمار ماژول‌ها + 05_arch footer] + Batch 4 [CUSTOM_INSTRUCTIONS v2.18 + manifest regenerate + legacy-ref PENDING] + Review #۰۱۳ + Decision #۷۱) — **M101 در boot part22 از git زنده بگیر و جایگزین کن**
 
 ---
 **📌 پایان PHASE_LEDGER.md — append-only؛ هر چت در chat-end حلقهٔ ۱ را اینجا می‌زند.**
