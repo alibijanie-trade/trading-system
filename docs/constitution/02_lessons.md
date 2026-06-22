@@ -445,6 +445,26 @@ Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude De
 
 ---
 
+### **M110** — Audit Script Counter Drift on Constitution Bump
+
+**کشف‌شده در:** part21 (codify v2.18) | **اهمیت:** 🟠 medium-high | **Cross-refs:** check_1 (rule counts) · check_2 (lesson counts) · #۷۳ (Atomic Stage-end) · M93
+
+**Pattern:** پس از constitution bump (v2.17→v2.18)، audit script با check_1 و check_2 هنوز آمار قدیمی (۸۸ قانون، M1-M105) می‌گزارد. دو علت:
+
+1. **check_1:** ردیف‌های #۸۹/#۹۰ در بخش جدیدی خارج از section 1.9 اضافه شده بود — اما check_1 فقط جدول **داخل section 1.9** را می‌خواند.
+
+2. **check_2:** درس‌های M106-M109 با heading `### M106` نوشته شده بودند — اما check_2 فقط pattern `**M{N}**` (با دو ستاره) را parse می‌کند، نه heading بدون ستاره.
+
+3. **SESSION_STATUS.md:** آمار قوانین/درس‌ها درستی به‌روز نشده بود.
+
+**راه‌حل (checklist بعد از هر constitution bump):**
+1. ردیف‌های جدید را **داخل جدول section 1.9** در `01_rules.md` اضافه کن (نه بيرون از آن).
+2. heading درس‌های جدید در `02_lessons.md` با `### **M{N}**` بنویس (دو ستاره اجباری).
+3. آمار `SESSION_STATUS.md` را atomic با bump به‌روز کن (قوانین، درس‌ها، Reviews، Decisions).
+4. پیش از commit، `python scripts/63_pre_commit_audit.py` اجرا کن و 13/13 تأیید شود.
+
+---
+
 ## 🚧 وضعیت این ماژول
 
 ✅ **Migration کامل از v2.11** — درس‌های M1-M63 (با ۲۶ Reserved explicit) ثبت شدند.
@@ -1100,7 +1120,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 
 ## §۲.۱۰ — درس‌های v2.18 (M106-M109) — part21
 
-### M106 — Clean-Commit Pre-Stage + Untracked Audit
+### **M106** — Clean-Commit Pre-Stage + Untracked Audit
 
 **کشف‌شده در:** part18/part19 chat-end | **اهمیت:** 🟠 medium-high | **Cross-refs:** M94 (Black re-stage) · M99/M105 (CMD paste) · #۵۱ (تأیید) · #۶۶ (push)
 
@@ -1115,7 +1135,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 
 ---
 
-### M107 — Partial Manual-Box Delivery Hazard
+### **M107** — Partial Manual-Box Delivery Hazard
 
 **کشف‌شده در:** part19 boot (overwrite سهوی Project Instructions) | **اهمیت:** 🔴 critical | **Cross-refs:** #۸۷ · #۸۸ · M17 · QL-1
 
@@ -1125,7 +1145,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 
 ---
 
-### M108 — MCP Liveness Mid-Conversation
+### **M108** — MCP Liveness Mid-Conversation
 
 **کشف‌شده در:** part08 (HM-9 candidate) | **اهمیت:** 🟠 medium-high | **Cross-refs:** HM-9 · #۸۲ (MPTC) · #۹۰
 
@@ -1138,7 +1158,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 
 ---
 
-### M109 — Tool-Discovery-First
+### **M109** — Tool-Discovery-First
 
 **کشف‌شده در:** part08 (HM-8 candidate) | **اهمیت:** 🟠 medium-high | **Cross-refs:** HM-8 · #۴۸ (boot) · #۹۰
 
@@ -1153,7 +1173,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 ✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1) + v2.18 (M106-M109)**
 
 **جمع‌بندی درس‌ها:**
-- M-series ثبت: ۷۷ (M1-M63 + M64-M87 + M88 + M93-M109)
+- M-series ثبت: **۷۸** (M1-M63 + M64-M87 + M88 + M93-M110)
 - M-series Reserved: ۳۲ (M22, M24, M29, M32-M43, M45-M55, M80, M81, M89-M92)
 - HM-series: ۷ (HM-1 to HM-7)
 
@@ -1162,6 +1182,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 - M107 (Partial Manual-Box Delivery Hazard)
 - M108 (MCP Liveness Mid-Conversation)
 - M109 (Tool-Discovery-First)
+- M110 (Audit Script Counter Drift on Constitution Bump) 🆕
 
 ---
 

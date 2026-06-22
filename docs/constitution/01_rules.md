@@ -125,9 +125,9 @@ Claude در تمام مراحل پروژه همزمان در نقش‌های ز�
 
 ---
 
-## ۱.۹ جدول قوانین قفل‌شده (#۱-۸۸)
+## ۱.۹ جدول قوانین قفل‌شده (#۱-۹۰)
 
-> این جدول authoritative است. هر قانون با کلیک روی شماره به شرح کامل پایین‌تر می‌رود. در v2.13 قانون #۶۷، در v2.14 قوانین #۶۸-۷۷، و در v2.15 قوانین Trust #۷۸-۸۵ افزوده شدند.
+> این جدول authoritative است. هر قانون با کلیک روی شماره به شرح کامل پایین‌تر می‌رود. در v2.13 قانون #۶۷، در v2.14 قوانین #۶۸-۷۷، و در v2.15 قوانین Trust #۷۸-۸۵، در v2.18 قوانین #۸۹-۹۰ افزوده شدند.
 
 | # | قانون قفل‌شده | نسخه |
 |---|---|---|
@@ -219,6 +219,8 @@ Claude در تمام مراحل پروژه همزمان در نقش‌های ز�
 | **۸۶ ⭐⭐⭐ 🆕** | Escape-Aware Sequence Derivation — شمارندهٔ دنباله‌ای (handoff/ledger/continuity) از frontier مشتق شود + cross-check با invariant فعال (check_12)؛ escape ≠ chat-end | v2.16 |
 | **۸۷ ⭐⭐⭐ 🆕** | Settings/Instructions/Project-Asset Sync Reminder — هر تغییر material که سه target خارج از دسترس Claude (Settings→General Instructions / Project Instructions / Project Knowledge files) را لمس کند → یادآوری صریح + گرفتن تأیید انجام + persist (با Materiality Threshold) | v2.17 |
 | **۸۸ ⭐⭐⭐ 🆕** | AI-Optimized Prompt/Artifact Authoring — هر artifact نوشتاری (پرامپت/handoff/Instructions/Scope Contract/دستور به Claude دیگر) طبق ۸ معیار prompt-engineering بهینه نوشته شود | v2.17 |
+| **۸۹ ⭐⭐⭐ 🆕 🔒** | Quick-Lock Mechanism — قفل‌کردن = append به LOCKED_RULES_INBOX + binding فوری، بدون bump/Decision/Review. codify رسمی ادواری. | v2.18 |
+| **۹۰ ⭐⭐⭐ 🆕 🔒** | No-Reliance on Human Memory/Attention — Claude هرگز به حافظه/توجه/یادآوری انسان متکی نشود؛ هر نیاز تکرارشونده باید گارد مکانیکی داشته باشد. | v2.18 |
 
 ---
 

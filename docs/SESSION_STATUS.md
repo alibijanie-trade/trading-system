@@ -1,8 +1,8 @@
-# Session Status — وضعیت پس از part19 (ورودی part20: governance repair batch)
+# Session Status — وضعیت پس از part21 (ورودی part22: governance repair Batch 4+)
 
-> **آخرین به‌روزرسانی:** 2026-05-31 (chat-end part19 — check_13 + CHAT_LOG catch-up + Quick-Lock + بازیابی Project Instructions)
+> **آخرین به‌روزرسانی:** 2026-06-21 (part21 — codify v2.18 + governance repair Batch 3)
 > **نسخه پروژه:** v0.6.0 (tag روی main: `5730173`؛ v0.7.0 در پایان MDRS v2)
-> **Constitution:** **v2.17** (Rule #۸۷/#۸۸ codified part18؛ #۸۶/M104 part16؛ Trust Rules #۷۸-۸۵ part11)
+> **Constitution:** **v2.18** (codify Quick-Lock: #۸۹/#۹۰ + M106-M109 + اصل تأیید صریح §۴.۱۲ part21)
 > **چت جاری:** governance repair (Batch 1 — مشکل ۱/۶/۷/۱۰ در جریان)
 > **مرجع تجمعی:** `claude_workspace/PHASE_LEDGER.md` (قصهٔ part01→part19؛ در boot اول خوانده شود)
 > ⚠️ **Naming (HM-3):** نام چت باید `TRADING-phase{N}-part{NN}-{topic}` باشد.
@@ -40,9 +40,11 @@
 🔮 **TODO** (part20+) با #۷۸ + #۷۹ + #۸۴.
 
 ## 📊 آمار پروژه (پس از part19)
-- **قوانین قفل‌شده:** **۸۸** (#۱-۸۸) + ۲ Reserved (#۵۲، #۵۳) + ۶ قانون Quick-Lock فعال (LOCKED_RULES_INBOX)
-- **درس‌نامه:** M1-M105 (۷۳ ثبت + ۳۲ Reserved) + HM-1..HM-7
-- **Reviews:** **۱۳** (#۰۰۱-۰۱۲؛ همه Implemented)
+- **قوانین قفل‌شده:** **۹۰** (#۱-۹۰) + ۲ Reserved (#۵۲، #۵۳) + ۷ قانون Quick-Lock فعال (LOCKED_RULES_INBOX — QL-0..QL-6 codified v2.18)
+- **درس‌نامه:** M1-M110 (۷۸ ثبت + ۳۲ Reserved) + HM-1..HM-7
+- **Reviews:** **۱۳** (#۰۰۱-۰۱۳؛ همه Implemented)
+- **Decisions:** **۷۱** (Max ID، ۶۶ ثبت + ۵ Reserved)
+- **Constitution:** **v2.18** (codify Quick-Lock: #۸۹/#۹۰ + M106-M109 part21)
 - **Audit:** **۱۳/۱۳ check** + **۱۶/۱۶ companion test** PASS (part19)
 - **Tests دیگر:** pytest **۲۵/۲۵** + vitest **۳۰/۳۰** (بدون تغییر)
 - **MDRS v2 deliverables:** **۱۴/۲۴** (D1-D13 + D24 + D12). باقی: D14-D23 (۱۰)

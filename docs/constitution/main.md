@@ -32,15 +32,16 @@
 
 ## 📚 ساختار ماژول‌ها
 
-| ماژول | محتوا | برآورد اندازه |
+| ماژول | محتوا | اندازه (واقعی — v2.18) |
 |---|---|---|
-| **[main.md](./main.md)** | این فایل — index + cross-refs + Vision + Quick-start | ~8KB |
-| **[01_rules.md](./01_rules.md)** | قوانین Locked #۱-N (با شرح کامل، نمونه، استثناها) | ~45KB |
-| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M105) با علت ریشه‌ای و راه‌حل | ~50KB |
-| **[03_bugs.md](./03_bugs.md)** | کاتالوگ Bug ها (#1-#54+) با علائم، علت، fix | ~30KB |
-| **[04_principles.md](./04_principles.md)** | ۸ اصل بنیادی + سطح‌بندی 🔒/🎯/💡 + No-Deletion + Atomic Updates | ~12KB |
-| **[05_architecture.md](./05_architecture.md)** | Stack + DB Schema + Backend + Frontend + UI/UX + Security + Roadmap | ~40KB |
-| **[06_meta.md](./06_meta.md)** | Session/Context + Templates + MCP + Claude Desktop + claude_workspace + Skills | ~35KB |
+| **[main.md](./main.md)** | این فایل — index + cross-refs + Vision + Quick-start | ~14KB |
+| **[01a_rules_core.md](./01a_rules_core.md)** | جدول قوانین Locked #۱-۹۰ + بخش‌های پایه (بوت-کریتیکال) | ~17KB |
+| **[01_rules.md](./01_rules.md)** | شرح کامل قوانین #۱-۹۰ (نمونه، استثنا) — **on-demand** | ~77KB |
+| **[02_lessons.md](./02_lessons.md)** | درس‌نامه اشتباهات Claude (M1-M110) با علت ریشه‌ای و راه‌حل | ~75KB |
+| **[03_bugs.md](./03_bugs.md)** | کاتالوگ Bug ها (#1-#54+) با علائم، علت، fix | ~17KB |
+| **[04_principles.md](./04_principles.md)** | ۸ اصل بنیادی + سطح‌بندی 🔒/🎯/💡 + No-Deletion + Atomic Updates | ~18KB |
+| **[05_architecture.md](./05_architecture.md)** | Stack + DB Schema + Backend + Frontend + UI/UX + Security + Roadmap | ~33KB |
+| **[06_meta.md](./06_meta.md)** | Session/Context + Templates + MCP + Claude Desktop + claude_workspace + Skills | ~36KB |
 
 ---
 
@@ -113,6 +114,7 @@
 - **M103** 🆕 v2.15 Audit Over-Promise Pattern → `02_lessons.md` §۲.۸
 - **M104** 🆕 v2.16 Mechanical-Claim Verification before Persisting → `02_lessons.md` §۲.۸
 - **M105** 🆕 v2.17 EXECUTE Command Paste-Integrity (`&`-chain) → `02_lessons.md` §۲.۸
+- **M106-M110** 🆕 v2.18 Clean-Commit/Manual-Box/MCP-Liveness/Tool-Discovery/Audit-Counter-Drift → `02_lessons.md` §۲.۱۰
 
 ### اصول بنیادی در `04_principles.md`
 
@@ -156,17 +158,19 @@
 
 ---
 
-## 📊 آمار Constitution v2.17
+## 📊 آمار Constitution v2.18
 
 | دسته | تعداد |
 |---|---|
-| قوانین Locked | ۸۸ ثبت‌شده (#۱-۸۸) + ۲ Reserved (#۵۲, #۵۳) — 🆕 ۲ قانون v2.17 (#۸۷-۸۸) + ۱ قانون v2.16 (#۸۶) + ۸ قانون Trust v2.15 (#۷۸-۸۵) + ۱۰ قانون v2.14 (#۶۸-#۷۷) |
-| درس‌نامه M-series | M1-M105 (۷۳ ثبت + ۳۲ Reserved) — 🆕 M105 v2.17 (EXECUTE Paste-Integrity) + M104 v2.16 (Mechanical-Claim Verification) + M103 v2.15 (Audit Over-Promise) + ۱۱ درس v2.14 (M88+M93-M102) + ۴ Reserved جدید (M89-M92) |
+| قوانین Locked | **۹۰** ثبت‌شده (#۱-۹۰) + ۲ Reserved (#۵۲, #۵۳) — 🆕 ۲ قانون v2.18 (#۸۹-۹۰) + چهار تبصره |
+| درس‌نامه M-series | M1-M110 (۷۸ ثبت + ۳۲ Reserved) — 🆕 M106-M110 v2.18 |
 | درس‌نامه HM-series 🆕 v2.14 | HM-1 to HM-7 در `02_lessons.md` §۲.۹ |
 | Bug ها | ۱۶ ثبت‌شده در `03_bugs.md` + ۳۰+ در `docs/TROUBLESHOOTING.md` |
-| ماژول‌ها | ۷ (شامل main.md) + archive |
-| اندازه کل واقعی | ~۲۰۰KB توزیع‌شده (پس از S3.1) |
-| بزرگترین ماژول | `02_lessons.md` (~۵۰KB پس از §۲.۹ HM-series) |
+| ماژول‌ها | ۸ (شامل main.md) + archive |
+| اندازه کل واقعی | ~287KB توزیع‌شده (از مجموع فایل‌های ماژولار) |
+| بزرگترین ماژول | `01_rules.md` (~77KB — شرح کامل on-demand) + `02_lessons.md` (~75KB) |
+| Reviews | ۱۳ (#001-013، همه Implemented) |
+| Decisions | تا #۷۱ (۶۶ ثبت‌شده + ۵ Reserved) |
 
 ---
 

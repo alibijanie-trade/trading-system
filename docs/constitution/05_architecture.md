@@ -108,7 +108,7 @@
 | ابزار / کتابخانه | نسخه | یادداشت |
 |---|---|---|
 | **Node.js** | 22.x LTS | (Node 20 از April 2026 EOL) |
-| **React** | 18 | |
+| **React** | 19.2.6 | (اصلاحیه v2.18 — package.json مرجع) |
 | **Vite** | 8.0.13 | |
 | **React Router** | 6.23.1 | |
 | **Axios** | 1.7.2 | |
@@ -863,11 +863,11 @@ types: feat | fix | refactor | docs | style | test | chore
 
 ✅ **Migration کامل از v2.11** — ۱۶ بخش از سند ۲-۱۲ ادغام شدند.
 
-🔮 **افزوده‌های آینده در commit 8:**
-- بخش ۵.۱.۲ Shell: تبدیل توجه v2.12 به اصلاحیه رسمی (CMD → PowerShell+venv)
-- بخش ۵.۱۶ Roadmap: به‌روزرسانی وضعیت فاز ۱ پس از پیشرفت
-- اضافه‌کردن BTC/USDT 1d state در بخش ۵.۹.۴ (در حال حاضر در «وضعیت فعلی داده» اشاره شده)
+✅ **اصلاحیه‌های v2.18 اعمال‌شده (part21):**
+- header v2.17 → v2.18
+- React 18 → 19.2.6 (verify از package.json زنده — مشکل #۹)
+- footer از «دستور آینده» به state-of-record تبدیل شد (مشکل #۱۳)
 
 ---
 
-**📌 پایان 05_architecture.md (commit 6 — migration completed)**
+**📌 پایان 05_architecture.md (v2.18 applied — part21)**
