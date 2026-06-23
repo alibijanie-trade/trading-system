@@ -1,33 +1,34 @@
-# PROJECT_CONSTITUTION — Redirect Stub (v2.12)
+# PROJECT_CONSTITUTION — Redirect Stub (v2.18)
 
 > ⚠️ **این فایل فقط یک redirect است.**
 >
-> سند جامع پروژه از **v2.12** به ساختار modular مهاجرت کرد.
+> سند جامع پروژه از **v2.12** به ساختار modular مهاجرت کرد. نسخه فعال: **v2.18**.
 
 ---
 
 ## 📍 محل جدید Constitution
 
-**سند جامع v2.12 (Modular):** [`docs/constitution/main.md`](./constitution/main.md)
+**Constitution v2.18 (Modular):** [`docs/constitution/main.md`](./constitution/main.md)
 
 ساختار:
 - [`constitution/main.md`](./constitution/main.md) — index + cross-refs (شروع از اینجا)
-- [`constitution/01_rules.md`](./constitution/01_rules.md) — قوانین Locked #۱-۶۶
-- [`constitution/02_lessons.md`](./constitution/02_lessons.md) — درس‌نامه M1-M86
-- [`constitution/03_bugs.md`](./constitution/03_bugs.md) — Bug catalog #۳۱-#۵۴
+- [`constitution/01a_rules_core.md`](./constitution/01a_rules_core.md) — جدول قوانین Locked #۱-۹۰ (boot-critical)
+- [`constitution/01_rules.md`](./constitution/01_rules.md) — شرح کامل قوانین #۱-۹۰ (on-demand)
+- [`constitution/02_lessons.md`](./constitution/02_lessons.md) — درس‌نامه M1-M110 + HM-1..HM-7
+- [`constitution/03_bugs.md`](./constitution/03_bugs.md) — Bug catalog
 - [`constitution/04_principles.md`](./constitution/04_principles.md) — ۸ اصل + metarules
 - [`constitution/05_architecture.md`](./constitution/05_architecture.md) — Stack + DB + API + UI
 - [`constitution/06_meta.md`](./constitution/06_meta.md) — Session + Templates + MCP + Tooling
 
 ---
 
-## 📜 نسخه قدیمی (سند جامع v2.11)
+## 📜 نسخه‌های قدیمی (archive)
 
-نسخه v2.11 (مونولیتیک، ~۲۱۶KB) برای reference تاریخی در:
+نسخه‌های v2.6–v2.11 (مونولیتیک) برای reference تاریخی در:
 
-[`docs/constitution/archive/v2_11_legacy.md`](./constitution/archive/v2_11_legacy.md)
+[`docs/constitution/archive/`](./constitution/archive/)
 
-طبق قانون #۲۴ (No-Deletion)، این فایل به‌عنوان snapshot قبل از split حفظ شده. **برای کار جاری از modular constitution استفاده کنید.**
+طبق قانون #۲۴ (No-Deletion)، این فایل‌ها به‌عنوان snapshot تاریخی حفظ شده‌اند. **برای کار جاری از modular constitution استفاده کنید.**
 
 ---
 
