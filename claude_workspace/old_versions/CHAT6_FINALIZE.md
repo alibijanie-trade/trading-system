@@ -2,9 +2,9 @@
 
 > **هدف یک‌خطی:** ثبت دقیق همه دستاوردها، قوانین جدید، باگ‌ها و کارهای معلق چت ۶ برای handoff به چت ۷.
 
-> **محل قرارگیری:** `docs/CHAT6_FINALIZE.md`  
-> **چت:** `TRADING-phase0-part06-quality-hardening`  
-> **تاریخ:** 2026-05-17  
+> **محل قرارگیری:** `docs/CHAT6_FINALIZE.md`
+> **چت:** `TRADING-phase0-part06-quality-hardening`
+> **تاریخ:** 2026-05-17
 > **نسخه:** v1.0
 
 ---
@@ -53,14 +53,14 @@ Claude **هرگز** فرآیند پایان چت (۱۲ مرحله فاز ۳ CLAU
 
 وقتی کد به خطا می‌خورد، **فقط اقدامات اجرایی** که کاربر باید انجام دهد گفته شود — بدون توضیحات فنی طولانی درباره علت یا روش تشخیص.
 
-❌ بد: «این خطا به این دلیل است که... من می‌خواهم با این روش حل کنم...»  
+❌ بد: «این خطا به این دلیل است که... من می‌خواهم با این روش حل کنم...»
 ✅ خوب: «این دستور را بزنید: [دستور]»
 
 ### قانون قفل‌شده #۲۹ — ارائه فایل با Artifact یا code block
 
 فایل‌های ساخت/اصلاح **همیشه** به‌صورت Artifact (در کادر سمت راست) یا code block با لینک فعال در پایان پیام ارائه شوند.
 
-❌ ممنوع: paste متن فایل برای دستی copy کردن در Notepad  
+❌ ممنوع: paste متن فایل برای دستی copy کردن در Notepad
 ✅ صحیح: Artifact یا code block استاندارد با دکمه Copy
 
 **نکته:** برای Python script ها، Artifact پشتیبانی نمی‌شود، ولی code block استاندارد قابل قبول است.
@@ -122,7 +122,7 @@ npm install --save-dev --no-audit --no-fund --prefer-offline <packages>
 
 **راه‌حل بهتر (TODO در چت ۷):** پیدا کردن علت ریشه‌ای — احتمالاً تنظیم `jsx: 'automatic'` در `tsconfig.json` یا `vite.config.js` در بلوک test.
 
-**فایل‌های متأثر:** ۱۵ فایل `.jsx` در `frontend/src/`  
+**فایل‌های متأثر:** ۱۵ فایل `.jsx` در `frontend/src/`
 **اسکریپت اصلاح:** `scripts/45_fix_react_imports_all_jsx.py`
 
 ### Bug #51 — Escape characters در `python -c` در CMD ویندوز
@@ -249,8 +249,8 @@ b8a02d0 feat: initial project structure (Phase 0 - Step 1)
 
 ### ج) پایان چت — Sync Protocol
 
-۱. Claude یک zip از state container می‌سازد  
-۲. کاربر zip را در `D:\Projects\` می‌گذارد  
+۱. Claude یک zip از state container می‌سازد
+۲. کاربر zip را در `D:\Projects\` می‌گذارد
 ۳. کاربر اسکریپت sync را با dry-run اجرا می‌کند:
 ```cmd
 python scripts\43_sync_from_zip.py "D:\Projects\<zip>"
@@ -295,6 +295,6 @@ python scripts\43_sync_from_zip.py "D:\Projects\<zip>" --apply
 
 ## 📌 پایان CHAT6_FINALIZE
 
-**نسخه:** v1.0  
-**تهیه‌کننده:** Claude در پایان چت ۶  
+**نسخه:** v1.0
+**تهیه‌کننده:** Claude در پایان چت ۶
 **به‌روز توسط:** Claude بعدی در صورت نیاز

@@ -90,19 +90,19 @@ trading-system/
 │   ├── 01_*.py تا 32_*.py
 │   └── Nb_test_*.py            ← تست‌ها (قانون #۲۲)
 │
-└── docs/                 ← اسناد جامع (۱۲ سند)
-    ├── PROJECT_GOVERNANCE.md  ⭐
-    ├── CLAUDE_CHECKLIST.md    ⭐
-    ├── CHAT_LOG.md            ⭐
-    ├── TASK_BACKLOG.md        ⭐
-    ├── DECISIONS_LOG.md       ⭐
-    ├── REUSABLE_SKELETON.md   ⭐
-    ├── ONBOARDING_GUIDE.md    ⭐
+└── docs/                 ← اسناد جامع
+    ├── constitution/         ← Constitution v2.18 (Modular) ⭐
+    ├── CHAT_LOG.md           ⭐
+    ├── TASK_BACKLOG.md       ⭐
+    ├── DECISIONS_LOG.md      ⭐
+    ├── REUSABLE_SKELETON.md  ⭐
+    ├── ONBOARDING_GUIDE.md   ⭐
+    ├── SESSION_STATUS.md
     ├── STYLE_GUIDE.md
     ├── GLOSSARY.md
     ├── TROUBLESHOOTING.md
-    ├── PROJECT_CONTEXT.md
-    └── SESSION_STATUS.md
+    ├── PENDING_FOR_NEXT_VERSION.md
+    └── reviews/
 ```
 
 ---
@@ -113,7 +113,7 @@ trading-system/
 → از **`docs/ONBOARDING_GUIDE.md`** شروع کنید (۴-۶ ساعت).
 
 ### من می‌خواهم پروژه را با Claude ادامه دهم
-→ **`docs/PROJECT_GOVERNANCE.md`** + **`docs/CLAUDE_CHECKLIST.md`** را پیوست هر چت کنید.
+→ **`docs/constitution/main.md`** (Constitution v2.18) را بخوانید + boot protocol در `claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md`.
 
 ### می‌خواهم بدانم چه task هایی باقی‌مانده
 → **`docs/TASK_BACKLOG.md`**.
@@ -283,14 +283,13 @@ Components                ← style={{ color: "var(--color-primary)" }}
 
 این پروژه با Claude AI به‌صورت تعاملی توسعه یافته. در هر چت جدید:
 
-1. zip پروژه را پیوست کنید
-2. سند جامع v2.X را پیوست کنید
-3. Claude خودکار:
-   - چک‌لیست شروع چت را اجرا می‌کند
+1. **`claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md`** را بخوانید و دستورات boot را به Claude بدهید
+2. Claude خودکار:
+   - فایل‌های boot را می‌خواند
    - وضعیت فعلی را گزارش می‌دهد
    - گزینه‌های گام بعدی را ارائه می‌دهد
 
-**جزئیات کامل:** `docs/PROJECT_GOVERNANCE.md` بخش ۴ و ۵.
+**جزئیات کامل:** `docs/constitution/main.md` بخش سسیون و متا.
 
 ---
 
