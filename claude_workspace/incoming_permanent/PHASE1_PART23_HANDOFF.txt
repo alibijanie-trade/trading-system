@@ -1,0 +1,69 @@
+﻿=== PHASE1_PART23_HANDOFF ===
+Date: 2026-06-24
+From: TRADING-phase1-part22-legacy-ref-elimination-and-governance
+To: TRADING-phase1-part23-{topic}
+Branch: infra/v2.14-source-of-truth
+Constitution: v2.18 (90 rules, M1-M110, QL-0..QL-6, 13 Reviews)
+
+--- CHAIN OF CUSTODY ---
+part22 chat-end hash: <az git zende: git rev-parse --short HEAD>
+part21 chat-end: 223db85 (backfilled dar boot part22)
+part22 commits:
+  af9e916 - M101 backfill part21=223db85
+  cd5f508 - archive v2.6-v2.11 + PROJECT_CONSTITUTION stub v2.18
+  4d90200 - reorganize md files (archive DEPRECATED + update refs)
+  ad69a58 - CHAT_LOG catch-up part19/20/21 (v2.8)
+  a30dd4f - Governance Batch5 (manifest 288 + Z2.P21-A RESOLVED)
+  <chat-end> - SESSION_STATUS + LEDGER + this file
+
+--- MANDATORY BOOT SEQUENCE (part23) ---
+Read these 10 files IN ORDER:
+1. claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md
+2. claude_workspace/PHASE_LEDGER.md
+3. docs/constitution/main.md
+4. docs/constitution/01a_rules_core.md
+5. claude_workspace/LOCKED_RULES_INBOX.md
+6. docs/constitution/02_lessons.md
+7. docs/constitution/06_meta.md
+8. docs/SESSION_STATUS.md
+9. docs/PENDING_FOR_NEXT_VERSION.md
+10. claude_workspace/incoming_permanent/PHASE1_PART23_HANDOFF.txt
+
+M101 BACKFILL (FIRST ACTION after reading):
+  git rev-parse --short HEAD
+  Replace in PHASE_LEDGER.md:
+    "<backfill dar boot part23 (M101)>" -> {live hash}
+  git add claude_workspace/PHASE_LEDGER.md
+  git commit -m "chore(ledger): M101 backfill part22 hash {hash} in boot part23"
+  git push origin infra/v2.14-source-of-truth
+
+--- PART22 ACCOMPLISHMENTS ---
+Priority 1 - Legacy Reference Elimination (Z2.P21-A RESOLVED):
+  archive 6 sand_jame v2.6-v2.11 -> docs/constitution/archive/
+  archive 3 DEPRECATED (PROJECT_GOVERNANCE + PROJECT_CONTEXT + CLAUDE_CHECKLIST)
+  archive 2 CHAT_FINALIZE -> claude_workspace/old_versions/
+  PROJECT_CONSTITUTION.md -> redirect stub v2.18
+  README.md + ONBOARDING_GUIDE.md -> references updated to constitution v2.18
+
+Priority 2 - CHAT_LOG catch-up (v2.8):
+  Sections added: part19 / part20 / part21 + boot marker part22
+
+Priority 3 - Governance Batch 5:
+  PROJECT_MANIFEST regenerated: 288 files
+  Z2.P21-A RESOLVED in PENDING
+  Audit 13/13 PASS
+
+--- CURRENT STATE ---
+Objective 1 (Phase 2): CLOSED
+Objective 2 (Phase 3): SUBSTANTIALLY COMPLETE
+Objective 3 (Phase 4): READY TO START
+
+--- NEXT CHAT PRIORITIES ---
+1. Phase 4 development (read TASK_BACKLOG.md for priorities)
+2. Any new governance issues found in boot
+
+--- DOUBLE-LOOP CONTINUITY ---
+Loop 1 (Ledger): DONE
+Loop 2 (Handoff): DONE (this file)
+
+=== END HANDOFF ===
