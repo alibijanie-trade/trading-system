@@ -86,9 +86,14 @@ docs/
 boot template اجباری (#۴۸) · `[Mechanism + Trust-Rules Self-Check]` بالا · `Honesty Audit (#۸۳)` پایین · Scope Contract (#۷۸) · تأیید per-task (#۵۱/#۵۱.۱) · commit `-F` ASCII (M99) · **قانون تداوم دوحلقه‌ای (check_12 مکانیکی)**
 
 ## 🚀 Sequence ادامه (part23)
-1. Boot کامل (۱۰ فایل) + M101 backfill part22 از git زنده
-2. **Phase 4** یا هر اولویتی در PART23_HANDOFF
-3. chat-end: حلقه ۱ Ledger → حلقه ۲ Handoff → یک commit + push
+1. Boot کامل (۱۰ فایل) + M101 backfill part22=`52ced6d` از git زنده
+2. **Enterprise Audit** (میشن اختصاصی part23):
+   - Layer A: Constitution Integrity (۹۰ قانون + M1-M110 + QL-0..QL-6)
+   - Layer B: File Structure Consistency (links + manifest + cross-doc counts)
+   - Layer C: Claimed Fixes Verification (Z2.P21-A + headers + shell + React)
+   - Layer D: Enterprise Quality (dead links + TODO + version mismatches)
+3. گزارش ساختاریافته: PASS/FAIL/FIX به تفکیک فایل/خط
+4. chat-end: حلقه ۱ Ledger → حلقه ۲ Handoff → یک commit + push
 
 ---
 **ساخته توسط:** Claude در part22 (legacy elimination + governance Batch 5)
