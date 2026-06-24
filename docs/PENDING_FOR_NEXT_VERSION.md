@@ -1491,3 +1491,13 @@ hash chat-end part16 = `81a3562` (cross-checked از `git rev-parse --short HEAD
 
 **اولویت:** بالا — در چت مستقل انجام شود.
 **Cross-refs:** #۲۴ (No-Deletion) · #۲۶ (Atomic Updates) · M71 (Documentation Drift)
+
+> ✅ **RESOLVED در part22** (`TRADING-phase1-part22-legacy-ref-elimination-and-governance`) — 2026-06-24
+>
+> **انجام‌شده:**
+> 1. ۶ فایل `سند_جامع_v2_6..v2_11` → `docs/constitution/archive/` (commit `cd5f508`)
+> 2. `docs/PROJECT_CONSTITUTION.md` → redirect stub v2.18 با لیست مودول‌های درست (commit `cd5f508`)
+> 3. `docs/PROJECT_GOVERNANCE.md` + `PROJECT_CONTEXT.md` + `CLAUDE_CHECKLIST.md` → archive (commit `4d90200`)
+> 4. `docs/CHAT6_FINALIZE.md` + `CHAT7_FINALIZE.md` → `claude_workspace/old_versions/` (commit `4d90200`)
+> 5. `README.md` + `docs/ONBOARDING_GUIDE.md` — همه ارجاعات legacy → constitution v2.18 آپدیت شد (commit `4d90200`)
+> 6. `docs/PROJECT_MANIFEST.md` regenerate (288 فایل) — Batch 5 (part22)
