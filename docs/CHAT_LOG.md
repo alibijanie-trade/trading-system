@@ -2596,8 +2596,85 @@ B5 + موارد موکول.
 
 ---
 
+---
+
+## چت `TRADING-phase1-part19-phase3-catchup` — check_13 + CHAT_LOG catch-up + Quick-Lock
+
+**تاریخ:** 2026-05-31  
+**Branch:** `infra/v2.14-source-of-truth`  
+**Parent commit (chat-end part18 frontier):** `a6e7625`
+
+### دستاوردها
+- ✅ boot کامل + **M101 backfill part18 frontier=`a6e7625`** (نه `041b80e` stale، از git زنده).
+- ✅ **کشف drift REVIEW_LOG↔file** (#۰۱۰/#۰۱۱ بدون فایل؛ check_10 فقط numbering) → ساخت ۲ فایل review + **check_13** (دوطرفه row↔file + slug + heading) + test_15/test_16 → **Review #۰۱۲** (commit `dcb5c20`).
+- ✅ **CHAT_LOG catch-up** part14→part18 از PHASE_LEDGER (commit `104abf0`) — بخش‌های کامل اضافه شد.
+- ✅ **بازیابی Project Instructions** (نوشته‌شدن سهوی در part18) + **Quick-Lock** mechanism: LOCKED_RULES_INBOX.md ساخته شد (QL-0/QL-1/QL-2) + boot template بازنویسی (commit `a6300ce`).
+- ✅ audit **۱۳/۱۳** + tests **۱۶/۱۶** PASS.
+
+### Commits
+- `dcb5c20` — check_13 + ساخت ۲ فایل review + Review #۰۱۲
+- `104abf0` — CHAT_LOG catch-up part14→part18
+- `a6300ce` — Quick-Lock + بازیابی Project Instructions + boot template
+- `5de05e0` — chat-end part19 (Ledger + PART20 handoff + backfill #۰۱۲=`dcb5c20`)
+
+---
+
+## چت `TRADING-phase1-part20-governance-repair` — governance repair Batch 1+2
+
+**تاریخ:** 2026-06-21  
+**Branch:** `infra/v2.14-source-of-truth`  
+**Parent commit (chat-end part19):** `5de05e0`
+
+### دستاوردها
+- ✅ boot کامل + **M101 backfill part19=`5de05e0`** (از git زنده).
+- ✅ **governance repair Batch 1:** header v2.14→v2.17 در ۶ ماژول constitution + LOCKED_RULES_INBOX در Quick-start main.md + PHASE_LEDGER در STEP 1 boot template + SESSION_STATUS rewrite کامل (part13→part19).
+- ✅ **governance repair Batch 2:** split `01_rules.md` → **`01a_rules_core.md`** (boot-critical ~25KB، جدول #۱-۹۰ تمیز) + shell standard CMD→PowerShell در بخش ۱.۷.
+- متن چت ۲۰ (docx) خوانده شد + QL-6 ثبت + Scope Contract v2.18 آماده.
+
+### Commits
+- `17bb60a` — governance repair Batch 1 (هدر + SESSION_STATUS + boot template)
+- `a0172ca` — governance repair Batch 2 (01a_rules_core + shell standard) + chat-end
+
+---
+
+## چت `TRADING-phase1-part21-codify-v218-and-governance-repair` — codify v2.18 + governance repair Batch 3+4
+
+**تاریخ:** 2026-06-21  
+**Branch:** `infra/v2.14-source-of-truth`  
+**Parent commit (chat-end part20):** `a0172ca`
+
+### دستاوردها
+- ✅ boot کامل + **M101 backfill part20=`a0172ca`** (از git زنده).
+- ✅ **codify Constitution v2.18:** قانون **#۸۹** (Quick-Lock Mechanism) + **#۹۰** (No-Reliance on Human Memory/Attention) + تبصره‌های QL-1..4 (#۵۱.۱/#۶۲.۱/#۸۶.۱/#۸۷.۱) + **M106-M110** (Clean-Commit / Manual-Box / MCP-Liveness / Tool-Discovery / Audit-Counter-Drift) + **§۴.۱۲** (اصل تأیید صریح کاربر) + HELPER_PROTOCOL banner FROZEN + **QL-6** در inbox + **Review #۰۱۳** + **Decision #۷۱** + header sync همه ماژول‌ها → v2.18. audit **۱۳/۱۳** PASS.
+- ✅ **governance repair Batch 3:** React 18 → 19.2.6 در 05_architecture + آمار واقعی ماژول‌ها در main.md + footer 05_architecture بازنویسی.
+- ✅ **governance repair Batch 4:** CUSTOM_INSTRUCTIONS.md sync v2.18 (بازنویسی کامل، ارجاع سند_جامع حذف) + PROJECT_MANIFEST regenerate (290 فایل classified) + **Z2.P21-A** (legacy-ref-elimination) در PENDING + M110.
+
+### قوانین جدید
+- **#۸۹:** Quick-Lock Mechanism (QL-0..QL-6 binding)
+- **#۹۰:** No-Reliance on Human Memory/Attention
+
+### درس‌های جدید (M106-M110)
+- **M106:** Clean-Commit Policy (commit یک کار اتمیک دارد)
+- **M107:** Manual-Box Full-Text Protocol (تحویل کامل متن)
+- **M108:** MCP-Liveness Sanity-Ping (sanity-ping قبل از کار سنگین)
+- **M109:** Tool-Discovery First (جستجو ابزار قبل فرض وجود)
+- **M110:** Audit-Counter-Drift (آمار audit با واقعیت سنج شود)
+
+### Commits
+- `7df436e` — codify v2.18 (#۸۹/#۹۰ + M106-M110 + §۴.۱۲ + Review #۰۱۳ + Decision #۷۱)
+- `db8c08c` — governance repair Batch 3 (React 19.2 + آمار ماژول‌ها + footer)
+- `223db85` — governance repair Batch 4 + chat-end (CUSTOM_INSTRUCTIONS v2.18 + manifest 290 + Z2.P21-A)
+
+---
+
+## 🔖 boot چت part22 — M101 backfill (TRADING-phase1-part22-legacy-ref-elimination-and-governance)
+
+**تاریخ:** 2026-06-24  
+**Parent commit (chat-end part21):** `223db85` (از git زنده در boot part22 ✅)  
+M101 backfill: placeholder → `223db85` (commit `af9e916`) ✅
+
 ## 📌 پایان CHAT_LOG
 
-**نسخه:** v2.7 (2026-05-31 — part19 catch-up: بخش‌های کامل part14-15/16/17/18 از PHASE_LEDGER افزوده شد) · v2.6 (2026-05-30 — part14 full-refresh: بخش‌های part09→part13 + boot part14 marker، parent `3eae91e`؛ تا part08 دست‌نخورده)
-**به‌روز شده در:** چت `TRADING-phase1-part19-phase3-catchup` (catch-up part14→part18) · قبلاً part14 (full-refresh part09→part13)
+**نسخه:** v2.8 (2026-06-24 — part22 catch-up: بخش‌های كامل part19/part20/part21 + boot marker part22 افزوده شد) · v2.7 (2026-05-31 — part19 catch-up: بخش‌های کامل part14-15/16/17/18 افزوده شد) · v2.6 (2026-05-30 — part14 full-refresh: بخش‌های part09→part13 + boot part14 marker، parent `3eae91e`؛ تا part08 دست‌نخورده)
+**به‌روز شده در:** چت `TRADING-phase1-part22-legacy-ref-elimination-and-governance` (catch-up part19/part20/part21) · قبلاً part19 (catch-up part14→part18) · part14 (full-refresh part09→part13)
 **به‌روز توسط:** Claude طبق قوانین #۲۳ + #۲۶ + #۶۰ + #۶۶ + #۷۳ (Triple-Rule honored)
