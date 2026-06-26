@@ -25,8 +25,8 @@
 
 این فایل‌ها را **به همین ترتیب کامل بخوان**:
 
-1. `docs/constitution/main.md` (Constitution v2.17 index)
-2. `docs/constitution/01_rules.md` (همه قواعد #1-#88)
+1. `docs/constitution/main.md` (Constitution v2.18 index)
+2. `docs/constitution/01a_rules_core.md` (قوانین #1-#90 — boot-critical)
    - ⚡ **و بلافاصله** `claude_workspace/LOCKED_RULES_INBOX.md` — قوانین Quick-Lockشده (**binding فوری، هر boot؛ هم‌سطح Locked**). اگر موجود نبود silent skip.
 3. `docs/constitution/02_lessons.md` (همه M-lessons + HM-lessons)
 4. `docs/constitution/06_meta.md` (meta principles)
@@ -36,11 +36,10 @@
 8. `claude_workspace/PHASE_LEDGER.md` (تاریخچه تجمعی پروژه — append-only source-of-truth) ⭐
 9. `docs/PENDING_FOR_NEXT_VERSION.md` (Z-drift + lessons pending)
 10. `claude_workspace/incoming_permanent/PART{N-1}_CHAT_END_DEFERRED_NOTE.txt`
-    (اگر previous chat با defer ختم شد — فعلاً PART09)
+    (اگر previous chat با defer ختم شد — اگر موجود باشد)
 11. `claude_workspace/HELPER_SESSION_TODO_part{N-1}_final.md`
-    (اگر helper session قبلی داشت — فعلاً part09)
-12. `claude_workspace/incoming_permanent/PART10_BOOT_ESCAPE_NOTE.txt`
-    (اگر موجود باشد)
+    (اگر helper session قبلی داشت — اگر موجود باشد)
+12. هر فایل BOOT_ESCAPE یا سایر incoming موجود در `claude_workspace/incoming_permanent/`
 13. `claude_workspace/incoming_permanent/PHASE1_PART{N}_HANDOFF.txt`
     (اگر موجود)
 
@@ -184,6 +183,7 @@ helper chat نقش consultation است (per HELPER_PROTOCOL §1.2).
 |------|--------|--------|
 | 2026-05-26 | helper part09 turn ۷۹ | Initial creation با enforcement layer (حل F57) |
 | 2026-05-31 | part19 | افزودن `LOCKED_RULES_INBOX.md` به STEP 1 reads + مکانیزم Quick-Lock (QL-0/QL-1/QL-2) |
+| 2026-06-26 | part23 enterprise audit | به‌روز‌رسانی ref از v2.17 به v2.18؛ جایگزینی `01a_rules_core.md` به‌جای `01_rules.md`؛ rule count #88→#90؛ حذف اشارات stale PART09/PART10 در items 10-12 |
 | 2026-06-20 | part20 governance repair | افزودن `PHASE_LEDGER.md` به STEP 1 (مشکل #۷)؛ به‌روزرسانی ref از v2.14 به v2.17 و شماره قواعد |
 
 ---

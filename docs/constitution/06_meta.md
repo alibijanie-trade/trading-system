@@ -111,19 +111,20 @@ Root: D:\Projects\trading-system
 
 ### پروتکل شروع چت (قانون #۴۸)
 
-طبق Modular Constitution v2.12، ترتیب الزامی خواندن:
+طبق Modular Constitution v2.18، ترتیب الزامی خواندن (برای جزئیات کامل به `CHAT_BOOT_TRIGGER_TEMPLATE.md` مراجعه کنید):
 
-1. **`docs/constitution/main.md`** (~۸KB، index)
-2. **`docs/constitution/04_principles.md`** (~۱۵KB، فلسفه)
-3. **`docs/constitution/01_rules.md`** (~۳۰KB، قوانین Locked)
-4. **`docs/constitution/02_lessons.md`** (~۲۹KB، درس‌نامه)
-5. **`docs/PENDING_FOR_NEXT_VERSION.md`** (PENDING آیتم‌ها)
+1. **`docs/constitution/main.md`** (index v2.18)
+2. **`docs/constitution/01a_rules_core.md`** (قوانین #1-#90 — boot-critical)
+   - و بلافاصله `claude_workspace/LOCKED_RULES_INBOX.md` (قوانین Quick-Lock)
+3. **`docs/constitution/02_lessons.md`** (M-lessons + HM-lessons)
+4. **`docs/constitution/06_meta.md`** (meta principles)
+5. **`docs/constitution/04_principles.md`** + **`docs/constitution/05_architecture.md`**
 6. **`docs/SESSION_STATUS.md`** (وضعیت فعلی)
-7. **`docs/DECISIONS_LOG.md`** (تصمیمات معماری)
-8. **`docs/CHAT_LOG.md`** بخش چت قبل
-9. **اجرای M73 audit** — cross-document consistency check
+7. **`claude_workspace/PHASE_LEDGER.md`** (تاریخچه تجمعی)
+8. **`docs/PENDING_FOR_NEXT_VERSION.md`** (PENDING)
+9. **`claude_workspace/incoming_permanent/PHASE1_PART{N}_HANDOFF.txt`** (اگر موجود)
 
-سایر ماژول‌ها (`03_bugs.md`, `05_architecture.md`, `06_meta.md`) **on-demand** خوانده می‌شوند.
+سایر ماژول‌ها (`03_bugs.md`) **on-demand** خوانده می‌شوند.
 
 ### پروتکل پایان چت (۱۲ مرحله، قانون #۲۷)
 
@@ -220,12 +221,14 @@ Root: D:\Projects\trading-system
 
 ## 📚 خوانده‌شده
 - [x] main.md
-- [x] 04_principles.md
-- [x] 01_rules.md
+- [x] 01a_rules_core.md
+- [x] LOCKED_RULES_INBOX.md
 - [x] 02_lessons.md
-- [x] PENDING_FOR_NEXT_VERSION
+- [x] 06_meta.md
+- [x] 04_principles.md + 05_architecture.md
 - [x] SESSION_STATUS
-- [x] CHAT_LOG
+- [x] PHASE_LEDGER
+- [x] PENDING_FOR_NEXT_VERSION
 
 ## 📋 Tasks باز در Tier فعلی
 - [ ] Task A
@@ -522,7 +525,7 @@ Stack: FastAPI + SQLAlchemy + React + Vite، Windows 11.
 زبان ارتباط: فارسی، اصطلاحات فنی انگلیسی.
 من دانش برنامه‌نویسی ندارم — هر کار مرحله‌به‌مرحله.
 
-قوانین قفل‌شده مهم (نسخه v2.14):
+قوانین قفل‌شده مهم (نسخه v2.18):
 - #۲۷: پایان چت فقط با تأیید صریح
 - #۳۰: اصلاحات کوچک = اسکریپت Python idempotent (یا MCP edit_file)
 - #۳۱: بالای هر کادر کد: 🟦/🟩/🟧/🟥 + شماره tab
@@ -534,7 +537,7 @@ Stack: FastAPI + SQLAlchemy + React + Vite، Windows 11.
 - #۶۳: Convention 🟢 ▶️ EXECUTE
 - #۶۶: Push اجباری در پایان چت (Locked در v2.12)
 
-مرجع کامل: docs/constitution/main.md (Modular v2.14)
+مرجع کامل: docs/constitution/main.md (Modular v2.18)
 ```
 
 ### پروتکل توصیه Real-Time
@@ -925,7 +928,7 @@ skills/trading-{name}/
 
 طبق قانون #۲۵ و #۴۸، Claude در شروع هر چت **هیچ کار قبل از تأیید کاربر** انجام نمی‌دهد. ۸ مرحله:
 
-1. بازشناسی پیوست‌ها (zip + سند جامع)
+1. بازشناسی پیوست‌ها (فایل‌های handoff)
 2. استخراج و بررسی ساختار zip
 3. خواندن اسناد به ترتیب الزامی (طبق بخش ۶.۱)
 4. بررسی محیط (venv، DB، node_modules)
@@ -964,7 +967,6 @@ skills/trading-{name}/
 🔮 **افزوده‌های بعدی (S3.3-S3.4):**
 - §۶.۵ Pre-commit hooks: Layer 1 Audit refresh post-S3.3 ACCEPTABLE_VERSIONS update
 - §۶.۷ Filesystem MCP troubleshooting: ادغام M88+M93-M110 lessons
-- §۶.۱ boot sequence: به‌روز به `01a_rules_core.md` (بجای `01_rules.md`) + شماره قوانین 90
 
 ---
 
