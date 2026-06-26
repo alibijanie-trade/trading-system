@@ -1166,7 +1166,7 @@ ALL_CHECKS: List[Callable[[], CheckResult]] = [
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Pre-commit Audit (Layer 1) for Constitution v2.17",
+        description="Pre-commit Audit (Layer 1) for Constitution v2.18",
     )
     parser.add_argument(
         "--verbose", action="store_true", help="Show details for passing checks too"
@@ -1187,7 +1187,7 @@ def main():
     else:
         checks_to_run = ALL_CHECKS
 
-    print("Pre-commit Audit (Layer 1) - Constitution v2.17")
+    print("Pre-commit Audit (Layer 1) - Constitution v2.18")
     print("=" * 60)
     print(f"Repo root: {REPO_ROOT}")
     print(f"Running {len(checks_to_run)} check(s)...")

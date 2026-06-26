@@ -950,21 +950,24 @@ skills/trading-{name}/
 
 ## 🚧 وضعیت این ماژول
 
-✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.14 (S3.2)** — ۱۲ بخش meta از سند ۱۳-۲۵ + Templates 11+12 جدید.
+✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.14 (S3.2) + v2.18 (part21)**
 
 ✅ **افزوده‌های v2.14 اعمال‌شده (S3.2 part07):**
 - Template ۱۱ — Pre-Action Checklist Visibility (پشتیبان Rule #۷۶ + M100)
 - Template ۱۲ — Git Commit -F Flag Standard (پشتیبان M95+M97+M99 + Rule #۴۲/#۴۳/#۶۶/#۷۶ cross-refs)
 - §۶.۳ heading: «۱۰ Template» → «۱۲ Template»
 
+✅ **افزوده‌های v2.18 اعمال‌شده (part21):**
+- Module header در header دارد: v2.18 ✅
+- M106–M110 cross-refs به این ماژول اضافه شد
+
 🔮 **افزوده‌های بعدی (S3.3-S3.4):**
 - §۶.۵ Pre-commit hooks: Layer 1 Audit refresh post-S3.3 ACCEPTABLE_VERSIONS update
-- §۶.۷ Filesystem MCP troubleshooting: ادغام M88+M93-M102 lessons (پس از S3.3 در maintenance pass)
-- §۶.۸ Custom Instructions: «نسخه v2.12» → «نسخه v2.14» (S3.3 atomic با module headers)
-- Module header v2.12 → v2.14 (S3.3 atomic با ACCEPTABLE_VERSIONS)
+- §۶.۷ Filesystem MCP troubleshooting: ادغام M88+M93-M110 lessons
+- §۶.۱ boot sequence: به‌روز به `01a_rules_core.md` (بجای `01_rules.md`) + شماره قوانین 90
 
 ---
 
-**📌 پایان 06_meta.md (S3.2 اتمیک v2.14 applied)**
+**📌 پایان 06_meta.md (S3.2 اتمیک v2.14 applied · v2.18 header updated — part21)**
 
-پس از commit 7، مرحله ۳ Migration کامل شد. commit 8 (آخرین) شامل: archive سند فارسی + Atomic Update v2.12 (اعمال PENDING + قوانین جدید). v2.14 S3.1+S3.2 atomic update پس از آن اعمال شد.
+پس از commit 7، مرحله ۳ Migration کامل شد. v2.14 S3.1+S3.2 اتمیک update پس از آن اعمال شد. v2.18 در part21 با M106–M110 و boot protocol آپدیت شد.

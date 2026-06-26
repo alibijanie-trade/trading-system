@@ -85,17 +85,17 @@ trading-system/
 │   └── 27b_test_*.py             ← تست‌ها (قانون #۲۲)
 │
 └── docs/              ← اسناد پروژه
-    ├── PROJECT_GOVERNANCE.md     ⭐ راهبردی
-    ├── CLAUDE_CHECKLIST.md       ⭐ چک‌لیست
+    ├── constitution/             ⭐ Constitution مدولار v2.18 (۸ ماژول)
     ├── CHAT_LOG.md               ⭐ تاریخچه چت‌ها
     ├── TASK_BACKLOG.md           ⭐ TODO ها
     ├── DECISIONS_LOG.md          ⭐ تصمیمات معماری
+    ├── PROJECT_MANIFEST.md       ⭐ فهرست کامل فایل‌ها
+    ├── PENDING_FOR_NEXT_VERSION.md
     ├── REUSABLE_SKELETON.md      ⭐ template
     ├── GLOSSARY.md
     ├── TROUBLESHOOTING.md
     ├── STYLE_GUIDE.md
     ├── ONBOARDING_GUIDE.md       ⭐ این سند
-    ├── PROJECT_CONTEXT.md
     └── SESSION_STATUS.md
 ```
 
@@ -281,18 +281,18 @@ docs/STYLE_GUIDE.md
 
 قواعد code style. هر کد جدیدی که می‌نویسید، باید این قواعد را رعایت کند.
 
-### قدم ۳.۸ — سند جامع (۳۰ دقیقه — overview، نه کامل)
+### قدم ۳.۸ — Constitution Modular (۳۰ دقیقه — overview، نه کامل)
 
 ```
-سند_جامع_v2.7.md
+docs/constitution/main.md
 ```
 
-این **constitution** پروژه است. در روز اول کافی است:
-- فهرست را ببینید
-- بخش‌های مهم با ⭐ را بخوانید
-- بخش "تغییرات این نسخه" را ببینید
+این **index** constitution مدولار v2.18 است. در روز اول کافی است:
+- فهرست ماژول‌ها را ببینید (۸ ماژول)
+- بخش Quick-start را بخوانید (ترتیب خواندن ماژول‌ها)
+- جدول ۹۰ قانون در `docs/constitution/01a_rules_core.md` را مرور کنید
 
-برای reference کامل، در طول کار به آن مراجعه می‌کنید.
+برای reference کامل هر بخش، به ماژول مربوطه (01_rules.md، 02_lessons.md و...) مراجعه می‌کنید.
 
 ---
 
@@ -491,7 +491,7 @@ git push
 
 ### Q2: چرا تست Backend با کد نه Swagger UI؟
 
-طبق **قانون #۲۱** سند جامع. دلایل در `TROUBLESHOOTING.md` Q6 آمده.
+طبق **قانون #۲۱** Constitution. دلایل در `TROUBLESHOOTING.md` Q6 آمده.
 
 ### Q3: اگر یک Bug پیدا کردم، چه کنم؟
 

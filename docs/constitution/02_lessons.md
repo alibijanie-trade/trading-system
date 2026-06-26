@@ -465,6 +465,23 @@ Claude در ابتدای چت ۹ فرض کرد «ساخت Project در Claude De
 
 ---
 
+### **M110** — Audit Script Counter Drift on Constitution Bump
+
+**کشف‌شده در:** part23 (enterprise audit Layer C) | **اهمیت:** 🟠 medium | **Cross-refs:** QL-4 (۸۹.d No-Stale-Label) · #۴۸ (boot protocol) · M106 (Clean-Commit)
+
+**Pattern:** وقتی Constitution version bump می‌شود (e.g. v2.17 → v2.18)، بنر فایل `scripts/63_pre_commit_audit.py` دو جا دارد که label درستی می‌خواهند: (1) خط `description` در `argparse`، (2) خط `print()` در `main()`. هر دو باید به نسخه جدید به‌روز شوند ولی به‌راحتی فراموش می‌شوند. در نتیجه: بنر برچسب اجرا می‌شود ولی label آن نسخه قدیمی را نشان می‌دهد.
+
+**راه‌حل:** در هر Constitution bump، بلافاصله پیش از commit نسخه جدید:
+1. فایل `scripts/63_pre_commit_audit.py` را باز کن و دو رشته زیر را به vX.XX جدید تطبیق بده:
+   - `description="Pre-commit Audit (Layer 1) for Constitution vX.XX"`
+   - `print("Pre-commit Audit (Layer 1) - Constitution vX.XX")`
+2. تست: `python scripts/63_pre_commit_audit.py` را مستقیماً اجرا و label در خروجی تأیید شود.
+3. این fix باید همراه commit version bump باشد، نه بعداً.
+
+**نمونه واقعی:** در part23 enterprise audit، بنر banner هنوز `Constitution v2.17` نشان می‌داد در حالی که Constitution در v2.18 بود. Fix: هر دو رشته در part23 Layer C audit تصحیح شدند.
+
+---
+
 ## 🚧 وضعیت این ماژول
 
 ✅ **Migration کامل از v2.11** — درس‌های M1-M63 (با ۲۶ Reserved explicit) ثبت شدند.
@@ -1118,7 +1135,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 
 ---
 
-## §۲.۱۰ — درس‌های v2.18 (M106-M109) — part21
+## §۲.۱۰ — درس‌های v2.18 (M106-M110) — part21
 
 ### **M106** — Clean-Commit Pre-Stage + Untracked Audit
 
@@ -1170,7 +1187,7 @@ helper finding conflict با levels 1-4 → conflict explicit surfaced to user f
 
 ## 🚧 وضعیت این ماژول
 
-✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1) + v2.18 (M106-M109)**
+✅ **Migration کامل از v2.11 + Atomic Updates v2.12 + v2.13 + v2.14 (S3.1) + v2.18 (M106-M110)**
 
 **جمع‌بندی درس‌ها:**
 - M-series ثبت: **۷۸** (M1-M63 + M64-M87 + M88 + M93-M110)
