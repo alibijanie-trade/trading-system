@@ -3,7 +3,7 @@
 > **Intelligent Trading System — Modular Constitution**
 > در بازارهای مالی | ارز دیجیتال و فارکس
 >
-> **نسخه:** 2.18 (atomic amendment از v2.17 — codify Quick-Lock: #۸۹/#۹۰ + M106-M109 + اصل تأیید صریح + تبصره‌های QL-1..4)
+> **نسخه:** 2.18 (atomic amendment از v2.17 — codify Quick-Lock: #۸۹/#۹۰ + M106-M110 + اصل تأیید صریح + تبصره‌های QL-1..4)
 > **تاریخ شروع split:** اردیبهشت ۱۴۰۵ (May 2026)
 > **تاریخ v2.13:** خرداد ۱۴۰۵ (May 2026)
 > **تاریخ v2.14:** خرداد ۱۴۰۵ (May 2026)
@@ -63,16 +63,18 @@
 طبق قانون #۴۸ (پروتکل اجباری شروع چت)، Claude باید این مسیر را طی کند:
 
 1. **`main.md`** (همین فایل) — برای آشنایی با ساختار modular
-2. **`04_principles.md`** — برای فهم سطح‌بندی و فلسفه پروژه
-3. **`01a_rules_core.md`** — قوانین کامل Locked (جدول #۱-۹۰ + بخش‌های پایه) ⭐
+2. **`01a_rules_core.md`** — قوانین کامل Locked (جدول #۱-۹۰ + بخش‌های پایه) ⭐
    - `01_rules.md` — شرح مفصل قوانین — **on-demand** (فقط وقتی شرح خاص قانونی لازم است)
-4. **`claude_workspace/LOCKED_RULES_INBOX.md`** — قوانین Quick-Lock فعال (QL-0..QL-6 binding) ⭐
-5. **`02_lessons.md`** — درس‌نامه برای جلوگیری از تکرار اشتباهات
-6. **`docs/PENDING_FOR_NEXT_VERSION.md`** — PENDING آیتم‌های ادغام نشده
+3. **`claude_workspace/LOCKED_RULES_INBOX.md`** — قوانین Quick-Lock فعال (QL-0..QL-6 binding) ⭐
+4. **`02_lessons.md`** — درس‌نامه برای جلوگیری از تکرار اشتباهات
+5. **`06_meta.md`** — Session و Templates و MCP
+6. **`04_principles.md`** + **`05_architecture.md`** — فلسفه و معماری (**on-demand** در صورت نیاز)
 7. **`docs/SESSION_STATUS.md`** — وضعیت فعلی پروژه
-8. **`docs/DECISIONS_LOG.md`** — تصمیمات معماری ثبت‌شده
-9. **`docs/CHAT_LOG.md`** بخش چت قبل
-10. **اجرای M73 audit** — Cross-Document Consistency Check
+8. **`claude_workspace/PHASE_LEDGER.md`** — تاریخچه تجمعی پروژه ⭐
+9. **`docs/PENDING_FOR_NEXT_VERSION.md`** — PENDING آیتم‌ها
+10. **`claude_workspace/incoming_permanent/PHASE1_PART{N}_HANDOFF.txt`** — اگر موجود
+
+ℹ️ برای لیست دقیق و enforcement، همیشه از `claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md` استفاده کنید.
 
 سایر ماژول‌ها (`03_bugs.md`, `05_architecture.md`, `06_meta.md`) **on-demand** خوانده می‌شوند — وقتی موضوع مرتبط مطرح شد.
 
@@ -92,6 +94,8 @@
 - **#۶۷** Cross-shell EXECUTE blocks اجباری (Locked در v2.13) → `01_rules.md#قانون-67`
 - **#۶۸-#۷۷** 🆕 v2.14 — MDRS v2 framework: Tier classification، Review Trigger، Path Validator، VERSION SSoT، Manifest Self-Awareness، Triple-Rule Atomic Boundary، Z-ID Permanence، Review Scope Closure، Pre-Action Checklist Visibility، Continuous Discovery Logging → `01_rules.md#قانون-68` تا `قانون-77`
 - **#۷۸-#۸۵** 🆕 v2.15 — Trust & Anti-Sycophancy Rules: SCM، QHP، NSISN، RDEM، MPTC، HAT، APMM، Self-Activation Lock → `01_rules.md` بخش «شرح کامل قوانین Trust & Anti-Sycophancy»
+- **#۸۹** 🆕 v2.18 Quick-Lock Mechanism → `01_rules.md` بخش «شرح کامل قوانین Quick-Lock (#۸۹-۹۰)»
+- **#۹۰** 🆕 v2.18 No-Reliance on Human Memory → `01_rules.md` بخش «شرح کامل قوانین Quick-Lock (#۸۹-۹۰)»
 - **#۸۶** 🆕 v2.16 — Escape-Aware Sequence Derivation → `01_rules.md` بخش «شرح کامل قانون Mechanical-Claim Verification»
 - **#۸۷-#۸۸** 🆕 v2.17 — Settings/Instructions/Project-Asset Sync Reminder + AI-Optimized Prompt/Artifact Authoring → `01_rules.md` بخش «شرح کامل قوانین Sync & Authoring»
 
@@ -137,7 +141,7 @@
 ### Meta در `06_meta.md`
 
 - Session Management + Context handoff
-- Templates پاسخ Claude (۱۰ Template)
+- Templates پاسخ Claude (۱۲ Template)
 - Filesystem MCP Integration
 - Claude Desktop Configuration (Memory + Project Knowledge + Custom Instructions + Settings)
 - `claude_workspace/` structure
