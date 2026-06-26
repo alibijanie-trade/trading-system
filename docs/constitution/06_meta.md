@@ -64,7 +64,7 @@ Backend + Frontend + DB
 ## مسیرها
 Root: D:\Projects\trading-system
 
-## قوانین کلیدی (subset از سند جامع)
+## قوانین کلیدی (subset از Constitution)
 - BrowserRouter فقط در main.jsx
 - ...
 
@@ -144,7 +144,7 @@ Root: D:\Projects\trading-system
 8. به‌روزرسانی SESSION_STATUS.md
 9. به‌روزرسانی PROJECT_CONTEXT.md
 10. به‌روزرسانی CHANGELOG.md (اگر version bump)
-11. به‌روزرسانی سند جامع/Constitution (افزایش version + change log)
+11. به‌روزرسانی Constitution (ماژول مربوط + version bump + change log)
 12. ساخت **CHAT{N+1}_HANDOFF.txt** (قانون #۶۲) + پیام پایانی + push روی GitHub (قانون #۶۶ — Locked در v2.12)
 
 ---
@@ -174,15 +174,15 @@ Root: D:\Projects\trading-system
 | ۱ | پیشنهاد و اخذ تأیید صریح |
 | ۲ | تولید SESSION_STATUS.md کامل (Artifact) |
 | ۳ | تولید PROJECT_CONTEXT.md به‌روز (Artifact) |
-| ۴ | تولید سند جامع/Constitution به‌روزشده با نسخه جدید |
+| ۴ | به‌روزرسانی ماژول‌های Constitution (اگر content تغییر داشت) |
 | ۵ | یادآوری نیازمندی‌های چت جدید (لیست فایل‌ها) |
 | ۶ | نکات افزایشی برای حداکثر هماهنگی |
 | ۷ | پیام پایانی صریح با ساختار `در چت جدید این موارد را آپلود کن: ...` |
 
 ### قوانین قفل‌شده Handoff
 
-🔒 سه فایل خروجی (SESSION_STATUS، PROJECT_CONTEXT، سند جامع) باید همگی Artifact قابل دانلود باشند — نه متن داخل چت.
-🔒 سند جامع جدید باید تضمین کند هیچ بخش قبلی حذف نشده (#۲۴).
+🔒 فایل‌های خروجی (SESSION_STATUS + ماژول‌های Constitution تغییریافته) باید Artifact قابل دانلود باشند — نه متن داخل چت.
+🔒 Constitution modules جدید باید تضمین کنند هیچ بخش قبلی حذف نشده (#۲۴).
 🔒 اگر چت جاری شامل تصمیمات تأییدشده‌ای است که هنوز در اسناد نیستند، اول آن‌ها را در PROJECT_CONTEXT/Constitution ثبت کن، **سپس** فایل‌ها را تولید کن.
 
 ### رفتار اجباری در تشخیص علائم پایان طبیعی
@@ -760,7 +760,7 @@ Filesystem MCP یک extension برای Claude Desktop است که به Claude ا
   - معرفی پروژه
   - Stack (سند ۲ خلاصه)
   - فاز جاری + درصد
-  - قوانین Locked مهم (subset از `01_rules.md`)
+  - قوانین Locked مهم (subset از `01a_rules_core.md`)
   - مسیر فایل‌های مرجع
 
 **به‌روزرسانی:**
