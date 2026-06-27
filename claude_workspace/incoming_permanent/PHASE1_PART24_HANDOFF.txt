@@ -1,0 +1,78 @@
+TRADING-phase1-part24 HANDOFF
+=============================================================
+az: Claude dar TRADING-phase1-part23-enterprise-audit-fullscan
+be: Claude dar chat badi
+tarikh: 2026-06-26
+=============================================================
+
+§1 — MISSION in chat (part23)
+Enterprise Audit kamel proyhe — Layer A-D — roye fayl-haye ACTIVE
+Natije: tamam-shod — 13/13 audit PASS — 7 commit — 11 file changed
+
+§2 — M101 BACKFILL (avalin kar dar boot part24)
+dar boot part24, qabl az har kar digari:
+1. ejra kon: git rev-parse --short HEAD
+2. hash chat-end part23 = an adad (az git zende)
+3. dar PHASE_LEDGER.md jaygozin kon:
+   OLD: chat-end part23 = `<backfill dar boot part24 (M101)>`
+   NEW: chat-end part23 = `{HASH}`
+4. dar PHASE_LEDGER.md bakhsh HEAD:
+   OLD: - **`<chat-end part23>`** = chat-end part23 ...
+   NEW: - **`{HASH}`** = chat-end part23 ...
+5. commit: "chore(ledger): M101 backfill part23 hash {HASH} in boot part24"
+6. push
+
+§3 — CONSTITUTION (pas az part23)
+Constitution: v2.18 (taghir nakard — audit faghat fix bud, na bump)
+Rules: 90 Locked
+Lessons: M1-M110 (M110 ta'rif shod dar part23)
+QL: 0..5 = CODIFIED | QL-6 = ACTIVE (pending codify)
+Branch: infra/v2.14-source-of-truth
+HEAD: <az git zende dar boot part24>
+
+§4 — FIXES dar part23
+
+Layer A (Constitution Integrity):
+  [FIX] 02_lessons.md: M110 ta'rif shod + section title M106-M110
+  [FIX] LOCKED_RULES_INBOX.md: QL-0..5 -> CODIFIED (v2.18 part21)
+  [FIX] main.md: Quick-start align + cross-refs #89/#90 + version header M106-M110 + 12 Template
+  [FIX] CHAT_BOOT_TRIGGER_TEMPLATE.md: 01a_rules_core + #1-#90 + v2.18 + stale PART09/PART10 refs
+  [FIX] 06_meta.md: §6.1 boot-seq + §6.4 v2.18 + Template1 + §6.11
+
+Layer B (File Structure):
+  [FIX] README.md: stats (90 rules/M110/v2.18/v0.6.0/branch/React 19.2) + module list + snd_jame refs
+
+Layer C (Claimed Fixes):
+  [FIX] scripts/63_pre_commit_audit.py: banner v2.17->v2.18
+  [FIX] .pre-commit-config.yaml: hook name v2.17->v2.18
+  [FIX] ONBOARDING_GUIDE.md: snd_jame_v2.7 ref + archived dir struct + Q2 legacy ref
+  [FIX] 06_meta.md: §6.1/§6.2/§6.8 snd_jame refs (6x) + §6.8 01_rules->01a_rules_core
+  [FIX] PENDING_FOR_NEXT_VERSION.md: header snd_jame->Constitution
+
+Layer D (Enterprise Quality):
+  [FIX] 06_meta.md: stale footer v2.14->v2.18
+
+§5 — COMMITS
+
+3ed4e4e — M101 backfill part22
+4cf6ce3 — Batch1 (6 files: audit banner, ONBOARDING, README, M110, 06_meta footer)
+90e9fa2 — Batch2 (CHAT_BOOT_TRIGGER_TEMPLATE, 06_meta §6.1/§6.4)
+dc750f8 — Batch3 (06_meta §6.1/§6.2 legacy refs)
+12cc56b — Batch4 (main.md Quick-start + cross-refs)
+3b26772 — Batch5 (LOCKED_RULES_INBOX QL-0..5 CODIFIED)
+28e3fa4 — Batch6 (PENDING header)
+[chat-end = backfill dar boot part24]
+
+§6 — KNOWN REMAINING (out of scope part23)
+- 01_rules.md / 01a_rules_core.md / 02_lessons.md headers: v2.17 (acceptable per ACCEPTABLE_VERSIONS)
+- ONBOARDING cmd blocks -> powershell (cosmetic)
+- QL-6: ACTIVE pending codify (genuine)
+- Phase 4 development: amade dar part24+
+
+§7 — NAM CHAT BADI (QL-3/HM-3)
+TRADING-phase1-part24-{topic}
+topic: tashim ba karbr dar shoru chat
+
+=============================================================
+END OF HANDOFF part23 -> part24
+=============================================================

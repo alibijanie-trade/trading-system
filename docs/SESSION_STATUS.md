@@ -1,18 +1,18 @@
-# Session Status — وضعیت پس از part22 (ورودی part23)
+# Session Status — وضعیت پس از part23 (ورودی part24)
 
-> **آخرین به‌روزرسانی:** 2026-06-24 (part22 — Legacy Elimination + CHAT_LOG catch-up + Governance Batch 5)
+> **آخرین به‌روزرسانی:** 2026-06-26 (part23 — Enterprise Audit کامل Layer A-D)
 > **نسخه پروژه:** v0.6.0 (tag روی main: `5730173`؛ v0.7.0 در پایان MDRS v2)
 > **Constitution:** **v2.18** (codify Quick-Lock: #۸۹/#۹۰ + M106-M110 + §۴.۱۲ + QL-0..QL-6 — part21)
-> **چت جاری:** part23 — Phase 4 آماده (یا governance موارد باقی‌مانده)
-> **مرجع تجمعی:** `claude_workspace/PHASE_LEDGER.md` (قصهٔ part01→part22؛ در boot اول خوانده شود)
+> **چت جاری:** part24 — توسعه یا Phase 4
+> **مرجع تجمعی:** `claude_workspace/PHASE_LEDGER.md` (قصهٔ part01→part23؛ در boot اول خوانده شود)
 > ⚠️ **Naming (HM-3):** نام چت باید `TRADING-phase{N}-part{NN}-{topic}` باشد.
 
 ---
 
-## 📦 وضعیت Hand-off (ورودی part23)
-- آخرین چت کامل: **part22** — chat-end `<از git زنده در boot part23 verify شود>`
-- زنجیره commitهای part22: `af9e916` (M101) ← `cd5f508` (archive+stub) ← `4d90200` (reorganize) ← `ad69a58` (CHAT_LOG v2.8) ← `a30dd4f` (Batch5) ← chat-end (این commit).
-- part23 = Phase 4 یا هر اولویتی که در handoff تعریف شده.
+## 📦 وضعیت Hand-off (ورودی part24)
+- آخرین چت کامل: **part23** — chat-end `<از git زنده در boot part24 verify شود>`
+- زنجیره commitهای part23: `3ed4e4e` (M101) ← `4cf6ce3` (Batch1) ← `90e9fa2` (Batch2) ← `dc750f8` (Batch3) ← `12cc56b` (Batch4) ← `3b26772` (Batch5) ← `28e3fa4` (Batch6) ← chat-end (این commit).
+- part24 = Phase 4 توسعه یا هر اولویتی که در handoff تعریف شده.
 
 ## 📍 وضعیت کلی
 - **فاز:** Phase 1 Skeleton ✅ + **MDRS v2 COMPLETE** ✅ + **Governance repair بخش عمده DONE** ✅
@@ -37,10 +37,11 @@
 - ✅ part20: governance repair Batch 1+2
 - ✅ part21: codify v2.18 + Batch 3+4 + Review #۰۱۳
 - ✅ **part22:** Legacy Elimination (Z2.P21-A RESOLVED) + CHAT_LOG v2.8 + Batch 5
+  - ✅ **part23:** Enterprise Audit Layer A-D (13/13 PASS) — M110 defined + QL-0..5 CODIFIED + boot-seq/headers/legacy-refs
 - 🔮 معلق (موکول): HM-META-H/I/J/K + W4-W5 (helper-side، fabricate نمی‌شود)
 
 ### Objective 3 — Phase 4 (توسعه واقعی)
-🔮 **آماده برای شروع** — part23+. با Scope Contract (#۷۸) + گزارش N/M (#۷۹) + بدون pattern-matching (#۸۴).
+🔮 **آماده برای شروع** — part24+. با Scope Contract (#۷۸) + گزارش N/M (#۷۹) + بدون pattern-matching (#۸۴).
 
 ## 📊 آمار پروژه (پس از part22)
 - **قوانین قفل‌شده:** **۹۰** (#۱-۹۰) + ۲ Reserved (#۵۲، #۵۳) + QL-0..QL-6 (LOCKED_RULES_INBOX)
@@ -85,16 +86,11 @@ docs/
 ## 🚦 مکانیزم‌های فعال هر چت
 boot template اجباری (#۴۸) · `[Mechanism + Trust-Rules Self-Check]` بالا · `Honesty Audit (#۸۳)` پایین · Scope Contract (#۷۸) · تأیید per-task (#۵۱/#۵۱.۱) · commit `-F` ASCII (M99) · **قانون تداوم دوحلقه‌ای (check_12 مکانیکی)**
 
-## 🚀 Sequence ادامه (part23)
-1. Boot کامل (۱۰ فایل) + M101 backfill part22=`52ced6d` از git زنده
-2. **Enterprise Audit** (میشن اختصاصی part23):
-   - Layer A: Constitution Integrity (۹۰ قانون + M1-M110 + QL-0..QL-6)
-   - Layer B: File Structure Consistency (links + manifest + cross-doc counts)
-   - Layer C: Claimed Fixes Verification (Z2.P21-A + headers + shell + React)
-   - Layer D: Enterprise Quality (dead links + TODO + version mismatches)
-3. گزارش ساختاریافته: PASS/FAIL/FIX به تفکیک فایل/خط
-4. chat-end: حلقه ۱ Ledger → حلقه ۲ Handoff → یک commit + push
+## 🚀 Sequence ادامه (part24)
+1. Boot کامل (۱۰ فایل) + M101 backfill part23 hash از git زنده
+2. تصمیم با کاربر: توسعه واقعی Phase 4 یا هر اولویت دیگری که لازم باشد
+3. chat-end: حلقه ۱ Ledger → حلقه ۲ Handoff → یک commit + push
 
 ---
-**ساخته توسط:** Claude در part22 (legacy elimination + governance Batch 5)
-**نسخه این فایل:** part22 chat-end (جایگزین نسخه part20 governance repair)
+**ساخته توسط:** Claude در part23 (enterprise audit + session-end)
+**نسخه این فایل:** part23 chat-end (جایگزین نسخه part22)

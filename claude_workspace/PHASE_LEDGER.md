@@ -42,6 +42,7 @@
 
 | part21 | boot کامل (M101 backfill part20=`a0172ca` ✅) + **codify v2.18**: #۸۹/#۹۰ + M106-M110 + §۴.۱۲ + تبصره‌های QL-1..4 + QL-6 + banner HELPER_PROTOCOL + Review #۰۱۳ + Decision #۷۱. **Batch 3**: React 19.2 + آمار واقعی ماژول‌ها + footer 05_arch. **Batch 4**: CUSTOM_INSTRUCTIONS v2.18 + manifest regenerate (290 فایل) + legacy-ref-elimination در PENDING + M110. | chat-end part21 = `223db85` ✅ |
 | part22 | boot کامل (M101 backfill part21=`223db85` ✅) + **Priority 1 — Legacy Reference Elimination** (Z2.P21-A RESOLVED): archive ۶ `سند_جامع_v2_6..v2_11` + ۳ DEPRECATED doc (GOVERNANCE/CONTEXT/CHECKLIST) + ۲ CHAT_FINALIZE → archive/old_versions + آپدیت PROJECT_CONSTITUTION/README/ONBOARDING به constitution v2.18 + **Priority 2 — CHAT_LOG catch-up** part19/20/21 + boot marker part22 (v2.8) + **Priority 3 — Governance repair Batch 5**: manifest regenerate (288 فایل) + Z2.P21-A RESOLVED در PENDING. audit **۱۳/۱۳** PASS. | `af9e916` (M101) · `cd5f508` (archive+stub) · `4d90200` (reorganize) · `ad69a58` (CHAT_LOG v2.8) · `a30dd4f` (Batch5) · chat-end part22 = `52ced6d` |
+| part23 | boot کامل (M101 backfill part22=`52ced6d` ✅) + **Enterprise Audit کامل Layer A-D**: Layer A (M110 defined + QL-0..5 CODIFIED + main.md quick-start/cross-refs/#89/#90 + CHAT_BOOT_TRIGGER_TEMPLATE v2.18/01a_rules_core + 06_meta boot-seq/§6.4/templates) · Layer B (README.md stats 90rules/M110/v2.18/v0.6.0/React 19.2) · Layer C (Z2.P21-A ONBOARDING+PENDING+06_meta+main.md legacy refs + audit banner v2.18 + hook label v2.18) · Layer D (06_meta stale footer). audit **۱۳/۱۳** PASS. | `3ed4e4e` (M101) · `4cf6ce3` (Batch1) · `90e9fa2` (Batch2) · `dc750f8` (Batch3) · `12cc56b` (Batch4) · `3b26772` (Batch5) · `28e3fa4` (Batch6) · chat-end part23 = `<backfill در boot part24 (M101)>` |
 
 ---
 
@@ -94,5 +95,6 @@
 - **`223db85`** = chat-end part21 (codify v2.18 [#۸۹/#۹۰ + M106-M110 + §۴.۱۲ + تبصره‌های QL-1..4] + governance repair Batch 3 [React 19.2 + آمار ماژول‌ها + 05_arch footer] + Batch 4 [CUSTOM_INSTRUCTIONS v2.18 + manifest regenerate + legacy-ref PENDING] + Review #۰۱۳ + Decision #۷۱) — backfilled در boot part22 (M101) ✅
 - **`52ced6d`** = chat-end part22 (legacy elimination Z2.P21-A + CHAT_LOG v2.8 + Batch5 manifest 288 + SESSION_STATUS + PART23 handoff) — backfilled در boot part23 (M101) ✅
 
+- **`<chat-end part23>`** = chat-end part23 (enterprise audit Layer A-D · 7 commit · 11 files · 13/13 PASS) — backfill در boot part24 (M101)
 ---
 **📌 پایان PHASE_LEDGER.md — append-only؛ هر چت در chat-end حلقهٔ ۱ را اینجا می‌زند.**
