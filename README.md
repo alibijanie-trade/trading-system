@@ -14,7 +14,7 @@
 - 🎯 **Theme Engine** سراسری + Settings Page با ۳ بخش
 - 📅 **تقویم شمسی** با `Intl` built-in (بدون کتابخانه خارجی)
 - 🔢 **جداکننده سه‌رقمی** + ۴ فرمت تاریخ میلادی
-- 📋 **Governance Infrastructure** — ۱۲ سند مرجع برای handoff حرفه‌ای
+- 📋 **Governance modular** — Constitution v2.18 (main + ۷ ماژول) + MDRS v2 + قانون تداوم دوحلقه‌ای برای handoff حرفه‌ای
 
 ---
 
@@ -90,19 +90,19 @@ trading-system/
 │   ├── 01_*.py تا 32_*.py
 │   └── Nb_test_*.py            ← تست‌ها (قانون #۲۲)
 │
-└── docs/                 ← اسناد جامع (۱۲ سند)
-    ├── PROJECT_GOVERNANCE.md  ⭐
-    ├── CLAUDE_CHECKLIST.md    ⭐
-    ├── CHAT_LOG.md            ⭐
-    ├── TASK_BACKLOG.md        ⭐
-    ├── DECISIONS_LOG.md       ⭐
-    ├── REUSABLE_SKELETON.md   ⭐
-    ├── ONBOARDING_GUIDE.md    ⭐
+└── docs/                 ← اسناد جامع
+    ├── constitution/         ← Constitution v2.18 (Modular) ⭐
+    ├── CHAT_LOG.md           ⭐
+    ├── TASK_BACKLOG.md       ⭐
+    ├── DECISIONS_LOG.md      ⭐
+    ├── REUSABLE_SKELETON.md  ⭐
+    ├── ONBOARDING_GUIDE.md   ⭐
+    ├── SESSION_STATUS.md
     ├── STYLE_GUIDE.md
     ├── GLOSSARY.md
     ├── TROUBLESHOOTING.md
-    ├── PROJECT_CONTEXT.md
-    └── SESSION_STATUS.md
+    ├── PENDING_FOR_NEXT_VERSION.md
+    └── reviews/
 ```
 
 ---
@@ -113,7 +113,7 @@ trading-system/
 → از **`docs/ONBOARDING_GUIDE.md`** شروع کنید (۴-۶ ساعت).
 
 ### من می‌خواهم پروژه را با Claude ادامه دهم
-→ **`docs/PROJECT_GOVERNANCE.md`** + **`docs/CLAUDE_CHECKLIST.md`** را پیوست هر چت کنید.
+→ **`docs/constitution/main.md`** (Constitution v2.18) را بخوانید + boot protocol در `claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md`.
 
 ### می‌خواهم بدانم چه task هایی باقی‌مانده
 → **`docs/TASK_BACKLOG.md`**.
@@ -165,7 +165,7 @@ trading-system/
 - **SQLite** (فاز ۰) → **PostgreSQL** (فاز ۲+)
 
 ### Frontend
-- **React** 18 + **Vite** 8
+- **React** 19.2 + **Vite** 8
 - **react-router-dom** — routing
 - **zustand** — state management + persist
 - **axios** — HTTP client
@@ -223,11 +223,12 @@ Components                ← style={{ color: "var(--color-primary)" }}
 
 ## 📜 قوانین کلیدی
 
-این پروژه **۶۶ قانون قفل‌شده** دارد که در **Constitution v2.12 (Modular)** ثبت شده‌اند. ساختار جدید مدولار (از v2.12) در `docs/constitution/`:
+این پروژه **۹۰ قانون قفل‌شده** دارد که در **Constitution v2.18 (Modular)** ثبت شده‌اند. ساختار مدولار در `docs/constitution/`:
 
 - [`main.md`](docs/constitution/main.md) — فهرست و navigation
-- [`01_rules.md`](docs/constitution/01_rules.md) — ۶۶ قانون Locked
-- [`02_lessons.md`](docs/constitution/02_lessons.md) — درس‌نامه M1-M86
+- [`01a_rules_core.md`](docs/constitution/01a_rules_core.md) — ۹۰ قانون Locked (بوت-کریتیکال)
+- [`01_rules.md`](docs/constitution/01_rules.md) — شرح مفصل قوانین (on-demand)
+- [`02_lessons.md`](docs/constitution/02_lessons.md) — درس‌نامه M1-M110
 - [`03_bugs.md`](docs/constitution/03_bugs.md) — Bug catalog
 - [`04_principles.md`](docs/constitution/04_principles.md) — ۸ اصل بنیادی
 - [`05_architecture.md`](docs/constitution/05_architecture.md) — Stack و معماری
@@ -239,7 +240,7 @@ Components                ← style={{ color: "var(--color-primary)" }}
 - **#۲۱:** هر چیز قابل تست با کد، با کد تست شود (نه Swagger UI)
 - **#۲۲:** هر اسکریپت `{N}_*.py` باید `{N}b_test_*.py` همراه داشته باشد
 - **#۲۳:** هر چت، CHAT_LOG با بخش جدید آپدیت شود
-- **#۲۴:** سند جامع فقط افزوده/اصلاح می‌شود — **هرگز حذف نمی‌شود** (No-Deletion)
+- **#۲۴:** Constitution فقط افزوده/اصلاح می‌شود — **هرگز حذف نمی‌شود** (No-Deletion)
 - **#۲۵:** Claude در شروع چت چک‌لیست ۸ مرحله را انجام دهد
 - **#۲۶:** تغییرات اسناد به‌صورت اتمیک اعمال شوند
 - **#۶۰ ⭐⭐⭐:** PENDING-EOC در لحظه در `docs/PENDING_FOR_NEXT_VERSION.md` ثبت شود
@@ -251,7 +252,7 @@ Components                ← style={{ color: "var(--color-primary)" }}
 
 ## 🎨 طراحی
 
-پروژه از **Variant Indicator Pattern** (سند جامع ۸.۸.۱) پیروی می‌کند:
+پروژه از **Variant Indicator Pattern** (Constitution ۰۵_architecture) پیروی می‌کند:
 
 - کانتینر همیشه از `var(--color-card)` + `var(--color-border)`
 - نوع (danger/warning/info) فقط با **accent باریک ۴px** + icon رنگی
@@ -283,14 +284,13 @@ Components                ← style={{ color: "var(--color-primary)" }}
 
 این پروژه با Claude AI به‌صورت تعاملی توسعه یافته. در هر چت جدید:
 
-1. zip پروژه را پیوست کنید
-2. سند جامع v2.X را پیوست کنید
-3. Claude خودکار:
-   - چک‌لیست شروع چت را اجرا می‌کند
+1. **`claude_workspace/CHAT_BOOT_TRIGGER_TEMPLATE.md`** را بخوانید و دستورات boot را به Claude بدهید
+2. Claude خودکار:
+   - فایل‌های boot را می‌خواند
    - وضعیت فعلی را گزارش می‌دهد
    - گزینه‌های گام بعدی را ارائه می‌دهد
 
-**جزئیات کامل:** `docs/PROJECT_GOVERNANCE.md` بخش ۴ و ۵.
+**جزئیات کامل:** `docs/constitution/main.md` بخش سسیون و متا.
 
 ---
 
@@ -298,16 +298,16 @@ Components                ← style={{ color: "var(--color-primary)" }}
 
 | متریک | مقدار |
 |---|---|
-| چت‌های انجام‌شده | ۱۱+ (شامل چت ۱۱.۰.الف modular split) |
+| چت‌های انجام‌شده | ۲۳+ (تا part23) |
 | اسکریپت‌های idempotent | ~۶۴ |
 | اسکریپت‌های تست همراه | ~۴۰ |
 | Bug های رفع‌شده | ۵۴ (#۱‌-۵۴ با ۳ Reserved: #۵۰-۵۲) |
-| تصمیمات معماری ثبت‌شده | ~۶۶ (Max ID; ۶۱ Recorded با ۵ Reserved) |
-| **قوانین قفل‌شده** | **۶۶** (#۱-۶۶ با ۲ Reserved: #۵۲, #۵۳) |
-| **درس‌نامه ردیف‌ها** | M1-M86 (با ۲۸ Reserved) |
-| **نسخه Constitution** | **v2.12 (Modular)** |
+| تصمیمات معماری ثبت‌شده | ۷۱ (Max ID) |
+| **قوانین قفل‌شده** | **۹۰** (#۱-۹۰) |
+| **درس‌نامه ردیف‌ها** | M1-M110 |
+| **نسخه Constitution** | **v2.18 (Modular)** |
 | تم‌های built-in | ۵ |
-| اسناد مرجع | ۱۲ (governance) + ۷ (modular constitution) |
+| اسناد مرجع | ۸ (ماژول‌های modular constitution) + governance docs |
 | Lines of code (frontend) | ~۲۵۰۰ |
 | Lines of code (backend) | ~۳۰۰۰ |
 | Bundle size (gzipped) | ~۱۴۴KB |
@@ -327,7 +327,7 @@ Components                ← style={{ color: "var(--color-primary)" }}
 
 ---
 
-**نسخه فعلی:** v0.5.0 (پس از modular split v2.12)
-**فاز:** ۰ تکمیل‌شده + فاز ۱ skeleton + Modular Constitution v2.12
-**برنچ جاری:** `infra/governance-overhaul` (آماده merge به `main` در پایان چت ۱۱.۰.ج)
-**به‌روز:** 2026-05-21
+**نسخه فعلی:** v0.6.0 (Constitution v2.18 Modular)
+**فاز:** ۰ تکمیل‌شده + فاز ۱ skeleton
+**برنچ جاری:** `infra/v2.14-source-of-truth`
+**به‌روز:** 2026-06-24
