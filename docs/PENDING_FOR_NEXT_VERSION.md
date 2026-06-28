@@ -1501,3 +1501,40 @@ hash chat-end part16 = `81a3562` (cross-checked از `git rev-parse --short HEAD
 > 4. `docs/CHAT6_FINALIZE.md` + `CHAT7_FINALIZE.md` → `claude_workspace/old_versions/` (commit `4d90200`)
 > 5. `README.md` + `docs/ONBOARDING_GUIDE.md` — همه ارجاعات legacy → constitution v2.18 آپدیت شد (commit `4d90200`)
 > 6. `docs/PROJECT_MANIFEST.md` regenerate (288 فایل) — Batch 5 (part22)
+
+---
+
+## 📌 آیتم‌های باقی‌مانده پس از part23 (Enterprise Audit)
+
+### Z2.P23-A — CHAT_LOG catch-up part22+part23
+
+**تاریخ:** 2026-06-26 (part23)  
+**نوع:** filesystem encoding issue  
+**وضعیت:** ⚠️ باقی — موکول به boot part24
+
+`docs/CHAT_LOG.md` هنوز فقط boot marker part22 دارد. بخش کامل part22 و part23 و boot marker part24 اضافه نشد چون `filesystem:edit_file` در فایل‌های بزرگ فارسی Unicode matching failure دارد.
+
+**کار لازم در part24 boot:** CHAT_LOG catch-up (v2.9) — اضافه کردن بخش کامل part22 + part23 + boot marker part24.  
+**Cross-refs:** #۲۳ (آپدیت CHAT_LOG هر چت)
+
+---
+
+### Z2.P23-B — QL-6 codify
+
+**تاریخ:** 2026-06-26 (part23)  
+**نوع:** genuine pending — codify انجام نشده  
+**وضعیت:** ⚠️ باقی — نیاز به Constitution bump v2.19
+
+QL-6 (تغییر Helper Model) در `LOCKED_RULES_INBOX.md` هنوز ACTIVE است. QL-0..5 در v2.18 part21 codify شدند، اما QL-6 به دلیل نیاز به تصمیم درباره شماره قانون و متن دقیق، codify نشد.  
+**Cross-refs:** #۸۹ (Quick-Lock Mechanism) · بخش QL در `LOCKED_RULES_INBOX.md`
+
+---
+
+### Z2.P23-C — ONBOARDING_GUIDE.md cmd blocks → powershell
+
+**تاریخ:** 2026-06-26 (part23)  
+**نوع:** cosmetic / Layer C — shell standard  
+**وضعیت:** 🟡 پریوریتی پایین
+
+`docs/ONBOARDING_GUIDE.md` بخش Cheat Sheet و سایر دستورات هنوز `cmd` blocks دارد. طبق shell standard (PowerShell)، باید به `powershell` تغییر شوند. دستورات CMD-only مثل `del` و `copy` هم باید به PowerShell معادل تبدیل شوند.  
+**Cross-refs:** #۳۱ (شل standard PowerShell) · `05_architecture.md` §5.1.2
